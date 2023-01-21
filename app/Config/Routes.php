@@ -35,6 +35,7 @@ $routes->get('/', 'Login::index');
 $routes->get('/dashboard', 'Dashboard::index');
 $routes->get('/collections', 'Collection::index');
 $routes->get('/categories', 'Category::index');
+$routes->get('/Images', 'Image::index');
 $routes->get('/account', 'Account::index');
 
 //Parameter URLs
