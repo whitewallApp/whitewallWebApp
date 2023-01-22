@@ -3,8 +3,8 @@
 <?= $this->section('Body') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">
-        <img src="/Icons/Whitewall-ICON.png" width="30" height="30" alt="">
+    <a class="navbar-brand" href="/dashboard">
+        <img src="/Icons/Whitewall-LOGO-pos.png" height="30" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -29,6 +29,18 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
         </form>
+
+        <div class="dropleft dropdown ml-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="crimson" class="bi bi-person-circle dropdown-toggle" viewBox="0 0 16 16" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+            </svg>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Profile</a>
+                <a class="dropdown-item" href="#">Billing</a>
+                <a class="dropdown-item" href="#">Settings</a>
+            </div>
+        </div>
     </div>
 </nav>
 

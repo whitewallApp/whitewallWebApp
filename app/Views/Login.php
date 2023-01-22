@@ -1,6 +1,6 @@
 <?= $this->extend('Base') ?>
 
-<?= $this->section('body') ?>
+<?= $this->section('Body') ?>
     <div class="container">
         <div class="card p-4 m-3">
             <img class="img" src="Icons\Whitewall-LOGO-pos.png">
