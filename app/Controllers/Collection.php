@@ -6,6 +6,6 @@ class Collection extends BaseController
 {
     public function index()
     {
-        return view('welcome_message');
+        return view('Collection_List');
     }
 }
