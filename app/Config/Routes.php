@@ -37,6 +37,7 @@ $routes->get('/collections', 'Collection::index');
 $routes->get('/categories', 'Category::index');
 $routes->get('/images', 'Image::index');
 $routes->get('/account', 'Account::index');
+$routes->get('/notifications', 'Notification::index');
 
 //Parameter URLs
 
