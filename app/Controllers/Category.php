@@ -6,6 +6,6 @@ class Category extends BaseController
 {
     public function index()
     {
-        return view('Category_List');
+        return view('Category\Category_List');
     }
 }
