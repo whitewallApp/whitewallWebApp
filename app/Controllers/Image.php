@@ -6,6 +6,6 @@ class Image extends BaseController
 {
     public function index()
     {
-        return view('welcome_message');
+        return view('Image/Image_List');
     }
 }
