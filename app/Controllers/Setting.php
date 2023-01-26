@@ -2,11 +2,11 @@
 
 namespace App\Controllers;
 
-class Notification extends BaseController
+class Setting extends BaseController
 {
     public function index()
     {
-        return view('Notifications');
+        return view('Settings');
     }
 }
 
