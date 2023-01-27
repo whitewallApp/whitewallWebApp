@@ -6,6 +6,6 @@ class Account extends BaseController
 {
     public function index()
     {
-        return view('Account');
+        return view('Account');\\\
     }
 }
