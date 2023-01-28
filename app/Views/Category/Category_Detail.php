@@ -1,4 +1,4 @@
-<?= $this->extend('Category\Category_List') ?>
+<?= $this->extend('Category/Category_List') ?>
 
 <?= $this->section('Detail') ?>
 <form class="mr-4">

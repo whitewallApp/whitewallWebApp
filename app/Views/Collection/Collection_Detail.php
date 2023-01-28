@@ -1,4 +1,4 @@
-<?= $this->extend('Collection\Collection_List') ?>
+<?= $this->extend('Collection/Collection_List') ?>
 
 <?= $this->section('Detail') ?>
 <form class="mr-4">
