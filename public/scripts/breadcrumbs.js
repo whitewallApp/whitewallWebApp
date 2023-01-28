@@ -8,7 +8,7 @@ window.onload = function(){
     page = page.charAt(0).toUpperCase() + page.slice(1);
 
     if (page != "Dashboard"){
-        html = `/ <a href="/dashboard">Dashboard</a> / <a href="/${page}">${page}</a>`;
+        html = `/ <a href="/dashboard">Dashboard</a> / <a href="/${page}">${page}</a>`; //TODO: Make it so second link works, is capatilized right now
     }else{
         html = `/ <a href="/dashboard">Dashboard</a> /`;
     }
