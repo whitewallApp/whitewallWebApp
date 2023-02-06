@@ -37,15 +37,24 @@
             <tbody>
                 <tr>
                 <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                
+                <td>stuff here</td>
+                <td>stuff here</td>
+                <td>stuff here</td>
+                <td>stuff here</td>
                 </tr>
                 <tr>
                 <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                
+                <td>stuff here</td>
+                <td>stuff here</td>
+                <td>stuff here</td>
+                <td>stuff here</td>
                 </tr>
                 <tr>
                 <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                
+                <td>stuff here</td>
+                <td>stuff here</td>
+                <td>stuff here</td>
+                <td>stuff here</td>
                 </tr>
             </tbody>
         </table>

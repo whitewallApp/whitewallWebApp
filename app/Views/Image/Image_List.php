@@ -36,20 +36,21 @@
             <tbody>
                 <tr>
                 <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                <td>Icon</td>
-                <td>Name</td>
-                <td>@mdo</td>
+                <td>stuff here</td>
+                <td>stuff here</td>
+                <td>stuff here</td>
                 </tr>
                 <tr>
                 <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
+                <td>stuff here</td>
+                <td>stuff here</td>
+                <td>stuff here</td>
                 </tr>
                 <tr>
                 <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
+                <td>stuff here</td>
+                <td>stuff here</td>
+                <td>stuff here</td>
                 </tr>
             </tbody>
         </table>
