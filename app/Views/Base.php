@@ -10,6 +10,7 @@
         <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
         <link rel="stylesheet" href="styles/style.css">
         <script src="scripts/breadcrumbs.js"></script>
+        <script src="scripts/actions.js"></script>
     </head>
     <body>
         <?= $this->renderSection('Body') ?>
