@@ -6,8 +6,35 @@
     <div class="col-sm-2">
         <a class="navbar-brand" href="/dashboard">
             <img src="/Icons/Whitewall-LOGO-pos.png" height="30" alt="Logo Image">
-            <p id="breadcrumbs" class="breadcrumbs"></p>
         </a>
+    </div>
+
+    <div class="collapse navbar-collapse " id="navbarSupportedContent"></div>
+    
+
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+        <div class="dropleft dropdown ml-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="crimson" class="bi bi-person-circle dropdown-toggle" viewBox="0 0 16 16" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+            </svg>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/account">Account</a>
+                <a class="dropdown-item" href="#">Billing</a>
+                <a class="dropdown-item" href="/settings">Settings</a>
+            </div>
+        </div>
+    </div>
+    
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="col-sm-2">
+        <p id="breadcrumbs" class="breadcrumbs"></p>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -31,25 +58,6 @@
                 <a class="nav-link" href="/notifications">Notifications</a>
             </li>
         </ul>
-
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
-        </form>
-
-        <div class="dropleft dropdown ml-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="crimson" class="bi bi-person-circle dropdown-toggle" viewBox="0 0 16 16" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-            </svg>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/account">Account</a>
-                <a class="dropdown-item" href="#">Billing</a>
-                <a class="dropdown-item" href="/settings">Settings</a>
-            </div>
-        </div>
-    </div>
-    
 </nav>
 
 <?= $this->renderSection('MainPage') ?>
