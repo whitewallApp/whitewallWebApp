@@ -1,8 +1,14 @@
 function toggleAll(){
-    $("#actions").toggle();
     var boxes = document.getElementsByClassName("checkbox-lg");
     var status = document.getElementById("check-all").checked;
     var selectedText = `${boxes.length - 1} Selected | `;
+
+    if (status){
+        $("#actions").show();
+    }else{
+        $("#actions").hide();
+    }
+
 
     for (var i = 1; i < boxes.length; i++){
         boxes[i].checked = status;

@@ -13,3 +13,7 @@ body {
 .checkbox-sm {
     scale: 0.5;
 }
+
+.w-10 {
+    width: 10% !important
+}
