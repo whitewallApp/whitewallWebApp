@@ -20,7 +20,9 @@
         <label class="custom-file-label" for="customFile">Icon Image</label>
     </div>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-  <button class="btn btn-primary">View Collections in Category</button>
+  <div class="float-right">
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button class="btn btn-danger">Delete</button>
+  </div>
 </form>
 <?= $this->endSection() ?>

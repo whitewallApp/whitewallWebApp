@@ -14,6 +14,7 @@ body {
     scale: 0.5;
 }
 
-.w-10 {
-    width: 10% !important
+.img-sm {
+    max-width:25%;
+    height:auto;
 }

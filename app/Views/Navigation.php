@@ -2,7 +2,7 @@
 
 <?= $this->section('Body') ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg">
     <div class="col-sm-2">
         <a class="navbar-brand" href="/dashboard">
             <img src="/Icons/Whitewall-LOGO-pos.png" height="30" alt="Logo Image">
@@ -32,10 +32,8 @@
     
 </nav>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="col-sm-2">
-        <p id="breadcrumbs" class="breadcrumbs"></p>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -59,6 +57,18 @@
             </li>
         </ul>
 </nav>
+<div class="row m-3">
+    <div class="col-sm-8">
+        <p id="breadcrumbs" class="breadcrumbs"></p>
+    </div>
+    <div class="col-sm-4">
+        <div class="row float-right">
+            <p class="m-2">Import Options</p>
+            <button class="btn btn-primary m-2">Single Upload</button>
+            <button class="btn btn-primary m-2">Bulk Upload</button>
+        </div>
+    </div>
+</div>
 
 <?= $this->renderSection('MainPage') ?>
 <?= $this->endSection() ?>

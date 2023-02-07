@@ -30,7 +30,7 @@
                 <label class="custom-control-label" for="customSwitch1">Force new Wallpaper</label>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row float-left">
             <button class="btn btn-primary col-sm-5 m-2">Notify Now</button>
             <button class="btn btn-primary col-sm-5 m-2">Schedule Notification</button>
         </div>

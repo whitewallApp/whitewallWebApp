@@ -39,19 +39,19 @@
             <tbody>
                 <tr>
                 <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                <td>stuff here</td>
-                <td>stuff here</td>
-                <td>stuff here</td>
-                </tr>
-                <tr>
-                <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                <td>stuff here</td>
+                <td class="w-25"><image class="img-sm" src="https://customercare.igloosoftware.com/.api2/api/v1/communities/10068556/previews/thumbnails/4fc20722-5368-e911-80d5-b82a72db46f2?width=680&height=680&crop=False"></td>
                 <td>stuff here</td>
                 <td>stuff here</td>
                 </tr>
                 <tr>
                 <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
+                <td><image class="img-sm" src="https://customercare.igloosoftware.com/.api2/api/v1/communities/10068556/previews/thumbnails/4fc20722-5368-e911-80d5-b82a72db46f2?width=680&height=680&crop=False"></td>
                 <td>stuff here</td>
+                <td>stuff here</td>
+                </tr>
+                <tr>
+                <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
+                <td><image class="img-sm" src="https://customercare.igloosoftware.com/.api2/api/v1/communities/10068556/previews/thumbnails/4fc20722-5368-e911-80d5-b82a72db46f2?width=680&height=680&crop=False"></td>
                 <td>stuff here</td>
                 <td>stuff here</td>
                 </tr>
