@@ -24,12 +24,6 @@ function breadcrumbs(){
     var html;
     var link = page.charAt(0).toUpperCase() + page.slice(1);
 
-    if (page != "dashboard"){
-        html = `/ <a href="/dashboard">Dashboard</a> / <a href="/${page}">${link}</a>`; 
-    }else{
-        html = `/ <a href="/dashboard">Dashboard</a> /`;
-    }
-    console.log(page);
 
-    breadcrumbs.innerHTML = html;
+    breadcrumbs.innerHTML = link;
 }

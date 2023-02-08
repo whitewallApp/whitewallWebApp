@@ -32,7 +32,7 @@
                 <thead>
                     <tr>
                     <th scope="col"><input id="check-all" type="checkbox" class="checkbox-lg"></th>
-                    <th scope="col">Icon</th>
+                    <th scope="col">Thumbnail</th>
                     <th scope="col">Name</th>
                     <th scope="col">Category</th>
                     <th scope="col">Images</th>

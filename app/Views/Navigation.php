@@ -5,7 +5,7 @@
 <nav class="navbar navbar-expand-lg">
     <div class="col-sm-2">
         <a class="navbar-brand" href="/dashboard">
-            <img src="/Icons/Whitewall-LOGO-pos.png" height="30" alt="Logo Image">
+            <img src="/Icons/Whitewall-LOGO-pos.png" height="50" alt="Logo Image">
         </a>
     </div>
 
@@ -63,8 +63,15 @@
     </div>
     <div class="col-sm-4">
         <div class="row float-right">
-            <p class="m-2">Import Options</p>
-            <button class="btn btn-primary m-2">Single Upload</button>
+            <?php
+                if (strpos(current_url(), "notifications") != false){
+                    echo '<p class="m-2">Add Notifications</p>';
+                }else{
+                    echo '<p class="m-2">Add Images</p>';
+                }
+            ?>
+                
+            <button class="btn btn-primary m-2">Individual</button>
             <button class="btn btn-primary m-2">Bulk Upload</button>
         </div>
     </div>

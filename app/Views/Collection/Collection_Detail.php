@@ -32,7 +32,7 @@
   </div>
   <div class="float-right">
     <button type="submit" class="btn btn-primary">Save</button>
-    <button class="btn btn-danger">Delete</button>
+    <button class="btn btn-danger">Remove</button>
   </div>
 </form>
 <?= $this->endSection() ?>
