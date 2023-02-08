@@ -6,6 +6,6 @@ class Image extends BaseController
 {
     public function index()
     {
-        return view('Image/Image_List');
+        return view('Image/Image_Detail');
     }
 }

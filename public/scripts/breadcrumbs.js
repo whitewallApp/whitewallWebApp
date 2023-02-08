@@ -3,6 +3,8 @@ window.onload = function(){
     breadcrumbs();
 
     startCheckBoxes();
+
+    notifications_start();
 }
 
 function startCheckBoxes(){
@@ -27,3 +29,4 @@ function breadcrumbs(){
 
     breadcrumbs.innerHTML = link;
 }
+
