@@ -10,7 +10,7 @@ class Assets extends BaseController {
      * @access    public
      */
     public function __construct(){
-        define('PATH', '/images');
+        define('PATH', "/images/");
         define('COLPATH', '/images/collections/');
         define('CATPATH', '/images/categories/');
     }
@@ -46,7 +46,7 @@ class Assets extends BaseController {
                 exit;
             }
         }
-        die('Invalid Image File: '.current(explode('.', $file)) );
+        die('Invalid Image File: '. PATH.$file );
     }
 
     function catImage($file)
