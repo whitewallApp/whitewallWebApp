@@ -10,7 +10,7 @@ class Assets extends BaseController {
      * @access    public
      */
     public function __construct(){
-        define('PATH', 'C:/images/');
+        define('PATH', '/images');
         define('COLPATH', '/images/collections/');
         define('CATPATH', '/images/categories/');
     }
