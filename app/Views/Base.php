@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="styles/style.css">
         <script src="scripts/notifications.js"></script>
         <script src="scripts/breadcrumbs.js"></script>
+        <script src="scripts/getset.js"></script>
         <script src="scripts/actions.js"></script>
     </head>
     <body>

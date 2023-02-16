@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\CategoryModel;
 
 class ImageModel extends Model
 {
@@ -14,10 +15,15 @@ class ImageModel extends Model
     protected $createdField  = 'dateCreated';
     protected $updatedField  = 'dateUpdated';
 
-    public function getAllImageIds(){
+    public function getAllIds($brandName){
+        $builder = $this->db->table('brand');
+        $builder->select("id")->where("name", $brandName);
+        $brandID = $builder->get()->getResultArray()[0];
+
         $builder = $this->db->table('image');
-        $builder->select("id");
+        $builder->select("id")->where("brand_id", $brandID);
         $query = $builder->get()->getResultArray();
+
         $ids = [];
 
         foreach($query as $id){
@@ -39,7 +45,7 @@ class ImageModel extends Model
         }
     }
 
-    public function getImagePathById($id){
+    public function getPathById($id){
         $builder = $this->db->table('image');
         $builder->select()->where("id", $id);
         $imageData = $builder->get()->getResultArray();
@@ -52,7 +58,7 @@ class ImageModel extends Model
         return $image;
     }
 
-    public function getImageThumbById($id){
+    public function getThumbById($id){
         $builder = $this->db->table('image');
         $builder->select()->where("id", $id);
         $imageData = $builder->get()->getResultArray();
@@ -65,7 +71,7 @@ class ImageModel extends Model
         return $image;
     }
 
-    public function getImageNameById(int $id){
+    public function getNameById(int $id){
         $builder = $this->db->table('image');
         $builder->select("wallpaper_id")->where("id", $id);
         $wallId = $builder->get()->getResultArray()[0];
@@ -75,5 +81,26 @@ class ImageModel extends Model
         $name = $builder->get()->getResultArray()[0]["name"];
 
         return $name;
+    }
+
+    public function getCollById($id){
+        $builder = $this->db->table('wallpaper');
+        $builder->select("collection_id")->where("id", $id);
+        $imgID = $builder->get()->getResultArray()[0];
+
+        $builder = $this->db->table('collection');
+        $builder->select()->where("id", $imgID);
+        $coll = $builder->get()->getResultArray()[0];
+
+        return $coll;
+    }
+
+    public function getCatById($id){
+        $catModel = new CategoryModel;
+
+        $catID = $this->getCollById($id)["category_id"];
+        $cat = $catModel->getCatById($catID);
+
+        return $cat;
     }
 }

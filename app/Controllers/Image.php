@@ -9,12 +9,15 @@ class Image extends BaseController
     {
         // Grab all images from the database
         $imageModel = new ImageModel;
-        $ids = $imageModel->getAllImageIds();
+        $ids = $imageModel->getAllIds("Beautiful AI");
         $images = [];
         foreach ($ids as $id) {
             $image = [
-                "path" => $imageModel->getImagePathById($id)["path"], 
-                "name" => $imageModel->getImageNameById($id)
+                "id" => $id,
+                "path" => $imageModel->getPathById($id)["path"], 
+                "name" => $imageModel->getNameById($id), 
+                "collection" => $imageModel->getCollById($id)["name"],
+                "category" => $imageModel->getCatById($id)["name"]
             ];
             array_push($images, $image);
         }

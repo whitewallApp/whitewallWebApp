@@ -39,7 +39,11 @@ $routes->get('/images', 'Image::index');
 $routes->get('/account', 'Account::index');
 $routes->get('/notifications', 'Notification::index');
 $routes->get('/settings', 'Setting::index');
+
+//Asset URLS
 $routes->get('/assets/images/(:any)', 'Assets::images/$1');
+$routes->get('/assets/coll-image/(:any)', 'Assets::colImages/$1');
+$routes->get('/assets/cat-images/(:any)', 'Assets::catImages/$1');
 
 //Parameter URLs
 

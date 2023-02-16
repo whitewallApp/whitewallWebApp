@@ -41,12 +41,12 @@
                 <tbody>
                     <?php if (isset($images)) : ?>
                         <?php foreach ($images as $image) : ?>
-                            <tr>
+                            <tr id="<?= $image["name"] ?>" onclick="getImg(this);">
                                 <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
                                 <td class="w-25"><image class="img-sm rounded" src="<?= $image["path"] ?>"></td>
                                 <td><?= $image["name"] ?></td>
-                                <td>stuff here</td>
-                                <td><a href="#">Link</a></td>
+                                <td><?= $image["collection"] ?></td>
+                                <td><a href="#"><?= $image["category"] ?></a></td>
                             </tr>
                         <?php endforeach ?>
                     <?php endif ?>
