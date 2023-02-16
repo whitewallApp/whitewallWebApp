@@ -39,27 +39,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                    <td class="w-25"><image class="img-sm" src="https://customercare.igloosoftware.com/.api2/api/v1/communities/10068556/previews/thumbnails/4fc20722-5368-e911-80d5-b82a72db46f2?width=680&height=680&crop=False"></td>
-                    <td>stuff here</td>
-                    <td>stuff here</td>
-                    <td><a href="#">Link</a></td>
-                    </tr>
-                    <tr>
-                    <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                    <td><image class="img-sm" src="https://customercare.igloosoftware.com/.api2/api/v1/communities/10068556/previews/thumbnails/4fc20722-5368-e911-80d5-b82a72db46f2?width=680&height=680&crop=False"></td>
-                    <td>stuff here</td>
-                    <td>stuff here</td>
-                    <td><a href="#">Link</a></td>
-                    </tr>
-                    <tr>
-                    <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                    <td><image class="img-sm" src="https://customercare.igloosoftware.com/.api2/api/v1/communities/10068556/previews/thumbnails/4fc20722-5368-e911-80d5-b82a72db46f2?width=680&height=680&crop=False"></td>
-                    <td>stuff here</td>
-                    <td>stuff here</td>
-                    <td><a href="#">Link</a></td>
-                    </tr>
+                    <?php if (isset($images)) : ?>
+                        <?php foreach ($images as $image) : ?>
+                            <tr>
+                                <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
+                                <td class="w-25"><image class="img-sm rounded" src="<?= $image["path"] ?>"></td>
+                                <td><?= $image["name"] ?></td>
+                                <td>stuff here</td>
+                                <td><a href="#">Link</a></td>
+                            </tr>
+                        <?php endforeach ?>
+                    <?php endif ?>
                 </tbody>
             </table>
         </div>
