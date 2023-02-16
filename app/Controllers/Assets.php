@@ -11,8 +11,8 @@ class Assets extends BaseController {
      */
     public function __construct(){
         define('PATH', 'C:/images/');
-        define('COLPATH', 'C:/images/collections/');
-        define('CATPATH', 'C:/images/categories/');
+        define('COLPATH', '/images/collections/');
+        define('CATPATH', '/images/categories/');
     }
     /**
      * Returns image files
