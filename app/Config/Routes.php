@@ -45,8 +45,8 @@ $routes->get('/assets/images/(:any)', 'Assets::images/$1');
 $routes->get('/assets/coll-image/(:any)', 'Assets::colImages/$1');
 $routes->get('/assets/cat-images/(:any)', 'Assets::catImages/$1');
 
-//Parameter URLs
-
+//Post URLs
+$routes->post('/images', 'Image::post');
 
 /*
  * --------------------------------------------------------------------

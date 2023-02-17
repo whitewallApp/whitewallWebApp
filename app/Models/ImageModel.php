@@ -103,4 +103,22 @@ class ImageModel extends Model
 
         return $cat;
     }
+
+    public function getImgByName($id){
+        $builder = $this->db->table('wallpaper');
+        $builder->select("id, name, description, dateUpdated")->where("name", $id);
+        $img = $builder->get()->getResultArray()[0];
+
+        $builder = $this->db->table('image');
+        $builder->select("imagePath, externalPath")->where("id", $img["id"]);
+        $link = $builder->get()->getResultArray()[0];
+
+        // foreach ($link as $thing){
+        //     array_push($img, $thing);
+        // }
+
+        $img = array_merge($img, $link);
+
+        return $img;
+    }
 }

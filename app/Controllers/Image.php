@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\ImageModel;
+use App\Models\CollectionModel;
 
 class Image extends BaseController
 {
@@ -27,5 +28,19 @@ class Image extends BaseController
             "images" => $images
         ];
         return view('Image/Image_Detail', $data);
+    }
+
+    public function post(){
+        $request = \Config\Services::request();
+        $imageModel = new ImageModel;
+        $colModel = new CollectionModel;
+
+        $id = $request->getVar("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        $image = $imageModel->getImgByName($id);
+        $collections = $colModel->getCollNames();
+        $image = array_merge($image, ["collectionNames" => $collections]);
+
+        return json_encode($image);
     }
 }
