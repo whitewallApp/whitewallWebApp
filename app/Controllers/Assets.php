@@ -61,7 +61,8 @@ class Assets extends BaseController {
                 'png'    =>    'image/png',
                 'tiff'    =>    'image/tiff',
                 'tif'    =>    'image/tiff',
-                'webp'    =>    'image/webp'
+                'webp'    =>    'image/webp',
+                "svg" => "image/svg"
             );
             
             $tmp = explode('.', $file);
