@@ -33,7 +33,7 @@ class Assets extends BaseController {
                 'tiff'    =>    'image/tiff',
                 'tif'    =>    'image/tiff',
                 'webp'    =>    'image/webp',
-                'svg' => 'image/png'
+                'svg' => 'image/svg+xml'
             );
             
             $tmp = explode('.', $file);
@@ -63,7 +63,7 @@ class Assets extends BaseController {
                 'tiff'    =>    'image/tiff',
                 'tif'    =>    'image/tiff',
                 'webp'    =>    'image/webp',
-                'svg' => 'image/png'
+                'svg' => 'image/svg+xml'
             );
             
             $tmp = explode('.', $file);
@@ -93,7 +93,7 @@ class Assets extends BaseController {
                 'tiff'    =>    'image/tiff',
                 'tif'    =>    'image/tiff',
                 'webp'    =>    'image/webp',
-                'svg' => 'image/png'
+                'svg' => 'image/svg+xml'
             );
             
             $tmp = explode('.', $file);
