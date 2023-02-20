@@ -33,75 +33,35 @@ class ImageModel extends Model
         return $ids;
     }
 
-    public function getExternalPath($id){
+    public function getImageById(Int $id,  $filter = [], $assoc=false){
         $builder = $this->db->table('image');
-        $builder->select("externalPath")->where("id", $id);
-        $query = $builder->get()->getResultArray();
+        if (count($filter) > 0){
+            $builder->select($filter)->where("image.id", $id);
+            $builder->join('wallpaper', 'image.id = wallpaper.id');
+            $imgID = $builder->get()->getResultArray()[0];
 
-        if ($query){
-            return true;
-        }else{
-            return false;
+            if (!$assoc){
+                if (count($filter) > 1){
+                    $array = [];
+
+                    foreach ($filter as $thing){
+                        array_push($array, $imgID[$thing]);
+                    }
+
+                    return $array;
+                }else{
+                    return $imgID[$filter[0]];
+                }
+            }else{
+                return $imgID;
+            }
         }
-    }
-
-    public function getPathById($id){
-        $builder = $this->db->table('image');
-        $builder->select()->where("id", $id);
-        $imageData = $builder->get()->getResultArray();
-
-        $image = [
-            "path" => $imageData[0]["imagePath"],
-            "externalPath" => $this->getExternalPath($id)
-        ];
-
-        return $image;
-    }
-
-    public function getThumbById($id){
-        $builder = $this->db->table('image');
-        $builder->select()->where("id", $id);
-        $imageData = $builder->get()->getResultArray();
-
-        $image = [
-            "thumbPath" => $imageData[0]["thumbnail"],
-            "externalPath" => $this->getExternalPath($id)
-        ];
-
-        return $image;
-    }
-
-    public function getNameById(int $id){
-        $builder = $this->db->table('image');
-        $builder->select("wallpaper_id")->where("id", $id);
-        $wallId = $builder->get()->getResultArray()[0];
-
-        $builder = $this->db->table('wallpaper');
-        $builder->select("name")->where("id", $wallId);
-        $name = $builder->get()->getResultArray()[0]["name"];
-
-        return $name;
-    }
-
-    public function getCollById($id){
-        $builder = $this->db->table('wallpaper');
-        $builder->select("collection_id")->where("id", $id);
-        $imgID = $builder->get()->getResultArray()[0];
-
-        $builder = $this->db->table('collection');
-        $builder->select()->where("id", $imgID);
-        $coll = $builder->get()->getResultArray()[0];
-
-        return $coll;
-    }
-
-    public function getCatById($id){
-        $catModel = new CategoryModel;
-
-        $catID = $this->getCollById($id)["category_id"];
-        $cat = $catModel->getCatById($catID);
-
-        return $cat;
+        else{
+            $builder->select("*")->where("image.id", $id);
+            $builder->join('wallpaper', 'image.id = wallpaper.id');
+            $imgID = $builder->get()->getResultArray();
+            return $imgID;
+        }
     }
 
     public function getImgByName($id){

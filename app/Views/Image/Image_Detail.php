@@ -10,16 +10,32 @@
     <label for="imageDesc">Description</label>
     <input type="text" class="form-control" id="imageDesc" aria-describedby="imageDescription" placeholder="Image Name">
   </div>
-  <div class="form-group">
-    <label for="imageLink">Link to Image</label>
-    <input type="text" class="form-control" id="imageLink" placeholder="https://yoursite.com/Image">
-  </div>
-  <div class="form-group">
-    <div class="custom-file">
-        <input type="file" class="custom-file-input" id="imageFile">
-        <label class="custom-file-label" for="imageFile">File Upload</label>
+
+  <div class="container row justify-content-center">
+    <div class="form-check mr-4">
+      <input class="form-check-input" type="radio" name="exampleRadios" id="linkRadio" value="option1">
+      <label class="form-check-label" for="linkRadio">
+        Link
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="exampleRadios" id="fileRadio" value="option1">
+      <label class="form-check-label" for="fileRadio">
+        File
+      </label>
     </div>
   </div>
+
+    <div class="form-group" id="linkDiv" style="display: none">
+      <label for="imageLink">Link to Image</label>
+      <input type="text" class="form-control" id="imageLink" placeholder="https://yoursite.com/Image">
+    </div>
+    <div class="form-group" id="fileDiv" style="display: none">
+      <div class="custom-file">
+          <input type="file" class="custom-file-input" id="imageFile">
+          <label class="custom-file-label" for="imageFile">File Upload</label>
+      </div>
+    </div>
   <div class="form-group">
     <label for="collSelect">Add to Collection</label>
     <select class="form-control" id="collSelect">

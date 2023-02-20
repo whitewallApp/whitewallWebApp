@@ -14,11 +14,33 @@ class CategoryModel extends Model
     protected $createdField  = 'dateCreated';
     protected $updatedField  = 'dateUpdated';
 
-    public function getCatById($id){
+    public function getCategoryById($id, $filter=[], $assoc=false){
         $builder = $this->db->table('category');
-        $builder->select()->where("id", $id);
-        $name = $builder->get()->getResultArray()[0];
+        
+        if (count($filter) > 0){
+            $builder->select($filter)->where("id", $id);
+            $collection = $builder->get()->getResultArray()[0];
 
-        return $name;
+            if (!$assoc){
+                if (count($filter) > 1){
+                    $array = [];
+
+                    foreach ($filter as $thing){
+                        array_push($array, $collection[$thing]);
+                    }
+
+                    return $array;
+                }else{
+                    return $collection[$filter[0]];
+                }
+            }else{
+                return $collection;
+            }
+        }
+        else{
+            $builder->select("*")->where("id", $id);
+            $collection = $builder->get()->getResultArray();
+            return $collection;
+        }
     }
 }

@@ -5,6 +5,8 @@ window.onload = function(){
     startCheckBoxes();
 
     notifications_start();
+
+    setImageStart();
 }
 
 function startCheckBoxes(){
@@ -28,5 +30,16 @@ function breadcrumbs(){
 
 
     breadcrumbs.innerHTML = link;
+}
+
+function setImageStart(){
+    $("#linkRadio").on("click", function(){
+        $("#fileDiv").hide();
+        $("#linkDiv").show();
+    });
+    $("#fileRadio").on("click", function(){
+        $("#fileDiv").show();
+        $("#linkDiv").hide();
+    });
 }
 

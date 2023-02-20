@@ -42,8 +42,8 @@ $routes->get('/settings', 'Setting::index');
 
 //Asset URLS
 $routes->get('/assets/images/(:any)', 'Assets::images/$1');
-$routes->get('/assets/coll-image/(:any)', 'Assets::colImages/$1');
-$routes->get('/assets/cat-images/(:any)', 'Assets::catImages/$1');
+$routes->get('/assets/collection/(:any)', 'Assets::colImages/$1');
+$routes->get('/assets/category/(:any)', 'Assets::catImages/$1');
 
 //Post URLs
 $routes->post('/images', 'Image::post');

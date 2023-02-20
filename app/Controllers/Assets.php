@@ -49,7 +49,7 @@ class Assets extends BaseController {
         die('Invalid Image File: '. PATH.$file );
     }
 
-    function catImage($file)
+    function catImages($file)
     {
         if (file_exists(CATPATH.$file)){
             // Figure out mime-type
@@ -78,7 +78,7 @@ class Assets extends BaseController {
         die('Invalid Image File: '.current(explode('.', $file)) );
     }
 
-    function colImage($file)
+    function colImages($file)
     {
         if (file_exists(COLPATH.$file)){
             // Figure out mime-type
