@@ -40,7 +40,7 @@
                 </thead>
                 <tbody>
                     <?php foreach($collections as $collection) : ?>
-                        <tr>
+                        <tr id="<?= $collection["name"] ?>" onclick="getColl(this);">
                             <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
                             <td class="w-25"><image class="img-fluid img-sm rounded" src="<?= $collection['iconPath'] ?>"></td>
                             <td><?= $collection['name'] ?></td>

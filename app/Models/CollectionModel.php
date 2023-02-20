@@ -34,7 +34,22 @@ class CollectionModel extends Model
     }
 
     public function getCollumn($column, $brandName){
-        return $this->findColumn($column);
+        $builder = $this->db->table('brand');
+        $builder->select("id")->where("name", $brandName);
+        $brandID = $builder->get()->getResultArray()[0];
+
+        $builder = $this->db->table('collection');
+        $builder->select($column)->where("brand_id", $brandID);
+        $column = $builder->get()->getResultArray();
+
+        return $column;
+    }
+
+    public function getIdByName($name){
+        $builder = $this->db->table('collection');
+        $builder->select("id")->where("name", $name);
+        
+        return $builder->get()->getResultArray()[0];
     }
 
     public function getCollectionbyId($id, $filter = [], $assoc=false){

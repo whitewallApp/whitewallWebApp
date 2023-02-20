@@ -34,4 +34,19 @@ class Collection extends BaseController
 
         return view('Collection/Collection_Detail', $data);
     }
+
+    public function post(){
+        $request = \Config\Services::request();
+        $colModel = new CollectionModel;
+        $catModel = new CategoryModel;
+
+        $id = $request->getVar("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $id = $colModel->getIdByName($id);
+
+        $collection = $colModel->getCollectionbyId($id, ["name", "dateUpdated", "description", "link"], true);
+        $categories = $catModel->getCollumn("name", "Beautiful AI");
+        $collection = array_merge($collection, ["categoryNames" => $categories]);
+
+        return json_encode($collection);
+    }
 }

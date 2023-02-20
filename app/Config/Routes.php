@@ -47,6 +47,8 @@ $routes->get('/assets/category/(:any)', 'Assets::catImages/$1');
 
 //Post URLs
 $routes->post('/images', 'Image::post');
+$routes->post('/collections', 'Collection::post');
+$routes->post('/categories', 'Category::post');
 
 /*
  * --------------------------------------------------------------------

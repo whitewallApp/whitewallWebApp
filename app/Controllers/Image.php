@@ -48,7 +48,7 @@ class Image extends BaseController
         $id = $request->getVar("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $image = $imageModel->getImgByName($id);
-        $collections = $colModel->getCollNames();
+        $collections = $colModel->getCollumn("name", "Beautiful AI");
         $image = array_merge($image, ["collectionNames" => $collections]);
 
         return json_encode($image);

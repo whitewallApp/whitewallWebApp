@@ -14,6 +14,18 @@ class CategoryModel extends Model
     protected $createdField  = 'dateCreated';
     protected $updatedField  = 'dateUpdated';
 
+    public function getCollumn($column, $brandName){
+        $builder = $this->db->table('brand');
+        $builder->select("id")->where("name", $brandName);
+        $brandID = $builder->get()->getResultArray()[0];
+
+        $builder = $this->db->table('category');
+        $builder->select($column)->where("brand_id", $brandID);
+        $column = $builder->get()->getResultArray();
+
+        return $column;
+    }
+
     public function getCategoryById($id, $filter=[], $assoc=false){
         $builder = $this->db->table('category');
         

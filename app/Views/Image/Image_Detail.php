@@ -27,7 +27,6 @@
   </div>
 
     <div class="form-group" id="linkDiv" style="display: none">
-      <label for="imageLink">Link to Image</label>
       <input type="text" class="form-control" id="imageLink" placeholder="https://yoursite.com/Image">
     </div>
     <div class="form-group" id="fileDiv" style="display: none">

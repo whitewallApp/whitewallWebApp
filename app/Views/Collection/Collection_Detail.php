@@ -3,25 +3,21 @@
 <?= $this->section('Detail') ?>
 <form class="mr-4">
   <div class="form-group">
-    <label for="exampleInputEmail1">Name</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Collection Name">
+    <label for="collName">Name</label>
+    <input type="text" class="form-control" id="collName" aria-describedby="emailHelp" placeholder="Collection Name">
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Description</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="This is a cool group of Images">
+    <label for="collDesc">Description</label>
+    <input type="text" class="form-control" id="collDesc" placeholder="This is a cool group of Images">
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Link to Collection</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="https://yoursite.com/Collection">
+    <label for="collLink">Link to Collection</label>
+    <input type="text" class="form-control" id="collLink" placeholder="https://yoursite.com/Collection">
   </div>
   <div class="form-group">
-    <label for="exampleFormControlSelect1">Add to Category</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
+    <label for="catSelect">Add to Category</label>
+    <select class="form-control" id="catSelect">
+
     </select>
   </div>
   <div class="form-group">
@@ -30,9 +26,10 @@
         <label class="custom-file-label" for="customFile">Icon Image</label>
     </div>
   </div>
-  <div class="float-right">
-    <button type="submit" class="btn btn-primary">Save</button>
-    <button class="btn btn-danger">Remove</button>
+  <div class="float-right row">
+    <p id="updated" class="mr-2"></p>
+    <button id="submit" class="btn btn-primary mr-2">Save</button>
+    <button id="delete" class="btn btn-danger mr-2">Remove</button>
   </div>
 </form>
 <?= $this->endSection() ?>
