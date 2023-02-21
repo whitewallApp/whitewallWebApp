@@ -4,6 +4,7 @@ function getImg(e){
     descTextBox = $("#imageDesc");
     collectionSelectBox = $("#collSelect");
     updatedText = $("#updated");
+    filelabel = $("#imageFileText");
 
     id = e.id;
 
@@ -19,8 +20,18 @@ function getImg(e){
 
         if (image.externalPath == "1"){
             linkTextBox.val(image.imagePath);
+            filelabel.html("")
+            $("#linkRadio").prop("checked", true)
+            $("#fileRadio").prop("checked", false)
+            $("#fileDiv").hide()
+            $("#linkDiv").show()
         }else{
+            filelabel.html(image.imagePath);
             linkTextBox.val("");
+            $("#linkRadio").prop("checked", false)
+            $("#fileRadio").prop("checked", true)
+            $("#fileDiv").show()
+            $("#linkDiv").hide()
         }
 
         collectionSelectBox.empty();

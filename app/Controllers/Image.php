@@ -49,6 +49,15 @@ class Image extends BaseController
 
         $image = $imageModel->getImgByName($id);
         $collections = $colModel->getCollumn("name", "Beautiful AI");
+
+        if (!$image["externalPath"]){
+            $exp = "/\/.*\/(.*)/";
+            $matches = [];
+            preg_match($exp, $image["imagePath"], $matches);
+
+            $image["imagePath"] = $matches[1];
+        }
+
         $image = array_merge($image, ["collectionNames" => $collections]);
 
         return json_encode($image);

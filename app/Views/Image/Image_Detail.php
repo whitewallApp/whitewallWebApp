@@ -32,7 +32,7 @@
     <div class="form-group" id="fileDiv" style="display: none">
       <div class="custom-file">
           <input type="file" class="custom-file-input" id="imageFile">
-          <label class="custom-file-label" for="imageFile">File Upload</label>
+          <label id="imageFileText" class="custom-file-label" for="imageFile">File Upload</label>
       </div>
     </div>
   <div class="form-group">
