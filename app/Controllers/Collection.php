@@ -19,13 +19,13 @@ class Collection extends BaseController
 
         foreach($ids as $id){
             $catID = $collModel->getCollectionbyId($id, ["category_id"]);
-            $collecion = [
+            $collection = [
                 "name" => $collModel->getCollectionbyId($id, ["name"]),
                 "iconPath" => $collModel->getCollectionbyId($id, ["iconPath"]),
                 "category" => $catModel->getCategoryById($catID, ["name"])
             ];
 
-            array_push($collections, $collecion);
+            array_push($collections, $collection);
         };
 
         $data = [
@@ -43,7 +43,15 @@ class Collection extends BaseController
         $id = $request->getVar("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $id = $colModel->getIdByName($id);
 
-        $collection = $colModel->getCollectionbyId($id, ["name", "dateUpdated", "description", "link"], true);
+        $exp = "/\/.*\/(.*)/";
+
+        $collection = $colModel->getCollectionbyId($id, ["name", "dateUpdated", "description", "link", "iconPath"], true);
+
+        $matches = [];
+        preg_match($exp, $collection["iconPath"], $matches);
+
+        $collection["iconPath"] = $matches[1];
+
         $categories = $catModel->getCollumn("name", "Beautiful AI");
         $collection = array_merge($collection, ["categoryNames" => $categories]);
 

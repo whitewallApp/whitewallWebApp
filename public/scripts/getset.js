@@ -42,6 +42,7 @@ function getColl(e){
     descTextBox = $("#collDesc");
     catSelect = $("#catSelect");
     updatedText = $("#updated");
+    iconLabel = $("#iconLabel");
 
     $.post("/collections", 
     {
@@ -52,6 +53,8 @@ function getColl(e){
         console.log(collection);
         nameTextBox.val(collection.name);
         descTextBox.val(collection.description);
+        linkTextBox.val(collection.link);
+        iconLabel.html(collection.iconPath);
 
         catSelect.empty();
 
