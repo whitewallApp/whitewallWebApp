@@ -77,8 +77,7 @@ class CollectionModel extends Model
 
         }else{
             $builder->select("*")->where($fetchBy, $id);
-            $collection = $builder->get();
-            //$collection = $builder->get()->getResultArray();
+            $collection = $builder->get()->getResultArray()[0];
             return $collection;
         }
     }

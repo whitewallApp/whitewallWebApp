@@ -19,7 +19,7 @@ function getImg(e){
 
     id = e.id;
 
-    showData("/images");
+    showData("func");
 
     $.post("/images", 
     {
@@ -69,7 +69,7 @@ function getColl(e){
 
     id = e.id
 
-    showData("/collections");
+    showData("func");
 
     nameTextBox = $("#collName");
     linkTextBox = $("#collLink");
@@ -121,25 +121,27 @@ function showData(link){
 
     button.hide();
     title.html("Edit " + link.substring(1, link.length));
-    form.show();
-
-    $("#img-icon").hide();
 
 
     catSelect = $("#select");
     catSelect.empty();
-;
-    $.post(link, 
-    {
-        "UpperReq": true
-    }, 
-    function(data, status){
-        collection = JSON.parse(data);
-        console.log(collection);
-        collection.forEach(element => {
-            catSelect.append("<option>" + element.name + "</option>")
-        });
-    })
+    form.show();
+;   
+    if (link != "func"){
+        $("#img-icon").hide();
+
+        $.post(link, 
+        {
+            "UpperReq": true
+        }, 
+        function(data, status){
+            collection = JSON.parse(data);
+            console.log(collection);
+            collection.forEach(element => {
+                catSelect.append("<option>" + element.name + "</option>")
+            });
+        })
+    }
 
     
 }

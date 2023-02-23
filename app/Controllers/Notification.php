@@ -11,12 +11,19 @@ class Notification extends BaseController
     public function index()
     {
         $brandModel = new BrandModel;
-        //$appModel = new AppModel;
+        $appModel = new AppModel;
         $notModel = new NotificationModel;
 
         $brandID = $brandModel->getBrand("Beautiful AI", filter: ["id"], fetchBy: "name");
+        $appID = $appModel->getIdByBrandId($brandID);
 
-        return view('Notifications');
+        $notifications = $notModel->getNotification($appID, fetchBy: "mobleApp_id", assoc: true);
+
+        $data = [
+            "notifications" => $notifications
+        ];
+
+        return view('Notifications', $data);
     }
 }
 

@@ -33,16 +33,18 @@
                 <thead>
                     <tr>
                         <th scope="col"><input id="check-all" type="checkbox" class="checkbox-lg"></th>
-                        <th scope="col">Name</th>
+                        <th scope="col">Title</th>
                         <th scope="col">Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                        <td>stuff here</td>
-                        <td>Send Date Here</td>
-                    </tr>
+                    <?php foreach ($notifications as $notification) : ?>
+                        <tr>
+                            <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
+                            <td><?= $notification["title"] ?></td>
+                            <td>Send Date Here</td>
+                        </tr>
+                    <?php endforeach ?>
                 </tbody>
             </table>
         </div>
