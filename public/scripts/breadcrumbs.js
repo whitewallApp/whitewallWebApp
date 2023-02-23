@@ -41,5 +41,12 @@ function setImageStart(){
         $("#fileDiv").show();
         $("#linkDiv").hide();
     });
+
+    var url = document.URL;
+    var url = url.replace("http://", "");
+    var page = url.split("/")[1];
+    var link = page.charAt(0).toUpperCase() + page.slice(1);
+    
+    $("#data-title").html("Add " + link)
 }
 

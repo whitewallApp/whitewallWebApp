@@ -1,7 +1,11 @@
 <?= $this->extend('Image/Image_List') ?>
 
 <?= $this->section('Detail') ?>
-<form class="mr-4">
+<div class="row justify-content-center">
+  <h2 id="data-title" class="mr-4"></h2>
+  <button id="add-button" class="btn btn-primary" onclick="showData('/images');">Add</button>
+</div>
+<form class="mr-4" id="data" style="display: none">
   <div class="form-group">
     <label for="imageName">Name</label>
     <input type="text" class="form-control" id="imageName" aria-describedby="imageName" placeholder="Image Name">
@@ -15,13 +19,13 @@
     <div class="form-check mr-4">
       <input class="form-check-input" type="radio" name="exampleRadios" id="linkRadio" value="option1">
       <label class="form-check-label" for="linkRadio">
-        Link
+        External Link
       </label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="radio" name="exampleRadios" id="fileRadio" value="option1">
       <label class="form-check-label" for="fileRadio">
-        File
+        Uploaded File
       </label>
     </div>
   </div>
@@ -36,8 +40,8 @@
       </div>
     </div>
   <div class="form-group">
-    <label for="collSelect">Add to Collection</label>
-    <select class="form-control" id="collSelect">
+    <label for="select">Add to Collection</label>
+    <select class="form-control" id="select">
       
     </select>
   </div>

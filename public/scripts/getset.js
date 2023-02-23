@@ -1,16 +1,30 @@
+lastElement = "";
+
 function getImg(e){
+    
+    tableRow = $(e);
     nameTextBox = $("#imageName");
     linkTextBox = $("#imageLink");
     descTextBox = $("#imageDesc");
-    collectionSelectBox = $("#collSelect");
+    collectionSelectBox = $("#select");
     updatedText = $("#updated");
     filelabel = $("#imageFileText");
 
+    if (lastElement != ""){
+        lastElement.css("background-color", "white");
+    }
+
+    tableRow.css("background-color", "#c8cbcf");
+    lastElement = tableRow;
+
     id = e.id;
+
+    showData("/images");
 
     $.post("/images", 
     {
-        'id': id
+        'id': id,
+        "collectionReq": false
     },
     function(data, status){
         image = JSON.parse(data);
@@ -47,25 +61,46 @@ function getImg(e){
 }
 
 function getColl(e){
+    tableRow = $(e);
+
+    if (lastElement != ""){
+        lastElement.css("background-color", "white");
+    }
+
     id = e.id
+
+    showData("/collections");
+
     nameTextBox = $("#collName");
     linkTextBox = $("#collLink");
     descTextBox = $("#collDesc");
-    catSelect = $("#catSelect");
+    catSelect = $("#select");
     updatedText = $("#updated");
-    iconLabel = $("#iconLabel");
+    file = $("#file-icon");
+    img = $("#icon");
+
+
+    tableRow.css("background-color", "#c8cbcf");
+    lastElement = tableRow;
 
     $.post("/collections", 
     {
-        'id': id
+        'id': id,
+        "collectionReq": false
     },
     function(data, status){
         collection = JSON.parse(data);
-        console.log(collection);
         nameTextBox.val(collection.name);
         descTextBox.val(collection.description);
         linkTextBox.val(collection.link);
-        iconLabel.html(collection.iconPath);
+
+        console.log(collection);
+
+        if (collection.iconPath != null){
+            img.attr("src", "http://localhost/" + collection.iconPath);
+            file.hide();
+        }
+
 
         catSelect.empty();
 
@@ -77,4 +112,34 @@ function getColl(e){
 
         updatedText.html("Date Updated: " + time.toLocaleString());
     });
+}
+
+function showData(link){
+    form = $("#data");
+    title = $("#data-title");
+    button = $("#add-button");
+
+    button.hide();
+    title.html("Edit " + link.substring(1, link.length));
+    form.show();
+
+    $("#img-icon").hide();
+
+
+    catSelect = $("#select");
+    catSelect.empty();
+;
+    $.post(link, 
+    {
+        "UpperReq": true
+    }, 
+    function(data, status){
+        collection = JSON.parse(data);
+        console.log(collection);
+        collection.forEach(element => {
+            catSelect.append("<option>" + element.name + "</option>")
+        });
+    })
+
+    
 }

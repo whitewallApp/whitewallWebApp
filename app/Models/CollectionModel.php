@@ -52,11 +52,11 @@ class CollectionModel extends Model
         return $builder->get()->getResultArray()[0];
     }
 
-    public function getCollectionbyId($id, $filter = [], $assoc=false){
+    public function getCollection($id, $filter = [], $fetchBy="id", $assoc=false){
         $builder = $this->db->table('collection');
         
         if (count($filter) > 0){
-            $builder->select($filter)->where("id", $id);
+            $builder->select($filter)->where($fetchBy, $id);
             $collection = $builder->get()->getResultArray()[0];
 
             if (!$assoc){
@@ -76,8 +76,9 @@ class CollectionModel extends Model
             }
 
         }else{
-            $builder->select("*")->where("id", $id);
-            $collection = $builder->get()->getResultArray();
+            $builder->select("*")->where($fetchBy, $id);
+            $collection = $builder->get();
+            //$collection = $builder->get()->getResultArray();
             return $collection;
         }
     }

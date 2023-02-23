@@ -8,4 +8,34 @@ class BrandModel extends Model
 {
     protected $primaryKey = 'id';
     protected $returnType = 'array';
+
+    public function getBrand($id, $fetchBy="id", $filter = [], $assoc=false){
+        $builder = $this->db->table('brand');
+        
+        if (count($filter) > 0){
+            $builder->select($filter)->where($fetchBy, $id);
+            $brand = $builder->get()->getResultArray()[0];
+
+            if (!$assoc){
+                if (count($filter) > 1){
+                    $array = [];
+
+                    foreach ($filter as $thing){
+                        array_push($array, $brand[$thing]);
+                    }
+
+                    return $array;
+                }else{
+                    return $brand[$filter[0]];
+                }
+            }else{
+                return $brand;
+            }
+
+        }else{
+            $builder->select("*")->where($fetchBy, $id);
+            $brand = $builder->get()->getResultArray();
+            return $brand;
+        }
+    }
 }

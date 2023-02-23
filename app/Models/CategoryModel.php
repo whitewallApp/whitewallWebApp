@@ -26,11 +26,11 @@ class CategoryModel extends Model
         return $column;
     }
 
-    public function getCategoryById($id, $filter=[], $assoc=false){
+    public function getCategory($id, $fetchBy="id", $filter=[], $assoc=false){
         $builder = $this->db->table('category');
         
         if (count($filter) > 0){
-            $builder->select($filter)->where("id", $id);
+            $builder->select($filter)->where($fetchBy, $id);
             $collection = $builder->get()->getResultArray()[0];
 
             if (!$assoc){
@@ -50,7 +50,7 @@ class CategoryModel extends Model
             }
         }
         else{
-            $builder->select("*")->where("id", $id);
+            $builder->select("*")->where($fetchBy, $id);
             $collection = $builder->get()->getResultArray();
             return $collection;
         }

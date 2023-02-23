@@ -43,16 +43,6 @@
                         <td>stuff here</td>
                         <td>Send Date Here</td>
                     </tr>
-                    <tr>
-                        <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                        <td>stuff here</td>
-                        <td>Send Date Here</td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                        <td>stuff here</td>
-                        <td>Send Date Here</td>
-                    </tr>
                 </tbody>
             </table>
         </div>

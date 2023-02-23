@@ -33,10 +33,10 @@ class ImageModel extends Model
         return $ids;
     }
 
-    public function getImageById(Int $id,  $filter = [], $assoc=false){
+    public function getImage($id, String $fetchBy="id", Array $filter = [], Bool $assoc=false){
         $builder = $this->db->table('image');
         if (count($filter) > 0){
-            $builder->select($filter)->where("image.id", $id);
+            $builder->select($filter)->where("image." . $fetchBy, $id);
             $builder->join('wallpaper', 'image.id = wallpaper.id');
             $imgID = $builder->get()->getResultArray()[0];
 
@@ -57,7 +57,7 @@ class ImageModel extends Model
             }
         }
         else{
-            $builder->select("*")->where("image.id", $id);
+            $builder->select("*")->where("image." . $fetchBy, $id);
             $builder->join('wallpaper', 'image.id = wallpaper.id');
             $imgID = $builder->get()->getResultArray();
             return $imgID;

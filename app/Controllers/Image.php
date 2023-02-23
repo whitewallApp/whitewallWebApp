@@ -18,15 +18,17 @@ class Image extends BaseController
         $images = [];
 
         foreach ($ids as $id) {
-            $colID = $imageModel->getImageById($id, ["collection_id"]);
-            $catID = $collModel->getCollectionbyId($colID, ["category_id"]);
+            $colID = $imageModel->getImage($id, filter: ["collection_id"]);
+            $catID = $collModel->getCollection($colID, filter: ["category_id"]);
+
+
 
             $image = [
                 "id" => $id,
-                "path" => $imageModel->getImageById($id, ["imagePath"]), 
-                "name" => $imageModel->getImageById($id, ["name"]), 
-                "collection" => $collModel->getCollectionbyId($colID, ["name"]),
-                "category" => $catModel->getCategoryById($catID, ["name"])
+                "path" => $imageModel->getImage($id, filter: ["imagePath"]), 
+                "name" => $imageModel->getImage($id, filter: ["name"]), 
+                "collection" => $collModel->getCollection($colID, filter: ["name"]),
+                "category" => $catModel->getCategory($catID, filter: ["name"])
             ];
             array_push($images, $image);
         }
@@ -45,7 +47,13 @@ class Image extends BaseController
         $imageModel = new ImageModel;
         $colModel = new CollectionModel;
 
-        $id = $request->getVar("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $id = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $collectionReq = $request->getPost("UpperReq", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if ($collectionReq == "true"){
+            $collections = $colModel->getCollumn("name", "Beautiful AI");
+            return json_encode($collections);
+        }
 
         $image = $imageModel->getImgByName($id);
         $collections = $colModel->getCollumn("name", "Beautiful AI");
@@ -61,5 +69,6 @@ class Image extends BaseController
         $image = array_merge($image, ["collectionNames" => $collections]);
 
         return json_encode($image);
+        
     }
 }

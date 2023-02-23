@@ -18,11 +18,11 @@ class Collection extends BaseController
 
 
         foreach($ids as $id){
-            $catID = $collModel->getCollectionbyId($id, ["category_id"]);
+            $catID = $collModel->getCollection($id, filter: ["category_id"]);
             $collection = [
-                "name" => $collModel->getCollectionbyId($id, ["name"]),
-                "iconPath" => $collModel->getCollectionbyId($id, ["iconPath"]),
-                "category" => $catModel->getCategoryById($catID, ["name"])
+                "name" => $collModel->getCollection($id, filter: ["name"]),
+                "iconPath" => $collModel->getCollection($id, filter: ["iconPath"]),
+                "category" => $catModel->getCategory($catID, filter: ["name"])
             ];
 
             array_push($collections, $collection);
@@ -41,16 +41,21 @@ class Collection extends BaseController
         $catModel = new CategoryModel;
 
         $id = $request->getVar("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $req = $request->getVar("UpperReq", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if ($req == "true"){
+            return json_encode($catModel->getCollumn("name", "Beautiful AI"));
+        }
+
         $id = $colModel->getIdByName($id);
+        //$exp = "/\/.*\/(.*)/";
 
-        $exp = "/\/.*\/(.*)/";
+        $collection = $colModel->getCollection($id, filter: ["name", "dateUpdated", "description", "link", "iconPath"], assoc: true);
 
-        $collection = $colModel->getCollectionbyId($id, ["name", "dateUpdated", "description", "link", "iconPath"], true);
+        // $matches = [];
+        // preg_match($exp, $collection["iconPath"], $matches);
 
-        $matches = [];
-        preg_match($exp, $collection["iconPath"], $matches);
-
-        $collection["iconPath"] = $matches[1];
+        // $collection["iconPath"] = $matches[1];
 
         $categories = $catModel->getCollumn("name", "Beautiful AI");
         $collection = array_merge($collection, ["categoryNames" => $categories]);
