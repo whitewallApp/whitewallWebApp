@@ -39,10 +39,10 @@
                 </thead>
                 <tbody>
                     <?php foreach ($notifications as $notification) : ?>
-                        <tr>
+                        <tr id="<?= $notification["id"] ?>" onclick="getNot(this);">
                             <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
                             <td><?= $notification["title"] ?></td>
-                            <td>Send Date Here</td>
+                            <td><?= $notification["sendTime"] ?></td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
@@ -77,10 +77,10 @@
                     <label for="title" class="col-sm-3 col-form-label">Notification Click Action</label>
 
                     <select id="selections" class="custom-select col-sm-8">
-                        <option selected value="nothing">None</option>
-                        <option value="app">Open the App</option>
-                        <option value="force" id="force-option">Force Change Wallpaper</option>
-                        <option value="link">Go to Custom link</option>
+                        <option selected value="None">None</option>
+                        <option value="App">Open the App</option>
+                        <option value="Wallpaper" id="force-option">Force Change Wallpaper</option>
+                        <option value="Link">Go to Custom link</option>
                     </select>
                 </div>
                 <div id="link-input" class="form-group row" style="display: none">
@@ -90,10 +90,10 @@
                 <div id="wall-select" class="form-group row" style="display: none;">
                     <label for="title" class="col-sm-3 col-form-label">Wallpaper</label>
 
-                    <select class="custom-select col-sm-8">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                    <select id="select" class="custom-select col-sm-8">
+                        <?php foreach($images as $image) : ?>
+                            <option value="<?= $image["id"] ?>"><?= $image["name"] ?></option>
+                        <?php endforeach ?>
                     </select>
                 </div>
                 <div class="float-right">

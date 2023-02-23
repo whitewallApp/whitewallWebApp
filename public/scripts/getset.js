@@ -114,6 +114,36 @@ function getColl(e){
     });
 }
 
+function getNot(e){
+    id = e.id;
+    $.post("/notifications", 
+    {
+        "id": id
+    },
+    function(data, status){
+        notification = JSON.parse(data);
+        notification = notification[0]
+
+        $("#title").val(notification.title);
+        $("#text").val(notification.description);
+
+        console.log(notification);
+
+        if (notification.forceWall == '1'){
+            $("#force-switch")[0].checked = true;
+            $("#force-option").hide();
+            $("#wall-select").show();
+            $('#select>option[value="' + notification.forceId + '"]').prop("selected", true);
+        }
+
+        if (notification.clickAction == "Wallpaper"){
+            $("#wall-select").show();
+            $('#select>option[value="' + notification.data + '"]').prop("selected", true);
+            $('#selections>option[value="' + notification.clickAction + '"]').prop("selected", true);
+        }
+    });
+}
+
 function showData(link){
     form = $("#data");
     title = $("#data-title");
