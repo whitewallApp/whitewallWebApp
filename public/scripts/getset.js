@@ -129,6 +129,9 @@ function getNot(e){
 
         console.log(notification);
 
+        $("#link-input").hide();
+        $("#wall-select").hide();
+
         if (notification.forceWall == '1'){
             $("#force-switch")[0].checked = true;
             $("#force-option").hide();
@@ -140,6 +143,12 @@ function getNot(e){
             $("#wall-select").show();
             $('#select>option[value="' + notification.data + '"]').prop("selected", true);
             $('#selections>option[value="' + notification.clickAction + '"]').prop("selected", true);
+        }
+
+        if (notification.clickAction == "Link"){
+            $("#link-input").show();
+            $('#selections>option[value="' + notification.clickAction + '"]').prop("selected", true);
+            $("#link").val(notification.data)
         }
     });
 }
