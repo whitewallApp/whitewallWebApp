@@ -97,7 +97,7 @@ function getColl(e){
         console.log(collection);
 
         if (collection.iconPath != null){
-            img.attr("src", "http://localhost/" + collection.iconPath);
+            img.attr("src", collection.iconPath);
             file.hide();
         }
 
