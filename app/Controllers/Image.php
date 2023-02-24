@@ -58,6 +58,8 @@ class Image extends BaseController
         $image = $imageModel->getImgByName($id);
         $collections = $colModel->getCollumn("name", "Beautiful AI");
 
+        $image["collection_id"] = $colModel->getCollection($image["collection_id"], filter: ["name"]);
+
         if (!$image["externalPath"]){
             $exp = "/\/.*\/(.*)/";
             $matches = [];

@@ -50,7 +50,8 @@ class Collection extends BaseController
         $id = $colModel->getIdByName($id);
         //$exp = "/\/.*\/(.*)/";
 
-        $collection = $colModel->getCollection($id, filter: ["name", "dateUpdated", "description", "link", "iconPath"], assoc: true);
+        $collection = $colModel->getCollection($id, filter: ["name", "dateUpdated", "description", "link", "iconPath", "category_id"], assoc: true);
+        $collection["category_id"] = $catModel->getCategory($collection["category_id"], filter: ["name"]);
 
         // $matches = [];
         // preg_match($exp, $collection["iconPath"], $matches);

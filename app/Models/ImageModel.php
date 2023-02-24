@@ -66,7 +66,7 @@ class ImageModel extends Model
 
     public function getImgByName($id){
         $builder = $this->db->table('wallpaper');
-        $builder->select("id, name, description, dateUpdated")->where("name", $id);
+        $builder->select("id, name, description, dateUpdated, collection_id")->where("name", $id);
         $img = $builder->get()->getResultArray()[0];
 
         $builder = $this->db->table('image');

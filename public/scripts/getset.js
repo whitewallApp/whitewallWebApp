@@ -51,8 +51,10 @@ function getImg(e){
         collectionSelectBox.empty();
 
         image.collectionNames.forEach(element => {
-            collectionSelectBox.append("<option>" + element.name + "</option>")
+            collectionSelectBox.append('<option value="' + element.name +'">' + element.name + "</option>")
         });
+
+        $('#select>option[value="' + image.collection_id + '"]').prop("selected", true);
 
         time = new Date(image.dateUpdated);
 
@@ -105,8 +107,10 @@ function getColl(e){
         catSelect.empty();
 
         collection.categoryNames.forEach(element => {
-            catSelect.append("<option>" + element.name + "</option>")
+            catSelect.append('<option value="' + element.name +'">' + element.name + "</option>")
         });
+
+        $('#select>option[value="' + collection.category_id + '"]').prop("selected", true);
 
         time = new Date(collection.dateUpdated);
 
