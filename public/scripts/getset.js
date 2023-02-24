@@ -130,7 +130,6 @@ function getNot(e){
 
         $("#title").val(notification.title);
         $("#text").val(notification.description);
-        $('#select>option[value="None"]').prop("selected", true);
 
         console.log(notification);
 
@@ -156,6 +155,10 @@ function getNot(e){
             $("#link-input").show();
             $('#selections>option[value="' + notification.clickAction + '"]').prop("selected", true);
             $("#link").val(notification.data)
+        }
+
+        if (notification.clickAction == "None"){
+            $('#selections>option[value="' + notification.clickAction + '"]').prop("selected", true);
         }
     });
 }
