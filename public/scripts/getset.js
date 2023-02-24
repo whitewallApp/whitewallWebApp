@@ -130,6 +130,7 @@ function getNot(e){
 
         $("#title").val(notification.title);
         $("#text").val(notification.description);
+        $('#select>option[value="None"]').prop("selected", true);
 
         console.log(notification);
 
