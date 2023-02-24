@@ -141,6 +141,8 @@ function getNot(e){
             $("#force-option").hide();
             $("#wall-select").show();
             $('#select>option[value="' + notification.forceId + '"]').prop("selected", true);
+        }else{
+            $("#force-switch")[0].checked = false;
         }
 
         if (notification.clickAction == "Wallpaper"){
