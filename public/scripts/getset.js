@@ -51,7 +51,7 @@ function getImg(e){
         collectionSelectBox.empty();
 
         image.collectionNames.forEach(element => {
-            collectionSelectBox.append('<option value="' + element.name +'">' + element.name + "</option>")
+            collectionSelectBox.append('<option value="' + element +'">' + element + "</option>")
         });
 
         $('#select>option[value="' + image.collection_id + '"]').prop("selected", true);
@@ -107,7 +107,7 @@ function getColl(e){
         catSelect.empty();
 
         collection.categoryNames.forEach(element => {
-            catSelect.append('<option value="' + element.name +'">' + element.name + "</option>")
+            catSelect.append('<option value="' + element +'">' + element + "</option>")
         });
 
         $('#select>option[value="' + collection.category_id + '"]').prop("selected", true);
@@ -224,9 +224,10 @@ function showData(link){
         function(data, status){
             collection = JSON.parse(data);
             console.log(collection);
+            catSelect.empty();
             collection.forEach(element => {
                 console.log(element);
-                catSelect.append("<option>" + element + "</option>")
+                catSelect.append('<option value="' + element +'">' + element + "</option>")
             });
         })
     }
