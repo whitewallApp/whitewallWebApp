@@ -48,11 +48,10 @@ class Image extends BaseController
         $colModel = new CollectionModel;
 
         $id = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $collectionReq = $request->getPost("UpperReq", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $req = $request->getVar("UpperReq", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        if ($collectionReq == "true"){
-            $collections = $colModel->getCollumn("name", "Beautiful AI");
-            return json_encode($collections);
+        if ($req == "true"){
+            return json_encode($colModel->getCollumn("name", "Beautiful AI"));
         }
 
         $image = $imageModel->getImgByName($id);

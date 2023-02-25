@@ -225,7 +225,8 @@ function showData(link){
             collection = JSON.parse(data);
             console.log(collection);
             collection.forEach(element => {
-                catSelect.append("<option>" + element.name + "</option>")
+                console.log(element);
+                catSelect.append("<option>" + element + "</option>")
             });
         })
     }
