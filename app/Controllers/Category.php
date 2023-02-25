@@ -38,4 +38,20 @@ class Category extends BaseController
 
         return view('Category/Category_Detail', $data);
     }
+
+    public function post(){
+        $request = \Config\Services::request();
+        $catModel = new CategoryModel;
+
+        $id = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $req = $request->getVar("UpperReq", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if ($req == "true"){
+            return json_encode($catModel->getCollumn("name", "Beautiful AI"));
+        }
+
+        $category = $catModel->getCategory($id, fetchBy: "name", assoc: true);
+
+        return json_encode($category);
+    }
 }

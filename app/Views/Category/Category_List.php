@@ -36,14 +36,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <?php foreach($categories as $category) : ?>
+                    <?php foreach($categories as $category) : ?>
+                        <tr id="<?= $category["name"] ?>" onclick="getCat(this);">
                             <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                                <td class="w-25"><image class="img-sm" src="<?= $category["iconPath"] ?>"></td>
-                                <td><?= $category["name"] ?></td>
-                                <td><a href="#"><?= $category["collectionName"] ?></a></td>
-                            </tr>
-                        <?php endforeach ?>
+                            <td class="w-25"><image class="img-sm" src="<?= $category["iconPath"] ?>"></td>
+                            <td><?= $category["name"] ?></td>
+                            <td><a href="#"><?= $category["collectionName"] ?></a></td>
+                        </tr>
+                    <?php endforeach ?>
                     <tr>
                 </tbody>
             </table>

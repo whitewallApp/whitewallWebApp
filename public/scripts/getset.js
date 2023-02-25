@@ -118,6 +118,44 @@ function getColl(e){
     });
 }
 
+function getCat(e){
+    id = e.id
+    tableRow = $(e);
+
+    showData("/categories");
+
+    $("#img-icon").hide();
+    $("#fileDiv").hide();
+
+    if (lastElement != ""){
+        lastElement.css("background-color", "white");
+    }
+
+    tableRow.css("background-color", "#c8cbcf");
+    lastElement = tableRow;
+
+    $.post("/categories",
+    {
+        "id": id
+    },
+    function (data, status){
+        category = JSON.parse(data);
+        console.log(category);
+
+        $("#link").val(category.link);
+        $("#name").val(category.name);
+        $("#desc").val(category.description);
+
+        if (category.iconPath != ""){
+            $("#fileDiv").hide();
+            $("#img-icon").show();
+            $("#icon").prop("src", category.iconPath);
+        }else{
+            $("#fileDiv").show();
+        }
+    });
+}
+
 function getNot(e){
     id = e.id;
     $.post("/notifications", 

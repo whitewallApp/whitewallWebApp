@@ -1,23 +1,31 @@
 <?= $this->extend('Category/Category_List') ?>
 
 <?= $this->section('Detail') ?>
-<form class="mr-4">
+<div class="row justify-content-center">
+  <h2 id="data-title" class="mr-4"></h2>
+  <button id="add-button" class="btn btn-primary" onclick="showData('/categories');">Add</button>
+</div>
+<form id="data" class="mr-4" style="display: none;">
   <div class="form-group">
-    <label for="exampleInputEmail1">Name</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Category Name">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Category Name">
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Description</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="This is a cool group of Collections">
+    <label for="desc">Description</label>
+    <input type="text" class="form-control" id="desc" placeholder="This is a cool group of Collections">
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Link to Category</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="https://yoursite.com/category">
+    <label for="link">Link to Category</label>
+    <input type="text" class="form-control" id="link" placeholder="https://yoursite.com/category">
   </div>
   <div class="form-group">
-    <div class="custom-file">
+    <div id="fileDiv" class="custom-file">
         <input type="file" class="custom-file-input" id="customFile">
         <label class="custom-file-label" for="customFile">Icon Image</label>
+    </div>
+    <div id="img-icon" class="row m-2">
+        <img id="icon" class="img-sm rounded mr-3">
+        <button class="btn btn-primary">Change</button>
     </div>
   </div>
   <div class="float-right">
