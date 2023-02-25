@@ -21,9 +21,15 @@ class CategoryModel extends Model
 
         $builder = $this->db->table('category');
         $builder->select($column)->where("brand_id", $brandID);
-        $column = $builder->get()->getResultArray();
+        $return = $builder->get()->getResultArray();
 
-        return $column;
+        $returnArray = [];
+
+        foreach($return as $thing){
+            array_push($returnArray, $thing[$column]);
+        }
+
+        return $returnArray;
     }
 
     public function getCategory($id, $fetchBy="id", $filter=[], $assoc=false){
@@ -51,7 +57,7 @@ class CategoryModel extends Model
         }
         else{
             $builder->select("*")->where($fetchBy, $id);
-            $collection = $builder->get()->getResultArray();
+            $collection = $builder->get()->getResultArray()[0];
             return $collection;
         }
     }

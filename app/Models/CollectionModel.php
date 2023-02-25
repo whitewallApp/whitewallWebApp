@@ -40,9 +40,15 @@ class CollectionModel extends Model
 
         $builder = $this->db->table('collection');
         $builder->select($column)->where("brand_id", $brandID);
-        $column = $builder->get()->getResultArray();
+        $return = $builder->get()->getResultArray();
 
-        return $column;
+        $returnArray = [];
+
+        foreach($return as $thing){
+            array_push($returnArray, $thing[$column]);
+        }
+
+        return $returnArray;
     }
 
     public function getIdByName($name){
