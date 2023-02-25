@@ -19,7 +19,7 @@ function getImg(e){
 
     id = e.id;
 
-    showData("func");
+    showData("/images");
 
     $.post("/images", 
     {
