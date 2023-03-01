@@ -68,12 +68,23 @@
                     <div class="col-sm-3">
                         <label for="force-switch" class="col-form-label">Force New Wallpaper</label>
                     </div>
-                    <div class="col-sm-8 custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="force-switch">
-                        <label class="custom-control-label" for="force-switch"></label>
+                    <div class="col-sm-8">
+                        <div class="row">
+                            <div class="custom-control custom-switch mr-3">
+                                <input type="checkbox" class="custom-control-input" id="force-switch">
+                                <label class="custom-control-label" for="force-switch"></label>
+                            </div>
+                            <div id="force-select-div" style="display: none;">
+                                <select id="force-select" class="custom-select">
+                                    <?php foreach($images as $image) : ?>
+                                        <option value="<?= $image["id"] ?>"><?= $image["name"] ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mt-3">
                     <label for="title" class="col-sm-3 col-form-label">Notification Click Action</label>
 
                     <select id="selections" class="custom-select col-sm-8">

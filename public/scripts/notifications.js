@@ -4,22 +4,22 @@ function notifications_start() {
 
         if (checked) {
             $("#force-option").hide();
-            $("#wall-select").show();
+            $("#force-select-div").show();
         } else {
             $("#force-option").show();
-            $("#wall-select").hide();
+            $("#force-select-div").hide();
         }
     })
 
     $("#selections").on("click", function () {
         var option = $("#selections").val();
-        if (option == "force") {
+        if (option == "Wallpaper") {
             $("#wall-select").show();
         } else {
             $("#wall-select").hide();
         }
 
-        if (option == "link") {
+        if (option == "Link") {
             $("#link-input").show();
         } else {
             $("#link-input").hide();
