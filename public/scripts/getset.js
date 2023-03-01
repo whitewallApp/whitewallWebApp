@@ -19,18 +19,17 @@ function getImg(e){
 
     id = e.id;
 
-    showData("/images");
-
     $.post("/images", 
     {
         'id': id,
-        "collectionReq": false
+        "UpperReq": false
     },
     function(data, status){
         image = JSON.parse(data);
         console.log(image);
         nameTextBox.val(image.name);
         descTextBox.val(image.description);
+        showData("/images", false);
 
         if (image.externalPath == "1"){
             linkTextBox.val(image.imagePath);
@@ -48,11 +47,11 @@ function getImg(e){
             $("#linkDiv").hide()
         }
 
-        // collectionSelectBox.empty();
+        collectionSelectBox.empty();
 
-        // image.collectionNames.forEach(element => {
-        //     collectionSelectBox.append('<option value="' + element +'">' + element + "</option>")
-        // });
+        image.collectionNames.forEach(element => {
+            collectionSelectBox.append('<option value="' + element + '">' + element + "</option>")
+        });
 
         $('#select>option[value="' + image.collection_id + '"]').prop("selected", true);
 
@@ -71,7 +70,7 @@ function getColl(e){
 
     id = e.id
 
-    showData("func");
+    showData("/collections", false);
 
     nameTextBox = $("#collName");
     linkTextBox = $("#collLink");
@@ -88,7 +87,7 @@ function getColl(e){
     $.post("/collections", 
     {
         'id': id,
-        "collectionReq": false
+        "UpperReq": false
     },
     function(data, status){
         collection = JSON.parse(data);
@@ -201,7 +200,7 @@ function getNot(e){
     });
 }
 
-function showData(link){
+function showData(link, list=true){
     form = $("#data");
     title = $("#data-title");
     button = $("#add-button");
@@ -224,11 +223,12 @@ function showData(link){
         function(data, status){
             collection = JSON.parse(data);
             console.log(collection);
-            catSelect.empty();
-            collection.forEach(element => {
-                console.log(element);
+            if (list){
+                catSelect.empty();
+                collection.forEach(element => {
                 catSelect.append('<option value="' + element +'">' + element + "</option>")
-            });
+                });
+            }
         })
     }
 
