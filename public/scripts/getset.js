@@ -48,11 +48,11 @@ function getImg(e){
             $("#linkDiv").hide()
         }
 
-        collectionSelectBox.empty();
+        // collectionSelectBox.empty();
 
-        image.collectionNames.forEach(element => {
-            collectionSelectBox.append('<option value="' + element +'">' + element + "</option>")
-        });
+        // image.collectionNames.forEach(element => {
+        //     collectionSelectBox.append('<option value="' + element +'">' + element + "</option>")
+        // });
 
         $('#select>option[value="' + image.collection_id + '"]').prop("selected", true);
 
