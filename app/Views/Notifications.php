@@ -49,7 +49,7 @@
             </table>
         </div>
     </div>
-    
+
     <div class="col-sm-8 mt-3">
         <div class="card m-2 p-2">
             <form>
@@ -119,23 +119,19 @@
                     <div id="app" class="form-group row" style="display: none">
                         <label for="cat-select" class="col-sm-3 col-form-label">Category</label>
                         <select id="cat-select" class="custom-select col-sm-8">
-                            <option selected value="Insta">Instagram</option>
-                            <option value="Face">Facebook</option>
-                            <option value="Web">Website</option>
+                            <?php foreach($categories as $category) : ?>
+                                <option value="<?= $category ?>"><?= $category ?></option>
+                            <?php endforeach ?>
                         </select>
 
                         <label for="col-select" class="col-sm-3 col-form-label">Collection</label>
                         <select id="col-select" class="custom-select col-sm-8">
-                            <option selected value="Insta">Instagram</option>
-                            <option value="Face">Facebook</option>
-                            <option value="Web">Website</option>
+                           
                         </select>
 
                         <label for="img-select" class="col-sm-3 col-form-label">Image</label>
                         <select id="img-select" class="custom-select col-sm-8">
-                            <option selected value="Insta">Instagram</option>
-                            <option value="Face">Facebook</option>
-                            <option value="Web">Website</option>
+                           
                         </select>
                     </div>
                 </div>

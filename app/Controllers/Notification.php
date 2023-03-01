@@ -5,6 +5,7 @@ use App\Models\NotificationModel;
 use App\Models\ImageModel;
 use App\Models\AppModel;
 use App\Models\BrandModel;
+use App\Models\CategoryModel;
 
 class Notification extends BaseController
 {
@@ -14,6 +15,7 @@ class Notification extends BaseController
         $appModel = new AppModel;
         $notModel = new NotificationModel;
         $imageModel = new ImageModel;
+        $catModel = new CategoryModel;
 
         $brandID = $brandModel->getBrand("Beautiful AI", filter: ["id"], fetchBy: "name");
         $appID = $appModel->getIdByBrandId($brandID);
@@ -34,7 +36,8 @@ class Notification extends BaseController
 
         $data = [
             "notifications" => $notifications,
-            "images" => $images
+            "images" => $images,
+            "categories" => $catModel->getCollumn("name", "Beautiful AI")
         ];
 
         return view('Notifications', $data);
