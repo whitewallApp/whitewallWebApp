@@ -49,6 +49,7 @@
             </table>
         </div>
     </div>
+    
     <div class="col-sm-8 mt-3">
         <div class="card m-2 p-2">
             <form>
@@ -101,15 +102,37 @@
                             <label class="form-check-label" for="menuRadio">Menu Item</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="menuRadio" id="appRadio">
+                            <input class="form-check-input" type="radio" name="appRadio" id="appRadio">
                             <label class="form-check-label" for="appRadio">Category/Collection/Image</label>
                         </div>
                     </div>
 
                     <div id="menu" class="form-group row" style="display: none">
-                        <label for="menu-select" class="col-sm-3 col-form-label">Menu Items</label>
+                        <label for="menu-select" class="col-sm-3 col-form-label">Menu Item</label>
 
                         <select id="menu-select" class="custom-select col-sm-8">
+                            <option selected value="Insta">Instagram</option>
+                            <option value="Face">Facebook</option>
+                            <option value="Web">Website</option>
+                        </select>
+                    </div>
+                    <div id="app" class="form-group row" style="display: none">
+                        <label for="cat-select" class="col-sm-3 col-form-label">Category</label>
+                        <select id="cat-select" class="custom-select col-sm-8">
+                            <option selected value="Insta">Instagram</option>
+                            <option value="Face">Facebook</option>
+                            <option value="Web">Website</option>
+                        </select>
+
+                        <label for="col-select" class="col-sm-3 col-form-label">Collection</label>
+                        <select id="col-select" class="custom-select col-sm-8">
+                            <option selected value="Insta">Instagram</option>
+                            <option value="Face">Facebook</option>
+                            <option value="Web">Website</option>
+                        </select>
+
+                        <label for="img-select" class="col-sm-3 col-form-label">Image</label>
+                        <select id="img-select" class="custom-select col-sm-8">
                             <option selected value="Insta">Instagram</option>
                             <option value="Face">Facebook</option>
                             <option value="Web">Website</option>

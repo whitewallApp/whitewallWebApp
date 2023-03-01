@@ -35,6 +35,14 @@ function notifications_start() {
     })
 
     $("#menuRadio").on("click", function(){
+        $("#app").hide();
         $("#menu").show();
+        $("#appRadio").prop("checked", false);
+    });
+
+    $("#appRadio").on("click", function(){
+        $("#app").show();
+        $("#menu").hide();
+        $("#menuRadio").prop("checked", false);
     });
 }
