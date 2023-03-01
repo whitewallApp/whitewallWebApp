@@ -94,6 +94,28 @@
                         <option value="Link">Go to Custom link</option>
                     </select>
                 </div>
+                <div id="app-input" style="display: none">
+                    <div class="container row justify-content-center">
+                        <div class="form-check mr-4">
+                            <input class="form-check-input" type="radio" name="menuRadio" id="menuRadio">
+                            <label class="form-check-label" for="menuRadio">Menu Item</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="menuRadio" id="appRadio">
+                            <label class="form-check-label" for="appRadio">Category/Collection/Image</label>
+                        </div>
+                    </div>
+
+                    <div id="menu" class="form-group row" style="display: none">
+                        <label for="menu-select" class="col-sm-3 col-form-label">Menu Items</label>
+
+                        <select id="menu-select" class="custom-select col-sm-8">
+                            <option selected value="Insta">Instagram</option>
+                            <option value="Face">Facebook</option>
+                            <option value="Web">Website</option>
+                        </select>
+                    </div>
+                </div>
                 <div id="link-input" class="form-group row" style="display: none">
                     <label for="link" class="col-sm-3 col-form-label">Link</label>
                     <input type="text" class="form-control col-sm-8" id="link" placeholder="https://yoursite.com/image">

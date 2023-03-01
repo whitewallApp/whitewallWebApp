@@ -13,6 +13,13 @@ function notifications_start() {
 
     $("#selections").on("click", function () {
         var option = $("#selections").val();
+
+        if (option == "App") {
+            $("#app-input").show();
+        } else {
+            $("#app-input").hide();
+        }
+
         if (option == "Wallpaper") {
             $("#wall-select").show();
         } else {
@@ -24,5 +31,10 @@ function notifications_start() {
         } else {
             $("#link-input").hide();
         }
+
     })
+
+    $("#menuRadio").on("click", function(){
+        $("#menu").show();
+    });
 }
