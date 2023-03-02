@@ -133,7 +133,7 @@
 
                         <label for="img-select" class="col-sm-3 col-form-label">Image</label>
                         <select id="img-select" class="custom-select col-sm-8">
-                        <option value="link">Link to Parent Collection</option>
+                            <option value="link">Link to Parent Collection</option>
                         </select>
                     </div>
                 </div>
