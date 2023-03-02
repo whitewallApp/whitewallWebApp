@@ -55,8 +55,6 @@ class Notification extends BaseController
             $categories[$category] = $collections;
         }
 
-        echo var_dump($categories);
-
         $data = [
             "notifications" => $notifications,
             "images" => $images,
