@@ -21,9 +21,28 @@ function notifications_start() {
         }
 
         if (option == "Wallpaper") {
-            $("#wall-select").show();
+            $("#app-input").show();
+            $(".form-check").hide();
+            $("#app").show();
+
+            categoryNames = Object.getOwnPropertyNames(categories);
+            collectionNames = Object.getOwnPropertyNames(categories[categoryNames[0]])
+            imageNames = categories[categoryNames[0]][collectionNames[0]]
+
+            categoryNames.forEach(element => {
+                $("#cat-select").append('<option value="' + element + '">' + element + "</option>")
+            });
+
+            collectionNames.forEach(element => {
+                $("#col-select").append('<option value="' + element + '">' + element + "</option>")
+            })
+
+            imageNames.forEach(element => {
+                $("#img-select").append('<option value="' + element + '">' + element + "</option>")
+            })
+
         } else {
-            $("#wall-select").hide();
+            $("#app-input").hide();
         }
 
         if (option == "Link") {
@@ -60,8 +79,6 @@ function notifications_start() {
         imageNames.forEach(element => {
             $("#img-select").append('<option value="' + element + '">' + element + "</option>")
         })
-
-        console.log();
     });
 
     $("#cat-select").on("click", function () {
@@ -73,6 +90,7 @@ function notifications_start() {
                 collectionNames = Object.getOwnPropertyNames(categories[option]);
 
                 $("#col-select").empty();
+                $("#img-select").empty();
                 $("#col-select").append('<option value="Link">' + "Link to Parent Category" + "</option>")
                 collectionNames.forEach(colName => {
                     $("#col-select").append('<option value="' + colName + '">' + colName + "</option>")

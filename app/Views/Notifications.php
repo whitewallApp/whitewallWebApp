@@ -141,15 +141,6 @@
                     <label for="link" class="col-sm-3 col-form-label">Link</label>
                     <input type="text" class="form-control col-sm-8" id="link" placeholder="https://yoursite.com/image">
                 </div>
-                <div id="wall-select" class="form-group row" style="display: none;">
-                    <label for="title" class="col-sm-3 col-form-label">Wallpaper</label>
-
-                    <select id="select" class="custom-select col-sm-8">
-                        <?php foreach($images as $image) : ?>
-                            <option value="<?= $image["id"] ?>"><?= $image["name"] ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
                 <div class="float-right">
                     <button class="btn btn-primary m-2">Save</button>
                     <button class="btn btn-danger m-2">Remove</button>
