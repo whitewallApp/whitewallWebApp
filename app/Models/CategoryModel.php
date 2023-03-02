@@ -14,13 +14,21 @@ class CategoryModel extends Model
     protected $createdField  = 'dateCreated';
     protected $updatedField  = 'dateUpdated';
 
-    public function getCollumn($column, $brandName){
+    public function getCollumn($column, $brandName, $getBy=[]){
         $builder = $this->db->table('brand');
         $builder->select("id")->where("name", $brandName);
         $brandID = $builder->get()->getResultArray()[0];
 
         $builder = $this->db->table('category');
         $builder->select($column)->where("brand_id", $brandID);
+
+        if (count($getBy) > 0){
+            $keys = array_keys($getBy);
+            foreach ($keys as $key) {
+                $builder->where($key, $getBy[$key]);
+            }
+        }
+
         $return = $builder->get()->getResultArray();
 
         $returnArray = [];
@@ -54,8 +62,8 @@ class CategoryModel extends Model
             }else{
                 return $collection;
             }
-        }
-        else{
+
+        }else{
             $builder->select("*")->where($fetchBy, $id);
             $collection = $builder->get()->getResultArray()[0];
             return $collection;

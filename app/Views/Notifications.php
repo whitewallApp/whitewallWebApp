@@ -1,5 +1,10 @@
 <?= $this->extend('Navigation') ?>
 <?= $this->section('MainPage') ?>
+
+<script>
+    categories = <?= json_encode($categories) ?>
+</script>
+
 <div class="row">
     <div class="col-sm-4">
         <div class="row m-2">
@@ -119,19 +124,16 @@
                     <div id="app" class="form-group row" style="display: none">
                         <label for="cat-select" class="col-sm-3 col-form-label">Category</label>
                         <select id="cat-select" class="custom-select col-sm-8">
-                            <?php foreach($categories as $category) : ?>
-                                <option value="<?= $category ?>"><?= $category ?></option>
-                            <?php endforeach ?>
                         </select>
 
                         <label for="col-select" class="col-sm-3 col-form-label">Collection</label>
                         <select id="col-select" class="custom-select col-sm-8">
-                           
+                            <option value="link">Link to Parent Category</option>
                         </select>
 
                         <label for="img-select" class="col-sm-3 col-form-label">Image</label>
                         <select id="img-select" class="custom-select col-sm-8">
-                           
+                        <option value="link">Link to Parent Collection</option>
                         </select>
                     </div>
                 </div>

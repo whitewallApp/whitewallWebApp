@@ -33,13 +33,21 @@ class CollectionModel extends Model
         return $ids;
     }
 
-    public function getCollumn($column, $brandName){
+    public function getCollumn($column, $brandName, $getBy=[]){
         $builder = $this->db->table('brand');
         $builder->select("id")->where("name", $brandName);
         $brandID = $builder->get()->getResultArray()[0];
 
         $builder = $this->db->table('collection');
         $builder->select($column)->where("brand_id", $brandID);
+
+        if (count($getBy) > 0){
+            $keys = array_keys($getBy);
+            foreach ($keys as $key) {
+                $builder->where($key, $getBy[$key]);
+            }
+        }
+
         $return = $builder->get()->getResultArray();
 
         $returnArray = [];

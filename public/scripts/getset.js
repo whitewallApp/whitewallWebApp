@@ -26,7 +26,7 @@ function getImg(e){
     },
     function(data, status){
         image = JSON.parse(data);
-        console.log(image);
+        
         nameTextBox.val(image.name);
         descTextBox.val(image.description);
         showData("/images", false);
@@ -95,7 +95,7 @@ function getColl(e){
         descTextBox.val(collection.description);
         linkTextBox.val(collection.link);
 
-        console.log(collection);
+        
 
         if (collection.iconPath != null){
             img.attr("src", collection.iconPath);
@@ -139,7 +139,7 @@ function getCat(e){
     },
     function (data, status){
         category = JSON.parse(data);
-        console.log(category);
+        
 
         $("#link").val(category.link);
         $("#name").val(category.name);
@@ -164,11 +164,10 @@ function getNot(e){
     function(data, status){
         notification = JSON.parse(data);
         notification = notification[0]
-
         $("#title").val(notification.title);
         $("#text").val(notification.description);
 
-        console.log(notification);
+        
 
         $("#link-input").hide();
         $("#wall-select").hide();
@@ -222,11 +221,11 @@ function showData(link, list=true){
         }, 
         function(data, status){
             collection = JSON.parse(data);
-            console.log(collection);
+            
             if (list){
                 catSelect.empty();
                 collection.forEach(element => {
-                catSelect.append('<option value="' + element +'">' + element + "</option>")
+                    catSelect.append('<option value="' + element +'">' + element + "</option>")
                 });
             }
         })
