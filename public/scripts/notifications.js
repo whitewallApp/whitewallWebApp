@@ -16,6 +16,7 @@ function notifications_start() {
 
         if (option == "App") {
             $("#app-input").show();
+            console.log("open app");
         } else {
             $("#app-input").hide();
         }
@@ -24,6 +25,7 @@ function notifications_start() {
             $("#app-input").show();
             $(".form-check").hide();
             $("#app").show();
+            $("#img-select-group").hide();
 
             categoryNames = Object.getOwnPropertyNames(categories);
             collectionNames = Object.getOwnPropertyNames(categories[categoryNames[0]])
@@ -41,7 +43,7 @@ function notifications_start() {
                 $("#img-select").append('<option value="' + element + '">' + element + "</option>")
             })
 
-        } else {
+        } else if(option != "Wallpaper" && option != "App") {
             $("#app-input").hide();
         }
 
@@ -62,6 +64,7 @@ function notifications_start() {
     $("#appRadio").on("click", function(){
         $("#app").show();
         $("#menu").hide();
+        $("#img-select-group").hide();
         $("#menuRadio").prop("checked", false);
 
         categoryNames = Object.getOwnPropertyNames(categories);
@@ -103,9 +106,14 @@ function notifications_start() {
     $("#col-select").on("click", function(){
         option = $("#col-select").val();
         collectionNames = Object.getOwnPropertyNames(categories[$("#cat-select").val()])
+
+        if(option == "link"){
+            $("#img-select-group").hide();
+        }
         
         collectionNames.forEach(colName => {
             if (colName == option){
+                $("#img-select-group").show();
                 imageNames = categories[$("#cat-select").val()][option]
                 
                 $("#img-select").empty();

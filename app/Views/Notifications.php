@@ -80,7 +80,7 @@
                                 <input type="checkbox" class="custom-control-input" id="force-switch">
                                 <label class="custom-control-label" for="force-switch"></label>
                             </div>
-                            <div id="force-select-div" style="display: none;">
+                            <div id="force-select-div" class="col-sm-11" style="display: none;">
                                 <select id="force-select" class="custom-select">
                                     <?php foreach($images as $image) : ?>
                                         <option value="<?= $image["id"] ?>"><?= $image["name"] ?></option>
@@ -121,20 +121,26 @@
                             <option value="Web">Website</option>
                         </select>
                     </div>
-                    <div id="app" class="form-group row" style="display: none">
-                        <label for="cat-select" class="col-sm-3 col-form-label">Category</label>
-                        <select id="cat-select" class="custom-select col-sm-8">
-                        </select>
+                    <div id="app" style="display: none">
+                        <div class="form-group row">
+                            <label for="cat-select" class="col-sm-4 col-form-label">Category</label>
+                            <select id="cat-select" class="custom-select col-sm-7">
+                            </select>
+                        </div>
 
-                        <label for="col-select" class="col-sm-3 col-form-label">Collection</label>
-                        <select id="col-select" class="custom-select col-sm-8">
-                            <option value="link">Link to Parent Category</option>
-                        </select>
+                        <div class="form-group row">
+                            <label for="col-select" class="col-sm-4 col-form-label">Collection</label>
+                            <select id="col-select" class="custom-select col-sm-7">
+                                <option value="link">Link to Parent Category</option>
+                            </select>
+                        </div>
 
-                        <label for="img-select" class="col-sm-3 col-form-label">Image</label>
-                        <select id="img-select" class="custom-select col-sm-8">
-                            <option value="link">Link to Parent Collection</option>
-                        </select>
+                        <div id="img-select-group" class=" form-group row">      
+                            <label for="img-select" class="col-sm-4 col-form-label">Image</label>
+                            <select id="img-select" class="custom-select col-sm-7">
+                                <option value="link">Link to Parent Collection</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div id="link-input" class="form-group row" style="display: none">
