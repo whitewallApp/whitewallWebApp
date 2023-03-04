@@ -18,3 +18,15 @@ body {
     max-width:25%;
     height:auto;
 }
+
+.img-circle {
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.new-brand {
+    width: 75%;
+    margin: auto;
+    border-radius: 50%;
+    background-color: lightgray;
+}

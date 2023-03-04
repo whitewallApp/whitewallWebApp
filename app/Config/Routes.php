@@ -40,6 +40,7 @@ $routes->get('/account', 'Account::index');
 $routes->get('/notifications', 'Notification::index');
 $routes->get('/settings', 'Setting::index');
 $routes->get('/menu', 'Menu::index');
+$routes->get('/brand', 'Brand::index');
 
 //Asset URLS
 $routes->get('/assets/images/(:any)', 'Assets::images/$1');
