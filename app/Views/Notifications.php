@@ -147,7 +147,8 @@
                     <label for="link" class="col-sm-3 col-form-label">Link</label>
                     <input type="text" class="form-control col-sm-8" id="link" placeholder="https://yoursite.com/image">
                 </div>
-                <div class="float-right">
+                <div class="float-right row">
+                    <p id="updated" class="mr-2"></p>
                     <button class="btn btn-primary m-2">Save</button>
                     <button class="btn btn-danger m-2">Remove</button>
                 </div>

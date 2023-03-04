@@ -55,6 +55,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/notifications">Notifications</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/menu">Menu Items</a>
+            </li>
         </ul>
 </nav>
 <div class="row m-3">
