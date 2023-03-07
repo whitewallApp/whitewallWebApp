@@ -55,3 +55,27 @@ function singlebox(e){
     document.getElementById("infoSelect").innerHTML = output;
     console.log(output)
 }
+
+function changeBrnd(e){
+    element = $(e);
+
+    $.post("/brand", {
+        id: element.prop('id')
+    },
+    function (data, state) {
+        alert("Success");
+    })
+}
+
+function login() {
+    $.post("/", {
+
+    },
+    function (data, status){
+        val = JSON.parse(data);
+        if (val.success){
+            var url = "/dashboard";
+            $(location).attr('href', url);
+        }
+    })
+}

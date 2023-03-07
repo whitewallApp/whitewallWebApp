@@ -5,7 +5,15 @@ namespace App\Controllers;
 class Account extends BaseController
 {
     public function index()
-    {
-        return view('Account');
+    {   
+        $session = session();
+        if ($session->get("logIn")){
+            return view('Account');
+        }else{
+            return view("errors/html/authError");
+        }
+        
     }
 }
+
+?>

@@ -6,7 +6,12 @@ class Setting extends BaseController
 {
     public function index()
     {
-        return view('Settings');
+        $session = session();
+        if ($session->get("logIn")){
+            return view('Settings');
+        }else{
+            return view("errors/html/authError");
+        }
     }
 }
 

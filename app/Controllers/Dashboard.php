@@ -6,6 +6,11 @@ class Dashboard extends BaseController
 {
     public function index()
     {
-        return view("Dashboard");
+        $session = session();
+        if ($session->get("logIn")){
+            return view('Dashboard');
+        }else{
+            return view("errors/html/authError");
+        }
     }
 }

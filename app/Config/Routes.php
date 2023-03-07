@@ -52,6 +52,8 @@ $routes->post('/images', 'Image::post');
 $routes->post('/collections', 'Collection::post');
 $routes->post('/categories', 'Category::post');
 $routes->post('/notifications', 'Notification::post');
+$routes->post('/brand', 'Brand::post');
+$routes->post('/', 'Login::post');
 
 /*
  * --------------------------------------------------------------------
