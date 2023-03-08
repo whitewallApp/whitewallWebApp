@@ -39,11 +39,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                        <tr id="menuRow" onclick="">
+                    <?php foreach($menuItems as $menuItem) : ?>
+                        <tr id="<?= $menuItem["title"] ?>" onclick="">
                             <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                            <td>Menu Title</td>
-                            <td>1</td>
+                            <td><?= $menuItem["title"] ?></td>
+                            <td><?= $menuItem["sequence"] ?></td>
                         </tr>
+                    <?php endforeach ?>
                 </tbody>
             </table>
         </div>

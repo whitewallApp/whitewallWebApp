@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\MenuModel;
 
 class Menu extends BaseController
 {
@@ -8,7 +9,21 @@ class Menu extends BaseController
     {
         $session = session();
         if ($session->get("logIn")){
-            return view('Menu');
+            $menuModel = new MenuModel;
+
+            $ids = $menuModel->getCollumn("id", $session->get("brand_name"));
+
+            $menuItems = [];
+
+            foreach($ids as $id){
+                array_push($menuItems, $menuModel->getMenuItem($id, assoc: true));
+            }
+
+            $data = [
+                "menuItems" => $menuItems
+            ];
+
+            return view('Menu', $data);
         }else{
             return view("errors/html/authError");
         }
