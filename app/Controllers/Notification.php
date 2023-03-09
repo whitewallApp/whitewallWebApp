@@ -7,6 +7,7 @@ use App\Models\AppModel;
 use App\Models\BrandModel;
 use App\Models\CategoryModel;
 use App\Models\CollectionModel;
+use App\Models\MenuModel;
 
 class Notification extends BaseController
 {
@@ -20,6 +21,7 @@ class Notification extends BaseController
             $imageModel = new ImageModel;
             $catModel = new CategoryModel;
             $colModel = new CollectionModel;
+            $menuModel = new MenuModel;
             $brandname = $session->get("brand_name");
 
             $brandID = $brandModel->getBrand($brandname, filter: ["id"], fetchBy: "name", assoc: true);
@@ -61,7 +63,8 @@ class Notification extends BaseController
             $data = [
                 "notifications" => $notifications,
                 "images" => $images,
-                "categories" => $categories
+                "categories" => $categories,
+                "menuItems" => $menuModel->getCollumn("title", $brandname)
             ];
 
             return view('Notifications', $data);

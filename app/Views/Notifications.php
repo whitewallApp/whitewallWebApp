@@ -116,9 +116,9 @@
                         <label for="menu-select" class="col-sm-3 col-form-label">Menu Item</label>
 
                         <select id="menu-select" class="custom-select col-sm-8">
-                            <option selected value="Insta">Instagram</option>
-                            <option value="Face">Facebook</option>
-                            <option value="Web">Website</option>
+                            <?php foreach ($menuItems as $menuItem) : ?>
+                                <option value="<?= $menuItem ?>"><?= $menuItem ?></option>
+                            <?php endforeach ?>
                         </select>
                     </div>
                     <div id="app" style="display: none">
