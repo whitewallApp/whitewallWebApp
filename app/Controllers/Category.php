@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Models\CategoryModel;
 use App\Models\CollectionModel;
+use App\Models\BrandModel;
 
 class Category extends BaseController
 {
@@ -12,6 +13,7 @@ class Category extends BaseController
         if ($session->get("logIn")){
             $catModel = new CategoryModel;
             $colModel = new CollectionModel;
+            $brandModel = new BrandModel;
             $brandname = $session->get("brand_name");
 
             $ids = $catModel->getCollumn("id", $brandname);
@@ -35,7 +37,8 @@ class Category extends BaseController
 
 
             $data = [
-                "categories" => $categories
+                "categories" => $categories,
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
             ];
 
             return view('Category/Category_Detail', $data);

@@ -3,7 +3,8 @@
 namespace App\Controllers;
 use App\Models\BrandModel;
 
-class Dashboard extends BaseController
+class App extends BaseController
+
 {
     public function index()
     {
@@ -15,7 +16,7 @@ class Dashboard extends BaseController
                 "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
             ];
 
-            return view('Dashboard', $data);
+            return view('App', $data);
         }else{
             return view("errors/html/authError");
         }

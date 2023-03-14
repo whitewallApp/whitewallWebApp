@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\ImageModel;
 use App\Models\CollectionModel;
 use App\Models\CategoryModel;
+use App\Models\BrandModel;
 
 
 class Collection extends BaseController
@@ -14,6 +15,7 @@ class Collection extends BaseController
         if ($session->get("logIn")){
             $collModel = new CollectionModel;
             $catModel = new CategoryModel;
+            $brandModel = new BrandModel;
             $brandname = $session->get("brand_name");
 
             $ids = $collModel->getAllIds($brandname);
@@ -32,7 +34,8 @@ class Collection extends BaseController
             };
 
             $data = [
-                "collections" => $collections
+                "collections" => $collections,
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
             ];
 
             return view('Collection/Collection_Detail', $data);

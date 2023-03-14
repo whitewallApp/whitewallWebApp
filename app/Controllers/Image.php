@@ -40,7 +40,8 @@ class Image extends BaseController
 
             // compile data to be sent to view
             $data = [
-                "images" => $images
+                "images" => $images,
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
             ];
             return view('Image/Image_Detail', $data);
         }else{

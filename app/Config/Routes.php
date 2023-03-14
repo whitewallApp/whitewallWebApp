@@ -41,6 +41,8 @@ $routes->get('/notifications', 'Notification::index');
 $routes->get('/settings', 'Setting::index');
 $routes->get('/menu', 'Menu::index');
 $routes->get('/brand', 'Brand::index');
+$routes->get('/app', 'App::index');
+$routes->get('/branding/(:num)', 'Brand::info/$1');
 
 //Asset URLS
 $routes->get('/assets/images/(:any)', 'Assets::images/$1');

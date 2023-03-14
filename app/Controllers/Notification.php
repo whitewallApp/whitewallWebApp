@@ -24,7 +24,7 @@ class Notification extends BaseController
             $menuModel = new MenuModel;
             $brandname = $session->get("brand_name");
 
-            $brandID = $brandModel->getBrand($brandname, filter: ["id"], fetchBy: "name", assoc: true);
+            $brandID = $brandModel->getBrand($brandname, filter: ["id"], fetchBy: "name");
             $appID = $appModel->getIdByBrandId($brandID);
 
             //add time to notifications
@@ -64,7 +64,8 @@ class Notification extends BaseController
                 "notifications" => $notifications,
                 "images" => $images,
                 "categories" => $categories,
-                "menuItems" => $menuModel->getCollumn("title", $brandname)
+                "menuItems" => $menuModel->getCollumn("title", $brandname),
+                "brandId" => $brandID
             ];
 
             return view('Notifications', $data);

@@ -58,6 +58,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="/menu">Menu Items</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/app">App Build</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/branding/<?= $brandId ?>">Branding</a>
+            </li>
         </ul>
 </nav>
 <div class="row m-3">

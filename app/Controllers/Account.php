@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\BrandModel;
 
 class Account extends BaseController
 {
@@ -8,7 +9,12 @@ class Account extends BaseController
     {   
         $session = session();
         if ($session->get("logIn")){
-            return view('Account');
+            $brandModel = new BrandModel;
+
+            $data = [
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
+            ];
+            return view('Account', $data);
         }else{
             return view("errors/html/authError");
         }

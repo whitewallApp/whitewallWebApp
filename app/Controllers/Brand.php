@@ -19,10 +19,11 @@ class Brand extends BaseController
             }
 
             $data = [
-                "brands" => $brands
+                "brands" => $brands,
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
             ];
 
-            return view('Brand', $data);
+            return view('brand/Brand', $data);
         }else{
             return view("errors/html/authError");
         }
@@ -37,6 +38,21 @@ class Brand extends BaseController
             $session->set("brand_name", $name);
 
             return json_encode(["success" => true]);
+        }else{
+            return json_encode(["success" => false]);
+        }
+    }
+
+    public function info($brandId){
+        $session = session();
+        if ($session->get("logIn")){
+            $brandModel = new BrandModel;
+
+            $data = [
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
+            ];
+
+            return view("brand/Branding", $data);
         }else{
             return json_encode(["success" => false]);
         }

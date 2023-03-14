@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\MenuModel;
+use App\Models\BrandModel;
 
 class Menu extends BaseController
 {
@@ -10,6 +11,7 @@ class Menu extends BaseController
         $session = session();
         if ($session->get("logIn")){
             $menuModel = new MenuModel;
+            $brandModel = new BrandModel;
 
             $ids = $menuModel->getCollumn("id", $session->get("brand_name"));
 
@@ -20,7 +22,8 @@ class Menu extends BaseController
             }
 
             $data = [
-                "menuItems" => $menuItems
+                "menuItems" => $menuItems,
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
             ];
 
             return view('Menu', $data);
