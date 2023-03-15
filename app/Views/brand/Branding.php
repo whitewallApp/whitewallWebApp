@@ -5,19 +5,19 @@
     <div class="col">
         <div class="card">
             <div class="card-body text-center">
-                <h5 class="card-title">Dark Theme</h5>
+                <h5 class="card-title">Light Theme</h5>
                 <form>
                     <div class="form-group row">
-                        <label for="backgroundColor">Background Color</label>
-                        <input type="color" class="form-control" id="backgroundColor">
+                        <label for="backgroundColorLight">Background Color</label>
+                        <input type="color" class="form-control" id="backgroundColorLight">
                     </div>
                     <div class="form-group row">
-                        <label for="surfaceColor">On Surface Color</label>
-                        <input type="color" class="form-control" id="surfaceColor">
+                        <label for="surfaceColorLight">On Surface Color</label>
+                        <input type="color" class="form-control" id="surfaceColorLight">
                     </div>
                     <div class="form-group row">
-                        <label for="accentColor">Accent Color</label>
-                        <input type="color" class="form-control" id="accentColor">
+                        <label for="accentColorLight">Accent Color</label>
+                        <input type="color" class="form-control" id="accentColorLight">
                     </div>
                 </form>
             </div>
@@ -25,19 +25,19 @@
 
         <div class="card">
             <div class="card-body text-center">
-                <h5 class="card-title">Light Theme</h5>
+                <h5 class="card-title">Dark Theme</h5>
                 <form>
                     <div class="form-group row">
-                        <label for="backgroundColor">Background Color</label>
-                        <input type="color" class="form-control" id="backgroundColor">
+                        <label for="backgroundColorDark">Background Color</label>
+                        <input type="color" class="form-control" id="backgroundColorDark">
                     </div>
                     <div class="form-group row">
-                        <label for="surfaceColor">On Surface Color</label>
-                        <input type="color" class="form-control" id="surfaceColor">
+                        <label for="surfaceColorDark">On Surface Color</label>
+                        <input type="color" class="form-control" id="surfaceColorDark">
                     </div>
                     <div class="form-group row">
-                        <label for="accentColor">Accent Color</label>
-                        <input type="color" class="form-control" id="accentColor">
+                        <label for="accentColorDark">Accent Color</label>
+                        <input type="color" class="form-control" id="accentColorDark">
                     </div>
                 </form>
             </div>
