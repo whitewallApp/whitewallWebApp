@@ -57,6 +57,21 @@ class Brand extends BaseController
             return json_encode(["success" => false]);
         }
     }
+
+    public function users($brandId){
+        $session = session();
+        if ($session->get("logIn")){
+            $brandModel = new BrandModel;
+
+            $data = [
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
+            ];
+
+            return view("brand/Users", $data);
+        }else{
+            return json_encode(["success" => false]);
+        }
+    }
 }
 
 ?>

@@ -59,10 +59,10 @@
                 <a class="nav-link" href="/menu">Menu Items</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/app">App Build</a>
+                <a class="nav-link" href="/app">App Builds</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/branding/<?= $brandId ?>">Branding</a>
+                <a class="nav-link" href="/brand/branding/<?= $brandId ?>">Branding</a>
             </li>
         </ul>
 </nav>
