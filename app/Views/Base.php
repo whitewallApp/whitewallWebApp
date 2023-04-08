@@ -9,13 +9,18 @@
         <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="/styles/style.css">
-        <script src="/scripts/notifications.js"></script>
-        <script src="/scripts/breadcrumbs.js"></script>
-        <script src="/scripts/getset.js"></script>
-        <script src="/scripts/actions.js"></script>
+        <link rel="stylesheet" href="/css/style.css">
+        <!-- MDB -->
+        <link rel="stylesheet" href="css/mdb.min.css" />
     </head>
     <body>
         <?= $this->renderSection('Body') ?>
+
+        <!-- MDB -->
+        <script type="text/javascript" src="js/mdb.min.js"></script>
+        <script src="/js/notifications.js"></script>
+        <script src="/js/breadcrumbs.js"></script>
+        <script src="/js/getset.js"></script>
+        <script src="/js/actions.js"></script>
     </body>
 </html>
