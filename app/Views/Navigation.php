@@ -26,7 +26,7 @@
             <a class="dropdown-item" href="/brand">Manage Brands</a>
             <a class="dropdown-item" href="/brand/users/<?= $brandId ?>">Manage Users</a>
             <a class="dropdown-item" href="/account">Account</a>
-            <a class="dropdown-item" href="#">Billing</a>
+            <a class="dropdown-item" href="/billing">Billing</a>
         </div>
     </div>
     </div>
@@ -75,10 +75,13 @@
                 <p class="breadcrumbs p-3"><?= $pageTitle ?></p>
             </div>
             <div class="col p-3 mt-2">
-                <?php if(isset($brands)) : ?>
+                <?php if (isset($brands)) : ?>
                     <select class="custom-select">
-                        <?php foreach($brands as $brand) : ?>
-                            <option><?= $brand["name"] ?> <img src="<?= $brand["logo"] ?>"></option>
+                        <?php foreach ($brands as $brand) : ?>
+                            <option>
+                                <p><?= $brand["name"] ?> </p>
+                                <img src="<?= $brand["logo"] ?>">
+                            </option>
                         <?php endforeach ?>
                     </select>
                 <?php endif ?>

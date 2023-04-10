@@ -43,6 +43,7 @@ $routes->get('/brand', 'Brand::index');
 $routes->get('/app', 'App::index');
 $routes->get('/brand/branding/(:num)', 'Brand::info/$1');
 $routes->get('/brand/users/(:num)', 'Brand::users/$1');
+$routes->get('/billing', 'Billing::index');
 
 //Asset URLS
 $routes->get('/assets/images/(:any)', 'Assets::images/$1');

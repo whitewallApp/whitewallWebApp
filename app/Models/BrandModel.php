@@ -31,6 +31,12 @@ class BrandModel extends Model
         return $returnArray;
     }
 
+    /**
+     * @param mixed $id the value of what you want to fetchBy
+     * @param string $fetchBy the column you want to fetch by default is ID
+     * @param array $filter defaults to grabbing the whole row. filer the row with this input
+     * @return array
+     */
     public function getBrand($id, $fetchBy="id", $filter = [], $assoc=false){
         $builder = $this->db->table('brand');
         
