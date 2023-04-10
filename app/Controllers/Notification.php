@@ -61,6 +61,7 @@ class Notification extends BaseController
             }
 
             $data = [
+                "brands" => $brandModel->getCollumn("name", 1), //TODO: session accountID
                 "notifications" => $notifications,
                 "images" => $images,
                 "categories" => $categories,

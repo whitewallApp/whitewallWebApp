@@ -10,7 +10,7 @@ class Brand extends BaseController
         $session = session();
         if ($session->get("logIn")){
             $brandModel = new BrandModel;
-            $ids = $brandModel->getCollumn("id", 1);
+            $ids = $brandModel->getCollumn("id", 1); //TODO: make accountID a session variable
 
             $brands = [];
 
@@ -36,6 +36,7 @@ class Brand extends BaseController
             $brandModel = new BrandModel;
 
             $data = [
+                "brands" => $brandModel->getCollumn("name", 1), //TODO: session accountID
                 "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
                 "pageTitle" => "Branding"
             ];
@@ -52,6 +53,7 @@ class Brand extends BaseController
             $brandModel = new BrandModel;
 
             $data = [
+                "brands" => $brandModel->getCollumn("name", 1), //TODO: session accountID
                 "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
                 "pageTitle" => "Users"
             ];

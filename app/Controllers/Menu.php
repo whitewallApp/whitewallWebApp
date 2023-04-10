@@ -22,6 +22,7 @@ class Menu extends BaseController
             }
 
             $data = [
+                "brands" => $brandModel->getCollumn("name", 1), //TODO: session accountID
                 "menuItems" => $menuItems,
                 "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
                 "pageTitle" => "Menu Items for"

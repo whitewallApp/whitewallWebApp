@@ -12,6 +12,7 @@ class Dashboard extends BaseController
             $brandModel = new BrandModel;
 
             $data = [
+                "brands" => $brandModel->getCollumn("name", 1), //TODO: session accountID
                 "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
                 "pageTitle" => "Dashboard for"
             ];
