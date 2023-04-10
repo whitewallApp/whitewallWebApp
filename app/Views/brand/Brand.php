@@ -1,7 +1,7 @@
 <?= $this->extend('Navigation') ?>
 <?= $this->section('MainPage') ?>
 <div class="card-deck m-2">
-    <?php foreach($brands as $brand) : ?>
+    <?php foreach($brandInfo as $brand) : ?>
         <div id="<?=$brand["name"] ?>" class="card text-center" >
             <div style="cursor: pointer;" onclick="changeBrnd(this);">
                 <img class="card-img-top img-circle" src="<?=$brand["logo"] ?>" />

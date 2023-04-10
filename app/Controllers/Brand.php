@@ -19,7 +19,7 @@ class Brand extends BaseController
             }
 
             $data = [
-                "brands" => $brands,
+                "brandInfo" => $brands,
                 "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
                 "pageTitle" => "Brand"
             ];

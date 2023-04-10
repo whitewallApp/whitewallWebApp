@@ -78,7 +78,7 @@
                 <?php if(isset($brands)) : ?>
                     <select class="custom-select">
                         <?php foreach($brands as $brand) : ?>
-                            <option><?= $brand ?>
+                            <option><?= $brand ?></option>
                         <?php endforeach ?>
                     </select>
                 <?php endif ?>
