@@ -65,7 +65,8 @@ class Notification extends BaseController
                 "images" => $images,
                 "categories" => $categories,
                 "menuItems" => $menuModel->getCollumn("title", $brandname),
-                "brandId" => $brandID
+                "brandId" => $brandID,
+                "pageTitle" => "Notifications for"
             ];
 
             return view('Notifications', $data);

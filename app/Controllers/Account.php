@@ -12,7 +12,8 @@ class Account extends BaseController
             $brandModel = new BrandModel;
 
             $data = [
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
+                "pageTitle" => "Account"
             ];
             return view('Account', $data);
         }else{

@@ -1,6 +1,6 @@
 window.onload = function(){
     
-    breadcrumbs();
+    // breadcrumbs();
 
     startCheckBoxes();
 

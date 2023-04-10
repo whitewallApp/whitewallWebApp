@@ -69,7 +69,7 @@
 </nav>
 <div class="row m-3">
     <div class="col-sm-8">
-        <p id="breadcrumbs" class="breadcrumbs"></p>
+        <p id="breadcrumbs" class="breadcrumbs"><?= $pageTitle ?></p>
     </div>
     <div class="col-sm-4">
         <div class="row float-right">

@@ -23,7 +23,8 @@ class Menu extends BaseController
 
             $data = [
                 "menuItems" => $menuItems,
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
+                "pageTitle" => "Menu Items for"
             ];
 
             return view('Menu', $data);

@@ -35,7 +35,8 @@ class Collection extends BaseController
 
             $data = [
                 "collections" => $collections,
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
+                "pageTitle" => "Collections for"
             ];
 
             return view('Collection/Collection_Detail', $data);

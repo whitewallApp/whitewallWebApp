@@ -20,26 +20,13 @@ class Brand extends BaseController
 
             $data = [
                 "brands" => $brands,
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
+                "pageTitle" => "Brand"
             ];
 
             return view('brand/Brand', $data);
         }else{
             return view("errors/html/authError");
-        }
-    }
-
-    public function post(){
-        $session = session();
-        if ($session->get("logIn")){
-            $request = \Config\Services::request();
-            $name = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $session = session();
-            $session->set("brand_name", $name);
-
-            return json_encode(["success" => true]);
-        }else{
-            return json_encode(["success" => false]);
         }
     }
 
@@ -49,7 +36,8 @@ class Brand extends BaseController
             $brandModel = new BrandModel;
 
             $data = [
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
+                "pageTitle" => "Branding"
             ];
 
             return view("brand/Branding", $data);
@@ -64,11 +52,27 @@ class Brand extends BaseController
             $brandModel = new BrandModel;
 
             $data = [
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
+                "pageTitle" => "Users"
             ];
 
             return view("brand/Users", $data);
         }else{
+            return json_encode(["success" => false]);
+        }
+    }
+
+    public function post()
+    {
+        $session = session();
+        if ($session->get("logIn")) {
+            $request = \Config\Services::request();
+            $name = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $session = session();
+            $session->set("brand_name", $name);
+
+            return json_encode(["success" => true]);
+        } else {
             return json_encode(["success" => false]);
         }
     }

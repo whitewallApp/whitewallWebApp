@@ -38,7 +38,8 @@ class Category extends BaseController
 
             $data = [
                 "categories" => $categories,
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"])
+                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
+                "pageTitle" => "Categories for"
             ];
 
             return view('Category/Category_Detail', $data);
