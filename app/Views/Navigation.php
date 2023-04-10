@@ -78,7 +78,7 @@
                 <?php if(isset($brands)) : ?>
                     <select class="custom-select">
                         <?php foreach($brands as $brand) : ?>
-                            <option><?= $brand ?></option>
+                            <option><?= $brand["name"] ?> <img src="<?= $brand["logo"] ?>"></option>
                         <?php endforeach ?>
                     </select>
                 <?php endif ?>

@@ -25,7 +25,7 @@ class BrandModel extends Model
         $returnArray = [];
 
         foreach($return as $thing){
-            array_push($returnArray, $thing[$column]);
+            array_push($returnArray, $thing);
         }
 
         return $returnArray;

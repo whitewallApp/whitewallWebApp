@@ -42,7 +42,7 @@ class Image extends BaseController
 
             // compile data to be sent to view
             $data = [
-                "brands" => $brandModel->getCollumn("name", 1), //TODO: session accountID
+                "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
                 "images" => $images,
                 "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
                 "pageTitle" => "Images for"

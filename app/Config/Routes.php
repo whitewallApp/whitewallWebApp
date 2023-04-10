@@ -38,7 +38,6 @@ $routes->get('/categories', 'Category::index');
 $routes->get('/images', 'Image::index');
 $routes->get('/account', 'Account::index');
 $routes->get('/notifications', 'Notification::index');
-$routes->get('/settings', 'Setting::index');
 $routes->get('/menu', 'Menu::index');
 $routes->get('/brand', 'Brand::index');
 $routes->get('/app', 'App::index');
