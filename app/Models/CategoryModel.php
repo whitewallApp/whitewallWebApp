@@ -13,8 +13,16 @@ class CategoryModel extends Model
     protected $dateFormat    = 'timestamp';
     protected $createdField  = 'dateCreated';
     protected $updatedField  = 'dateUpdated';
-
-    public function getCollumn($column, $brandName, $getBy=[]){
+    
+    /**
+     * Get the column(s) in the Category table based on brand name.
+     *
+     * @param  array|string $column The column(s) that you want to get from the database
+     * @param  string $brandName The brand name that the user belongs to
+     * @param  array $getBy An array of key value pairs for further filtering. EX: ["category_used" => 1]
+     * @return array
+     */
+    public function getCollumn(array|string $column, string $brandName, array $getBy=[]): array{
         $builder = $this->db->table('brand');
         $builder->select("id")->where("name", $brandName);
         $brandID = $builder->get()->getResultArray()[0];
@@ -39,8 +47,17 @@ class CategoryModel extends Model
 
         return $returnArray;
     }
-
-    public function getCategory($id, $fetchBy="id", $filter=[], $assoc=false){
+    
+    /**
+     * getCategory
+     *
+     * @param  mixed $id The value you want to get the row by
+     * @param  mixed $fetchBy The column you want it to search for the $id in
+     * @param  mixed $filter An array of values you want it to return from 
+     * @param  mixed $assoc If you want the return array to be an associate array or not
+     * @return array
+     */
+    public function getCategory($id, $fetchBy="id", $filter=[], $assoc=false): array{
         $builder = $this->db->table('category');
         
         if (count($filter) > 0){
