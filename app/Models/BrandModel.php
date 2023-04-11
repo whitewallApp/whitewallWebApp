@@ -8,8 +8,16 @@ class BrandModel extends Model
 {
     protected $primaryKey = 'id';
     protected $returnType = 'array';
-
-    public function getCollumn($column, $accountID, $getBy=[]){
+    
+    /**
+     * Gets a column of the table based on an account ID. Use $getBy to do additional filtering
+     *
+     * @param  array|string $column The column of the table to get
+     * @param  int $accountID The account id of the user/brand
+     * @param  array $getBy An array of key value pairs to use for filtering. EX: ["account_active" => 1]
+     * @return array
+     */
+    public function getCollumn($column, $accountID, $getBy=[]): array{
         $builder = $this->db->table('brand');
         $builder->select($column)->where("account_id", $accountID);
 
@@ -32,12 +40,13 @@ class BrandModel extends Model
     }
 
     /**
+     * Grabs a row in the database by a value of a spesified column
      * @param mixed $id the value of what you want to fetchBy
-     * @param string $fetchBy the column you want to fetch by default is ID
+     * @param string $fetchBy the column you want to fetch by. NOTE: default is ID column
      * @param array $filter defaults to grabbing the whole row. filer the row with this input
      * @return array
      */
-    public function getBrand($id, $fetchBy="id", $filter = [], $assoc=false){
+    public function getBrand($id, $fetchBy="id", $filter = [], $assoc=false): array{
         $builder = $this->db->table('brand');
         
         if (count($filter) > 0){
