@@ -17,7 +17,7 @@ class BrandModel extends Model
      * @param  array $getBy An array of key value pairs to use for filtering. EX: ["account_active" => 1]
      * @return array
      */
-    public function getCollumn($column, $accountID, $getBy=[]): array{
+    public function getCollumn($column, $accountID, $getBy=[]): mixed{
         $builder = $this->db->table('brand');
         $builder->select($column)->where("account_id", $accountID);
 
@@ -46,7 +46,7 @@ class BrandModel extends Model
      * @param array $filter defaults to grabbing the whole row. filer the row with this input
      * @return array
      */
-    public function getBrand($id, $fetchBy="id", $filter = [], $assoc=false): array{
+    public function getBrand($id, $fetchBy="id", $filter = [], $assoc=false): mixed{
         $builder = $this->db->table('brand');
         
         if (count($filter) > 0){

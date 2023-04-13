@@ -22,7 +22,7 @@ class CategoryModel extends Model
      * @param  array $getBy An array of key value pairs for further filtering. EX: ["category_used" => 1]
      * @return array
      */
-    public function getCollumn(array|string $column, string $brandName, array $getBy=[]): array{
+    public function getCollumn(array|string $column, string $brandName, array $getBy=[]): mixed{
         $builder = $this->db->table('brand');
         $builder->select("id")->where("name", $brandName);
         $brandID = $builder->get()->getResultArray()[0];
@@ -57,7 +57,7 @@ class CategoryModel extends Model
      * @param  mixed $assoc If you want the return array to be an associate array or not
      * @return array
      */
-    public function getCategory($id, $fetchBy="id", $filter=[], $assoc=false): array{
+    public function getCategory($id, $fetchBy="id", $filter=[], $assoc=false): mixed{
         $builder = $this->db->table('category');
         
         if (count($filter) > 0){
