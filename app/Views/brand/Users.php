@@ -6,10 +6,18 @@
             <div class="row m-2">
                 <div class="col-sm-10">
                     <div id="actions" class="row" style="display: none">
-                        <p id="infoSelect" class="mr-2"></p>
-                        <a href="#">Delete</a>
-                        <p class="mr-2 ml-2"> | </p>
-                        <a href="#">Change User</a>
+                        <div class="col-2">
+                            <p id="infoSelect" class="mr-2"></p>
+                        </div>
+                        <div class="col-2">
+                            <a href="#">Delete</a>
+                        </div>
+                        <div class="col-2">
+                            <p class="mr-2 ml-2"> | </p>
+                        </div>
+                        <div class="col-2">
+                            <a href="#">Change User</a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-2">
@@ -87,10 +95,14 @@
             <!-- Permissions Table -->
             <div class="col-8">
                 <div class="row ml-3">
-                    <label class="mr-3">Admin</label>
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="customSwitch2">
-                        <label class="custom-control-label" for="customSwitch2"></label>
+                    <div class="col-2">
+                        <label class="mr-3">Admin</label>
+                    </div>
+                    <div class="col-10">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch2">
+                            <label class="custom-control-label" for="customSwitch2"></label>
+                        </div>
                     </div>
                 </div>
                 <div class="container">
