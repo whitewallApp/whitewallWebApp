@@ -62,11 +62,15 @@
                             <label for="formGroupExampleInput2">Email</label>
                             <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
                         </div>
-                        <div class="form-group row p-3">
-                            <label class="mr-3">Active</label>
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                <label class="custom-control-label" for="customSwitch1"></label>
+                        <div class="form-group row">
+                            <div class="col-3">
+                                <label class="mr-3">Active</label>
+                            </div>
+                            <div class="col-8">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                    <label class="custom-control-label" for="customSwitch1"></label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
