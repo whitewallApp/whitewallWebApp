@@ -11,13 +11,13 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         <link rel="stylesheet" href="/css/style.css">
         <!-- MDB -->
-        <link rel="stylesheet" href="css/mdb.min.css" />
+        <link rel="stylesheet" href="/css/mdb.min.css" />
     </head>
     <body>
         <?= $this->renderSection('Body') ?>
 
         <!-- MDB -->
-        <script type="text/javascript" src="js/mdb.min.js"></script>
+        <script type="text/javascript" src="/js/mdb.min.js"></script>
         <script src="/js/notifications.js"></script>
         <script src="/js/breadcrumbs.js"></script>
         <script src="/js/getset.js"></script>
