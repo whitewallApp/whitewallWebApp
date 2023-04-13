@@ -1,65 +1,38 @@
 <?= $this->extend('Navigation') ?>
 <?= $this->section('MainPage') ?>
 
-<div class="row">
-    <div class="col">
-        <div class="card">
-            <div class="card-body text-center">
-                <h5 class="card-title">Light Theme</h5>
-                <form>
-                    <div class="form-group row">
-                        <label for="backgroundColorLight">Background Color</label>
-                        <input type="color" class="form-control" id="backgroundColorLight">
-                    </div>
-                    <div class="form-group row">
-                        <label for="surfaceColorLight">On Surface Color</label>
-                        <input type="color" class="form-control" id="surfaceColorLight">
-                    </div>
-                    <div class="form-group row">
-                        <label for="accentColorLight">Accent Color</label>
-                        <input type="color" class="form-control" id="accentColorLight">
-                    </div>
-                </form>
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+        </div>
+        <div class="col">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Logos</button>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample1">Category Labels</button>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample2">Background</button>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample3">Collection & Image Labels</button>
+
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                </div>
+            </div>
+            <div class="collapse" id="collapseExample1">
+                <div class="card card-body">
+                    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                </div>
+            </div>
+            <div class="collapse" id="collapseExample2">
+                <div class="card card-body">
+                    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                </div>
+            </div>
+            <div class="collapse" id="collapseExample3">
+                <div class="card card-body">
+                    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                </div>
             </div>
         </div>
-
-        <div class="card">
-            <div class="card-body text-center">
-                <h5 class="card-title">Dark Theme</h5>
-                <form>
-                    <div class="form-group row">
-                        <label for="backgroundColorDark">Background Color</label>
-                        <input type="color" class="form-control" id="backgroundColorDark">
-                    </div>
-                    <div class="form-group row">
-                        <label for="surfaceColorDark">On Surface Color</label>
-                        <input type="color" class="form-control" id="surfaceColorDark">
-                    </div>
-                    <div class="form-group row">
-                        <label for="accentColorDark">Accent Color</label>
-                        <input type="color" class="form-control" id="accentColorDark">
-                    </div>
-                </form>
-            </div>
-        </div>
-
-    </div>
-    <div class="col">
-
-        <div class="card">
-            <div class="card-body text-center">
-                <h5 class="card-title">Font</h5>
-                <form>
-                    <div class="form-group row">
-                        <label for="fontSelect">Font</label>
-                        <select class="form-control" id="fontSelect">
-        
-                        </select>
-                    </div>
-                </form>
-            </div>
-        </div>
-        
     </div>
 </div>
 
