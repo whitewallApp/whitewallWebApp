@@ -30,3 +30,33 @@ body {
     border-radius: 50%;
     background-color: lightgray;
 }
+
+.phone {
+    height: 553px;
+    background-image: url("http://localhost/Icons/phone.png");
+}
+
+.background-phone {
+    border-radius: 20px;
+    position: relative;
+    left: 176px;
+    top: 60px;
+    width: 230px;
+    height: 430px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.background-phone::-webkit-scrollbar {
+    display: none;
+}
+
+.category-title {
+    padding: none;
+    text-align: center;
+    font-size: x-small;
+}

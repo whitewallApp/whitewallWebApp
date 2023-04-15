@@ -4,8 +4,63 @@
 <!-- TODO: include javascript here to make it work on OnLoad -->
 <div class="container">
     <div class="row">
-        <div class="col">
-
+        <div class="col phone">
+            <div class="background-phone">
+                <div class="row m-2">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                            <div class="category-title">
+                                <p>Category Title</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                            <div class="category-title">
+                                <p>Category Title</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                            <div class="category-title">
+                                <p>Category Title</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                            <div class="category-title">
+                                <p>Category Title</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                            <div class="category-title">
+                                <p>Category Title</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                            <div class="category-title">
+                                <p>Category Title</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col">
             <div class="row p-3">
