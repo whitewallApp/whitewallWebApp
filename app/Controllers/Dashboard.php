@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Controllers\Navigation;
 use App\Models\BrandModel;
 
 class Dashboard extends BaseController
@@ -9,16 +10,7 @@ class Dashboard extends BaseController
     {
         $session = session();
         if ($session->get("logIn")){
-            $brandModel = new BrandModel;
-
-            $data = [
-                "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
-                "pageTitle" => "Dashboard for"
-            ];
-
-
-            return view('Dashboard', $data);
+            return Navigation::renderNavBar("Dashboard for") . view('Dashboard') . Navigation::renderFooter();
         }else{
             return view("errors/html/authError");
         }

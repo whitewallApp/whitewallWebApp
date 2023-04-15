@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Models\MenuModel;
 use App\Models\BrandModel;
+use App\Controllers\Navigation;
 
 class Menu extends BaseController
 {
@@ -22,13 +23,10 @@ class Menu extends BaseController
             }
 
             $data = [
-                "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
                 "menuItems" => $menuItems,
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
-                "pageTitle" => "Menu Items for"
             ];
 
-            return view('Menu', $data);
+            return Navigation::renderNavBar("Menu Items For") . view('Menu', $data) . Navigation::renderFooter();
         }else{
             return view("errors/html/authError");
         }

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\BrandModel;
+use App\Controllers\Navigation;
 
 class App extends BaseController
 
@@ -13,12 +14,10 @@ class App extends BaseController
             $brandModel = new BrandModel;
 
             $data = [
-                "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
-                "pageTitle" => "App"
+               
             ];
 
-            return view('App', $data);
+            return Navigation::renderNavBar("App Builds") . view('App', $data) . Navigation::renderFooter();
         }else{
             return view("errors/html/authError");
         }

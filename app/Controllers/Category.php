@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\CategoryModel;
 use App\Models\CollectionModel;
 use App\Models\BrandModel;
+use App\Controllers\Navigation;
 
 class Category extends BaseController
 {
@@ -37,13 +38,10 @@ class Category extends BaseController
 
 
             $data = [
-                "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
                 "categories" => $categories,
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
-                "pageTitle" => "Categories for"
             ];
 
-            return view('Category/Category_Detail', $data);
+            return Navigation::renderNavBar("Categories For") . view('Category/Category_Detail', $data) . Navigation::renderFooter();
         }else{
             return view("errors/html/authError");
         }

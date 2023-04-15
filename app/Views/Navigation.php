@@ -23,12 +23,20 @@
             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
         </svg>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div class="row p-2" style="background-color: lightgray;">
+                <div class="col-2">
+                    <img class="brand-icon-header" src="/Icons/Whitewall-ICON.png">
+                </div>
+                <div class="col-10">
+                    <p>Brand</p>
+                </div>
+            </div>
             <a class="dropdown-item" href="/brand">Manage Brands</a>
             <a class="dropdown-item" href="/brand/users/<?= $brandId ?>">Manage Users</a>
             <a class="dropdown-item" href="/account">Account</a>
             <a class="dropdown-item" href="/billing">Billing</a>
+            
         </div>
-    </div>
     </div>
 
 </nav>
@@ -60,7 +68,7 @@
                 <a class="nav-link" href="/menu">Menu Items</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/app">App Builds</a>
+                <a class="nav-link" href="/app">Versions</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/brand/branding/<?= $brandId ?>">Branding</a>
@@ -102,6 +110,4 @@
         </div>
     </div>
 </div>
-
-<?= $this->renderSection('MainPage') ?>
 <?= $this->endSection() ?>

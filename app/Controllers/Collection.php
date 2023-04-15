@@ -5,7 +5,7 @@ use App\Models\ImageModel;
 use App\Models\CollectionModel;
 use App\Models\CategoryModel;
 use App\Models\BrandModel;
-
+use App\Controllers\Navigation;
 
 class Collection extends BaseController
 {
@@ -34,13 +34,10 @@ class Collection extends BaseController
             };
 
             $data = [
-                "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
                 "collections" => $collections,
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
-                "pageTitle" => "Collections for"
             ];
 
-            return view('Collection/Collection_Detail', $data);
+            return Navigation::renderNavBar("Collections For") . view('Collection/Collection_Detail', $data) . Navigation::renderFooter();
         }else{
             return view("errors/html/authError");
         }

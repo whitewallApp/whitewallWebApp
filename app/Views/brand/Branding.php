@@ -1,6 +1,3 @@
-<?= $this->extend('Navigation') ?>
-<?= $this->section('MainPage') ?>
-
 <!-- TODO: include javascript here to make it work on OnLoad -->
 <div class="container">
     <div class="row">
@@ -314,5 +311,3 @@
         </div>
     </div>
 </div>
-
-<?= $this->endSection() ?>

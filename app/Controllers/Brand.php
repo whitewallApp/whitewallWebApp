@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\BrandModel;
+use App\Controllers\Navigation;
 
 class Brand extends BaseController
 {
@@ -20,11 +21,9 @@ class Brand extends BaseController
 
             $data = [
                 "brandInfo" => $brands,
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
-                "pageTitle" => "Brand"
             ];
 
-            return view('brand/Brand', $data);
+            return Navigation::renderNavBar("Brands") . view('brand/Brand', $data) . Navigation::renderFooter();
         }else{
             return view("errors/html/authError");
         }
@@ -37,11 +36,9 @@ class Brand extends BaseController
 
             $data = [
                 "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
-                "pageTitle" => "Branding"
             ];
 
-            return view("brand/Branding", $data);
+            return Navigation::renderNavBar("Branding") . view("brand/Branding", $data) . Navigation::renderFooter();
         }else{
             return json_encode(["success" => false]);
         }
@@ -53,12 +50,9 @@ class Brand extends BaseController
             $brandModel = new BrandModel;
 
             $data = [
-                "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
-                "pageTitle" => "Users"
             ];
 
-            return view("brand/Users", $data);
+            return Navigation::renderNavBar("Brand Users") . view("brand/Users", $data) . Navigation::renderFooter();
         }else{
             return json_encode(["success" => false]);
         }

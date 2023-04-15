@@ -5,6 +5,7 @@ use App\Models\ImageModel;
 use App\Models\CollectionModel;
 use App\Models\CategoryModel;
 use App\Models\BrandModel;
+use App\Controllers\Navigation;
 
 class Image extends BaseController
 {
@@ -42,12 +43,9 @@ class Image extends BaseController
 
             // compile data to be sent to view
             $data = [
-                "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
                 "images" => $images,
-                "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
-                "pageTitle" => "Images for"
             ];
-            return view('Image/Image_Detail', $data);
+            return Navigation::renderNavBar("Images For") . view('Image/Image_Detail', $data) . Navigation::renderFooter();
         }else{
             return view("errors/html/authError");
         }

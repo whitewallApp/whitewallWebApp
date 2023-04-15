@@ -1,5 +1,3 @@
-<?= $this->extend('Navigation') ?>
-<?= $this->section('MainPage') ?>
 <div>
     <div class="row">
         <div class="col d-flex justify-content-center">
@@ -33,4 +31,3 @@
         </div>
     </div>
 </div>
-<?= $this->endSection() ?>

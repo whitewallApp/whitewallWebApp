@@ -1,5 +1,3 @@
-<?= $this->extend('Navigation') ?>
-<?= $this->section('MainPage') ?>
 <div class="card-deck m-2">
     <?php foreach($brandInfo as $brand) : ?>
         <div id="<?=$brand["name"] ?>" class="card text-center" >
@@ -18,4 +16,3 @@
         <h1>New Brand</h1>
     </div>
 </div>
-<?= $this->endSection() ?>

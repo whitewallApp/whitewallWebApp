@@ -1,6 +1,3 @@
-<?= $this->extend('Navigation') ?>
-<?= $this->section('MainPage') ?>
-
 <div class="row">
     <div class="col-sm-4">
         <div class="row m-2">
@@ -92,4 +89,3 @@
         </div>
     </div>
 </div>
-<?= $this->endSection() ?>

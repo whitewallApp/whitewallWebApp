@@ -60,3 +60,8 @@ body {
     text-align: center;
     font-size: x-small;
 }
+
+.brand-icon-header {
+    height: 20px;
+    width: auto;
+}
