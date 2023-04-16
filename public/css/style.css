@@ -64,4 +64,5 @@ body {
 .brand-icon-header {
     height: 20px;
     width: auto;
+    border-radius: 100px;
 }

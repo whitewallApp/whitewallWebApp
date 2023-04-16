@@ -14,6 +14,8 @@ class Navigation extends BaseController
         $data = [
             "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
             "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
+            "brandName" => $session->get("brand_name"),
+            "brandIcon" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["logo"]),
             "pageTitle" => $pageTitle
         ];
 

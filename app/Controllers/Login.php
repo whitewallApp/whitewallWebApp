@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Controllers;
+use App\Controllers\Navigation;
 
 class Login extends BaseController
 {
     public function index()
     {
-        return view('Login'); //TODO: Needs to save in session: Brand Name, Account ID, if logged in
+        return view('Login') . Navigation::renderFooter(); //TODO: Needs to save in session: Brand Name, Account ID, if logged in
     }
 
     public function post(){
