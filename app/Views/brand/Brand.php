@@ -1,9 +1,9 @@
 <div class="card-deck m-2">
-    <?php foreach($brandInfo as $brand) : ?>
-        <div id="<?=$brand["name"] ?>" class="card text-center" >
-            <div style="cursor: pointer;" onclick="changeBrnd(this);">
-                <img class="card-img-top img-circle" src="<?=$brand["logo"] ?>" />
-                <h1><?=$brand["name"] ?></h1>
+    <?php foreach ($brandInfo as $brand) : ?>
+        <div class="card text-center">
+            <div id="<?= $brand["name"] ?>" style="cursor: pointer;" onclick="changeBrnd(this);">
+                <img class="card-img-top img-circle" src="<?= $brand["logo"] ?>" />
+                <h1><?= $brand["name"] ?></h1>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><a href="/brand/users/<?= $brand["id"] ?>" class="badge badge-primary">Manage Users<i class="bi bi-people ml-1"></i></a></li>
