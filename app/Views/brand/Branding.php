@@ -71,10 +71,10 @@
                             </div>
                             <div class="row bottom-nav">
                                 <div class="col text-center">
-                                    hello
+                                    Category 1
                                 </div>
                                 <div class="col text-center">
-                                    hello
+                                    Category 2
                                 </div>
                             </div>
                         </div>
