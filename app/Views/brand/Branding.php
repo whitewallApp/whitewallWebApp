@@ -13,7 +13,7 @@
                 <!-- Collections -->
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="phone">
-                        <img class="phone-img" src="http://localhost/Icons/phone.png">
+                        <img class="phone-img" src="/Icons/phone.png">
                         <div class="background-phone-collection">
                             <div class="row m-2">
                                 <div class="col-sm-6">
@@ -84,7 +84,7 @@
                 <!-- Set Image Pane -->
                 <div class="tab-pane fade" id="nav-img-pg" role="tabpanel" aria-labelledby="nav-img-pg-tab">
                     <div class="phone">
-                        <img class="phone-img" src="http://localhost/Icons/phone.png">
+                        <img class="phone-img" src="/Icons/phone.png">
                         <div class="background-phone-image">
                             <div class="row m-2">
                                 <div class="col-sm-6">
@@ -145,7 +145,7 @@
                 </div>
                 <div class="tab-pane fade" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab">
                     <div class="phone">
-                        <img class="phone-img" src="http://localhost/Icons/phone.png">
+                        <img class="phone-img" src="/Icons/phone.png">
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-menu" role="tabpanel" aria-labelledby="nav-menu-tab">
