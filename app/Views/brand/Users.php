@@ -55,296 +55,290 @@
         </div>
     </div>
     <div class="col-6">
-        <div class="row">
-            <!-- User Info -->
-            <div class="col-4">
-                <div class="card p-2">
-                    <form>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput">Name</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder">
+        <!-- User Info -->
+        <div class="card p-2 mb-5">
+            <form>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Name</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">Email</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+                </div>
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label class="mr-3">Active</label>
+                    </div>
+                    <div class="col-8">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                            <label class="custom-control-label" for="customSwitch1"></label>
                         </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Email</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-3">
-                                <label class="mr-3">Active</label>
-                            </div>
-                            <div class="col-8">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                    <label class="custom-control-label" for="customSwitch1"></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <select class="custom-select">
-                                <option selected>Brand 1</option>
-                                <option value="1">Brand 2</option>
-                                <option value="2">Brand 3</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                    </form>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <select class="custom-select">
+                        <option selected>Brand 1</option>
+                        <option value="1">Brand 2</option>
+                        <option value="2">Brand 3</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <!-- Permissions Table -->
+        <div class="row ml-3">
+            <div class="col-2">
+                <label class="mr-3">Admin</label>
+            </div>
+            <div class="col-10">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch2">
+                    <label class="custom-control-label" for="customSwitch2"></label>
                 </div>
             </div>
-            <!-- Permissions Table -->
-            <div class="col-8">
-                <div class="row ml-3">
-                    <div class="col-2">
-                        <label class="mr-3">Admin</label>
-                    </div>
-                    <div class="col-10">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitch2">
-                            <label class="custom-control-label" for="customSwitch2"></label>
-                        </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+
+                </div>
+                <div class="col">
+                    <p>View</p>
+                </div>
+                <div class="col">
+                    <p>Add</p>
+                </div>
+                <div class="col">
+                    <p>Edit</p>
+                </div>
+                <div class="col">
+                    <p>Remove</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p>Select All</p>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     </div>
                 </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-
-                        </div>
-                        <div class="col">
-                            <p>View</p>
-                        </div>
-                        <div class="col">
-                            <p>Add</p>
-                        </div>
-                        <div class="col">
-                            <p>Edit</p>
-                        </div>
-                        <div class="col">
-                            <p>Remove</p>
-                        </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     </div>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p>Select All</p>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     </div>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p>Categories</p>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     </div>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p>Collections</p>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p>Categories</p>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     </div>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p>Images</p>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     </div>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p>Notifications</p>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     </div>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p>Menu Items</p>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     </div>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p>Branding</p>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p>Collections</p>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     </div>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p>Brands</p>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     </div>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p>App Builds</p>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            </div>
-                        </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p>Images</p>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p>Notifications</p>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p>Menu Items</p>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p>Branding</p>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p>Brands</p>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p>App Builds</p>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     </div>
                 </div>
             </div>

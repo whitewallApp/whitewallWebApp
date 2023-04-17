@@ -35,7 +35,7 @@
                 <a class="dropdown-item" href="/brand">Manage Brands</a>
                 <a class="dropdown-item" href="/brand/users/<?= $brandId ?>">Manage Users</a>
                 <a class="dropdown-item" href="/account">Account</a>
-                <a class="dropdown-item" href="/billing">Billing</a>
+                <a class="dropdown-item" href="#">Billing</a>
             </div>
         </div>
     </div>
