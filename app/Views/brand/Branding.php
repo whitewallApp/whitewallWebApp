@@ -5,7 +5,8 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home Page</a>
                     <a class="nav-item nav-link" id="nav-profile-img-pg" data-toggle="tab" href="#nav-img-pg" role="tab" aria-controls="nav-img-pg" aria-selected="false">Image Page</a>
-                    <a class="nav-item nav-link" id="nav-contact-img" data-toggle="tab" href="#nav-img" role="tab" aria-controls="nav-img" aria-selected="false">Set Image</a>
+                    <a class="nav-item nav-link" id="nav-contact-img" data-toggle="tab" href="#nav-img" role="tab" aria-controls="nav-img" aria-selected="false">Wallpaper Page</a>
+                    <a class="nav-item nav-link" id="nav-contact-menu" data-toggle="tab" href="#nav-menu" role="tab" aria-controls="nav-menu" aria-selected="false">App Menu</a>
                 </div>
             </nav>
             <div class="tab-content" id="myTabContent">
@@ -136,6 +137,9 @@
                     <div class="phone">
 
                     </div>
+                </div>
+                <div class="tab-pane fade" id="nav-menu" role="tabpanel" aria-labelledby="nav-menu-tab">
+                    Menu
                 </div>
             </div>
         </div>
