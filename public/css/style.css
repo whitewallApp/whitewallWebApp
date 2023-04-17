@@ -65,7 +65,7 @@ body {
 .background-phone-image {
     border-radius: 20px;
     position: relative;
-    left: 25px;
+    left: 190px;
     top: 60px;
     width: 230px;
     height: 430px;
@@ -91,10 +91,6 @@ body {
     height: 20px;
     width: auto;
     border-radius: 100px;
-}
-
-.container.branding {
-    
 }
 
 .branding-button {
