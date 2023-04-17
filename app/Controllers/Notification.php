@@ -8,6 +8,7 @@ use App\Models\BrandModel;
 use App\Models\CategoryModel;
 use App\Models\CollectionModel;
 use App\Models\MenuModel;
+use App\Controllers\Navigation;
 
 class Notification extends BaseController
 {
@@ -61,16 +62,13 @@ class Notification extends BaseController
             }
 
             $data = [
-                "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
                 "notifications" => $notifications,
                 "images" => $images,
                 "categories" => $categories,
                 "menuItems" => $menuModel->getCollumn("title", $brandname),
-                "brandId" => $brandID,
-                "pageTitle" => "Notifications for"
             ];
 
-            return view('Notifications', $data);
+            return Navigation::renderNavBar("Menu Items for") . view('Notifications', $data) . Navigation::renderFooter();
         }else{
             return view("errors/html/authError");
         }

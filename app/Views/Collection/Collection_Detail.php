@@ -1,9 +1,11 @@
 <?= $this->extend('Collection/Collection_List') ?>
 
 <?= $this->section('Detail') ?>
-<div class="row justify-content-center">
-  <h2 id="data-title" class="mr-4"></h2>
-  <button id="add-button" class="btn btn-primary" onclick="showData('/collections');">Add</button>
+<div class="row">
+  <div class="col d-flex justify-content-center">
+    <h2 id="data-title" class="mr-4"></h2>
+    <button id="add-button" class="btn btn-primary" onclick="showData('/collections');">Add</button>
+  </div>
 </div>
 <form class="mr-4" id="data" style="display: none">
   <div class="form-group">
@@ -26,14 +28,14 @@
   </div>
   <div class="form-group">
     <div id="file-icon" class="custom-file">
-        <input type="file" class="custom-file-input" id="customFile">
-        <label class="custom-file-label" for="customFile">Icon Image</label>
+      <input type="file" class="custom-file-input" id="customFile">
+      <label class="custom-file-label" for="customFile">Icon Image</label>
     </div>
   </div>
   <div class="form-group">
     <div id="img-icon" class="row m-2">
-        <img id="icon" class="img-sm rounded mr-3">
-        <button class="btn btn-primary">Change</button>
+      <img id="icon" class="img-sm rounded mr-3">
+      <button class="btn btn-primary">Change</button>
     </div>
   </div>
   <div class="float-right row">

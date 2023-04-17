@@ -1,6 +1,3 @@
-<?= $this->extend('Navigation') ?>
-<?= $this->section('MainPage') ?>
-
 <script>
     categories = <?= json_encode($categories) ?>
 </script>
@@ -156,4 +153,3 @@
         </div>
     </div>
 </div>
-<?= $this->endSection() ?>

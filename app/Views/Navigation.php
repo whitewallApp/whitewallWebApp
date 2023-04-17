@@ -35,7 +35,7 @@
                 <a class="dropdown-item" href="/brand">Manage Brands</a>
                 <a class="dropdown-item" href="/brand/users/<?= $brandId ?>">Manage Users</a>
                 <a class="dropdown-item" href="/account">Account</a>
-                <a class="dropdown-item" href="#">Billing</a>
+                <a class="dropdown-item" href="">Billing</a>
             </div>
         </div>
     </div>
@@ -77,23 +77,25 @@
         </ul>
 </nav>
 
-<div class="row g-2">
+<div class="row">
     <div class="col-4">
         <div class="row">
-            <div class="col">
+            <div class="col-sm-6 text-center">
                 <p class="breadcrumbs p-3"><?= $pageTitle ?></p>
             </div>
-            <div class="col p-3 mt-2">
-                <?php if (isset($brands)) : ?>
-                    <select class="custom-select">
-                        <?php foreach ($brands as $brand) : ?>
-                            <option>
-                                <p><?= $brand["name"] ?> </p>
-                                <img src="<?= $brand["logo"] ?>">
-                            </option>
-                        <?php endforeach ?>
-                    </select>
-                <?php endif ?>
+            <div class="col-sm-6 pl-0">
+                <div class="mt-3">
+                    <?php if (isset($brands)) : ?>
+                        <select style="max-width: fit-content; font-size: 1.5rem;" class="h-50 custom-select">
+                            <?php foreach ($brands as $brand) : ?>
+                                <option>
+                                    <p><?= $brand["name"] ?> </p>
+                                    <img src="<?= $brand["logo"] ?>">
+                                </option>
+                            <?php endforeach ?>
+                        </select>
+                    <?php endif ?>
+                </div>
             </div>
         </div>
     </div>

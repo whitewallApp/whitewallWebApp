@@ -1,9 +1,11 @@
 <?= $this->extend('Image/Image_List') ?>
 
 <?= $this->section('Detail') ?>
-<div class="row justify-content-center">
-  <h2 id="data-title" class="mr-4"></h2>
-  <button id="add-button" class="btn btn-primary" onclick="showData('/images');">Add</button>
+<div class="row">
+  <div class="col d-flex justify-content-center">
+    <h2 id="data-title" class="mr-4"></h2>
+    <button id="add-button" class="btn btn-primary" onclick="showData('/images');">Add</button>
+  </div>
 </div>
 <form class="mr-4" id="data" style="display: none">
   <div class="form-group">
