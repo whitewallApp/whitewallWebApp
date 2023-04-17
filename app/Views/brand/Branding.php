@@ -1,95 +1,238 @@
 <!-- TODO: include javascript here to make it work on OnLoad -->
-<div class="container">
+<div class="container branding">
     <div class="row">
-        <div class="col phone">
-            <div class="background-phone">
-                <div class="row m-2">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                            <div class="category-title">
-                                <p>Category Title</p>
+        <div class="col-6">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="phone">
+                        <div class="background-phone-collection">
+                            <div class="row m-2">
+                                <div class="col-sm-6">
+                                    <div class="card">
+                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                        <div class="collection-title">
+                                            <p>Collection Title</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="card">
+                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                        <div class="collection-title">
+                                            <p>Collection Title</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-sm-6">
+                                    <div class="card">
+                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                        <div class="collection-title">
+                                            <p>Collection Title</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="card">
+                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                        <div class="collection-title">
+                                            <p>Collection Title</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-sm-6">
+                                    <div class="card">
+                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                        <div class="collection-title">
+                                            <p>Collection Title</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="card">
+                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                        <div class="collection-title">
+                                            <p>Collection Title</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                            <div class="category-title">
-                                <p>Category Title</p>
-                            </div>
-                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">test</div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">yes</div>
                     </div>
                 </div>
-                <div class="row m-2">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                            <div class="category-title">
-                                <p>Category Title</p>
+            </div>
+            <!-- <div class="row">
+            <div class="col phone">
+                <div class="background-phone-collection">
+                    <div class="row m-2">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                <div class="collection-title">
+                                    <p>Collection Title</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                <div class="collection-title">
+                                    <p>Collection Title</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                            <div class="category-title">
-                                <p>Category Title</p>
+                    <div class="row m-2">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                <div class="collection-title">
+                                    <p>Collection Title</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                <div class="collection-title">
+                                    <p>Collection Title</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row m-2">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                            <div class="category-title">
-                                <p>Category Title</p>
+                    <div class="row m-2">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                <div class="collection-title">
+                                    <p>Collection Title</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                            <div class="category-title">
-                                <p>Category Title</p>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                <div class="collection-title">
+                                    <p>Collection Title</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col phone">
+                <div class="background-phone-image">
+                    <div class="row m-2">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                <div class="image-title">
+                                    <p>Image Title</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                <div class="image-title">
+                                    <p>Image Title</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                <div class="image-title">
+                                    <p>Image Title</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                <div class="image-title">
+                                    <p>Image Title</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                <div class="image-title">
+                                    <p>Image Title</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                <div class="collection-title">
+                                    <p>Collection Title</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col phone">
+
+            </div> -->
         </div>
-        <div class="col">
+
+
+
+        <!-- Branding Buttons -->
+        <div class="col-6">
             <div class="row p-3">
-                <div class="col">
+                <div class="col-sm-4">
                     <button class="btn btn-primary p-3 w-100" type="button" data-toggle="collapse" data-target="#collapseLogo" aria-expanded="false" aria-controls="collapseLogo">Logos</button>
                 </div>
-                <div class="col">
+                <div class="col-sm-4">
                     <button class="btn btn-primary p-3 w-100" type="button" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="false" aria-controls="collapseCategory">Category Labels</button>
                 </div>
-                <div class="col">
+                <div class="col-sm-4">
                     <button class="btn btn-primary p-3 w-100" type="button" data-toggle="collapse" data-target="#collapseBackground" aria-expanded="false" aria-controls="collapseBackground">Background</button>
                 </div>
             </div>
             <div class="row p-3">
-                <div class="col">
+                <div class="col-sm-4">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseCollImgLabel" aria-expanded="false" aria-controls="collapseCollImgLabel">Collection & Image Labels</button>
                 </div>
-                <div class="col">
+                <div class="col-sm-4">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseDropdown" aria-expanded="false" aria-controls="collapseDropdown">Selection Dropdown</button>
                 </div>
-                <div class="col">
+                <div class="col-sm-4">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseCheckmark" aria-expanded="false" aria-controls="collapseCheckmark">Selection Checkmark</button>
                 </div>
             </div>
             <div class="row p-3">
-                <div class="col">
+                <div class="col-sm-4">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseImgColl" aria-expanded="false" aria-controls="collapseImgColl">Images & Collections</button>
                 </div>
-                <div class="col">
+                <div class="col-sm-4">
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseImgCollFrame" aria-expanded="false" aria-controls="collapseImgCollFrame">Images & Collections Frame</button>
                 </div>
-                <div class="col">
+                <div class="col-sm-4">
                     <button class="btn btn-primary p-3 w-100" type="button" data-toggle="collapse" data-target="#collapseButton" aria-expanded="false" aria-controls="collapseButton">Button</button>
                 </div>
             </div>
@@ -310,4 +453,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>
