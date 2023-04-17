@@ -25,10 +25,10 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <div class="col">
                 <div class="row rounded" style="background-color: lightgray;">
-                    <div class="col-4 pl-2">
+                    <div class="col-4">
                         <img class="brand-icon-header" src="<?= $brandIcon ?>">
                     </div>
-                    <div class="col-8 p-0 m-0">
+                    <div class="col-8">
                         <p style="font-size: medium;"><?= $brandName ?></p>
                     </div>
                 </div>

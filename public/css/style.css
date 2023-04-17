@@ -15,8 +15,8 @@ body {
 }
 
 .img-sm {
-    max-width:25%;
-    height:auto;
+    max-width: 25%;
+    height: auto;
 }
 
 .img-circle {
@@ -32,18 +32,24 @@ body {
 }
 
 .phone {
-    height: 553px;
-    background-image: url("http://localhost/Icons/phone.png");
+    /* height: 553px; */
+    /* background-image: url("http://localhost/Icons/phone.png"); */
     /* background-position: 150px; */
+}
+
+.phone-img {
+    position: relative;
+    left: -180px;
+    z-index: 1;
 }
 
 .background-phone-collection {
     border-radius: 20px;
     position: relative;
-    left: 190px;
-    top: 60px;
+    top: -500px;
+    left: 10px;
     width: 230px;
-    height: 430px;
+    height: 500px;
     overflow-y: scroll;
     overflow-x: hidden;
     -ms-overflow-style: none;
@@ -65,10 +71,10 @@ body {
 .background-phone-image {
     border-radius: 20px;
     position: relative;
-    left: 190px;
-    top: 60px;
+    top: -500px;
+    left: 10px;
     width: 230px;
-    height: 430px;
+    height: 500px;
     overflow-y: scroll;
     overflow-x: hidden;
     -ms-overflow-style: none;
@@ -79,6 +85,14 @@ body {
 
 .background-phone-image::-webkit-scrollbar {
     display: none;
+}
+
+.row.bottom-nav {
+    background-color: lightslategray;
+    position: relative;
+    height: 50px;
+    top: 45px;
+    border-radius: 0px 0px 100px 100px;
 }
 
 .image-title {
