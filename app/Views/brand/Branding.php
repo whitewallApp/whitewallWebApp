@@ -3,9 +3,9 @@
         <div class="col-6">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
-                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home Page</a>
+                    <a class="nav-item nav-link" id="nav-profile-img-pg" data-toggle="tab" href="#nav-img-pg" role="tab" aria-controls="nav-img-pg" aria-selected="false">Image Page</a>
+                    <a class="nav-item nav-link" id="nav-contact-img" data-toggle="tab" href="#nav-img" role="tab" aria-controls="nav-img" aria-selected="false">Set Image</a>
                 </div>
             </nav>
             <div class="tab-content" id="myTabContent">
@@ -72,7 +72,7 @@
                 </div>
 
                 <!-- Set Image Pane -->
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="tab-pane fade" id="nav-img-pg" role="tabpanel" aria-labelledby="nav-img-pg-tab">
                     <div class="phone">
                         <div class="background-phone-image">
                             <div class="row m-2">
@@ -132,7 +132,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                <div class="tab-pane fade" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab">
                     <div class="phone">
 
                     </div>
