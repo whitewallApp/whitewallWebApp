@@ -143,13 +143,28 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Wallpaper Pane -->
                 <div class="tab-pane fade" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab">
                     <div class="phone">
                         <img class="phone-img" src="/Icons/phone.png">
                     </div>
                 </div>
+
+                <!-- Menu Pane -->
                 <div class="tab-pane fade" id="nav-menu" role="tabpanel" aria-labelledby="nav-menu-tab">
-                    Menu
+                    <div class="phone">
+                        <img class="phone-img" src="/Icons/phone.png">
+                        <i class="bi bi-list menu-icon"></i>
+                        <div class="list-group list-group-light menu-list">
+                            <a href="#" class="list-group-item list-group-item-action px-3 border-0 active" aria-current="true">
+                                The current link item</a>
+                            <a href="#" class="list-group-item list-group-item-action px-3 border-0">A second link item</a>
+                            <a href="#" class="list-group-item list-group-item-action px-3 border-0">A third link item</a>
+                            <a href="#" class="list-group-item list-group-item-action px-3 border-0">A fourth link item</a>
+                            <a class="list-group-item list-group-item-action px-3 border-0 disabled">A disabled link item</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
