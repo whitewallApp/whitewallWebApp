@@ -2,11 +2,49 @@ window.onload = function(){
     
     // breadcrumbs();
 
-    startCheckBoxes();
-
     notifications_start();
 
     setImageStart();
+
+    loadingBars();
+
+    startCheckBoxes();
+}
+
+function loadingBars(){
+    console.log("Loading");
+    $("#ioscompileButton").on("click", function(){
+        $("#iosInput").hide();
+
+        var bar = $("#iosLoading");
+        bar.parent().show()
+
+        for(i = 0; i <= 100; i++){
+            bar.attr("aria-valuenow", i);
+            bar.html(i + "%")
+            bar.css("width", i + "%")
+        }
+
+        $("#iosDownloadButton").show();
+        $("#iosPublishButton").show();
+        $("#ioscompileButton").hide();
+    })
+    $("#andoidcompileButton").on("click", function () {
+        $("#androidInput").hide();
+
+        var bar = $("#androidLoading");
+        bar.parent().show()
+
+        for (i = 0; i <= 100; i++) {
+            bar.attr("aria-valuenow", i);
+            bar.html(i + "%")
+            bar.css("width", i + "%")
+        }
+
+        $("#andoidDownloadButton").show();
+        $("#andoidPublishButton").show();
+        $("#andoidcompileButton").hide();
+    })
 }
 
 function startCheckBoxes(){
