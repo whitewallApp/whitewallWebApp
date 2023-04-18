@@ -38,7 +38,7 @@ class Brand extends BaseController
                 "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
             ];
 
-            return Navigation::renderNavBar("Branding") . view("brand/Branding", $data) . Navigation::renderFooter();
+            return Navigation::renderNavBar("Branding", [true, "Brands"]) . view("brand/Branding", $data) . Navigation::renderFooter();
         }else{
             return json_encode(["success" => false]);
         }
@@ -52,7 +52,7 @@ class Brand extends BaseController
             $data = [
             ];
 
-            return Navigation::renderNavBar("Brand Users") . view("brand/Users", $data) . Navigation::renderFooter();
+            return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
         }else{
             return json_encode(["success" => false]);
         }

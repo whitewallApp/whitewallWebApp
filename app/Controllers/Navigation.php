@@ -6,7 +6,7 @@ use App\Models\BrandModel;
 
 class Navigation extends BaseController
 {
-    public static function renderNavBar($pageTitle)
+    public static function renderNavBar($pageTitle, $actions = [])
     {
         $brandModel = new BrandModel;
         $session = session();
@@ -16,7 +16,8 @@ class Navigation extends BaseController
             "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
             "brandName" => $session->get("brand_name"),
             "brandIcon" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["logo"]),
-            "pageTitle" => $pageTitle
+            "pageTitle" => $pageTitle,
+            "actions" => $actions
         ];
 
 

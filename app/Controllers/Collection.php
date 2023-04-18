@@ -37,7 +37,7 @@ class Collection extends BaseController
                 "collections" => $collections,
             ];
 
-            return Navigation::renderNavBar("Collections For") . view('Collection/Collection_Detail', $data) . Navigation::renderFooter();
+            return Navigation::renderNavBar("Collections", [true, "Images"]) . view('Collection/Collection_Detail', $data) . Navigation::renderFooter();
         }else{
             return view("errors/html/authError");
         }

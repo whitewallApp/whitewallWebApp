@@ -45,7 +45,7 @@ class Image extends BaseController
             $data = [
                 "images" => $images,
             ];
-            return Navigation::renderNavBar("Images For") . view('Image/Image_Detail', $data) . Navigation::renderFooter();
+            return Navigation::renderNavBar("Images", [true, "Images"]) . view('Image/Image_Detail', $data) . Navigation::renderFooter();
         }else{
             return view("errors/html/authError");
         }

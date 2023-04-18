@@ -26,7 +26,7 @@ class Menu extends BaseController
                 "menuItems" => $menuItems,
             ];
 
-            return Navigation::renderNavBar("Menu Items For") . view('Menu', $data) . Navigation::renderFooter();
+            return Navigation::renderNavBar("Menu Items", [true, "Menu Items"]) . view('Menu', $data) . Navigation::renderFooter();
         }else{
             return view("errors/html/authError");
         }

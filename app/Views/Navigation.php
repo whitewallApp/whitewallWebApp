@@ -81,7 +81,7 @@
     <div class="col-4">
         <div class="row">
             <div class="col-sm-6 text-center">
-                <p class="breadcrumbs p-3"><?= $pageTitle ?></p>
+                <p class="breadcrumbs p-3"><?= $pageTitle ?> For</p>
             </div>
             <div class="col-sm-6 pl-0">
                 <div class="mt-3">
@@ -100,17 +100,19 @@
         </div>
     </div>
     <div class="col-8">
-        <div class="row row-cols-3 float-right p-3">
-            <div class="col p-3">
-                <hp>Add</p>
+        <?php if(isset($actions[0])) : ?>
+            <div class="row row-cols-3 float-right p-3">
+                <div class="col p-3">
+                    <p>Add <?= $actions[1] ?></p>
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary m-2">Individual</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary m-2">Bulk Upload</button>
+                </div>
             </div>
-            <div class="col">
-                <button class="btn btn-primary m-2">Individual</button>
-            </div>
-            <div class="col">
-                <button class="btn btn-primary m-2">Bulk Upload</button>
-            </div>
-        </div>
+        <?php endif ?>
     </div>
 </div>
 <?= $this->endSection() ?>
