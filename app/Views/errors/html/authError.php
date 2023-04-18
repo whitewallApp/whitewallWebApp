@@ -17,6 +17,7 @@
         <h1 class="headline"><?= lang('Errors.whoops') ?></h1>
 
         <p class="lead"><?= lang('You Are Not Logged In. <br> Please go back an hit the submit button') ?></p>
+        <a href="/"><button class="btn btn-primary">Log In</button></a>
 
     </div>
 
