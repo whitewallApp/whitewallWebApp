@@ -1,5 +1,3 @@
-<?= $this->extend('Navigation') ?>
-<?= $this->section('MainPage') ?>
 <div class="col-sm-8 mt-3">
   <form>
     <div class="form-group row">
@@ -11,10 +9,10 @@
     <div class="form-group" id="photoDiv">
       <div class="row row-col">
         <div class="col-2">
-          <label class="form-label">Default file input example</label>
+          <label class="form-label">Profile Picture</label>
         </div>
         <div class="col-8">
-          <input type="file" class="form-control" id="customFile" />
+          <input type="file" class="form-control" id="profilePhoto" />
         </div>
       </div>
     </div>
@@ -27,4 +25,3 @@
 
   </form>
 </div>
-<?= $this->endSection() ?>
