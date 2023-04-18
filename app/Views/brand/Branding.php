@@ -34,6 +34,7 @@
                             <div class="row m-2">
                                 <div class="col-sm-6">
                                     <div class="card">
+                                        
                                         <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
                                         <div class="collection-title">
                                             <p>Collection Title</p>
@@ -105,7 +106,7 @@
                         <img class="phone-img" src="/Icons/phone.png">
                         <div class="background-phone-image">
                             <div class="col top-nav mt-2 mb-2">
-                               <button class="btn btn-primary w-100">Back</button>
+                                <button class="btn btn-primary w-100">Back</button>
                             </div>
                             <div class="row m-2">
                                 <div class="col-sm-6">
@@ -259,8 +260,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="categoryFontSize">Category Font Size</label>
-                                    <input type="range" class="custom-range" min="1" max="60" step="1" id="categoryFontSize">
+                                    <label class="form-label" for="catFont">Category Font Size</label>
+                                    <div class="range">
+                                        <input type="range" class="form-range" step="1" min="0" max="60" id="catFont" />
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -316,8 +319,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="collImgLabelFontSize">Collection & Image Label Font Size</label>
-                                    <input type="range" class="custom-range" min="1" max="60" step="1" id="collImgLabelFontSize">
+                                    <label class="form-label" for="imgCollabelFont">Font Size</label>
+                                    <div class="range">
+                                        <input type="range" class="form-range" step="1" min="0" max="60" id="imgCollabelFont" />
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -358,8 +363,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="dropdownFontSize">Dropdown Font Size</label>
-                                    <input type="range" class="custom-range" min="1" max="60" step="1" id="dropdownFontSize">
+                                    <label class="form-label" for="dropdownFont">Font Size</label>
+                                    <div class="range">
+                                        <input type="range" class="form-range" min="0" max="60" id="dropdownFont" />
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -400,12 +407,16 @@
                         <div class="card-body">
                             <form>
                                 <div class="form-group">
-                                    <label for="borderRadius">Border Radius</label>
-                                    <input type="range" class="custom-range" min="0" max="100" step="1" id="borderRadius">
+                                    <label class="form-label" for="imgBorderRadius">Border Radius</label>
+                                    <div class="range">
+                                        <input type="range" class="form-range" min="0" max="100" id="imgBorderRadius" />
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="borderWidth">Border Width</label>
-                                    <input type="range" class="custom-range" min="0" max="100" step="1" id="borderWidth">
+                                    <label class="form-label" for="imgBorderWidth">Border Width</label>
+                                    <div class="range">
+                                        <input type="range" class="form-range" min="0" max="100" id="imgBorderWidth" />
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="borderColor">Border Color</label>
@@ -431,12 +442,16 @@
                                     <input type="color" class="form-control" id="collBackgroundColor">
                                 </div>
                                 <div class="form-group">
-                                    <label for="CornerRadius">Corner Radius</label>
-                                    <input type="range" class="custom-range" min="0" max="100" step="1" id="CornerRadius">
+                                    <label class="form-label" for="frameRadius">Border Radius</label>
+                                    <div class="range">
+                                        <input type="range" class="form-range" min="0" max="100" id="frameRadius" />
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="collBorderWidth">Border Width</label>
-                                    <input type="range" class="custom-range" min="0" max="100" step="1" id="collBorderWidth">
+                                    <label class="form-label" for="frameBorderWidth">Border Width</label>
+                                    <div class="range">
+                                        <input type="range" class="form-range" min="0" max="100" id="frameBorderWidth" />
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="collBorderColor">Border Color</label>
@@ -450,7 +465,7 @@
                     <div class="card-header" id="button">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#buttonCollapse" aria-expanded="false" aria-controls="collapseTwo">
-                                Images & Collections Frame
+                                Buttons
                             </button>
                         </h2>
                     </div>
@@ -462,8 +477,10 @@
                                     <input type="color" class="form-control" id="buttonColor">
                                 </div>
                                 <div class="form-group">
-                                    <label for="CornerRadius">Corner Radius</label>
-                                    <input type="range" class="custom-range" min="0" max="100" step="1" id="CornerRadius">
+                                    <label class="form-label" for="buttonBorderRadius">Border Radius</label>
+                                    <div class="range">
+                                        <input type="range" class="form-range" min="0" max="100" id="buttonBorderRadius" />
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <select class="custom-select">
@@ -485,8 +502,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="buttonFontSize">Button Font Size</label>
-                                    <input type="range" class="custom-range" min="1" max="60" step="1" id="buttonFontSize">
+                                    <label class="form-label" for="buttonFontSize">Font Size</label>
+                                    <div class="range">
+                                        <input type="range" class="form-range" min="0" max="60" id="buttonFontSize" />
+                                    </div>
                                 </div>
                             </form>
                         </div>

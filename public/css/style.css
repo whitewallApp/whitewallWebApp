@@ -131,3 +131,9 @@ body {
     height: auto;
     padding: 5px;
 }
+
+.phone-checkmark {
+    z-index: 2;
+    position: relative;
+    top: 20px;
+}
