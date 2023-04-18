@@ -44,12 +44,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr id="1" onclick="">
-                        <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                        <td>Name</td>
-                        <td>example@example.com</td>
-                        <td>Active</td>
-                    </tr>
+                    <?php foreach ($users as $user) : ?>
+                        <tr id="<?= $user["id"] ?>" onclick="">
+                            <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
+                            <td><?= $user["name"] ?></td>
+                            <td><?= $user["email"] ?></td>
+                            <td>Active</td>
+                        </tr>
+                    <?php endforeach ?>
                 </tbody>
             </table>
         </div>

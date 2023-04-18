@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
+use App\Models\UserModel;
 
 class Brand extends BaseController
 {
@@ -29,7 +30,7 @@ class Brand extends BaseController
         }
     }
 
-    public function info($brandId){
+    public function branding($brandId){
         $session = session();
         if ($session->get("logIn")){
             $brandModel = new BrandModel;
@@ -47,9 +48,18 @@ class Brand extends BaseController
     public function users($brandId){
         $session = session();
         if ($session->get("logIn")){
-            $brandModel = new BrandModel;
+            $userModel = new UserModel();
+            $userIds = $userModel->getCollumn("id", 1); //TODO: session account id
+
+            $users = [];
+
+            foreach($userIds as $id){
+                $user = $userModel->getUser($id, filter: ["name", "email", "id"]);
+                array_push($users, $user);
+            }
 
             $data = [
+                "users" => $users
             ];
 
             return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
