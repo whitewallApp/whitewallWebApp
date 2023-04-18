@@ -5,16 +5,26 @@
                 <div class="col-sm-10">
                     <div id="actions" class="row" style="display: none">
                         <div class="col-2">
-                            <p id="infoSelect" class="mr-2"></p>
+                            <p id="infoSelect" class=""></p>
                         </div>
-                        <div class="col-2">
-                            <a href="#">Delete</a>
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-1">
+                                    |
+                                </div>
+                                <div class="col-4 text-center">
+                                    <a href="#">Delete</a>
+                                </div>
+                                <div class="col-1">
+                                    |
+                                </div>
+                                <div class="col-6">
+                                    <a href="#">Change Categories</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-2">
-                            <p class="mr-2 ml-2"> | </p>
-                        </div>
-                        <div class="col-2">
-                            <a href="#">Change Category</a>
+                        <div class="col-4">
+
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 function toggleAll(){
     var boxes = document.getElementsByClassName("checkbox-lg");
     var status = document.getElementById("check-all").checked;
-    var selectedText = `${boxes.length - 1} Selected | `;
+    var selectedText = `${boxes.length - 1} Selected`;
 
     if (status){
         $("#actions").show();
@@ -40,16 +40,16 @@ function singlebox(e){
 
     if (status){
         if (text == ""){
-            output = "1 Selected | "
+            output = "1 Selected"
         }else if (text != ""){
-            output = `${num + 1} Selected | `
+            output = `${num + 1} Selected`
         }
     }else{
         if (num == 1){
             $("#actions").toggle();
             output = ""
         }else if (text != ""){
-            output = `${num - 1} Selected | `
+            output = `${num - 1} Selected`
         }
     }
     document.getElementById("infoSelect").innerHTML = output;
