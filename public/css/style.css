@@ -31,12 +31,6 @@ body {
     background-color: lightgray;
 }
 
-.phone {
-    /* height: 553px; */
-    /* background-image: url("http://localhost/Icons/phone.png"); */
-    /* background-position: 150px; */
-}
-
 .phone-img {
     position: relative;
     left: -180px;
@@ -90,10 +84,14 @@ body {
 .row.bottom-nav {
     background-color: lightslategray;
     position: relative;
-    height: 50px;
-    top: 45px;
-    border-radius: 0px 0px 100px 100px;
+    height: 65px;
+    top: -65px;
+    border-radius: 0px 0px 50px 50px;
     color: white;
+}
+
+.top-nav {
+    z-index: 2;
 }
 
 .image-title {
@@ -115,15 +113,21 @@ body {
 
 .menu-icon {
     position: relative;
-    top:-480px;
-    left: 210px;
     font-size: 1.5em;
 }
 
 .menu-list {
     position: relative;
     width: 250px;
-    bottom: 585px;
-    left: 15px;
+    bottom: 558px;
     transform: scale(0.5);
+    z-index: 2;
+}
+
+.menu-img {
+    position: relative;
+    left: -15px;
+    width: 230px;
+    height: auto;
+    padding: 5px;
 }

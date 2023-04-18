@@ -15,6 +15,22 @@
                     <div class="phone">
                         <img class="phone-img" src="/Icons/phone.png">
                         <div class="background-phone-collection">
+                            <div class="col top-nav">
+                                <img class="menu-img" src="/Icons/SMALL-Whitewall-LOGO-pos.png">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <select class="custom-select custom-select-sm" style="font-size: x-small;">
+                                            <option selected>Change: Never</option>
+                                            <option value="1">Change Every: Day</option>
+                                            <option value="2">Change Every: Other Day</option>
+                                            <option value="3">Change Every: Week</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <i class="bi bi-list menu-icon" style="top: -5px;"></i>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row m-2">
                                 <div class="col-sm-6">
                                     <div class="card">
@@ -71,10 +87,12 @@
                             </div>
                             <div class="row bottom-nav">
                                 <div class="col text-center">
-                                    Category 1
+                                    <i class="bi bi-palette-fill"></i>
+                                    <p>Category 1</p>
                                 </div>
                                 <div class="col text-center">
-                                    Category 2
+                                    <i class="bi bi-camera2"></i>
+                                    <p>Category 2</p>
                                 </div>
                             </div>
                         </div>
@@ -86,6 +104,9 @@
                     <div class="phone">
                         <img class="phone-img" src="/Icons/phone.png">
                         <div class="background-phone-image">
+                            <div class="col top-nav mt-2 mb-2">
+                               <button class="btn btn-primary w-100">Back</button>
+                            </div>
                             <div class="row m-2">
                                 <div class="col-sm-6">
                                     <div class="card">
@@ -155,14 +176,14 @@
                 <div class="tab-pane fade" id="nav-menu" role="tabpanel" aria-labelledby="nav-menu-tab">
                     <div class="phone">
                         <img class="phone-img" src="/Icons/phone.png">
-                        <i class="bi bi-list menu-icon"></i>
+                        <i class="bi bi-list menu-icon" style="top:-455px; left: 188px;"></i>
                         <div class="list-group list-group-light menu-list">
                             <a href="#" class="list-group-item list-group-item-action px-3 border-0 active" aria-current="true">
                                 The current link item</a>
                             <a href="#" class="list-group-item list-group-item-action px-3 border-0">A second link item</a>
                             <a href="#" class="list-group-item list-group-item-action px-3 border-0">A third link item</a>
                             <a href="#" class="list-group-item list-group-item-action px-3 border-0">A fourth link item</a>
-                            <a class="list-group-item list-group-item-action px-3 border-0 disabled">A disabled link item</a>
+                            <a href="#" class="list-group-item list-group-item-action px-3 border-0">A disabled link item</a>
                         </div>
                     </div>
                 </div>
