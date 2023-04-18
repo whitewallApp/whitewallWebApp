@@ -81,10 +81,9 @@
                 </div>
                 <div class="form-group">
                     <select class="custom-select">
-                        <option selected>Brand 1</option>
-                        <option value="1">Brand 2</option>
-                        <option value="2">Brand 3</option>
-                        <option value="3">Three</option>
+                        <?php foreach($brandNames as $name) : ?>
+                            <option value="<?=$name["name"] ?>"><?= $name["name"] ?></option>
+                        <?php endforeach ?>
                     </select>
                 </div>
             </form>

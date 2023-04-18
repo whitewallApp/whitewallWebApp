@@ -49,6 +49,7 @@ class Brand extends BaseController
         $session = session();
         if ($session->get("logIn")){
             $userModel = new UserModel();
+            $brandModel = new BrandModel();
             $userIds = $userModel->getCollumn("id", 1); //TODO: session account id
 
             $users = [];
@@ -59,7 +60,8 @@ class Brand extends BaseController
             }
 
             $data = [
-                "users" => $users
+                "users" => $users,
+                "brandNames" => $brandModel->getCollumn("name", 1)
             ];
 
             return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
