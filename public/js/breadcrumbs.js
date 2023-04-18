@@ -9,10 +9,25 @@ window.onload = function(){
     loadingBars();
 
     startCheckBoxes();
+
+    selectBrand();
+}
+
+function selectBrand(){
+    $("#brandSelect").change(function(){
+        var brand_name = $("#brandSelect").val();
+
+        $.post("/brand", {
+            id: brand_name
+        }, function(data, state){
+            if (state == "success"){
+                location.reload()
+            }
+        })
+    })
 }
 
 function loadingBars(){
-    console.log("Loading");
     $("#ioscompileButton").on("click", function(){
         $("#iosInput").hide();
 

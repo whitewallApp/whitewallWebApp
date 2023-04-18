@@ -55,8 +55,11 @@ class Brand extends BaseController
             $users = [];
 
             foreach($userIds as $id){
-                $user = $userModel->getUser($id, filter: ["name", "email", "id"]);
-                array_push($users, $user);
+                $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id"]);
+                if ($session->get("brand_name") == $brandModel->getBrand($user["brand_id"], filter: ["name"])){
+                    array_push($users, $user);
+                }
+                
             }
 
             $data = [

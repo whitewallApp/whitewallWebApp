@@ -85,22 +85,21 @@
             </div>
             <div class="col-sm-6 pl-0">
                 <div class="mt-3">
-                    <?php if (isset($brands)) : ?>
-                        <select style="max-width: fit-content; font-size: 1.5rem;" class="h-50 custom-select">
-                            <?php foreach ($brands as $brand) : ?>
-                                <option>
-                                    <p><?= $brand["name"] ?> </p>
-                                    <img src="<?= $brand["logo"] ?>">
-                                </option>
-                            <?php endforeach ?>
-                        </select>
-                    <?php endif ?>
+                    <select id="brandSelect" style="max-width: fit-content; font-size: 1.5rem;" class="h-50 custom-select">
+                        <?php foreach ($brands as $brand) : ?>
+                            <?php if ($brand["name"] == $brandName) : ?>
+                                <option selected><?= $brand["name"] ?></option>
+                            <?php else : ?>
+                                <option><?= $brand["name"] ?></option>
+                            <?php endif ?>
+                        <?php endforeach ?>
+                    </select>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-8">
-        <?php if(isset($actions[0])) : ?>
+        <?php if (isset($actions[0])) : ?>
             <div class="row row-cols-3 float-right p-3">
                 <div class="col p-3">
                     <p>Add <?= $actions[1] ?></p>
