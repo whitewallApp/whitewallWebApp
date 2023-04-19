@@ -40,11 +40,11 @@ function loadingBars(){
             bar.css("width", i + "%")
         }
 
-        $("#iosDownloadButton").show();
-        $("#iosPublishButton").show();
-        $("#ioscompileButton").hide();
+        $("#iosButtons").show();
+        $("#iosModelButton").hide();
     })
-    $("#andoidcompileButton").on("click", function () {
+    $("#androidcompileButton").on("click", function () {
+        console.log("hello");
         $("#androidInput").hide();
 
         var bar = $("#androidLoading");
@@ -56,9 +56,8 @@ function loadingBars(){
             bar.css("width", i + "%")
         }
 
-        $("#andoidDownloadButton").show();
-        $("#andoidPublishButton").show();
-        $("#andoidcompileButton").hide();
+        $("#androidButtons").show();
+        $("#androidModelButton").hide();
     })
 }
 

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="p-5">
     <table class="table text-center">
         <thead>
             <tr>
@@ -22,12 +22,42 @@
                 <th scope="row">Workspace</th>
                 <td class="border-right">Mar 25 2018</td>
                 <td>
-                    <p>In Progress</p><button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#androidModal">Compile</button>
+                    <div class="row">
+                        <div class="col">
+                            <p>In Progress</p>
+                        </div>
+                        <div class="col" id="androidModelButton">
+                            <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#androidModal">Compile</button>
+                        </div>
+                        <div class="row" id="androidButtons" style="display: none;">
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" id="androidDownloadButton">Download Now</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" id="androidPublishButton">Publish Now</button>
+                            </div>
+                        </div>
+                    </div>
                 </td>
                 <td>N/A</td>
                 <td class="border-right">N/A</td>
                 <td>
-                    <p>In Progress</p><button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#iosModal">Compile</button>
+                    <div class="row">
+                        <div class="col">
+                            <p>In Progress</p>
+                        </div>
+                        <div class="col" id="iosModelButton">
+                            <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#iosModal">Compile</button>
+                        </div>
+                        <div class="row" id="iosButtons" style="display: none;">
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" id="iosDownloadButton">Download Now</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" id="iosPublishButton">Publish Now</button>
+                            </div>
+                        </div>
+                    </div>
                 </td>
                 <td>N/A</td>
                 <td>N/A</td>
@@ -77,9 +107,7 @@
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
                     Close
                 </button>
-                <button type="button" class="btn btn-primary" id="andoidcompileButton">Compile Now</button>
-                <button type="button" style="display: none;" class="btn btn-primary" id="andoidDownloadButton">Download Now</button>
-                <button type="button" style="display: none;" class="btn btn-primary" id="andoidPublishButton">Publish Now</button>
+                <button type="button" class="btn btn-primary" id="androidcompileButton">Compile Now</button>
             </div>
         </div>
     </div>
@@ -107,8 +135,6 @@
                     Close
                 </button>
                 <button id="ioscompileButton" type="button" class="btn btn-primary">Compile Now</button>
-                <button type="button" style="display: none;" class="btn btn-primary" id="iosDownloadButton">Download Now</button>
-                <button type="button" style="display: none;" class="btn btn-primary" id="iosPublishButton">Publish Now</button>
             </div>
         </div>
     </div>
