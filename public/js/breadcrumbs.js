@@ -11,6 +11,14 @@ window.onload = function(){
     startCheckBoxes();
 
     selectBrand();
+
+    permissions();
+}
+
+function permissions(){
+    $("#savePermissions").on("click", function(){
+        $("#permissionsForm").submit();
+    });
 }
 
 function selectBrand(){
