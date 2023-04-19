@@ -4,10 +4,11 @@ namespace App\Controllers;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
 use App\Models\UserModel;
+use PhpParser\Node\Expr\FuncCall;
 
 class Brand extends BaseController
 {
-    public function index()
+    public function index() //Change brand page
     {
         $session = session();
         if ($session->get("logIn")){
@@ -73,7 +74,17 @@ class Brand extends BaseController
         }
     }
 
-    public function post()
+    public function userData($userID){
+        $session = session();
+        $msg = "Not Logged In";
+        if ($session->get("logIn")){
+            $userModel = new UserModel();
+        }else{
+            return json_encode(["success" => false, "msg" => $msg]);
+        }
+    }
+
+    public function setBrand()
     {
         $session = session();
         if ($session->get("logIn")) {

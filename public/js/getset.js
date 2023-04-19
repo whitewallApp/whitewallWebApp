@@ -199,6 +199,13 @@ function getNot(e){
     });
 }
 
+function getUser(e) {
+    var id = e.id;
+    $.post("user/"+id, {}, function(){
+
+    });
+}
+
 function showData(link, list=true){
     form = $("#data");
     title = $("#data-title");

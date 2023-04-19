@@ -45,7 +45,7 @@
                 </thead>
                 <tbody>
                     <?php foreach ($users as $user) : ?>
-                        <tr id="<?= $user["id"] ?>" onclick="">
+                        <tr id="<?= $user["id"] ?>" onclick="getUser(this);">
                             <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
                             <td><?= $user["name"] ?></td>
                             <td><?= $user["email"] ?></td>
