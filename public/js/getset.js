@@ -201,9 +201,7 @@ function getNot(e){
 
 function getUser(e) {
     var id = e.id;
-    $.post("user/"+id, {}, function(){
-
-    });
+    $("#permissionsForm").attr("userId", id);
 }
 
 function showData(link, list=true){

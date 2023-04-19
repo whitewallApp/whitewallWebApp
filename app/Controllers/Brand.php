@@ -78,7 +78,10 @@ class Brand extends BaseController
         $session = session();
         $msg = "Not Logged In";
         if ($session->get("logIn")){
-            $userModel = new UserModel();
+            $request = \Config\Services::request();
+            $test = $request->getPost("permissions");
+
+            return json_encode($test);
         }else{
             return json_encode(["success" => false, "msg" => $msg]);
         }
