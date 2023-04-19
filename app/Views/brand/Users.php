@@ -123,22 +123,22 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" name="permissions[all][view][]">
+                            <input class="form-check-input" type="checkbox"  name="permissions[all][view][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" name="permissions[all][add][]">
+                            <input class="form-check-input" type="checkbox"  name="permissions[all][add][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" name="permissions[all][edit][]">
+                            <input class="form-check-input" type="checkbox"  name="permissions[all][edit][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" name="permissions[all][remove][]">
+                            <input class="form-check-input" type="checkbox"  name="permissions[all][remove][]">
                         </div>
                     </div>
                 </div>
@@ -148,22 +148,22 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" name="permissions[categories][view][]">
+                            <input class="form-check-input" type="checkbox"  name="permissions[categories][view][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" name="permissions[categories][add][]">
+                            <input class="form-check-input" type="checkbox"  name="permissions[categories][add][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" name="permissions[categories][edit][]">
+                            <input class="form-check-input" type="checkbox"  name="permissions[categories][edit][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" name="permissions[categories][remove][]">
+                            <input class="form-check-input" type="checkbox"  name="permissions[categories][remove][]">
                         </div>
                     </div>
                 </div>
@@ -173,22 +173,22 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[collections][view][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[collections][add][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[collections][edit][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[collections][remove][]">
                         </div>
                     </div>
                 </div>
@@ -198,22 +198,22 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[images][view][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[images][add][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[images][edit][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[images][remove][]">
                         </div>
                     </div>
                 </div>
@@ -223,22 +223,22 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[notifications][view][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[notifications][add][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[notifications][edit][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[notifications][remove][]">
                         </div>
                     </div>
                 </div>
@@ -248,22 +248,22 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[menu][view][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[menu][add][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[menu][edit][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[menu][remove][]">
                         </div>
                     </div>
                 </div>
@@ -273,22 +273,22 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[branding][view][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[branding][add][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[branding][edit][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[branding][remove][]">
                         </div>
                     </div>
                 </div>
@@ -298,22 +298,22 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[brands][view][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[brands][add][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[brands][edit][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[brands][remove][]">
                         </div>
                     </div>
                 </div>
@@ -323,22 +323,22 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[versions][view][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[versions][add][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[versions][edit][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
+                            <input class="form-check-input" type="checkbox"  name="permissions[versions][remove][]">
                         </div>
                     </div>
                 </div>
