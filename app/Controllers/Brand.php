@@ -74,14 +74,18 @@ class Brand extends BaseController
         }
     }
 
-    public function userData($userID){
+    public function userData(){
         $session = session();
         $msg = "Not Logged In";
         if ($session->get("logIn")){
             $request = \Config\Services::request();
-            $test = $request->getPost("permissions");
+            $userModel = new UserModel();
 
-            return json_encode($test);
+            $id = esc($request->getGet("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+
+            $user = $userModel->getUser($id);
+
+            return json_encode($user);
         }else{
             return json_encode(["success" => false, "msg" => $msg]);
         }
@@ -92,7 +96,7 @@ class Brand extends BaseController
         $session = session();
         if ($session->get("logIn")) {
             $request = \Config\Services::request();
-            $name = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $name = esc($request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             $session = session();
             $session->set("brand_name", $name);
 

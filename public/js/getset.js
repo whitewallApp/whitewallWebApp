@@ -1,5 +1,24 @@
 lastElement = "";
 
+
+function getUser(e) {
+    var id = e.id;
+    var tableRow = $(e);
+
+    if (lastElement != "") {
+        lastElement.css("background-color", "white");
+    }
+
+    tableRow.css("background-color", "#c8cbcf");
+    lastElement = tableRow;
+
+    $.get("user", {
+        id: id
+    }, function(data, status){
+        console.log(data);
+    })
+}
+
 function getImg(e){
     
     tableRow = $(e);
@@ -197,11 +216,6 @@ function getNot(e){
             $('#selections>option[value="' + notification.clickAction + '"]').prop("selected", true);
         }
     });
-}
-
-function getUser(e) {
-    var id = e.id;
-    $("#permissionsForm").attr("userId", id);
 }
 
 function showData(link, list=true){

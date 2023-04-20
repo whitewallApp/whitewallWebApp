@@ -62,11 +62,11 @@
             <div class="card p-2 mb-5">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Example input placeholder">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Example input placeholder">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="text" class="form-control" id="email" placeholder="Another input placeholder">
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Another input placeholder">
                 </div>
                 <div class="form-group row">
                     <div class="col-3">
@@ -74,13 +74,13 @@
                     </div>
                     <div class="col-8">
                         <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                            <label class="custom-control-label" for="customSwitch1"></label>
+                            <input type="checkbox" class="custom-control-input" id="active" name="active">
+                            <label class="custom-control-label" for="active"></label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <select class="custom-select">
+                    <select class="custom-select" name="brand">
                         <?php foreach ($brandNames as $name) : ?>
                             <option value="<?= $name["name"] ?>"><?= $name["name"] ?></option>
                         <?php endforeach ?>
@@ -94,8 +94,8 @@
                 </div>
                 <div class="col-10">
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="customSwitch2">
-                        <label class="custom-control-label" for="customSwitch2"></label>
+                        <input type="checkbox" class="custom-control-input" id="admin" name="admin">
+                        <label class="custom-control-label" for="admin"></label>
                     </div>
                 </div>
             </div>

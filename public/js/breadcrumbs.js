@@ -11,25 +11,23 @@ window.onload = function(){
     startCheckBoxes();
 
     selectBrand();
-
-    permissions();
 }
 
-function permissions(){
-    $("#savePermissions").on("click", function(){
+function setUser(){
+    $("#savePermissions").on("click", function () {
         var form = $("form#permissionsForm");
         $.ajax({
             url: "user/" + form.attr("userid"),
             type: "post",
             dataType: 'application/x-www-form-urlencoded',
             data: $("form#permissionsForm").serialize(),
-            success: function(data, status){
+            success: function (data, status) {
                 console.log(data);
             }
         })
 
         console.log($("form#permissionsForm").serialize());
-        
+
     });
 }
 
