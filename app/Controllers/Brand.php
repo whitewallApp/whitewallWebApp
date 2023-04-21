@@ -37,7 +37,7 @@ class Brand extends BaseController
             $brandModel = new BrandModel;
 
             $data = [
-                "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
+                "brands" => $brandModel->getCollumn(["name", "logo"], $session->get("brand_name")), //TODO: session accountID
             ];
 
             return Navigation::renderNavBar("Branding", [true, "Brands"]) . view("brand/Branding", $data) . Navigation::renderFooter();
@@ -51,21 +51,19 @@ class Brand extends BaseController
         if ($session->get("logIn")){
             $userModel = new UserModel();
             $brandModel = new BrandModel();
-            $userIds = $userModel->getCollumn("id", 1); //TODO: session account id
+            $userIds = $userModel->getCollumn("id", $session->get("brand_name")); //TODO: session account id
+
+            // echo var_dump($userIds);
 
             $users = [];
 
             foreach($userIds as $id){
                 $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id"]);
-                if ($session->get("brand_name") == $brandModel->getBrand($user["brand_id"], filter: ["name"])){
-                    array_push($users, $user);
-                }
-                
+                array_push($users, $user);
             }
 
             $data = [
-                "users" => $users,
-                "brandNames" => $brandModel->getCollumn("name", 1)
+                "users" => $users
             ];
 
             return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();

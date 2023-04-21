@@ -79,13 +79,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <select class="custom-select" name="brand">
-                        <?php foreach ($brandNames as $name) : ?>
-                            <option value="<?= $name["name"] ?>"><?= $name["name"] ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
             </div>
             <!-- Permissions Table -->
             <div class="row ml-3">

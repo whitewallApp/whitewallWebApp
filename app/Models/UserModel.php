@@ -3,16 +3,22 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\BrandModel;
 
 class UserModel extends Model
 {
     protected $primaryKey = 'id';
     protected $returnType = 'array';
 
-    public function getCollumn($column, $accountID, $getBy = []): mixed
+    public function getCollumn($column, $brandName, $getBy = []): mixed
     {
+        $brandModel = new BrandModel();
+
+        $brandId = $brandModel->getBrand($brandName, "name", ["id"]);
+
         $builder = $this->db->table('user');
-        $builder->select($column)->where("account_id", $accountID);
+        $builder->join("branduser", "branduser.user_id = user.id", "inner");
+        $builder->select($column)->where("brand_id", $brandId);
 
         if (count($getBy) > 0) {
             $keys = array_keys($getBy);
@@ -32,9 +38,10 @@ class UserModel extends Model
         return $returnArray;
     }
 
-    public function getUser($id, $fetchBy = "id", $filter = [], $assoc = true): mixed
+    public function getUser($id, $fetchBy = "user.id", $filter = [], $assoc = true): mixed
     {
         $builder = $this->db->table('user');
+        $builder->join("branduser", "branduser.user_id = user.id", "inner");
 
         if (count($filter) > 0) {
             $builder->select($filter)->where($fetchBy, $id);
