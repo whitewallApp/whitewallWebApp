@@ -56,7 +56,10 @@
             </table>
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-6" id="userPrompt">
+
+    </div>
+    <div class="col-6" id="userForm" style="display: none;">
         <form id="permissionsForm" method="post">
             <!-- User Info -->
             <div class="card p-2 mb-5">

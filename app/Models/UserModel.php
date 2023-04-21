@@ -68,4 +68,29 @@ class UserModel extends Model
             return $brand;
         }
     }
+
+    public function getPermissions($id, $area = []): array {
+        if (count($area) == 0){
+            $builder = $this->db->table('permissions');
+            $builder->select("*")->where("user_id", $id);
+            $query = $builder->get()->getResultArray();
+
+            $return = [];
+
+            foreach($query as $permission){
+                $return[$permission["area"]] = [
+                    "view" => $permission["p_view"],
+                    "add" => $permission["p_add"],
+                    "edit" => $permission["p_edit"],
+                    "remove" => $permission["p_remove"],
+                ];
+            }
+
+            return $return;
+        }else{
+
+        }
+
+        return [];
+    }
 }
