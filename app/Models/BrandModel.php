@@ -51,7 +51,6 @@ class BrandModel extends Model
         
         if (count($filter) > 0){
             $builder->select($filter)->where($fetchBy, $id);
-            // echo var_dump($builder->get()->getResultArray()[0]);
             $brand = $builder->get()->getResultArray()[0];
 
             if (!$assoc){

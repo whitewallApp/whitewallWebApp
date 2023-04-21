@@ -53,8 +53,6 @@ class Brand extends BaseController
             $brandModel = new BrandModel();
             $userIds = $userModel->getCollumn("id", $session->get("brand_name")); //TODO: session account id
 
-            // echo var_dump($userIds);
-
             $users = [];
 
             foreach($userIds as $id){
