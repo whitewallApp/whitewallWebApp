@@ -34,13 +34,8 @@ class Brand extends BaseController
     public function branding($brandId){
         $session = session();
         if ($session->get("logIn")){
-            $brandModel = new BrandModel;
 
-            $data = [
-                "brands" => $brandModel->getCollumn(["name", "logo"], $session->get("brand_name")), //TODO: session accountID
-            ];
-
-            return Navigation::renderNavBar("Branding", [true, "Brands"]) . view("brand/Branding", $data) . Navigation::renderFooter();
+            return Navigation::renderNavBar("Branding", [true, "Brands"]) . view("brand/Branding") . Navigation::renderFooter();
         }else{
             return json_encode(["success" => false]);
         }
@@ -51,7 +46,7 @@ class Brand extends BaseController
         if ($session->get("logIn")){
             $userModel = new UserModel();
             $brandModel = new BrandModel();
-            $userIds = $userModel->getCollumn("id", $session->get("brand_name")); //TODO: session account id
+            $userIds = $userModel->getCollumn("id", $session->get("brand_name")); //I have NO flipping idea why this works
 
             $users = [];
 
