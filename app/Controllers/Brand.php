@@ -73,7 +73,7 @@ class Brand extends BaseController
             $id = esc($request->getGet("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
             $user = $userModel->getUser($id);
-            $permissions = $userModel->getPermissions($id);
+            $permissions = $userModel->getPermissions($id, $session->get("brand_name"));
 
             $data = [
                 "user" => $user,

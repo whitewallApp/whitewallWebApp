@@ -69,15 +69,33 @@ class UserModel extends Model
         }
     }
 
-    public function getPermissions($id, $area = []): array {
-        if (count($area) == 0){
+    public function getPermissions($id, $brandName, $area=[]): array {
+        $brandModel = new BrandModel();
+        $brandID = $brandModel->getBrand($brandName, "name", ["id"]);
+
+        if (count($area) > 0){
+
             $builder = $this->db->table('permissions');
-            $builder->select("*")->where("user_id", $id);
+
+            $return = [];
+            
+            foreach($area as $areaName){
+                $builder->select(["p_view", "p_add", "p_edit", "p_remove"])->where("user_id", $id)->where("brand_id", $brandID)->where("area", $areaName);
+                $query = $builder->get()->getResultArray()[0];
+
+                $return[$areaName] = $query;
+            }
+
+            return $return;
+
+        }else{
+            $builder = $this->db->table('permissions');
+            $builder->select("*")->where("user_id", $id)->where("brand_id", $brandID);
             $query = $builder->get()->getResultArray();
 
             $return = [];
 
-            foreach($query as $permission){
+            foreach ($query as $permission) {
                 $return[$permission["area"]] = [
                     "view" => $permission["p_view"],
                     "add" => $permission["p_add"],
@@ -87,10 +105,6 @@ class UserModel extends Model
             }
 
             return $return;
-        }else{
-
         }
-
-        return [];
     }
 }
