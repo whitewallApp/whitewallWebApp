@@ -68,6 +68,7 @@ function changeBrnd(e){
 }
 
 function login() {
+    console.log("hello");
     $.post("/", {
 
     },

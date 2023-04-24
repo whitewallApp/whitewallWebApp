@@ -16,13 +16,12 @@
             </div>
         </form>
         <button class="btn btn-primary" onclick="login();">Submit</button>
-        <div id="g_id_onload" data-client_id="437362021062-fserfra8i9g6kicf00jvefvhbpbf845l.apps.googleusercontent.com" data-context="signin" data-ux_mode="popup" data-login_uri="http://localhost" data-auto_prompt="false">
+
+        <div id="g_id_onload" data-client_id="437362021062-fserfra8i9g6kicf00jvefvhbpbf845l.apps.googleusercontent.com" data-context="signin" data-ux_mode="popup" data-callback="login" data-auto_prompt="false">
         </div>
 
         <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signin_with" data-size="large" data-logo_alignment="left">
         </div>
-
-        <script src="https://accounts.google.com/gsi/client" async defer></script>
     </div>
 </div>
 <?= $this->endSection() ?>
