@@ -76,8 +76,8 @@ function login(e) {
     function (data, status){
         val = JSON.parse(data);
         if (val.success){
-            // var url = "/dashboard";
-            // $(location).attr('href', url);
+            var url = "/dashboard";
+            $(location).attr('href', url);
             console.log("Logged in");
         }else{
             console.log("Not Logged in");

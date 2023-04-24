@@ -49,7 +49,7 @@ class Brand extends BaseController
             $users = [];
 
             foreach($userIds as $id){
-                $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id"]);
+                $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status"]);
                 array_push($users, $user);
             }
 
@@ -72,7 +72,7 @@ class Brand extends BaseController
 
             $id = esc($request->getGet("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-            $user = $userModel->getUser($id);
+            $user = $userModel->getUser($id, filter: ["name", "email", "status"]);
             $permissions = $userModel->getPermissions($id, $session->get("brand_name"));
 
             $data = [

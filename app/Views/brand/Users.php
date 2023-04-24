@@ -49,7 +49,11 @@
                             <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
                             <td><?= $user["name"] ?></td>
                             <td><?= $user["email"] ?></td>
-                            <td>Active</td>
+                            <?php if ($user["status"]) : ?>
+                                <td>Active</td>
+                            <?php else : ?>
+                                <td>Inactive</td>
+                            <?php endif ?>
                         </tr>
                     <?php endforeach ?>
                 </tbody>

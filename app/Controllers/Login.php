@@ -37,13 +37,12 @@ class Login extends BaseController
                 if ($email == $emailInput){
                     if (password_verify($password, $userModel->getUser($email, "email", ["password"], false))){
                         $return["success"] = true;
+                        $session->set("logIn", true);
+                        $session->set("brand_name", "Beautiful AI");
                     }
                 }
             }
         }
-
-        // $session->set("logIn", true);
-        // $session->set("brand_name", "Beautiful AI");
         
         return json_encode($return);
     }
