@@ -34,7 +34,7 @@
                             <div class="row m-2">
                                 <div class="col-sm-6">
                                     <div class="card">
-                                        
+
                                         <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
                                         <div class="collection-title">
                                             <p>Collection Title</p>
@@ -216,8 +216,8 @@
                                     <input type="file" class="form-control" id="appLoading" />
                                 </div>
                                 <div class="form-outline">
-                                    <input type="text" id="appHeader" class="form-control" />
-                                    <label class="form-label" for="appHeader">App Header</label>
+                                    <label class="form-label" for="appHeader">App Icon</label>
+                                    <input type="file" class="form-control" id="appHeader" />
                                 </div>
                             </form>
                         </div>

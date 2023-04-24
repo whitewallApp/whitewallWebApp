@@ -35,7 +35,7 @@
                 <a class="dropdown-item" href="/brand">Manage Brands</a>
                 <a class="dropdown-item" href="/brand/users/<?= $brandId ?>">Manage Users</a>
                 <a class="dropdown-item" href="/account">Account</a>
-                <a class="dropdown-item" href="">Billing</a>
+                <a class="dropdown-item" href="/billing">Billing</a>
             </div>
         </div>
     </div>
@@ -81,20 +81,22 @@
     <div class="col-4">
         <div class="row">
             <div class="col-sm-6 text-center">
-                <p class="breadcrumbs p-3"><?= $pageTitle ?> For</p>
+                <p class="breadcrumbs p-3"><?= $pageTitle ?></p>
             </div>
             <div class="col-sm-6 pl-0">
-                <div class="mt-3">
-                    <select id="brandSelect" style="max-width: fit-content; font-size: 1.5rem;" class="h-50 custom-select">
-                        <?php foreach ($brands as $brand) : ?>
-                            <?php if ($brand["name"] == $brandName) : ?>
-                                <option selected><?= $brand["name"] ?></option>
-                            <?php else : ?>
-                                <option><?= $brand["name"] ?></option>
-                            <?php endif ?>
-                        <?php endforeach ?>
-                    </select>
-                </div>
+                <?php if ($pageTitle != "Account Settings" && $pageTitle != "Billing") : ?>
+                    <div class="mt-3">
+                        <select id="brandSelect" style="max-width: fit-content; font-size: 1.5rem;" class="h-50 custom-select">
+                            <?php foreach ($brands as $brand) : ?>
+                                <?php if ($brand["name"] == $brandName) : ?>
+                                    <option selected><?= $brand["name"] ?></option>
+                                <?php else : ?>
+                                    <option><?= $brand["name"] ?></option>
+                                <?php endif ?>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                <?php endif ?>
             </div>
         </div>
     </div>

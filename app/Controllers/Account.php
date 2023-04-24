@@ -17,6 +17,10 @@ class Account extends BaseController
         }
         
     }
+
+    public function billing(){
+        return Navigation::renderNavBar("Billing") . view("Billing") . Navigation::renderFooter();
+    }
 }
 
 ?>

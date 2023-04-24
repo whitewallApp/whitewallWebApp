@@ -67,16 +67,20 @@ function changeBrnd(e){
     })
 }
 
-function login() {
-    console.log("hello");
+function login(e) {
     $.post("/", {
-
+        email: $("#InputEmail").val(),
+        password: $("#InputPassword").val(),
+        google: e
     },
     function (data, status){
         val = JSON.parse(data);
         if (val.success){
-            var url = "/dashboard";
-            $(location).attr('href', url);
+            // var url = "/dashboard";
+            // $(location).attr('href', url);
+            console.log("Logged in");
+        }else{
+            console.log("Not Logged in");
         }
     })
 }

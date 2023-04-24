@@ -12,10 +12,17 @@ class Login extends BaseController
 
     public function post(){
         $session = session();
-        $session->set("logIn", true);
-        $session->set("brand_name", "Beautiful AI");
+        $request = \Config\Services::request();
+        $return = ["success" => false];
 
-        return json_encode(["success" => true]);
+        $name = esc($request->getPost("email"));
+        $password = esc($request->getPost("password"));
+        $google = esc($request->getPost("google"));
+
+        // $session->set("logIn", true);
+        // $session->set("brand_name", "Beautiful AI");
+        
+        return json_encode($return);
     }
 }
 
