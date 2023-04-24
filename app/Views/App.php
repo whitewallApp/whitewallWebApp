@@ -34,7 +34,7 @@
                                 <button type="button" class="btn btn-primary" id="androidDownloadButton">Download Now</button>
                             </div>
                             <div class="col">
-                                <button type="button" class="btn btn-primary" id="androidPublishButton">Publish Now</button>
+                                <button type="button" class="btn btn-primary" id="androidPublishButton">Mark as Published</button>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                                 <button type="button" class="btn btn-primary" id="iosDownloadButton">Download Now</button>
                             </div>
                             <div class="col">
-                                <button type="button" class="btn btn-primary" id="iosPublishButton">Publish Now</button>
+                                <button type="button" class="btn btn-primary" id="iosPublishButton">Mark as Published</button>
                             </div>
                         </div>
                     </div>

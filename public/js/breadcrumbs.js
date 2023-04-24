@@ -49,6 +49,8 @@ function loadingBars(){
     $("#ioscompileButton").on("click", function(){
         $("#iosInput").hide();
 
+        console.log();
+
         var bar = $("#iosLoading");
         bar.parent().show()
 
@@ -60,6 +62,7 @@ function loadingBars(){
 
         $("#iosButtons").show();
         $("#iosModelButton").hide();
+        $("#ioscompileButton").hide();
     })
     $("#androidcompileButton").on("click", function () {
         console.log("hello");
@@ -76,6 +79,7 @@ function loadingBars(){
 
         $("#androidButtons").show();
         $("#androidModelButton").hide();
+        $("#androidcompileButton").hide();
     })
 }
 
