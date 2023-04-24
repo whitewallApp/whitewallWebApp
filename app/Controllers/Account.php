@@ -10,8 +10,14 @@ class Account extends BaseController
     {   
         $session = session();
         if ($session->get("logIn")){
+            $brandModel = new BrandModel();
+            $brandnames = $brandModel->getCollumn("name", $session->get("user_id"));
 
-            return Navigation::renderNavBar("Account Settings") . view('Account') . Navigation::renderFooter();
+            $data = [
+                "brands" => $brandnames
+            ];
+
+            return Navigation::renderNavBar("Account Settings") . view('Account', $data) . Navigation::renderFooter();
         }else{
             return view("errors/html/authError");
         }

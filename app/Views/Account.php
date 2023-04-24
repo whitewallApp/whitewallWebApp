@@ -17,11 +17,21 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="delete" class="col-sm-2 col-form-label">Delete Account</label>
-      <div class="col-sm-2">
-        <input type="button" class="form-control btn btn-danger" value="Delete">
+      <div class="col-2">
+        <label class="form-label">Default Brand</label>
+      </div>
+      <div class="col-8">
+        <select class="form-select" aria-label="Default select example">
+          <?php foreach($brands as $brand) : ?>
+            <option value="<?=$brand["name"] ?>"><?= $brand["name"] ?></option>
+          <?php endforeach ?>
+        </select>
       </div>
     </div>
-
+    <div class="form-group row">
+      <div class="col-sm-2">
+        <input type="button" class="form-control btn btn-primary" value="Save">
+      </div>
+    </div>
   </form>
 </div>

@@ -39,6 +39,7 @@ class Login extends BaseController
                         $return["success"] = true;
                         $session->set("logIn", true);
                         $session->set("brand_name", "Beautiful AI");
+                        $session->set("user_id", $userModel->getUser($email, "email", ["id"], false));
                     }
                 }
             }

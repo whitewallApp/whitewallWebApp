@@ -12,7 +12,7 @@ class Brand extends BaseController
         $session = session();
         if ($session->get("logIn")){
             $brandModel = new BrandModel;
-            $ids = $brandModel->getCollumn("id", 1); //TODO: make accountID a session variable
+            $ids = $brandModel->getCollumn("id", $session->get("user_id"));
 
             $brands = [];
 
@@ -44,7 +44,7 @@ class Brand extends BaseController
         $session = session();
         if ($session->get("logIn")){
             $userModel = new UserModel();
-            $userIds = $userModel->getCollumn("id", $session->get("brand_name")); //I have NO flipping idea why this works
+            $userIds = $userModel->getCollumn("id", $session->get("brand_name"));
 
             $users = [];
 
