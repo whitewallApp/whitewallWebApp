@@ -64,7 +64,11 @@ class BrandModel extends Model
 
                     return $array;
                 }else{
-                    return $brand[$filter[0]];
+                    if (count($filter) == 1){
+                        return $brand[$filter[0]];
+                    }else{
+                        return $brand;
+                    }
                 }
             }else{
                 return $brand;

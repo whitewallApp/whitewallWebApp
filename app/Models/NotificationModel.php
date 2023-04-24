@@ -29,7 +29,11 @@ class NotificationModel extends Model
                     return $notification[$filter[0]];
                 }
             }else{
-                return $notification;
+                if (count($filter) == 1) {
+                    return $notification[$filter[0]];
+                }else{
+                    return $notification;
+                }
             }
 
         }else{

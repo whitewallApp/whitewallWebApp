@@ -52,7 +52,11 @@ class MenuModel extends Model
 
                     return $array;
                 }else{
-                    return $collection[$filter[0]];
+                    if (count($filter) == 1) {
+                        return $collection[$filter[0]];
+                    }else{
+                        return $collection;
+                    }
                 }
             }else{
                 return $collection;

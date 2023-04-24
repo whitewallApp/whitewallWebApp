@@ -59,7 +59,11 @@ class UserModel extends Model
 
                     return $array;
                 } else {
-                    return $user[$filter[0]];
+                    if (count($filter) == 1) {
+                        return $user[$filter[0]];
+                    }else{
+                        return $user;
+                    }
                 }
             } else {
                 return $user;

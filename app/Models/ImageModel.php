@@ -78,7 +78,11 @@ class ImageModel extends Model
 
                     return $array;
                 }else{
-                    return $imgID[$filter[0]];
+                    if (count($filter) == 1) {
+                        return $imgID[$filter[0]];
+                    }else{
+                        return $imgID;
+                    }
                 }
             }else{
                 return $imgID;
