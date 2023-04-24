@@ -9,6 +9,7 @@ class UserModel extends Model
 {
     protected $primaryKey = 'id';
     protected $returnType = 'array';
+    protected $table = "user";
 
     public function getCollumn($column, $brandName, $getBy = []): mixed
     {
@@ -45,22 +46,22 @@ class UserModel extends Model
 
         if (count($filter) > 0) {
             $builder->select($filter)->where($fetchBy, $id);
-            $brand = $builder->get()->getResultArray()[0];
+            $user = $builder->get()->getResultArray()[0];
 
             if (!$assoc) {
                 if (count($filter) > 1) {
                     $array = [];
 
                     foreach ($filter as $thing) {
-                        array_push($array, $brand[$thing]);
+                        array_push($array, $user[$thing]);
                     }
 
                     return $array;
                 } else {
-                    return $brand[$filter[0]];
+                    return $user[$filter[0]];
                 }
             } else {
-                return $brand;
+                return $user;
             }
         } else {
             $builder->select("*")->where($fetchBy, $id);
