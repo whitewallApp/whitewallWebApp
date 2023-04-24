@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Controllers\Navigation;
 use App\Models\UserModel;
+use Google;
 
 class Login extends BaseController
 {
@@ -22,7 +23,14 @@ class Login extends BaseController
         $google = esc($request->getPost("google"));
 
         if (isset($google)){
-
+            // $client = new Client(["client_id" => getenv("GOOGLE_CLIENT_ID")]);
+            $return["success"] = true;
+            // $payload = $client->verifyIdToken($google["client_id"]);
+            // if ($payload){
+            //     echo var_dump($payload);
+            // }else{
+            //     $return["success"] = false;
+            // }
         }else{
             $emails = $userModel->findColumn("email");
             foreach($emails as $email){
