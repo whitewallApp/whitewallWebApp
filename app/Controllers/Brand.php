@@ -74,7 +74,7 @@ class Brand extends BaseController
         }
     }
 
-    public function userData(){
+    public function userData(){ //Post
         $session = session();
         $msg = "Not Logged In";
         if ($session->get("logIn")){
@@ -91,7 +91,7 @@ class Brand extends BaseController
         }
     }
 
-    public function setBrand()
+    public function setBrand() //Post
     {
         $session = session();
         if ($session->get("logIn")) {
