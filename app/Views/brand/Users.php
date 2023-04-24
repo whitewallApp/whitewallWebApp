@@ -56,7 +56,10 @@
             </table>
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-6" id="userPrompt">
+
+    </div>
+    <div class="col-6" id="userForm" style="display: none;">
         <form id="permissionsForm" method="post">
             <!-- User Info -->
             <div class="card p-2 mb-5">
@@ -78,13 +81,6 @@
                             <label class="custom-control-label" for="active"></label>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <select class="custom-select" name="brand">
-                        <?php foreach ($brandNames as $name) : ?>
-                            <option value="<?= $name["name"] ?>"><?= $name["name"] ?></option>
-                        <?php endforeach ?>
-                    </select>
                 </div>
             </div>
             <!-- Permissions Table -->

@@ -3,16 +3,22 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\BrandModel;
 
 class UserModel extends Model
 {
     protected $primaryKey = 'id';
     protected $returnType = 'array';
 
-    public function getCollumn($column, $accountID, $getBy = []): mixed
+    public function getCollumn($column, $brandName, $getBy = []): mixed
     {
+        $brandModel = new BrandModel();
+
+        $brandId = $brandModel->getBrand($brandName, "name", ["id"]);
+
         $builder = $this->db->table('user');
-        $builder->select($column)->where("account_id", $accountID);
+        $builder->join("branduser", "branduser.user_id = user.id", "inner");
+        $builder->select($column)->where("brand_id", $brandId);
 
         if (count($getBy) > 0) {
             $keys = array_keys($getBy);
@@ -32,9 +38,10 @@ class UserModel extends Model
         return $returnArray;
     }
 
-    public function getUser($id, $fetchBy = "id", $filter = [], $assoc = true): mixed
+    public function getUser($id, $fetchBy = "user.id", $filter = [], $assoc = true): mixed
     {
         $builder = $this->db->table('user');
+        $builder->join("branduser", "branduser.user_id = user.id", "inner");
 
         if (count($filter) > 0) {
             $builder->select($filter)->where($fetchBy, $id);
@@ -59,6 +66,45 @@ class UserModel extends Model
             $builder->select("*")->where($fetchBy, $id);
             $brand = $builder->get()->getResultArray()[0];
             return $brand;
+        }
+    }
+
+    public function getPermissions($id, $brandName, $area=[]): array {
+        $brandModel = new BrandModel();
+        $brandID = $brandModel->getBrand($brandName, "name", ["id"]);
+
+        if (count($area) > 0){
+
+            $builder = $this->db->table('permissions');
+
+            $return = [];
+            
+            foreach($area as $areaName){
+                $builder->select(["p_view", "p_add", "p_edit", "p_remove"])->where("user_id", $id)->where("brand_id", $brandID)->where("area", $areaName);
+                $query = $builder->get()->getResultArray()[0];
+
+                $return[$areaName] = $query;
+            }
+
+            return $return;
+
+        }else{
+            $builder = $this->db->table('permissions');
+            $builder->select("*")->where("user_id", $id)->where("brand_id", $brandID);
+            $query = $builder->get()->getResultArray();
+
+            $return = [];
+
+            foreach ($query as $permission) {
+                $return[$permission["area"]] = [
+                    "view" => $permission["p_view"],
+                    "add" => $permission["p_add"],
+                    "edit" => $permission["p_edit"],
+                    "remove" => $permission["p_remove"],
+                ];
+            }
+
+            return $return;
         }
     }
 }

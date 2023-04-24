@@ -4,7 +4,6 @@ namespace App\Controllers;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
 use App\Models\UserModel;
-use PhpParser\Node\Expr\FuncCall;
 
 class Brand extends BaseController
 {
@@ -34,13 +33,8 @@ class Brand extends BaseController
     public function branding($brandId){
         $session = session();
         if ($session->get("logIn")){
-            $brandModel = new BrandModel;
 
-            $data = [
-                "brands" => $brandModel->getCollumn(["name", "logo"], 1), //TODO: session accountID
-            ];
-
-            return Navigation::renderNavBar("Branding", [true, "Brands"]) . view("brand/Branding", $data) . Navigation::renderFooter();
+            return Navigation::renderNavBar("Branding", [true, "Brands"]) . view("brand/Branding") . Navigation::renderFooter();
         }else{
             return json_encode(["success" => false]);
         }
@@ -50,22 +44,17 @@ class Brand extends BaseController
         $session = session();
         if ($session->get("logIn")){
             $userModel = new UserModel();
-            $brandModel = new BrandModel();
-            $userIds = $userModel->getCollumn("id", 1); //TODO: session account id
+            $userIds = $userModel->getCollumn("id", $session->get("brand_name")); //I have NO flipping idea why this works
 
             $users = [];
 
             foreach($userIds as $id){
                 $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id"]);
-                if ($session->get("brand_name") == $brandModel->getBrand($user["brand_id"], filter: ["name"])){
-                    array_push($users, $user);
-                }
-                
+                array_push($users, $user);
             }
 
             $data = [
-                "users" => $users,
-                "brandNames" => $brandModel->getCollumn("name", 1)
+                "users" => $users
             ];
 
             return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
@@ -84,8 +73,14 @@ class Brand extends BaseController
             $id = esc($request->getGet("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
             $user = $userModel->getUser($id);
+            $permissions = $userModel->getPermissions($id, $session->get("brand_name"));
 
-            return json_encode($user);
+            $data = [
+                "user" => $user,
+                "permissions" => $permissions
+            ];
+
+            return json_encode($data);
         }else{
             return json_encode(["success" => false, "msg" => $msg]);
         }
