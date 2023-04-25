@@ -11,6 +11,27 @@ window.onload = function(){
     startCheckBoxes();
 
     selectBrand();
+
+    saveAccount();
+}
+
+function saveAccount(){
+    $("form#userForm").submit(function(e) {
+        e.preventDefault();
+        console.log("working");
+        // var formData = new FormData(this);
+
+        // console.log(formData);
+
+        // $.ajax({
+        //     url: window.location.pathname,
+        //     type: 'POST',
+        //     data: formData,
+        //     success: function (data) {
+        //         console.log(data);
+        //     }
+        // });
+    })
 }
 
 function setUser(){

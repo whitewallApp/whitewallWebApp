@@ -58,6 +58,7 @@ $routes->post('/notifications', 'Notification::post');
 $routes->post('/brand', 'Brand::setBrand');
 $routes->post('/', 'Login::post');
 $routes->get('/brand/users/user', 'Brand::userData');
+$routes->post('/account', 'Account::post');
 
 /*
  * --------------------------------------------------------------------
