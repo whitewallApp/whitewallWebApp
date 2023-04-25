@@ -66,7 +66,7 @@ class FileControler {
     }
 
     public function getProfilePhoto(){
-
+        
     }
 }
 

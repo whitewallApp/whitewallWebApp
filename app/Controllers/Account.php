@@ -41,6 +41,8 @@ class Account extends BaseController
 
             $fileControler->saveProfilePhoto($session->get("user_id"), $session->get("brand_name"), $fileName, $tempPath);
 
+            return $this->index();
+
         }else{
             $this->response->setStatusCode(401);
             return $this->response->send();
