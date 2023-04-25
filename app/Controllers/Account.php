@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
+use App\Models\UserModel;
 
 class Account extends BaseController
 {
@@ -14,7 +15,8 @@ class Account extends BaseController
             $brandnames = $brandModel->getCollumn("name", $session->get("user_id"));
 
             $data = [
-                "brands" => $brandnames
+                "brands" => $brandnames,
+                "success" => false
             ];
 
             return Navigation::renderNavBar("Account Settings") . view('Account', $data) . Navigation::renderFooter();
@@ -33,18 +35,25 @@ class Account extends BaseController
 
     public function post(){
         $session = session();
-        $fileControler = new FileControler();
+
         if ($session->get("logIn")) {
+            $assetControler = new Assets();
+            $userModel = new UserModel();
             $tempPath = $_FILES["profilePhoto"]["tmp_name"];
             $imgName = $_FILES["profilePhoto"]["name"];
 
-            $matches = [];
-            preg_match("/\.(.*)$/", $imgName, $matches);
-            $fileName = $session->get("user_id")[0] . $matches[0];
+            $link = $assetControler->saveProfilePhoto($session->get("user_id"), $imgName, $tempPath);
+            //TODO: save profile picture here with $link
 
-            $fileControler->saveProfilePhoto($session->get("user_id"), $session->get("brand_name"), $fileName, $tempPath);
+            $brandModel = new BrandModel();
+            $brandnames = $brandModel->getCollumn("name", $session->get("user_id"));
 
-            return $this->index();
+            $data = [
+                "brands" => $brandnames,
+                "success" => true
+            ];
+
+            return Navigation::renderNavBar("Account Settings") . view('Account', $data) . Navigation::renderFooter();
 
         }else{
             $this->response->setStatusCode(401);
