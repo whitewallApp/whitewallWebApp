@@ -18,10 +18,14 @@
     </form>
 
     <div class="dropleft dropdown ml-3 p-3">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="crimson" class="bi bi-person-circle dropdown-toggle" viewBox="0 0 16 16" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-        </svg>
+        <?php if ($userIcon == "") : ?>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="crimson" class="bi bi-person-circle dropdown-toggle" viewBox="0 0 16 16" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>
+        <?php else : ?>
+            <img class="profile-photo" src="<?= $userIcon ?>">
+        <?php endif ?>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <div class="col">
                 <div class="row rounded" style="background-color: lightgray;">
@@ -33,7 +37,7 @@
                     </div>
                 </div>
                 <a class="dropdown-item" href="/brand">Manage Brands</a>
-                <?php if($admin) :?>
+                <?php if ($admin) : ?>
                     <a class="dropdown-item" href="/brand/users/<?= $brandId ?>">Manage Users</a>
                 <?php endif ?>
                 <a class="dropdown-item" href="/account">Account</a>

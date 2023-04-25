@@ -49,6 +49,7 @@ $routes->get('/billing', "Account::billing");
 $routes->get('/assets/images/(:any)', 'Assets::images/$1');
 $routes->get('/assets/collection/(:any)', 'Assets::colImages/$1');
 $routes->get('/assets/category/(:any)', 'Assets::catImages/$1');
+$routes->get('/assets/user/(:any)', 'Assets::user/$1');
 
 //Post URLs
 $routes->post('/images', 'Image::post');

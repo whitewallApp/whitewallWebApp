@@ -3,12 +3,14 @@
 namespace App\Controllers;
 
 use App\Models\BrandModel;
+use App\Models\UserModel;
 
 class Navigation extends BaseController
 {
     public static function renderNavBar($pageTitle, $actions = [])
     {
         $brandModel = new BrandModel;
+        $userModel = new UserModel();
         $session = session();
 
         $data = [
@@ -16,6 +18,7 @@ class Navigation extends BaseController
             "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
             "brandName" => $session->get("brand_name"),
             "brandIcon" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["logo"]),
+            "userIcon" => $userModel->getUser($session->get("user_id"), filter: ["icon"]),
             "pageTitle" => $pageTitle,
             "actions" => $actions,
             "admin" => $session->get("is_admin")

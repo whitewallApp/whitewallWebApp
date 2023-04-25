@@ -71,8 +71,18 @@ class Assets extends BaseController {
             header("Content-type: " . "image/" . $matches[1]);
             require($this->collPath . $file);
             exit;
-        }else{
-            
+        }
+    }
+
+    function user($file){
+        if (file_exists($this->userPath . $file)) {
+
+            $matches = [];
+            preg_match("/\.(.*)/", $file, $matches);
+
+            header("Content-type: " . "image/" . $matches[1]);
+            require($this->userPath . $file);
+            exit;
         }
     }
 
