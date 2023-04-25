@@ -93,16 +93,24 @@ class Brand extends BaseController
         $session = session();
         if ($session->get("logIn")) {
             $request = \Config\Services::request();
-            $userModel = new UserModel();
+            $brandModel = new BrandModel();
             $name = esc($request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             $session = session();
 
-            $brands = $userModel->getCollumn("name", $session->get("brand_name"));
+            $brands = $brandModel->getCollumn("name", $session->get("user_id"));
+            $success = false;
 
-            if (in_array($name, $brands)){
+            foreach($brands as $brand){
+                if ($brand["name"] == $name){
+                    $success = true;
+                }
+            }
+
+            if ($success){
                 $session->set("brand_name", $name);
                 return json_encode(["success" => true]);
             }
+
         } else {
             $this->response->setStatusCode(401);
             return $this->response->send(); 
