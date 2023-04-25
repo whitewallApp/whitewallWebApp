@@ -30,8 +30,17 @@ class Account extends BaseController
 
     public function post(){
         $session = session();
+        $fileControler = new FileControler();
         if ($session->get("logIn")) {
-            echo var_dump($_FILES["profilePhoto"]["name"]);
+            $tempPath = $_FILES["profilePhoto"]["tmp_name"];
+            $imgName = $_FILES["profilePhoto"]["name"];
+
+            $matches = [];
+            preg_match("/\.(.*)$/", $imgName, $matches);
+            $fileName = $session->get("user_id")[0] . $matches[0];
+
+            $fileControler->saveProfilePhoto($session->get("user_id"), $session->get("brand_name"), $fileName, $tempPath);
+
         }else{
             $this->response->setStatusCode(401);
             return $this->response->send();

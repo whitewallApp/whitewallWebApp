@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\BrandModel;
 use App\Models\UserModel;
 
 class FileControler {
@@ -30,13 +31,25 @@ class FileControler {
 
     }
 
-    public function saveProfilePhoto($userId, $brandId, $photoName, $photo){
+    public function saveProfilePhoto($userId, $brandName, $photoName, $tmpPath){
         $userModel = new UserModel();
         $accountId = $userModel->getUser($userId, filter: ["account_id"]);
-        $path = $this->basePath . $accountId . "/" . $brandId . "/users/" . $photoName;
 
-        if (!file_exists($path)){
-            // move_uploaded_file()
+        $brandModel = new BrandModel();
+        $brandId = $brandModel->getBrand($brandName, "name", ["id"]);
+
+        $path = $this->basePath . $accountId . "/" . $brandId . "/users/" . $photoName;
+        $dir = $this->basePath . $accountId . "/" . $brandId . "/users/";
+
+        if (is_dir($dir)){
+            if (!file_exists($path)){
+                move_uploaded_file($tmpPath, $path);
+            }
+        }else{
+            mkdir($dir, recursive: true);
+            if (!file_exists($path)) {
+                move_uploaded_file($tmpPath, $path);
+            }
         }
     }
 
