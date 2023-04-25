@@ -18,6 +18,9 @@ class Account extends BaseController
             ];
 
             return Navigation::renderNavBar("Account Settings") . view('Account', $data) . Navigation::renderFooter();
+            // header("Content-type: " . "image/png");
+            // require("C:/images/1.png");
+            // exit;
         }else{
             return view("errors/html/authError");
         }
