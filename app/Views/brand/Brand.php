@@ -6,8 +6,12 @@
                 <h1><?= $brand["name"] ?></h1>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><a href="/brand/users/<?= $brand["id"] ?>" class="badge badge-primary">Manage Users<i class="bi bi-people ml-1"></i></a></li>
-                <li class="list-group-item"><a href="#" class="badge badge-danger">Delete<i class="bi bi-trash ml-1"></i></a></i></li>
+                <?php if ($admin) : ?>
+                    <li class="list-group-item"><a href="/brand/users/<?= $brand["id"] ?>" class="badge badge-primary">Manage Users<i class="bi bi-people ml-1"></i></a></li>
+                    <?php if(false) : ?> <!-- TODO: needs to get is owner -->
+                        <li class="list-group-item"><a href="#" class="badge badge-danger">Delete<i class="bi bi-trash ml-1"></i></a></i></li>
+                    <?php endif ?>
+                <?php endif ?>
             </ul>
         </div>
     <?php endforeach ?>

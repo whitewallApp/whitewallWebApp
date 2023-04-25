@@ -22,6 +22,7 @@ class Brand extends BaseController
 
             $data = [
                 "brandInfo" => $brands,
+                "admin" => $session->get("is_admin")
             ];
 
             return Navigation::renderNavBar("Brands") . view('brand/Brand', $data) . Navigation::renderFooter();

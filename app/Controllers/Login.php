@@ -9,7 +9,7 @@ class Login extends BaseController
 {
     public function index()
     {
-        return view('Login') . Navigation::renderFooter(); //TODO: Needs to save in session: Brand Name, Account ID, if logged in
+        return view('Login') . Navigation::renderFooter();
     }
 
     public function post(){

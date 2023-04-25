@@ -33,7 +33,7 @@ class ImageModel extends Model
         return $ids;
     }
 
-    public function getCollumn($column, $brandName, $getBy=[]){ //TODO: Needs to be joined with wallpaper table
+    public function getCollumn($column, $brandName, $getBy=[]){
         $builder = $this->db->table('brand');
         $builder->select("id")->where("name", $brandName);
         $brandID = $builder->get()->getResultArray()[0];
