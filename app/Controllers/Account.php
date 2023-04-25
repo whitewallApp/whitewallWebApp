@@ -43,8 +43,10 @@ class Account extends BaseController
             $imgName = $_FILES["profilePhoto"]["name"];
 
             $link = $assetControler->saveProfilePhoto($session->get("user_id"), $imgName, $tempPath);
-            //TODO: save profile picture here with $link
+            $userModel->update($session->get("user_id"), ["icon" => $link]);
 
+
+            //re render the page for success
             $brandModel = new BrandModel();
             $brandnames = $brandModel->getCollumn("name", $session->get("user_id"));
 
