@@ -9,10 +9,14 @@ class Assets extends BaseController {
      *
      * @access    public
      */
+
+     private $imgPath;
+     private $collPath;
+     private $catPath;
+     private $userPath;
+    
     public function __construct(){
-        define('PATH', "/images/");
-        define('COLPATH', '/images/collections/');
-        define('CATPATH', '/images/categories/');
+        $imgPath = getenv("BASE_PATH") . 
     }
     /**
      * Returns image files
