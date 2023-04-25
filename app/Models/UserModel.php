@@ -50,7 +50,7 @@ class UserModel extends Model
             $user = $builder->get()->getResultArray()[0];
 
             if (!$assoc) {
-                if (count($filter) > 1) {
+                if (count($filter) > 0) {
                     $array = [];
 
                     foreach ($filter as $thing) {
@@ -66,7 +66,11 @@ class UserModel extends Model
                     }
                 }
             } else {
-                return $user;
+                if (count($filter) == 1) {
+                    return $user[$filter[0]];
+                } else {
+                    return $user;
+                }
             }
         } else {
             $builder->select("*")->where($fetchBy, $id);

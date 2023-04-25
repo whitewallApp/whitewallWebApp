@@ -42,7 +42,7 @@ class Brand extends BaseController
 
     public function users($brandId){
         $session = session();
-        if ($session->get("logIn")){
+        if ($session->get("logIn") && $session->get("is_admin")){
             $userModel = new UserModel();
             $userIds = $userModel->getCollumn("id", $session->get("brand_name"));
 
@@ -59,14 +59,14 @@ class Brand extends BaseController
 
             return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
         }else{
-            return json_encode(["success" => false]);
+            return view("errors/html/authError");
         }
     }
 
     public function userData(){ //Post
         $session = session();
-        $msg = "Not Logged In";
-        if ($session->get("logIn")){
+
+        if ($session->get("logIn") && $session->get("is_admin")){
             $request = \Config\Services::request();
             $userModel = new UserModel();
 
@@ -82,7 +82,8 @@ class Brand extends BaseController
 
             return json_encode($data);
         }else{
-            return json_encode(["success" => false, "msg" => $msg]);
+            $this->response->setStatusCode(401);
+            return $this->response->send(); 
         }
     }
 
@@ -91,13 +92,19 @@ class Brand extends BaseController
         $session = session();
         if ($session->get("logIn")) {
             $request = \Config\Services::request();
+            $userModel = new UserModel();
             $name = esc($request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             $session = session();
-            $session->set("brand_name", $name);
 
-            return json_encode(["success" => true]);
+            $brands = $userModel->getCollumn("name", $session->get("brand_name"));
+
+            if (in_array($name, $brands)){
+                $session->set("brand_name", $name);
+                return json_encode(["success" => true]);
+            }
         } else {
-            return json_encode(["success" => false]);
+            $this->response->setStatusCode(401);
+            return $this->response->send(); 
         }
     }
 }

@@ -33,7 +33,9 @@
                     </div>
                 </div>
                 <a class="dropdown-item" href="/brand">Manage Brands</a>
-                <a class="dropdown-item" href="/brand/users/<?= $brandId ?>">Manage Users</a>
+                <?php if($admin) :?>
+                    <a class="dropdown-item" href="/brand/users/<?= $brandId ?>">Manage Users</a>
+                <?php endif ?>
                 <a class="dropdown-item" href="/account">Account</a>
                 <a class="dropdown-item" href="/billing">Billing</a>
             </div>

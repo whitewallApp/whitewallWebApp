@@ -35,11 +35,12 @@ class Login extends BaseController
             $emails = $userModel->findColumn("email");
             foreach($emails as $email){
                 if ($email == $emailInput){
-                    if (password_verify($password, $userModel->getUser($email, "email", ["password"], false))){
+                    if (password_verify($password, $userModel->getUser($email, "email", ["password"]))){
                         $return["success"] = true;
                         $session->set("logIn", true);
                         $session->set("brand_name", "Beautiful AI");
                         $session->set("user_id", $userModel->getUser($email, "email", ["id"], false));
+                        $session->set("is_admin", $userModel->getUser($session->get("user_id"), filter: ["admin"]));
                     }
                 }
             }
