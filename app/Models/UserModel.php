@@ -44,7 +44,7 @@ class UserModel extends Model
     {
         $builder = $this->db->table('user');
         $builder->join("branduser", "branduser.user_id = user.id", "inner");
-        $builder->join("usersettings", "usersettings.user_id = user.id", "inner");
+        // $builder->join("usersettings", "usersettings.user_id = user.id", "inner");
 
         if (count($filter) > 0) {
             $builder->select($filter)->where($fetchBy, $id);

@@ -42,7 +42,9 @@ class Assets extends BaseController {
             $matches = [];
             preg_match("/\.(.*)/", $file, $matches);
 
-            header("Content-type: " . "image/" . $matches[1]);
+            $type = $this->mapType($matches[1]);
+
+            header("Content-type: " . "image/" . $type);
             require($this->imgPath . $file);
             exit;
         }
@@ -55,7 +57,9 @@ class Assets extends BaseController {
             $matches = [];
             preg_match("/\.(.*)/", $file, $matches);
 
-            header("Content-type: " . "image/" . $matches[1]);
+            $type = $this->mapType($matches[1]);
+
+            header("Content-type: " . "image/" . $type);
             require($this->catPath . $file);
             exit;
         }
@@ -68,7 +72,9 @@ class Assets extends BaseController {
             $matches = [];
             preg_match("/\.(.*)/", $file, $matches);
 
-            header("Content-type: " . "image/" . $matches[1]);
+            $type = $this->mapType($matches[1]);
+
+            header("Content-type: " . "image/" . $type);
             require($this->collPath . $file);
             exit;
         }
@@ -80,7 +86,9 @@ class Assets extends BaseController {
             $matches = [];
             preg_match("/\.(.*)/", $file, $matches);
 
-            header("Content-type: " . "image/" . $matches[1]);
+            $type = $this->mapType($matches[1]);
+
+            header("Content-type: " . "image/" . $type);
             require($this->userPath . $file);
             exit;
         }
@@ -106,6 +114,18 @@ class Assets extends BaseController {
         }
 
         return "assets/user/" . $userId . $matches[0];
+    }
+
+    private function mapType($inputType): string {
+        return match ($inputType) {
+            "png" => "png",
+            "svg" => "svg+xml",
+            "jpg", "jpeg", "jfif" => "jpg",
+            "webp" => "webp",
+            "ico", "cur" => "x-icon",
+            "bmp" => "bmp",
+            "tiff", "tif" => "tiff"
+        };
     }
 }
 

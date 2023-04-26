@@ -1,15 +1,15 @@
 <div class="col-sm-8 mt-3">
-  <form id="userForm" method="post" enctype="multipart/form-data" action="/account">
-    <div class="form-group row">
+  <form id="userForm" action="/account" method="post" enctype="multipart/form-data">
+    <div class=" form-group row">
       <label for="email" class="col-sm-2 col-form-label">Chage Email</label>
       <div class="col-sm-8">
-        <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+        <input type="email" class="form-control" id="email" value="<?= $email ?>" name="email">
       </div>
     </div>
     <div class="form-group" id="photoDiv">
       <div class="row row-col">
         <div class="col-2">
-          <label class="form-label">Profile Picture</label>
+          <label class="form-label" for="profilePhoto">Profile Picture</label>
         </div>
         <div class="col-8">
           <input type="file" class="form-control" id="profilePhoto" name="profilePhoto" />

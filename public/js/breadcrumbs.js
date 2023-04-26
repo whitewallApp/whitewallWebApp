@@ -1,30 +1,24 @@
-window.onload = function(){
-    
-    // breadcrumbs();
-
+$("document").ready(function(){
     notifications_start();
 
     setImageStart();
 
     loadingBars();
 
-    startCheckBoxes();
-
     selectBrand();
 
     saveAccount();
-}
 
-function saveAccount(){
-    $("form#userForm").submit(function(e) {
+    startCheckBoxes();
+});
+
+function saveAccount() {
+    $("form#userForm").submit(function (e) {
         e.preventDefault();
-        console.log("working");
-        var formData = new FormData(this);
-
-        console.log(formData);
+        var formData = new FormData(e[0]);
 
         $.ajax({
-            url: window.location.pathname,
+            url: "/account",
             type: 'POST',
             data: formData,
             success: function (data) {
