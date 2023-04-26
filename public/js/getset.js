@@ -25,6 +25,7 @@ function getUser(e) {
             $("#name").val(user.name);
             $("#email").val(user.email);
             $("#admin").prop("checked", Boolean(Number(permissions.admin)));
+            $("#active").prop("checked", Boolean(Number(user.status)));
 
             //set permissons
 
