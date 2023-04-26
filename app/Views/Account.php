@@ -1,5 +1,5 @@
 <div class="col-sm-8 mt-3">
-  <form id="userForm" action="/account" method="post" enctype="multipart/form-data">
+  <form id="userForm" action="/account" method="post">
     <div class=" form-group row">
       <label for="email" class="col-sm-2 col-form-label">Chage Email</label>
       <div class="col-sm-8">
@@ -23,14 +23,18 @@
       <div class="col-8">
         <select class="form-select" aria-label="Default select example" name="brand">
           <?php foreach ($brands as $brand) : ?>
-            <option value="<?= $brand["name"] ?>"><?= $brand["name"] ?></option>
+            <?php if ($brand["name"] == $default_brand) : ?>
+              <option value="<?= $brand["name"] ?>" selected><?= $brand["name"] ?></option>
+            <?php else : ?>
+              <option value="<?= $brand["name"] ?>"><?= $brand["name"] ?></option>
+            <?php endif ?>
           <?php endforeach ?>
         </select>
       </div>
     </div>
     <div class="form-group row">
       <div class="col-sm-2">
-        <input type="submit" class="form-control btn btn-primary" value="Save">
+        <input type="submit" class="btn btn-primary" value="Submit">
       </div>
     </div>
   </form>

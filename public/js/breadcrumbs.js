@@ -7,7 +7,7 @@ $("document").ready(function(){
 
     selectBrand();
 
-    saveAccount();
+    //saveAccount();
 
     startCheckBoxes();
 });

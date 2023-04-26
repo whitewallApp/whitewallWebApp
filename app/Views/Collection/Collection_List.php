@@ -59,7 +59,7 @@
                         <tr id="<?= $collection["name"] ?>" onclick="getColl(this);">
                             <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
                             <td class="w-25">
-                                <image class="img-fluid img-sm rounded" src="<?= $collection['iconPath'] ?>">
+                                <image class="img-sm rounded" src="<?= $collection['iconPath'] ?>">
                             </td>
                             <td><?= $collection['name'] ?></td>
                             <td class="w-25"><a href="#"><?= $collection["category"] ?></a></td>
