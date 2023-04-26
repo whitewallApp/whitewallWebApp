@@ -26,10 +26,19 @@ class Login extends BaseController
             $client = new Google\Client(["client_id" => $google["clientId"]]);
             $payload = $client->verifyIdToken($google["credential"]);
             if ($payload){
-                echo var_dump($payload);
-                $return["success"] = true;
-            }else{
-                $return["success"] = false;
+                $googleIds = $userModel->findColumn("google_id");
+
+                foreach($googleIds as $id){
+                    if ($id == $payload["sub"]){
+
+                        $return["success"] = true;
+
+                        $session->set("logIn", true);
+                        $session->set("brand_name", "Beautiful AI");
+                        $session->set("user_id", $userModel->getUser($id, "user.google_id", ["id"]));
+                        $session->set("is_admin", $userModel->getUser($session->get("user_id"), filter: ["admin"]));
+                    }
+                }
             }
         }else{
             $emails = $userModel->findColumn("email");
