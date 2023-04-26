@@ -23,14 +23,14 @@ class Login extends BaseController
         $google = esc($request->getPost("google"));
 
         if (isset($google)){
-            // $client = new Client(["client_id" => getenv("GOOGLE_CLIENT_ID")]);
-            $return["success"] = true;
-            // $payload = $client->verifyIdToken($google["client_id"]);
-            // if ($payload){
-            //     echo var_dump($payload);
-            // }else{
-            //     $return["success"] = false;
-            // }
+            $client = new Google\Client(["client_id" => $google["clientId"]]);
+            $payload = $client->verifyIdToken($google["credential"]);
+            if ($payload){
+                echo var_dump($payload);
+                $return["success"] = true;
+            }else{
+                $return["success"] = false;
+            }
         }else{
             $emails = $userModel->findColumn("email");
             foreach($emails as $email){
