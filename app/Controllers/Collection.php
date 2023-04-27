@@ -39,6 +39,7 @@ class Collection extends BaseController
 
             return Navigation::renderNavBar("Collections", [true, "Images"]) . view('Collection/Collection_Detail', $data) . Navigation::renderFooter();
         }else{
+            $session->setFlashdata('prev_url', 'collections');
             return redirect()->to("");
         }
     }

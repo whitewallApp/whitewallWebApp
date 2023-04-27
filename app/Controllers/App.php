@@ -19,6 +19,7 @@ class App extends BaseController
 
             return Navigation::renderNavBar("Versions") . view('App', $data) . Navigation::renderFooter();
         }else{
+            $session->setFlashdata('prev_url', 'app');
             return redirect()->to("");
         }
     }

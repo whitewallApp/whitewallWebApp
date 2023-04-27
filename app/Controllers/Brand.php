@@ -27,7 +27,8 @@ class Brand extends BaseController
 
             return Navigation::renderNavBar("Brands") . view('brand/Brand', $data) . Navigation::renderFooter();
         }else{
-            return view("errors/html/authError");
+            $session->setFlashdata('prev_url', 'brand');
+            return redirect()->to("");
         }
     }
 
@@ -37,7 +38,8 @@ class Brand extends BaseController
 
             return Navigation::renderNavBar("Branding", [true, "Brands"]) . view("brand/Branding") . Navigation::renderFooter();
         }else{
-            return json_encode(["success" => false]);
+            $session->setFlashdata('prev_url', 'brand/branding/' . $brandId);
+            return redirect()->to("");
         }
     }
 
@@ -60,6 +62,7 @@ class Brand extends BaseController
 
             return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
         }else{
+            $session->setFlashdata('prev_url', 'brand/users/' . $brandId);
             return redirect()->to("");
         }
     }

@@ -70,6 +70,7 @@ class Notification extends BaseController
 
             return Navigation::renderNavBar("Notifications", [true, "Notifications"]) . view('Notifications', $data) . Navigation::renderFooter();
         }else{
+            $session->setFlashdata('prev_url', 'notifications');
             return redirect()->to("");
         }
     }

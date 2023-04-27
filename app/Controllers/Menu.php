@@ -28,6 +28,7 @@ class Menu extends BaseController
 
             return Navigation::renderNavBar("Menu Items", [true, "Menu Items"]) . view('Menu', $data) . Navigation::renderFooter();
         }else{
+            $session->setFlashdata('prev_url', 'menu');
             return redirect()->to("");
         }
     }
