@@ -21,7 +21,15 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        'userValidation' => \App\Filters\UserValidation::class
+        'userValidation' => \App\Filters\UserValidation::class,
+        "app" => \App\Filters\AppFilter::class,
+        "brand" => \App\Filters\BrandFilter::class,
+        "category" => \App\Filters\CategoryFilter::class,
+        "collection" => \App\Filters\CollectionFilter::class,
+        "image" => \App\Filters\ImageFilter::class,
+        "menu" => \App\Filters\MenuFilter::class,
+        "notification" =>  \App\Filters\NotificationFilter::class,
+        "account" => \App\Filters\AccountFilter::class
     ];
 
     /**

@@ -33,17 +33,17 @@ $routes->set404Override();
 //Base URLs
 $routes->get('/', 'Login::index');
 $routes->get('/dashboard', 'Dashboard::index');
-$routes->get('/collections', 'Collection::index');
-$routes->get('/categories', 'Category::index');
-$routes->get('/images', 'Image::index');
-$routes->get('/account', 'Account::index');
-$routes->get('/notifications', 'Notification::index');
-$routes->get('/menu', 'Menu::index');
-$routes->get('/brand', 'Brand::index');
-$routes->get('/app', 'App::index');
-$routes->get('/brand/branding/(:num)', 'Brand::branding/$1');
-$routes->get('/brand/users/(:num)', 'Brand::users/$1');
-$routes->get('/billing', "Account::billing");
+$routes->get('/collections', 'Collection::index', ["filter" => "collection"]);
+$routes->get('/categories','Category::index', ["filter" => "category"]);
+$routes->get('/images','Image::index', ["filter" => "image"]);
+$routes->get('/account', 'Account::index', ["filter" => "account"]);
+$routes->get('/notifications','Notification::index', ["filter" => "notification"]);
+$routes->get('/menu','Menu::index', ["filter" => "menu"]);
+$routes->get('/brand','Brand::index', ["filter" => "brand"]);
+$routes->get('/app','App::index', ["filter" => "app"]);
+$routes->get('/brand/branding/(:num)','Brand::branding/$1', ["filter" => "brand"]);
+$routes->get('/brand/users/(:num)','Brand::users/$1', ["filter" => "brand"]);
+$routes->get('/billing',"Account::billing", ["filter" => "brand"]);
 
 //Asset URLS
 $routes->get('/assets/images/(:any)', 'Assets::images/$1');
