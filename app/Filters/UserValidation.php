@@ -20,11 +20,18 @@ class UserValidation implements FilterInterface
             return redirect()->to("");
         }
 
-        if ($page != "nocheck"){
-            $canView = $userModel->getPermissions($session->get("user_id"), $session->get("brand_name"), permissions: ["p_view"]);
-            if (!$canView[$page]["p_view"]){
-                $session->setFlashdata('prev_url', "dashboard");
+        if($page == "admin"){
+            if (!$session->get("is_admin")){
+                $session->setFlashdata('prev_url', $request->getUri()->getPath());
                 return redirect()->to("");
+            }
+        }else{
+            if ($page != "nocheck") {
+                $canView = $userModel->getPermissions($session->get("user_id"), $session->get("brand_name"), permissions: ["p_view"]);
+                if (!$canView[$page]["p_view"]) {
+                    $session->setFlashdata('prev_url', "dashboard");
+                    return redirect()->to("");
+                }
             }
         }
 

@@ -33,23 +33,21 @@ class Brand extends BaseController
 
     public function users($brandId){
         $session = session();
-        if($session->get("is_admin")){
-            $userModel = new UserModel();
-            $userIds = $userModel->getCollumn("id", $session->get("brand_name"));
+        $userModel = new UserModel();
+        $userIds = $userModel->getCollumn("id", $session->get("brand_name"));
 
-            $users = [];
+        $users = [];
 
-            foreach($userIds as $id){
-                $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status"]);
-                array_push($users, $user);
-            }
-
-            $data = [
-                "users" => $users
-            ];
-
-            return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
+        foreach($userIds as $id){
+            $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status"]);
+            array_push($users, $user);
         }
+
+        $data = [
+            "users" => $users
+        ];
+
+        return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
     }
 
     public function userData(){ //Post
