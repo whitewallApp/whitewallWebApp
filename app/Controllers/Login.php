@@ -34,11 +34,20 @@ class Login extends BaseController
                     if ($payload["email"] == $email){
                         $ids = $userModel->getUser($payload["email"], "user.email", ["google_id", "id"]);
                         if ($ids["google_id"] == ""){
-                            $userId = $userModel->getUser($ids["id"], filter: ["id"]);
-                            $userModel->update($userId, ["google_id" => $payload["sub"]]);
+                            $userModel->update($ids["id"], ["google_id" => $payload["sub"]]);
+
+                            if($userModel->getUser($ids["id"], filter: ["icon"]) == ""){
+                                $userModel->update($ids["id"], ["icon" => $payload["picture"]]);
+                            }
+
                             $return["success"] = true;
                         }else{
                             if ($ids["google_id"] == $payload["sub"]){
+
+                                if ($userModel->getUser($ids["id"], filter: ["icon"]) == "") {
+                                    $userModel->update($ids["id"], ["icon" => $payload["picture"]]);
+                                }
+
                                 $return["success"] = true;
                             }
                         }
