@@ -10,25 +10,21 @@ class Account extends BaseController
     public function index()
     {   
         $session = session();
-        if ($session->get("logIn")){
-            $brandModel = new BrandModel();
-            $userModel = new UserModel();
-            $brandnames = $brandModel->getCollumn("name", $session->get("user_id"));
+        $brandModel = new BrandModel();
+        $userModel = new UserModel();
+        $brandnames = $brandModel->getCollumn("name", $session->get("user_id"));
 
-            $dBrandId = $userModel->getUser($session->get("user_id"), filter: ["default_brand"]);
-            $brandName = $brandModel->getBrand($dBrandId, filter: ["name"]);
+        $dBrandId = $userModel->getUser($session->get("user_id"), filter: ["default_brand"]);
+        $brandName = $brandModel->getBrand($dBrandId, filter: ["name"]);
 
-            $data = [
-                "brands" => $brandnames,
-                "email" => $userModel->getUser($session->get("user_id"), filter: ["email"]),
-                "default_brand" => $brandName,
-                "success" => false
-            ];
+        $data = [
+            "brands" => $brandnames,
+            "email" => $userModel->getUser($session->get("user_id"), filter: ["email"]),
+            "default_brand" => $brandName,
+            "success" => false
+        ];
 
-            return Navigation::renderNavBar("Account Settings") . view('Account', $data) . Navigation::renderFooter();
-        }else{
-            return redirect()->to("");
-        }
+        return Navigation::renderNavBar("Account Settings") . view('Account', $data) . Navigation::renderFooter();
         
     }
 
