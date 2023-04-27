@@ -1,7 +1,7 @@
 <?= $this->extend('Base') ?>
 
 <?= $this->section('Body') ?>
-<div class="container">
+<div class="container w-50">
     <div class="card p-4 m-3">
         <img class="img" src="Icons\Whitewall-LOGO-pos.png">
         <form>
@@ -23,11 +23,11 @@
                 <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signin_with" data-size="large" data-logo_alignment="left">
                 </div>
             </div>
-            <div class="col-4">
-                <p style="cursor: pointer;" data-mdb-toggle="modal" data-mdb-target="#resetModal"><span class="badge badge-primary">Forgot Username or Password</span></p>
-            </div>
-            <div class="col-5">
+            <div class="col-6">
 
+            </div>
+            <div class="col-3">
+                <p style="cursor: pointer;" data-mdb-toggle="modal" data-mdb-target="#resetModal"><span class="badge badge-primary">Forgot Username or Password</span></p>
             </div>
         </div>
     </div>
