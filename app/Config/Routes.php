@@ -32,11 +32,11 @@ $routes->set404Override();
 
 //Base URLs
 $routes->get('/', 'Login::index');
-$routes->get('/dashboard', 'Dashboard::index', ["filter" => "login:dashboard"]);
+$routes->get('/dashboard', 'Dashboard::index', ["filter" => "login:nocheck"]);
 $routes->get('/collections', 'Collection::index', ["filter" => "login:collections"]);
 $routes->get('/categories','Category::index', ["filter" => "login:categories"]);
 $routes->get('/images','Image::index', ["filter" => "login:images"]);
-$routes->get('/account', 'Account::index', ["filter" => "login:account"]);
+$routes->get('/account', 'Account::index', ["filter" => "login:nocheck"]);
 $routes->get('/notifications','Notification::index', ["filter" => "login:notifications"]);
 $routes->get('/menu','Menu::index', ["filter" => "login:menu"]);
 $routes->get('/brand','Brand::index', ["filter" => "login:brands"]);
