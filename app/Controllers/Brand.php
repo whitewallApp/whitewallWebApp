@@ -62,7 +62,7 @@ class Brand extends BaseController
             $user = $userModel->getUser($id, filter: ["name", "email", "status"]);
             $permissions = $userModel->getPermissions($id, $session->get("brand_name"));
 
-            $permissions["admin"] = $userModel->getAdmin($session->get("user_id"), $session->get("brand_name"));
+            $permissions["admin"] = $userModel->getAdmin($id, $session->get("brand_name"));
 
             $data = [
                 "user" => $user,
