@@ -12,44 +12,39 @@ class Image extends BaseController
     public function index()
     {
         $session = session();
-        if ($session->get("logIn")){
-            // Grab all images from the database
-            $imageModel = new ImageModel;
-            $collModel = new CollectionModel;
-            $catModel = new CategoryModel;
-            $brandModel = new BrandModel;
-            $brandname = $session->get("brand_name");
+        // Grab all images from the database
+        $imageModel = new ImageModel;
+        $collModel = new CollectionModel;
+        $catModel = new CategoryModel;
+        $brandModel = new BrandModel;
+        $brandname = $session->get("brand_name");
 
-            $ids = $imageModel->getAllIds($brandname);
-            $images = [];
+        $ids = $imageModel->getAllIds($brandname);
+        $images = [];
 
-            foreach ($ids as $id) {
-                $colID = $imageModel->getImage($id, filter: ["collection_id"]);
-                $catID = $collModel->getCollection($colID, filter: ["category_id"]);
-
+        foreach ($ids as $id) {
+            $colID = $imageModel->getImage($id, filter: ["collection_id"]);
+            $catID = $collModel->getCollection($colID, filter: ["category_id"]);
 
 
-                $image = [
-                    "id" => $id,
-                    "path" => $imageModel->getImage($id, filter: ["imagePath"]), 
-                    "name" => $imageModel->getImage($id, filter: ["name"]), 
-                    "collection" => $collModel->getCollection($colID, filter: ["name"]),
-                    "category" => $catModel->getCategory($catID, filter: ["name"])
-                ];
-                array_push($images, $image);
-            }
 
-            
-
-            // compile data to be sent to view
-            $data = [
-                "images" => $images,
+            $image = [
+                "id" => $id,
+                "path" => $imageModel->getImage($id, filter: ["imagePath"]), 
+                "name" => $imageModel->getImage($id, filter: ["name"]), 
+                "collection" => $collModel->getCollection($colID, filter: ["name"]),
+                "category" => $catModel->getCategory($catID, filter: ["name"])
             ];
-            return Navigation::renderNavBar("Images", [true, "Images"]) . view('Image/Image_Detail', $data) . Navigation::renderFooter();
-        }else{
-            $session->setFlashdata('prev_url', 'images');
-            return redirect()->to("");
+            array_push($images, $image);
         }
+
+        
+
+        // compile data to be sent to view
+        $data = [
+            "images" => $images,
+        ];
+        return Navigation::renderNavBar("Images", [true, "Images"]) . view('Image/Image_Detail', $data) . Navigation::renderFooter();
     }
 
     public function post(){

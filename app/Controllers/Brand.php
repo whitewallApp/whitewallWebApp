@@ -10,42 +10,30 @@ class Brand extends BaseController
     public function index() //Change brand page
     {
         $session = session();
-        if ($session->get("logIn")){
-            $brandModel = new BrandModel;
-            $ids = $brandModel->getCollumn("id", $session->get("user_id"));
+        $brandModel = new BrandModel;
+        $ids = $brandModel->getCollumn("id", $session->get("user_id"));
 
-            $brands = [];
+        $brands = [];
 
-            foreach($ids as $id){
-                array_push($brands, $brandModel->getBrand($id, assoc: true));
-            }
-
-            $data = [
-                "brandInfo" => $brands,
-                "admin" => $session->get("is_admin")
-            ];
-
-            return Navigation::renderNavBar("Brands") . view('brand/Brand', $data) . Navigation::renderFooter();
-        }else{
-            $session->setFlashdata('prev_url', 'brand');
-            return redirect()->to("");
+        foreach($ids as $id){
+            array_push($brands, $brandModel->getBrand($id, assoc: true));
         }
+
+        $data = [
+            "brandInfo" => $brands,
+            "admin" => $session->get("is_admin")
+        ];
+
+        return Navigation::renderNavBar("Brands") . view('brand/Brand', $data) . Navigation::renderFooter();
     }
 
     public function branding($brandId){
-        $session = session();
-        if ($session->get("logIn")){
-
             return Navigation::renderNavBar("Branding", [true, "Brands"]) . view("brand/Branding") . Navigation::renderFooter();
-        }else{
-            $session->setFlashdata('prev_url', 'brand/branding/' . $brandId);
-            return redirect()->to("");
-        }
     }
 
     public function users($brandId){
         $session = session();
-        if ($session->get("logIn") && $session->get("is_admin")){
+        if($session->get("is_admin")){
             $userModel = new UserModel();
             $userIds = $userModel->getCollumn("id", $session->get("brand_name"));
 
@@ -61,9 +49,6 @@ class Brand extends BaseController
             ];
 
             return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
-        }else{
-            $session->setFlashdata('prev_url', 'brand/users/' . $brandId);
-            return redirect()->to("");
         }
     }
 

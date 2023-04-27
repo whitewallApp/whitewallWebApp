@@ -9,18 +9,7 @@ class App extends BaseController
 {
     public function index()
     {
-        $session = session();
-        if ($session->get("logIn")){
-            $brandModel = new BrandModel;
 
-            $data = [
-               
-            ];
-
-            return Navigation::renderNavBar("Versions") . view('App', $data) . Navigation::renderFooter();
-        }else{
-            $session->setFlashdata('prev_url', 'app');
-            return redirect()->to("");
-        }
+        return Navigation::renderNavBar("Versions") . view('App') . Navigation::renderFooter();
     }
 }

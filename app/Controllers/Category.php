@@ -11,41 +11,36 @@ class Category extends BaseController
     public function index()
     {
         $session = session();
-        if ($session->get("logIn")){
-            $catModel = new CategoryModel;
-            $colModel = new CollectionModel;
-            $brandModel = new BrandModel;
-            $brandname = $session->get("brand_name");
+        $catModel = new CategoryModel;
+        $colModel = new CollectionModel;
+        $brandModel = new BrandModel;
+        $brandname = $session->get("brand_name");
 
-            $ids = $catModel->getCollumn("id", $brandname);
-            $colIds = $colModel->getCollumn("id", $brandname);
+        $ids = $catModel->getCollumn("id", $brandname);
+        $colIds = $colModel->getCollumn("id", $brandname);
 
-            $categories = [];
+        $categories = [];
 
-            foreach ($ids as $id){
-                $category = $catModel->getCategory($id, assoc: true);
+        foreach ($ids as $id){
+            $category = $catModel->getCategory($id, assoc: true);
 
-                foreach($colIds as $colId){
-                    $colCatId = $colModel->getCollection($colId, filter: ["category_id", "name"], assoc: true);
+            foreach($colIds as $colId){
+                $colCatId = $colModel->getCollection($colId, filter: ["category_id", "name"], assoc: true);
 
-                    if ($colCatId["category_id"] == $id){
-                        $category["collectionName"] = $colCatId["name"];
-                    }
+                if ($colCatId["category_id"] == $id){
+                    $category["collectionName"] = $colCatId["name"];
                 }
-
-                array_push($categories, $category);
             }
 
-
-            $data = [
-                "categories" => $categories,
-            ];
-
-            return Navigation::renderNavBar("Categories", [true, "Images"]) . view('Category/Category_Detail', $data) . Navigation::renderFooter();
-        }else{
-            $session->setFlashdata('prev_url', 'categories');
-            return redirect()->to("");
+            array_push($categories, $category);
         }
+
+
+        $data = [
+            "categories" => $categories,
+        ];
+
+        return Navigation::renderNavBar("Categories", [true, "Images"]) . view('Category/Category_Detail', $data) . Navigation::renderFooter();
     }
 
     public function post(){

@@ -10,27 +10,22 @@ class Menu extends BaseController
     public function index()
     {
         $session = session();
-        if ($session->get("logIn")){
-            $menuModel = new MenuModel;
-            $brandModel = new BrandModel;
+        $menuModel = new MenuModel;
+        $brandModel = new BrandModel;
 
-            $ids = $menuModel->getCollumn("id", $session->get("brand_name"));
+        $ids = $menuModel->getCollumn("id", $session->get("brand_name"));
 
-            $menuItems = [];
+        $menuItems = [];
 
-            foreach($ids as $id){
-                array_push($menuItems, $menuModel->getMenuItem($id, assoc: true));
-            }
-
-            $data = [
-                "menuItems" => $menuItems,
-            ];
-
-            return Navigation::renderNavBar("Menu Items", [true, "Menu Items"]) . view('Menu', $data) . Navigation::renderFooter();
-        }else{
-            $session->setFlashdata('prev_url', 'menu');
-            return redirect()->to("");
+        foreach($ids as $id){
+            array_push($menuItems, $menuModel->getMenuItem($id, assoc: true));
         }
+
+        $data = [
+            "menuItems" => $menuItems,
+        ];
+
+        return Navigation::renderNavBar("Menu Items", [true, "Menu Items"]) . view('Menu', $data) . Navigation::renderFooter();
     }
 }
 

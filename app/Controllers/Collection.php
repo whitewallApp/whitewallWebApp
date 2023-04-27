@@ -12,36 +12,31 @@ class Collection extends BaseController
     public function index()
     {
         $session = session();
-        if ($session->get("logIn")){
-            $collModel = new CollectionModel;
-            $catModel = new CategoryModel;
-            $brandModel = new BrandModel;
-            $brandname = $session->get("brand_name");
+        $collModel = new CollectionModel;
+        $catModel = new CategoryModel;
+        $brandModel = new BrandModel;
+        $brandname = $session->get("brand_name");
 
-            $ids = $collModel->getAllIds($brandname);
-            $collections = [];
+        $ids = $collModel->getAllIds($brandname);
+        $collections = [];
 
 
-            foreach($ids as $id){
-                $catID = $collModel->getCollection($id, filter: ["category_id"]);
-                $collection = [
-                    "name" => $collModel->getCollection($id, filter: ["name"]),
-                    "iconPath" => $collModel->getCollection($id, filter: ["iconPath"]),
-                    "category" => $catModel->getCategory($catID, filter: ["name"])
-                ];
-
-                array_push($collections, $collection);
-            };
-
-            $data = [
-                "collections" => $collections,
+        foreach($ids as $id){
+            $catID = $collModel->getCollection($id, filter: ["category_id"]);
+            $collection = [
+                "name" => $collModel->getCollection($id, filter: ["name"]),
+                "iconPath" => $collModel->getCollection($id, filter: ["iconPath"]),
+                "category" => $catModel->getCategory($catID, filter: ["name"])
             ];
 
-            return Navigation::renderNavBar("Collections", [true, "Images"]) . view('Collection/Collection_Detail', $data) . Navigation::renderFooter();
-        }else{
-            $session->setFlashdata('prev_url', 'collections');
-            return redirect()->to("");
-        }
+            array_push($collections, $collection);
+        };
+
+        $data = [
+            "collections" => $collections,
+        ];
+
+        return Navigation::renderNavBar("Collections", [true, "Images"]) . view('Collection/Collection_Detail', $data) . Navigation::renderFooter();
     }
 
     public function post(){

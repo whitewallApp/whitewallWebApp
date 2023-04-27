@@ -21,6 +21,7 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'userValidation' => \App\Filters\UserValidation::class
     ];
 
     /**
@@ -29,6 +30,7 @@ class Filters extends BaseConfig
      */
     public array $globals = [
         'before' => [
+            "userValidation" => ['except' => '/']
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
