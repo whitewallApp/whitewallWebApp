@@ -18,8 +18,9 @@ class UserValidation implements FilterInterface
             return redirect()->to("");
         }
 
-        match($page){
+        switch($page){
             //TODO: this will be to make sure they can't go there from a url
+            
         };
 
     }
