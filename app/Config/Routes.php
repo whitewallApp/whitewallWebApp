@@ -51,7 +51,7 @@ $routes->get('/assets/collection/(:any)', 'Assets::colImages/$1');
 $routes->get('/assets/category/(:any)', 'Assets::catImages/$1');
 $routes->get('/assets/user/(:any)', 'Assets::user/$1');
 
-//Post URLs
+//Data URLs
 $routes->post('/images', 'Image::post');
 $routes->post('/collections', 'Collection::post');
 $routes->post('/categories', 'Category::post');
@@ -60,6 +60,7 @@ $routes->post('/brand', 'Brand::setBrand');
 $routes->post('/', 'Login::post');
 $routes->get('/brand/users/user', 'Brand::userData');
 $routes->post('/account', 'Account::post');
+$routes->post('/reset', 'Reset::index');
 
 /*
  * --------------------------------------------------------------------
