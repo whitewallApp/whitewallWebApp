@@ -32,7 +32,7 @@ $routes->set404Override();
 
 //Base URLs
 $routes->get('/', 'Login::index');
-$routes->get('/dashboard', 'Dashboard::index');
+$routes->get('/dashboard', 'Dashboard::index', ["filter" => "login:dashboard"]);
 $routes->get('/collections', 'Collection::index', ["filter" => "login:collections"]);
 $routes->get('/categories','Category::index', ["filter" => "login:categories"]);
 $routes->get('/images','Image::index', ["filter" => "login:images"]);

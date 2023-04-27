@@ -11,6 +11,8 @@ class UserValidation implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         $session = session();
+        $page = $arguments[0];
+        
         if (!$session->get("logIn")) {
             $session->setFlashdata('prev_url', $request->getUri()->getPath());
             return redirect()->to("");
