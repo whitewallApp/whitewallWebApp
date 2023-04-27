@@ -15,7 +15,7 @@ class Navigation extends BaseController
 
         //TODO: put a view array here 
 
-        $canView = $userModel->getPermissions($session->get("user_id"), $session->get("brand_name"), permissions: ["p_view", "p_edit"]);
+        $canView = $userModel->getPermissions($session->get("user_id"), $session->get("brand_name"), permissions: ["p_view"]);
 
         // echo var_dump($canView);
 

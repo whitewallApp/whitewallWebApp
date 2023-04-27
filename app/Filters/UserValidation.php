@@ -2,6 +2,7 @@
 
 namespace App\Filters;
 
+use App\Models\UserModel;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -12,16 +13,19 @@ class UserValidation implements FilterInterface
     {
         $session = session();
         $page = $arguments[0];
+        $userModel = new UserModel();
 
         if (!$session->get("logIn")) {
             $session->setFlashdata('prev_url', $request->getUri()->getPath());
             return redirect()->to("");
         }
 
-        switch($page){
-            //TODO: this will be to make sure they can't go there from a url
-            
-        };
+        $canView = $userModel->getPermissions($session->get("user_id"), $session->get("brand_name"), permissions: ["p_view"]);
+
+        if (!$canView[$page]["p_view"]){
+            $session->setFlashdata('prev_url', "dashboard");
+            return redirect()->to("");
+        }
 
     }
 
