@@ -70,6 +70,10 @@ class Login extends BaseController
                 }
             }
         }
+
+        if (isset($_SESSION["prev_url"]) && $return["success"]){
+            $return["prevURL"] = $session->get("prev_url");
+        }
         
         return json_encode($return);
     }

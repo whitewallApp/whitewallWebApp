@@ -47,7 +47,8 @@ class Image extends BaseController
             ];
             return Navigation::renderNavBar("Images", [true, "Images"]) . view('Image/Image_Detail', $data) . Navigation::renderFooter();
         }else{
-            return view("errors/html/authError");
+            $session->setFlashdata('prev_url', 'images');
+            return redirect()->to("");
         }
     }
 
@@ -83,7 +84,7 @@ class Image extends BaseController
 
             return json_encode($image);
         }else{
-            return redirect()->to("");
+            return json_encode(["success" => false]);
         }
         
     }

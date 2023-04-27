@@ -76,11 +76,14 @@ function login(e) {
     function (data, status){
         val = JSON.parse(data);
         if (val.success){
-            var url = "/dashboard";
-            $(location).attr('href', url);
-            console.log("Logged in");
+            if (!val.hasOwnProperty("prevURL")){
+                var url = "/dashboard";
+                $(location).attr('href', url);
+            }else{
+                var url = "/" + val.prevURL;
+                $(location).attr('href', url);
+            }
         }else{
-            console.log("Not Logged in");
         }
     })
 }
