@@ -12,13 +12,13 @@ class UserValidation implements FilterInterface
     {
         $session = session();
         $page = $arguments[0];
-        
+
         if (!$session->get("logIn")) {
             $session->setFlashdata('prev_url', $request->getUri()->getPath());
             return redirect()->to("");
         }
 
-        match($arguments){
+        match($page){
             //TODO: this will be to make sure they can't go there from a url
         };
 
