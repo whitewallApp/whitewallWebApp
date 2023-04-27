@@ -13,6 +13,8 @@ class Navigation extends BaseController
         $userModel = new UserModel();
         $session = session();
 
+        //TODO: put a view array here 
+
         $data = [
             "brands" => $brandModel->getCollumn(["name", "logo"], $session->get("user_id")),
             "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),

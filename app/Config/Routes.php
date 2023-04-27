@@ -33,17 +33,17 @@ $routes->set404Override();
 //Base URLs
 $routes->get('/', 'Login::index');
 $routes->get('/dashboard', 'Dashboard::index');
-$routes->get('/collections', 'Collection::index', ["filter" => "collection"]);
-$routes->get('/categories','Category::index', ["filter" => "category"]);
-$routes->get('/images','Image::index', ["filter" => "image"]);
-$routes->get('/account', 'Account::index', ["filter" => "account"]);
-$routes->get('/notifications','Notification::index', ["filter" => "notification"]);
-$routes->get('/menu','Menu::index', ["filter" => "menu"]);
-$routes->get('/brand','Brand::index', ["filter" => "brand"]);
-$routes->get('/app','App::index', ["filter" => "app"]);
-$routes->get('/brand/branding/(:num)','Brand::branding/$1', ["filter" => "brand"]);
-$routes->get('/brand/users/(:num)','Brand::users/$1', ["filter" => "brand"]);
-$routes->get('/billing',"Account::billing", ["filter" => "brand"]);
+$routes->get('/collections', 'Collection::index', ["filter" => "login:collections"]);
+$routes->get('/categories','Category::index', ["filter" => "login:categories"]);
+$routes->get('/images','Image::index', ["filter" => "login:images"]);
+$routes->get('/account', 'Account::index', ["filter" => "login:account"]);
+$routes->get('/notifications','Notification::index', ["filter" => "login:notifications"]);
+$routes->get('/menu','Menu::index', ["filter" => "login:menu"]);
+$routes->get('/brand','Brand::index', ["filter" => "login:brands"]);
+$routes->get('/app','App::index', ["filter" => "login:builds"]);
+$routes->get('/brand/branding/(:num)','Brand::branding/$1', ["filter" => "login:branding/$1"]);
+$routes->get('/brand/users/(:num)','Brand::users/$1', ["filter" => "login:admin"]);
+$routes->get('/billing',"Account::billing", ["filter" => "login:owner"]);
 
 //Asset URLS
 $routes->get('/assets/images/(:any)', 'Assets::images/$1');
