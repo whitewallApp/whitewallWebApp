@@ -15,6 +15,10 @@ class Navigation extends BaseController
 
         //TODO: put a view array here 
 
+        $canView = $userModel->getPermissions($session->get("user_id"), $session->get("brand_name"), permissions: ["p_view", "p_edit"]);
+
+        // echo var_dump($canView);
+
         $data = [
             "brands" => $brandModel->getCollumn(["name", "logo"], $session->get("user_id")),
             "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
@@ -23,6 +27,7 @@ class Navigation extends BaseController
             "userIcon" => $userModel->getUser($session->get("user_id"), filter: ["icon"]),
             "pageTitle" => $pageTitle,
             "actions" => $actions,
+            "view" => $canView,
             "admin" => $session->get("is_admin")
         ];
 

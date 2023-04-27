@@ -90,7 +90,7 @@ class UserModel extends Model
         return $builder->get()->getResultArray()[0]["admin"];
     }
 
-    public function getPermissions($userId, $brandName, $area=[]): array {
+    public function getPermissions($userId, $brandName, $area=[], $permissions = ["p_view", "p_add", "p_edit", "p_remove"]): array {
         $brandModel = new BrandModel();
         $brandID = $brandModel->getBrand($brandName, "name", ["id"]);
 
@@ -101,7 +101,7 @@ class UserModel extends Model
             $return = [];
             
             foreach($area as $areaName){
-                $builder->select(["p_view", "p_add", "p_edit", "p_remove"])->where("user_id", $userId)->where("brand_id", $brandID)->where("area", $areaName);
+                $builder->select($permissions)->where("user_id", $userId)->where("brand_id", $brandID)->where("area", $areaName);
                 $query = $builder->get()->getResultArray()[0];
 
                 $return[$areaName] = $query;
@@ -109,15 +109,34 @@ class UserModel extends Model
 
             return $return;
 
+        }else if (count($permissions) < 4) {
+            $builder = $this->db->table('permissions');
+            $builder->join("branduser", "branduser.user_id = permissions.user_id AND branduser.brand_id = permissions.brand_id", "inner");
+
+            array_push($permissions, "area");
+            $builder->select($permissions)->where("permissions.user_id", $userId)->where("permissions.brand_id", $brandID);
+            $query = $builder->get()->getResultArray();
+
+            $return = [];
+
+            foreach ($query as $permission) {
+                $areaPermissions = [];
+                foreach ($permissions as $area) {
+                   $areaPermissions[$area] = $permission[$area];
+                }
+                $return[$permission["area"]] = $areaPermissions;
+            }
+
+            return $return;
         }else{
             $builder = $this->db->table('permissions');
             $builder->join("branduser", "branduser.user_id = permissions.user_id AND branduser.brand_id = permissions.brand_id", "inner");
 
+            array_push($permissions, "area");
             $builder->select("*")->where("permissions.user_id", $userId)->where("permissions.brand_id", $brandID);
             $query = $builder->get()->getResultArray();
 
             $return = [];
-            $admin = false;
 
             foreach ($query as $permission) {
                 $return[$permission["area"]] = [
@@ -126,10 +145,7 @@ class UserModel extends Model
                     "edit" => $permission["p_edit"],
                     "remove" => $permission["p_remove"],
                 ];
-                $admin = $permission["admin"];
             }
-
-            $return["admin"] = $admin;
 
             return $return;
         }

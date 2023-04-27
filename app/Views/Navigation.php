@@ -36,7 +36,11 @@
                         <p style="font-size: medium;"><?= $brandName ?></p>
                     </div>
                 </div>
-                <a class="dropdown-item" href="/brand">Manage Brands</a>
+
+                <?php if ($view["brands"]["p_view"]) : ?>
+                    <a class="dropdown-item" href="/brand">Manage Brands</a>
+                <?php endif ?>
+
                 <?php if ($admin) : ?>
                     <a class="dropdown-item" href="/brand/users/<?= $brandId ?>">Manage Users</a>
                 <?php endif ?>
@@ -59,27 +63,48 @@
             <li class="nav-item">
                 <a class="nav-link" href="/dashboard">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/categories">Categories</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/collections">Collections</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/images">Images</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/notifications">Notifications</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/menu">Menu Items</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/app">Versions</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/brand/branding/<?= $brandId ?>">Branding</a>
-            </li>
+
+            <?php if ($view["categories"]["p_view"]) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/categories">Categories</a>
+                </li>
+            <?php endif ?>
+
+            <?php if ($view["collections"]["p_view"]) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/collections">Collections</a>
+                </li>
+            <?php endif ?>
+
+            <?php if ($view["images"]["p_view"]) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/images">Images</a>
+                </li>
+            <?php endif ?>
+
+            <?php if ($view["notifications"]["p_view"]) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/notifications">Notifications</a>
+                </li>
+            <?php endif ?>
+
+            <?php if ($view["menu"]["p_view"]) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/menu">Menu Items</a>
+                </li>
+            <?php endif ?>
+
+            <?php if ($view["builds"]["p_view"]) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/app">Versions</a>
+                </li>
+            <?php endif ?>
+
+            <?php if ($view["branding"]["p_view"]) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/brand/branding/<?= $brandId ?>">Branding</a>
+                </li>
+            <?php endif ?>
         </ul>
 </nav>
 
