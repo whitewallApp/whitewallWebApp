@@ -19,7 +19,7 @@ class App extends BaseController
 
             return Navigation::renderNavBar("Versions") . view('App', $data) . Navigation::renderFooter();
         }else{
-            return view("errors/html/authError");
+            return redirect()->to("");
         }
     }
 }

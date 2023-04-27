@@ -12,7 +12,7 @@ class Dashboard extends BaseController
         if ($session->get("logIn")){
             return Navigation::renderNavBar("Dashboard for") . view('Dashboard') . Navigation::renderFooter();
         }else{
-            return view("errors/html/authError");
+            return redirect()->to("");
         }
     }
 }

@@ -27,7 +27,7 @@ class Account extends BaseController
 
             return Navigation::renderNavBar("Account Settings") . view('Account', $data) . Navigation::renderFooter();
         }else{
-            return view("errors/html/authError");
+            return redirect()->to("");
         }
         
     }

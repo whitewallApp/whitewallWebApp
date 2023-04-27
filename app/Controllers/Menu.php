@@ -28,7 +28,7 @@ class Menu extends BaseController
 
             return Navigation::renderNavBar("Menu Items", [true, "Menu Items"]) . view('Menu', $data) . Navigation::renderFooter();
         }else{
-            return view("errors/html/authError");
+            return redirect()->to("");
         }
     }
 }

@@ -60,7 +60,7 @@ class Brand extends BaseController
 
             return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
         }else{
-            return view("errors/html/authError");
+            return redirect()->to("");
         }
     }
 

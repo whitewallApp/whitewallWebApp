@@ -43,7 +43,7 @@ class Category extends BaseController
 
             return Navigation::renderNavBar("Categories", [true, "Images"]) . view('Category/Category_Detail', $data) . Navigation::renderFooter();
         }else{
-            return view("errors/html/authError");
+            return redirect()->to("");
         }
     }
 

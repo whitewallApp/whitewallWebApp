@@ -70,7 +70,7 @@ class Notification extends BaseController
 
             return Navigation::renderNavBar("Notifications", [true, "Notifications"]) . view('Notifications', $data) . Navigation::renderFooter();
         }else{
-            return view("errors/html/authError");
+            return redirect()->to("");
         }
     }
 

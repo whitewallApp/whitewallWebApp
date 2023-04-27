@@ -83,7 +83,7 @@ class Image extends BaseController
 
             return json_encode($image);
         }else{
-            return json_encode(["success" => false]);
+            return redirect()->to("");
         }
         
     }

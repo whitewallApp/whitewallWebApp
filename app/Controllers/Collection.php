@@ -39,7 +39,7 @@ class Collection extends BaseController
 
             return Navigation::renderNavBar("Collections", [true, "Images"]) . view('Collection/Collection_Detail', $data) . Navigation::renderFooter();
         }else{
-            return view("errors/html/authError");
+            return redirect()->to("");
         }
     }
 
