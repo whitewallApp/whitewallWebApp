@@ -59,7 +59,7 @@ class Login extends BaseController
                     $session->set("logIn", true);
                     $session->set("brand_name", $brandModel->getBrand($userModel->getUser($userId, filter: ["default_brand"]), filter: ["name"]));
                     $session->set("user_id", $userId);
-                    $session->set("is_admin", $userModel->getUser($session->get("user_id"), filter: ["admin"]));
+                    $session->set("is_admin", $userModel->getAdmin($userId, $session->get("brand_name")));
                 }
             }
         }else{
@@ -74,7 +74,7 @@ class Login extends BaseController
                         $session->set("logIn", true);
                         $session->set("brand_name", $brandModel->getBrand($userModel->getUser($userId, filter: ["default_brand"]), filter: ["name"]));
                         $session->set("user_id", $userId);
-                        $session->set("is_admin", $userModel->getUser($session->get("user_id"), filter: ["admin"]));
+                        $session->set("is_admin", $userModel->getAdmin($userId, $session->get("brand_name")));
                     }
                 }
             }

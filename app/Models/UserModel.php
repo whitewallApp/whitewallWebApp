@@ -80,6 +80,16 @@ class UserModel extends Model
         }
     }
 
+    public function getAdmin($userId, $brandName){
+        $builder = $this->db->table('branduser');
+        $brandModel = new BrandModel();
+        $brandId = $brandModel->getBrand($brandName, "name", ["id"]);
+
+        $builder->select("admin")->where("brand_id", $brandId)->where("user_id", $userId);
+
+        return $builder->get()->getResultArray()[0]["admin"];
+    }
+
     public function getPermissions($userId, $brandName, $area=[]): array {
         $brandModel = new BrandModel();
         $brandID = $brandModel->getBrand($brandName, "name", ["id"]);

@@ -97,6 +97,7 @@ class Brand extends BaseController
         if ($session->get("logIn")) {
             $request = \Config\Services::request();
             $brandModel = new BrandModel();
+            $userModel = new UserModel();
             $name = esc($request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             $session = session();
 
@@ -111,6 +112,7 @@ class Brand extends BaseController
 
             if ($success){
                 $session->set("brand_name", $name);
+                $session->set('is_admin', $userModel->getAdmin($session->get("user_id"), $session->get("brand_name")));
                 return json_encode(["success" => true]);
             }
 
