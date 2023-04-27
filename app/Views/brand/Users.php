@@ -323,22 +323,22 @@
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="permissions[versions][view][]">
+                            <input class="form-check-input" type="checkbox" name="permissions[builds][view][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="permissions[versions][add][]">
+                            <input class="form-check-input" type="checkbox" name="permissions[builds][add][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="permissions[versions][edit][]">
+                            <input class="form-check-input" type="checkbox" name="permissions[builds][edit][]">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="permissions[versions][remove][]">
+                            <input class="form-check-input" type="checkbox" name="permissions[builds][remove][]">
                         </div>
                     </div>
                 </div>
