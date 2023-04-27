@@ -20,11 +20,12 @@ class UserValidation implements FilterInterface
             return redirect()->to("");
         }
 
-        $canView = $userModel->getPermissions($session->get("user_id"), $session->get("brand_name"), permissions: ["p_view"]);
-
-        if (!$canView[$page]["p_view"]){
-            $session->setFlashdata('prev_url', "dashboard");
-            return redirect()->to("");
+        if ($page != "dashboard"){
+            $canView = $userModel->getPermissions($session->get("user_id"), $session->get("brand_name"), permissions: ["p_view"]);
+            if (!$canView[$page]["p_view"]){
+                $session->setFlashdata('prev_url', "dashboard");
+                return redirect()->to("");
+            }
         }
 
     }
