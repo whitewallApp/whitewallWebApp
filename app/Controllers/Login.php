@@ -28,20 +28,29 @@ class Login extends BaseController
             $client = new Google\Client(["client_id" => $google["clientId"]]);
             $payload = $client->verifyIdToken($google["credential"]);
             if ($payload){
-                $googleIds = $userModel->findColumn("google_id");
+                $emails = $userModel->findColumn("email");
 
-                foreach($googleIds as $id){
-                    if ($id == $payload["sub"]){
-
-                        $return["success"] = true;
-
-                        $userId = $userModel->getUser($id, "user.google_id", ["id"]);
-
-                        $session->set("logIn", true);
-                        $session->set("brand_name", $brandModel->getBrand($userModel->getUser($userId, filter: ["default_brand"]), filter: ["name"]));
-                        $session->set("user_id", $userId);
-                        $session->set("is_admin", $userModel->getUser($session->get("user_id"), filter: ["admin"]));
+                foreach($emails as $email){
+                    if ($payload["email"] == $email){
+                        $ids = $userModel->getUser($payload["email"], "user.email", ["google_id", "id"]);
+                        if ($ids["google_id"] == ""){
+                            $userId = $userModel->getUser($ids["id"], filter: ["id"]);
+                            $userModel->update($userId, ["google_id" => $payload["sub"]]);
+                            $return["success"] = true;
+                        }else{
+                            if ($ids["google_id"] == $payload["sub"]){
+                                $return["success"] = true;
+                            }
+                        }
                     }
+                }
+
+                if ($return["success"]){
+                    $userId = $userModel->getUser($payload["email"], "user.email", ["id"]);
+                    $session->set("logIn", true);
+                    $session->set("brand_name", $brandModel->getBrand($userModel->getUser($userId, filter: ["default_brand"]), filter: ["name"]));
+                    $session->set("user_id", $userId);
+                    $session->set("is_admin", $userModel->getUser($session->get("user_id"), filter: ["admin"]));
                 }
             }
         }else{

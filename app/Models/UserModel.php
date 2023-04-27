@@ -10,7 +10,7 @@ class UserModel extends Model
     protected $primaryKey = 'id';
     protected $returnType = 'array';
     protected $table = "user";
-    protected $allowedFields = ["name", "email", "phone", "icon", "status", "default_brand"];
+    protected $allowedFields = ["name", "email", "phone", "icon", "status", "default_brand", "google_id"];
 
     public function getCollumn($column, $brandName, $getBy = []): mixed
     {
