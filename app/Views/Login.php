@@ -38,13 +38,20 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="resetModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="resetModalLabel">Reset Your Password</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">...</div>
+            <div class="modal-body">
+                <form id="resetForm">
+                    <div class="form-outline">
+                        <input type="email" id="email" class="form-control" />
+                        <label class="form-label" for="email">Email</label>
+                    </div>
+                </form>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Reset</button>
+                <button type="button" class="btn btn-primary" id="resetBtn">Reset</button>
             </div>
         </div>
     </div>

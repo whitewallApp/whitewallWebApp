@@ -87,3 +87,7 @@ function login(e) {
         }
     })
 }
+
+$("#resetBtn").on("click", function(e){
+    alert("hello");
+})

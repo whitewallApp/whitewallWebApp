@@ -41,9 +41,10 @@ $routes->get('/notifications','Notification::index', ["filter" => "login:notific
 $routes->get('/menu','Menu::index', ["filter" => "login:menu"]);
 $routes->get('/brand','Brand::index', ["filter" => "login:brands"]);
 $routes->get('/app','App::index', ["filter" => "login:builds"]);
-$routes->get('/brand/branding/(:num)','Brand::branding/$1', ["filter" => "login:branding/$1"]);
+$routes->get('/brand/branding/(:num)','Brand::branding/$1', ["filter" => "login:branding"]);
 $routes->get('/brand/users/(:num)','Brand::users/$1', ["filter" => "login:admin"]);
-$routes->get('/billing',"Account::billing", ["filter" => "login:owner"]);
+$routes->get('/billing',"Account::billing", ["filter" => "login:nocheck"]);
+$routes->get('/reset', 'Reset::index');
 
 //Asset URLS
 $routes->get('/assets/images/(:any)', 'Assets::images/$1');
@@ -60,7 +61,7 @@ $routes->post('/brand', 'Brand::setBrand');
 $routes->post('/', 'Login::post');
 $routes->get('/brand/users/user', 'Brand::userData');
 $routes->post('/account', 'Account::post');
-$routes->post('/reset', 'Reset::index');
+$routes->post('/reset', 'Reset::post');
 
 /*
  * --------------------------------------------------------------------

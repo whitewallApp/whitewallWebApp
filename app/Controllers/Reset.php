@@ -13,4 +13,8 @@ class Reset extends BaseController
 
         return "hello";
     }
+
+    public function post(){
+        
+    }
 }
