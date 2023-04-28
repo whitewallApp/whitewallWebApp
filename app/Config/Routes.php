@@ -44,7 +44,7 @@ $routes->get('/app','App::index', ["filter" => "login:builds"]);
 $routes->get('/brand/branding/(:num)','Brand::branding/$1', ["filter" => "login:branding"]);
 $routes->get('/brand/users/(:num)','Brand::users/$1', ["filter" => "login:admin"]);
 $routes->get('/billing',"Account::billing", ["filter" => "login:nocheck"]);
-$routes->get('/reset', 'Reset::index');
+$routes->get('/reset/(:any)', 'Reset::index/$1');
 
 //Asset URLS
 $routes->get('/assets/images/(:any)', 'Assets::images/$1');

@@ -89,5 +89,17 @@ function login(e) {
 }
 
 $("#resetBtn").on("click", function(e){
-    alert("hello");
+    $.post("/reset", {
+        email: $("#email").val()
+    }, function(data, status){
+        response = JSON.parse(data);
+        if (response.success){
+            $("#email").addClass("is-valid");
+            $(".modal-body").html("<p>Check your inbox for the password reset email</p>")
+        }else{
+            $("#resetForm").removeClass("was-validated")
+            $("#email").addClass("is-invalid");
+            $("#msg").html(response.message);
+        }
+    })
 })

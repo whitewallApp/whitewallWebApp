@@ -42,10 +42,11 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="resetForm">
+                <form id="resetForm" class="was-validated">
                     <div class="form-outline">
                         <input type="email" id="email" class="form-control" />
                         <label class="form-label" for="email">Email</label>
+                        <div class="invalid-feedback" id="msg">Please provide a valid email.</div>
                     </div>
                 </form>
             </div>
