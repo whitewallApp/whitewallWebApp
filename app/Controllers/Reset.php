@@ -14,7 +14,7 @@ class Reset extends BaseController
     public function index($key)
     {
 
-        return "hello";
+        return view('Reset') . Navigation::renderFooter();
     }
 
     public function post(){
