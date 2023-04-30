@@ -13,6 +13,11 @@ $("#document").ready(function(){
             $("#chars").attr("checked", true);
             $("#chars").parent().css("font-weight", "bold");
             length = true;
+        }else{
+            $("#chars").removeClass("is-valid");
+            $("#chars").attr("checked", false);
+            $("#chars").parent().css("font-weight", "normal");
+            length = false;
         }
 
         if (/\d/.test(password)){
@@ -20,6 +25,11 @@ $("#document").ready(function(){
             $("#number").attr("checked", true);
             $("#number").parent().css("font-weight", "bold");
             number = true;
+        }else{
+            $("#number").removeClass("is-valid");
+            $("#number").attr("checked", false);
+            $("#number").parent().css("font-weight", "normal");
+            number = false;
         }
 
         if (/[A-Z]/.test(password)){
@@ -27,6 +37,11 @@ $("#document").ready(function(){
             $("#capital").attr("checked", true);
             $("#capital").parent().css("font-weight", "bold");
             capital = true;
+        }else{
+            $("#capital").removeClass("is-valid");
+            $("#capital").attr("checked", false);
+            $("#capital").parent().css("font-weight", "normal");
+            capital = false;
         }
 
         if (/\W/.test(password)) {
@@ -34,6 +49,11 @@ $("#document").ready(function(){
             $("#symbol").attr("checked", true);
             $("#symbol").parent().css("font-weight", "bold");
             symbol = true;
+        }else{
+            $("#symbol").removeClass("is-valid");
+            $("#symbol").attr("checked", false);
+            $("#symbol").parent().css("font-weight", "normal");
+            symbol = false;
         }
     })
 
