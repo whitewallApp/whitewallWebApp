@@ -56,10 +56,7 @@ class Login extends BaseController
 
                 if ($return["success"]){
                     $userId = $userModel->getUser($payload["email"], "user.email", ["id"]);
-                    $session->set("logIn", true);
-                    $session->set("brand_name", $brandModel->getBrand($userModel->getUser($userId, filter: ["default_brand"]), filter: ["name"]));
-                    $session->set("user_id", $userId);
-                    $session->set("is_admin", $userModel->getAdmin($userId, $session->get("brand_name")));
+                    $this->login($userId);
                 }
             }
         }else{
@@ -71,10 +68,7 @@ class Login extends BaseController
 
                         $userId = $userModel->getUser($email, "email", ["id"]);
 
-                        $session->set("logIn", true);
-                        $session->set("brand_name", $brandModel->getBrand($userModel->getUser($userId, filter: ["default_brand"]), filter: ["name"]));
-                        $session->set("user_id", $userId);
-                        $session->set("is_admin", $userModel->getAdmin($userId, $session->get("brand_name")));
+                        $this->login($userId);
                     }
                 }
             }
@@ -85,6 +79,17 @@ class Login extends BaseController
         }
         
         return json_encode($return);
+    }
+
+    public static function login($userId){
+        $session = session();
+        $brandModel = new BrandModel();
+        $userModel = new UserModel();
+
+        $session->set("logIn", true);
+        $session->set("brand_name", $brandModel->getBrand($userModel->getUser($userId, filter: ["default_brand"]), filter: ["name"]));
+        $session->set("user_id", $userId);
+        $session->set("is_admin", $userModel->getAdmin($userId, $session->get("brand_name")));
     }
 }
 

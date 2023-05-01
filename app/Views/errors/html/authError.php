@@ -16,7 +16,7 @@
 
         <h1 class="headline"><?= lang('Errors.whoops') ?></h1>
 
-        <p class="lead"><?= lang('Error Code: 401') ?></p>
+        <p class="lead"><?= lang('Error Code: 404') ?></p>
         <?php if(isset($msg)) : ?>
             <p class="lead"><?= lang($msg) ?></p>
         <?php endif ?>

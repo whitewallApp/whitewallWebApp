@@ -64,7 +64,7 @@ $("#document").ready(function(){
             $("#password").addClass("is-valid");
 
             if(length && number && capital && symbol){
-                $("[type='submit']").attr("disabled", false);
+                $("#submit").attr("disabled", false);
             }
         }
     })
@@ -95,5 +95,22 @@ $("#document").ready(function(){
             $("#confirmView").addClass("bi-eye-slash");
         }
         canViewConf = !canViewConf;
+    })
+
+    $("#submit").on("click", function(){
+        const regex = /reset\/(.*)/gm;
+
+        $.post("/reset/update", {
+            password: $("#password").val(),
+            // key: regex.exec(window.location.href)[1]
+            key: key
+        }, function(data, result){
+            response = JSON.parse(data);
+            if (response.success){
+                window.location.href = "/dashboard";
+            }else{
+
+            }
+        })
     })
 })

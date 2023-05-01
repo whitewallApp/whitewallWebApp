@@ -13,8 +13,70 @@ class Reset extends BaseController
 {
     public function index($key)
     {
+        $resetModel = new ResetModel();
 
-        return view('Reset') . Navigation::renderFooter();
+        $found = false;
+        $keys = $resetModel->findColumn("reset_key");
+
+        if($keys != null){
+            foreach($keys as $dbkey){
+                if($dbkey == $key){
+                    $found = true;
+                }
+            }
+
+            if ($found){
+                return view('Reset', ["key" => $key]) . Navigation::renderFooter();
+            }else{
+                return view("errors/html/error_404");
+            }
+        }else{
+            return view("errors/html/error_404");
+        }
+    }
+
+    public function update(){
+        $password = esc($this->request->getPost("password"));
+        $reset_key = esc($this->request->getPost("key"));
+        $chars = true;
+        $symbol = true;
+        $number = true;
+        $capital = true;
+        $msg = "";
+
+        if(!strlen($password) >= 8){
+            $chars = false;
+            $msg . "Not 8 characters<br>";
+        }
+
+        if(!preg_match("/\W/", $password)){
+            $symbol = false;
+            $msg . "Needs a symbol<br>";
+        }
+
+        if (!preg_match("/\d/", $password)){
+            $number = false;
+            $msg . "Needs a number<br>";
+        }
+
+        if (!preg_match("/[A-Z]/", $password)){
+            $capital = false;
+            $msg . "Need a capital letter<br>";
+        }
+
+        if ($chars && $symbol && $number && $capital){
+            $resetModel = new ResetModel();
+            $userModel = new UserModel();
+
+            $userId = $resetModel->where("reset_key", $reset_key)->first()["user_id"];
+            $userModel->update($userId, ["password" => password_hash($password, PASSWORD_DEFAULT)]);
+
+            LogIn::login($userId);
+
+            return json_encode(["success" => true]);
+        }else{
+            return json_encode(["success" => false, "msg" => $msg]);
+        }
     }
 
     public function post(){

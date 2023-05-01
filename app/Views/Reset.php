@@ -21,7 +21,7 @@
                 <div class="col-11">
                     <div class="form-outline mb-4">
                         <input type="password" id="confirmPassword" class="form-control" />
-                        <label class="form-label" for="confirmPassword">New Password</label>
+                        <label class="form-label" for="confirmPassword">Confirm New Password</label>
                     </div>
                 </div>
                 <div class="col-1">
@@ -50,9 +50,10 @@
             </div>
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block" disabled>Save New Password</button>
         </form>
+        <button id="submit" class="btn btn-primary btn-block" disabled>Save New Password</button>
     </div>
 </div>
+<script>key = "<?= $key ?>"</script>
 <script src="/js/reset.js"></script>
 <?= $this->endSection(); ?>
