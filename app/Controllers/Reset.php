@@ -69,7 +69,9 @@ class Reset extends BaseController
             $userModel = new UserModel();
 
             $userId = $resetModel->where("reset_key", $reset_key)->first()["user_id"];
+            $rowId = $resetModel->where("reset_key", $reset_key)->first()["id"];
             $userModel->update($userId, ["password" => password_hash($password, PASSWORD_DEFAULT)]);
+            $resetModel->delete($rowId);
 
             LogIn::login($userId);
 
