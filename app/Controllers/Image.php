@@ -83,4 +83,8 @@ class Image extends BaseController
         }
         
     }
+
+    public function update(){
+        echo var_dump($_POST);
+    }
 }

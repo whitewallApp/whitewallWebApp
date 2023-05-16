@@ -68,6 +68,8 @@ function getImg(e){
     },
     function(data, status){
         image = JSON.parse(data);
+
+        $("#data").attr("image-id", id);
         
         nameTextBox.val(image.name);
         descTextBox.val(image.description);
@@ -102,6 +104,48 @@ function getImg(e){
         updatedText.html("Date Updated: " + time.toLocaleString());
     });
 }
+
+$("#data").submit(function(e){
+    e.preventDefault();
+
+    var formData = new FormData(e[0]);
+    formData.append("name", $("#imageName").val())
+    formData.append("description", $("#imageDesc").val());
+
+    if ($("#imageFile")[0].files.length > 0){
+        console.log($("#imageFile")[0].files);
+
+        file = $("#imageFile")[0].files[0];
+        formData.append("file", file.slice(0, file.size), $("#imageFile")[0].files[0].name)
+        formData.append("type", file.type)
+    }
+
+    if ($("#imageLink").val() != ""){
+        formData.append("link", $("#imageLink").val())
+    }
+
+    formData.append("collection", $("#select").val())
+
+    $.ajax({
+        url: "/images/update",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            console.log(data);
+        }
+    });
+});
+
+function updateImage(){
+    $("#data").submit();
+}
+
+$("#imageFile").on("change", function(e){
+    imageName = $("#imageFile")[0].files[0].name;
+    $("#imageFileText").html(imageName);
+})
 
 function getColl(e){
     tableRow = $(e);
@@ -242,7 +286,7 @@ function getNot(e){
 }
 
 function showData(link, list=true){
-    form = $("#data");
+    form = $("#form-div");
     title = $("#data-title");
     button = $("#add-button");
 
