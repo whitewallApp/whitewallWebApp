@@ -69,7 +69,7 @@ function getImg(e){
     function(data, status){
         image = JSON.parse(data);
 
-        $("#data").attr("image-id", id);
+        $("#data").attr("image-id", image.id);
         
         nameTextBox.val(image.name);
         descTextBox.val(image.description);
@@ -109,6 +109,7 @@ $("#data").submit(function(e){
     e.preventDefault();
 
     var formData = new FormData(e[0]);
+    formData.append("id", $("#data").attr("image-id"))
     formData.append("name", $("#imageName").val())
     formData.append("description", $("#imageDesc").val());
 

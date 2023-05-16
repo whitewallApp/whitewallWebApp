@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\BrandModel;
 use App\Models\UserModel;
 
 class Assets extends BaseController {
@@ -114,6 +115,42 @@ class Assets extends BaseController {
         }
 
         return "assets/user/" . $userId . $matches[0];
+    }
+
+    /**
+     * Saves the image file to the correct directory
+     *
+     * @param string $tmpPath | The temp path from the file upload
+     * @param string $type | the type of image (png, jpg, bmp, webp)
+     * @return string | the unique file name to save in database
+     */
+    public function saveImage($tmpPath, $type){
+
+        $filename = tempnam($this->imgPath, '');
+        unlink($filename); // Need to delete the created tmp file, just want the name
+
+        $file = explode(".tmp", $filename)[0];
+        $file = $file . "." . $type;
+
+        if(move_uploaded_file($tmpPath, $file)){
+            return explode("images\\", $file)[1];
+        }else{
+            return false;
+        }
+        
+    }
+
+    /**
+     * updated the image by deleting the old one then saving the new one
+     *
+     * @param string $tmpPath | the temporary path of the new image
+     * @param string $type | the type of the image (png, jpg, bmp, webp)
+     * @param string $oldPath | the old name/path of the image
+     * @return string name of the new file
+     */
+    public function updateImage($tmpPath, $type, $oldPath){
+        // unlink($this->imgPath . $oldPath);
+        return $this->saveImage($tmpPath, $type);
     }
 
     private function mapType($inputType): string {

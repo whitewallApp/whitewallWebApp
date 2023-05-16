@@ -67,7 +67,7 @@ class Image extends BaseController
 
             $image["collection_id"] = $colModel->getCollection($image["collection_id"], filter: ["name"]);
 
-            if (!$image["externalPath"]){
+            if (!$image["externalPath"]){ //removes the assets/images
                 $exp = "/\/.*\/(.*)/";
                 $matches = [];
                 preg_match($exp, $image["imagePath"], $matches);
@@ -85,6 +85,32 @@ class Image extends BaseController
     }
 
     public function update(){
-        echo var_dump($_POST);
+        $assets = new Assets();
+        $imageModel = new ImageModel();
+        $collectionModel = new CollectionModel();
+
+        if (isset($_FILES)){
+            $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
+            $imageID = htmlspecialchars((string)$this->request->getPost("id"));
+
+            $name = $imageModel->getImage($imageID, filter: ["imagePath"]);
+            //get rid of the assets/images
+            $name = explode("assets/images/", $name)[1];
+
+            $type = explode("/", (string)$this->request->getPost("type"))[1];
+            $newPath = $assets->updateImage($tmpPath, $type, $name);
+
+            if ($newPath){ //if no error
+                $post = $this->request->getPost(["name", "description", "collection"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);//TODO: updated externalPath too
+                $data = [
+                    "imagePath" => "assets/images/" . $newPath,
+                    "thumbnail" => "assets/thumbnail/" . $newPath,
+                    "name" => $post["name"],
+                    "description" => $post["description"],
+                    "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name")
+                ];
+                $imageModel->updateImage($imageID, $data);
+            }
+        }
     }
 }
