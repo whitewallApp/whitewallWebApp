@@ -45,9 +45,13 @@ class Assets extends BaseController {
 
             $type = $this->mapType($matches[1]);
 
-            header("Content-type: " . "image/" . $type);
-            require($this->imgPath . $file);
+            // echo $type;
+
+            header("Content-Type: " . "image/" . $type);
+            readfile($this->imgPath . $file);
             exit;
+        }else{
+            return view("errors/html/error_404", ["message" => "sorry we can't find that file"]);
         }
     }
 
@@ -60,9 +64,11 @@ class Assets extends BaseController {
 
             $type = $this->mapType($matches[1]);
 
-            header("Content-type: " . "image/" . $type);
-            require($this->catPath . $file);
+            header("Content-Type: " . "image/" . $type);
+            readfile($this->catPath . $file);
             exit;
+        } else {
+            return view("errors/html/error_404", ["message" => "sorry we can't find that file"]);
         }
     }
 
@@ -75,9 +81,11 @@ class Assets extends BaseController {
 
             $type = $this->mapType($matches[1]);
 
-            header("Content-type: " . "image/" . $type);
-            require($this->collPath . $file);
+            header("Content-Type: " . "image/" . $type);
+            readfile($this->collPath . $file);
             exit;
+        } else {
+            return view("errors/html/error_404", ["message" => "sorry we can't find that file"]);
         }
     }
 
@@ -89,9 +97,11 @@ class Assets extends BaseController {
 
             $type = $this->mapType($matches[1]);
 
-            header("Content-type: " . "image/" . $type);
-            require($this->userPath . $file);
+            header("Content-Type: " . "image/" . $type);
+            readfile($this->userPath . $file);
             exit;
+        } else {
+            return view("errors/html/error_404", ["message" => "sorry we can't find that file"]);
         }
     }
 
