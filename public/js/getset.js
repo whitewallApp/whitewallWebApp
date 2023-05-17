@@ -115,12 +115,12 @@ $("#data").submit(function(e){
 
     if ($("#imageLink").val() != ""){
         formData.append("link", $("#imageLink").val())
-        formData.append("externalPath", true);
+        formData.append("externalPath", 1);
     }else{
         file = $("#imageFile")[0].files[0];
         formData.append("file", file.slice(0, file.size), $("#imageFile")[0].files[0].name)
         formData.append("type", file.type)
-        formData.append("externalPath", false);
+        formData.append("externalPath", 0);
     }
 
     formData.append("collection", $("#select").val())

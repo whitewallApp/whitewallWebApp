@@ -44,7 +44,8 @@ class Image extends BaseController
         $data = [
             "images" => $images,
         ];
-        return Navigation::renderNavBar("Images", [true, "Images"]) . view('Image/Image_Detail', $data) . Navigation::renderFooter();
+
+        return Navigation::renderNavBar("Images", [true, "Images"]) . view('Image/Image_Detail', $data, ["cache" => 86400]) . Navigation::renderFooter();
     }
 
     public function post(){
@@ -89,6 +90,10 @@ class Image extends BaseController
         $imageModel = new ImageModel();
         $collectionModel = new CollectionModel();
 
+        //delete caches
+        unlink("../writable/cache/ImageImage_Detail");
+        unlink("../writable/cache/ImageImage_List");
+
         if (isset($_POST["type"])){
             $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
             $imageID = htmlspecialchars((string)$this->request->getPost("id"));
@@ -102,6 +107,7 @@ class Image extends BaseController
 
             if ($newPath){ //if no error
                 $post = $this->request->getPost(["name", "description", "collection", "externalPath"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
                 $data = [
                     "imagePath" => "assets/images/" . $newPath,
                     "thumbnail" => "assets/thumbnail/" . $newPath,
@@ -115,6 +121,8 @@ class Image extends BaseController
         }else if (isset($_POST["link"])){
             $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $imageID = htmlspecialchars((string)$this->request->getPost("id"));
+
+            echo var_dump($post);
 
             $data = [
                 "imagePath" => $post["link"],
