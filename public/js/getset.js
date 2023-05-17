@@ -116,7 +116,9 @@ $("#data").submit(function(e){
     if ($("#imageLink").val() != ""){
         formData.append("link", $("#imageLink").val())
         formData.append("externalPath", 1);
-    }else{
+    }
+    
+    if ($("#imageFile")[0].files.length > 0){
         file = $("#imageFile")[0].files[0];
         formData.append("file", file.slice(0, file.size), $("#imageFile")[0].files[0].name)
         formData.append("type", file.type)
