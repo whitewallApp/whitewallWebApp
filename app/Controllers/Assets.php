@@ -149,7 +149,7 @@ class Assets extends BaseController {
      * @return string name of the new file
      */
     public function updateImage($tmpPath, $type, $oldPath){
-        // unlink($this->imgPath . $oldPath);
+        unlink($this->imgPath . $oldPath);
         return $this->saveImage($tmpPath, $type);
     }
 

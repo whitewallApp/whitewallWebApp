@@ -57,7 +57,7 @@
                 <tbody>
                     <?php if (isset($images)) : ?>
                         <?php foreach ($images as $image) : ?>
-                            <tr id="<?= $image["name"] ?>" onclick="getImg(this);">
+                            <tr id="<?= $image["id"] ?>" onclick="getImg(this);">
                                 <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
                                 <td class="w-25">
                                     <image class="img-sm rounded" src="<?= $image["path"] ?>">

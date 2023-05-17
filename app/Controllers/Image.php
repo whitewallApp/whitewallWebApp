@@ -62,7 +62,7 @@ class Image extends BaseController
                 return json_encode($colModel->getCollumn("name", $brandname));
             }
 
-            $image = $imageModel->getImgByName($id);
+            $image = $imageModel->getImage($id)[0];
             $collections = $colModel->getCollumn("name", $brandname);
 
             $image["collection_id"] = $colModel->getCollection($image["collection_id"], filter: ["name"]);
@@ -89,7 +89,7 @@ class Image extends BaseController
         $imageModel = new ImageModel();
         $collectionModel = new CollectionModel();
 
-        if (isset($_FILES)){
+        if (isset($_POST["type"])){
             $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
             $imageID = htmlspecialchars((string)$this->request->getPost("id"));
 
@@ -101,16 +101,30 @@ class Image extends BaseController
             $newPath = $assets->updateImage($tmpPath, $type, $name);
 
             if ($newPath){ //if no error
-                $post = $this->request->getPost(["name", "description", "collection"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);//TODO: updated externalPath too
+                $post = $this->request->getPost(["name", "description", "collection", "externalPath"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $data = [
                     "imagePath" => "assets/images/" . $newPath,
                     "thumbnail" => "assets/thumbnail/" . $newPath,
                     "name" => $post["name"],
                     "description" => $post["description"],
-                    "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name")
+                    "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
+                    "externalPath" => $post["externalPath"]
                 ];
                 $imageModel->updateImage($imageID, $data);
             }
+        }else if (isset($_POST["link"])){
+            $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $imageID = htmlspecialchars((string)$this->request->getPost("id"));
+
+            $data = [
+                "imagePath" => $post["link"],
+                "thumbnail" => "none",
+                "name" => $post["name"],
+                "description" => $post["description"],
+                "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
+                "externalPath" => $post["externalPath"]
+            ];
+            $imageModel->updateImage($imageID, $data);
         }
     }
 }

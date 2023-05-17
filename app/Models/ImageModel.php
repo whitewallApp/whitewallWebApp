@@ -12,7 +12,7 @@ class ImageModel extends Model
     protected $returnType = 'array';
 
     protected $useTimestamps = true;
-    protected $dateFormat    = 'timestamp';
+    protected $dateFormat    = 'datetime';
     protected $createdField  = 'dateCreated';
     protected $updatedField  = 'dateUpdated';
 
@@ -21,7 +21,7 @@ class ImageModel extends Model
         $builder->select("id")->where("name", $brandName);
         $brandID = $builder->get()->getResultArray()[0];
 
-        $builder = $this->db->table('image');
+        $builder = $this->db->table('wallpaper');
         $builder->select("id")->where("brand_id", $brandID);
         $query = $builder->get()->getResultArray();
 
@@ -39,9 +39,8 @@ class ImageModel extends Model
         $builder->select("id")->where("name", $brandName);
         $brandID = $builder->get()->getResultArray()[0];
 
-        $builder = $this->db->table('image');
+        $builder = $this->db->table('wallpaper');
         $builder->select($column);
-        $builder->join("wallpaper", "image.wallpaper_id = wallpaper.id");
         $builder->where("brand_id", $brandID);
 
         if (count($getBy) > 0){
@@ -62,11 +61,10 @@ class ImageModel extends Model
         return $returnArray;
     }
 
-    public function getImage($id, String $fetchBy="image.id", Array $filter = [], Bool $assoc=false){
-        $builder = $this->db->table('image');
+    public function getImage($id, String $fetchBy="id", Array $filter = [], Bool $assoc=false){
+        $builder = $this->db->table('wallpaper');
         if (count($filter) > 0){
             $builder->select($filter)->where($fetchBy, $id);
-            $builder->join('wallpaper', 'image.wallpaper_id = wallpaper.id');
             $image = $builder->get()->getResultArray()[0];
 
             if (!$assoc){
@@ -90,35 +88,24 @@ class ImageModel extends Model
             }
         }
         else{
-            $builder->select("*")->where("image." . $fetchBy, $id);
-            $builder->join('wallpaper', 'image.wallpaper_id = wallpaper.id');
+            $builder->select("*")->where($fetchBy, $id);
             $imgID = $builder->get()->getResultArray();
             return $imgID;
         }
     }
 
-    public function updateImage($id, $data, $updateBy="image.id"){
+    public function updateImage($id, $data, $updateBy="id"){
         $data["dateUpdated"] = new RawSql('CURRENT_TIMESTAMP');
 
-        $builder = $this->db->table("image")->join('wallpaper', 'image.wallpaper_id = wallpaper.id')->where($updateBy, $id);
-        echo var_dump($builder->getCompiledUpsert());
-        // $builder->upsertBatch($data);
+        $builder = $this->db->table("wallpaper");
+        $builder->where($updateBy, $id);
+        $builder->update($data);
     }
 
     public function getImgByName($name){
         $builder = $this->db->table('wallpaper');
-        $builder->select("id, name, description, dateUpdated, collection_id")->where("name", $name);
+        $builder->select("*")->where("name", $name);
         $img = $builder->get()->getResultArray()[0];
-
-        $builder = $this->db->table('image');
-        $builder->select("imagePath, thumbnail, externalPath")->where("id", $img["id"]);
-        $link = $builder->get()->getResultArray()[0];
-
-        // foreach ($link as $thing){
-        //     array_push($img, $thing);
-        // }
-
-        $img = array_merge($img, $link);
 
         return $img;
     }

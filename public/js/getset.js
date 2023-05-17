@@ -113,16 +113,14 @@ $("#data").submit(function(e){
     formData.append("name", $("#imageName").val())
     formData.append("description", $("#imageDesc").val());
 
-    if ($("#imageFile")[0].files.length > 0){
-        console.log($("#imageFile")[0].files);
-
+    if ($("#imageLink").val() != ""){
+        formData.append("link", $("#imageLink").val())
+        formData.append("externalPath", true);
+    }else{
         file = $("#imageFile")[0].files[0];
         formData.append("file", file.slice(0, file.size), $("#imageFile")[0].files[0].name)
         formData.append("type", file.type)
-    }
-
-    if ($("#imageLink").val() != ""){
-        formData.append("link", $("#imageLink").val())
+        formData.append("externalPath", false);
     }
 
     formData.append("collection", $("#select").val())
