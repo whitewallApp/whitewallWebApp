@@ -6,7 +6,7 @@ use App\Models\BrandModel;
 use App\Models\UserModel;
 use Google;
 
-class Login extends BaseController
+class LogIn extends BaseController
 {
     public function index()
     {
