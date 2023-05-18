@@ -178,6 +178,7 @@ function getColl(e){
     },
     function(data, status){
         collection = JSON.parse(data);
+        console.log(collection);
         nameTextBox.val(collection.name);
         descTextBox.val(collection.description);
         linkTextBox.val(collection.link);

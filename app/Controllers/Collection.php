@@ -36,7 +36,7 @@ class Collection extends BaseController
             "collections" => $collections,
         ];
 
-        return Navigation::renderNavBar("Collections", [true, "Images"]) . view('Collection/Collection_Detail', $data) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Collections", [true, "Images"]) . view('Collection/Collection_Detail', $data, ["cache" => 86400]) . Navigation::renderFooter();
     }
 
     public function post(){
@@ -57,7 +57,7 @@ class Collection extends BaseController
             $id = $colModel->getIdByName($id);
             //$exp = "/\/.*\/(.*)/";
 
-            $collection = $colModel->getCollection($id, filter: ["name", "dateUpdated", "description", "link", "iconPath", "category_id"], assoc: true);
+            $collection = $colModel->getCollection($id, filter: ["id", "name", "dateUpdated", "description", "link", "iconPath", "category_id"], assoc: true);
             $collection["category_id"] = $catModel->getCategory($collection["category_id"], filter: ["name"]);
 
             // $matches = [];
@@ -71,6 +71,15 @@ class Collection extends BaseController
             return json_encode($collection);
         }else{
             return json_encode(["success" => false]);
+        }
+    }
+
+    public function update(){
+        $session = session();
+        if ($session->get("logIn")) {
+            //delete caches
+            unlink("../writable/cache/ImageImage_Detail");
+            unlink("../writable/cache/ImageImage_List");
         }
     }
 }

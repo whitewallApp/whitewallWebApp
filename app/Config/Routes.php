@@ -31,7 +31,7 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 
 //Base URLs
-$routes->get('/', 'Login::index');
+$routes->get('/', 'LogIn::index');
 $routes->get('/dashboard', 'Dashboard::index', ["filter" => "login:nocheck"]);
 $routes->get('/collections', 'Collection::index', ["filter" => "login:collections"]);
 $routes->get('/categories','Category::index', ["filter" => "login:categories"]);
