@@ -1,7 +1,7 @@
 <div class="col-sm-8 mt-3">
   <form id="userForm" action="/account" method="post">
     <div class=" form-group row">
-      <label for="email" class="col-sm-2 col-form-label"><?= PHP_OS ?></label>
+      <label for="email" class="col-sm-2 col-form-label">Change Email</label>
       <div class="col-sm-8">
         <input type="email" class="form-control" id="email" value="<?= $email ?>" name="email">
       </div>

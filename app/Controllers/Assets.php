@@ -145,7 +145,11 @@ class Assets extends BaseController {
         $file = $file . "." . $type;
 
         if(move_uploaded_file($tmpPath, $file)){
-            return explode("images/", $file)[1];
+            if (PHP_OS == "Linux"){
+                return explode("images/", $file)[1];
+            }else{
+                return explode("images\\", $file)[1];
+            }
         }else{
             return false;
         }
@@ -196,7 +200,11 @@ class Assets extends BaseController {
         $file = $file . "." . $type;
 
         if (move_uploaded_file($tmpPath, $file)) {
-            return explode("collections\\", $file)[1];
+            if (PHP_OS == "Linux") {
+                return explode("collections/", $file)[1];
+            } else {
+                return explode("collections\\", $file)[1];
+            }
         } else {
             return false;
         }
