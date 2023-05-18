@@ -39,7 +39,7 @@ class Notification extends BaseController
         $images = [];
 
         foreach($ids as $id){
-            array_push($images, $imageModel->getImage($id, filter: ["image.id", "name"], assoc: true));
+            array_push($images, $imageModel->getImage($id, filter: ["id", "name"], assoc: true));
         }
 
         //get collection category images array
