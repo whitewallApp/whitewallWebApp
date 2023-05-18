@@ -105,7 +105,7 @@ class Image extends BaseController
             $name = $imageModel->getImage($imageID, filter: ["imagePath", "externalPath"], assoc: true);
             if ($name["externalPath"] == "0"){
                 //get rid of the assets/images
-                $name = explode("assets/images/", $name)[1];
+                $name = explode("assets/images/", $name["imagePath"])[1];
 
                 $newPath = $assets->updateImage($tmpPath, $type, $name);
 
