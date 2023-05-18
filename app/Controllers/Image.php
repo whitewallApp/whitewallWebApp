@@ -135,8 +135,8 @@ class Image extends BaseController
                 "externalPath" => $post["externalPath"]
             ];
             $imageModel->updateImage($imageID, $data);
-
-            return json_encode(["success" => true]);
         }
+
+        return json_encode(["success" => true]);
     }
 }
