@@ -43,7 +43,7 @@ $routes->get('/brand','Brand::index', ["filter" => "login:brands"]);
 $routes->get('/app','App::index', ["filter" => "login:builds"]);
 $routes->get('/brand/branding/(:num)','Brand::branding/$1', ["filter" => "login:branding"]);
 $routes->get('/brand/users/(:num)','Brand::users/$1', ["filter" => "login:admin"]);
-$routes->get('/billing',"Account::billing", ["filter" => "login:nocheck"]);
+$routes->get('/billing',"Account::billing", ["filter" => "login:nocheck"]); //TODO move this to account view
 $routes->get('/reset/(:any)', 'Reset::index/$1');
 
 //Asset URLS
@@ -52,7 +52,7 @@ $routes->get('/assets/collection/(:any)', 'Assets::colImages/$1');
 $routes->get('/assets/category/(:any)', 'Assets::catImages/$1');
 $routes->get('/assets/user/(:any)', 'Assets::user/$1');
 
-//Data URLs
+//Get URLs
 $routes->post('/images', 'Image::post');
 $routes->post('/collections', 'Collection::post');
 $routes->post('/categories', 'Category::post');
@@ -63,8 +63,10 @@ $routes->get('/brand/users/user', 'Brand::userData');
 $routes->post('/account', 'Account::post');
 $routes->post('/reset', 'Reset::post');
 
+//Update URLs
 $routes->post('/reset/update', 'Reset::update');
 $routes->post('/images/update', 'Image::update');
+$routes->post('/collections/update', 'Collection::update');
 
 /*
  * --------------------------------------------------------------------

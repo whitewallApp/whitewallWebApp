@@ -91,8 +91,10 @@ class Image extends BaseController
         $collectionModel = new CollectionModel();
 
         //delete caches
-        unlink("../writable/cache/ImageImage_Detail");
-        unlink("../writable/cache/ImageImage_List");
+        if (file_exists("../writable/cache/ImageImage_Detail")){
+            unlink("../writable/cache/ImageImage_Detail");
+            unlink("../writable/cache/ImageImage_List");
+        }
 
         if (isset($_POST["type"])){
             $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
@@ -133,6 +135,8 @@ class Image extends BaseController
                 "externalPath" => $post["externalPath"]
             ];
             $imageModel->updateImage($imageID, $data);
+
+            return json_encode(["success" => true]);
         }
     }
 }

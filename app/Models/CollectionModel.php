@@ -4,6 +4,8 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+use CodeIgniter\Database\RawSql;
+
 class CollectionModel extends Model
 {
     protected $primaryKey = 'id';
@@ -94,5 +96,13 @@ class CollectionModel extends Model
             $collection = $builder->get()->getResultArray()[0];
             return $collection;
         }
+    }
+
+    public function updateCollection($id, $data, $updateBy="id"){
+        $data["dateUpdated"] = new RawSql('CURRENT_TIMESTAMP');
+
+        $builder = $this->db->table("collection");
+        $builder->where($updateBy, $id);
+        $builder->update($data);
     }
 }

@@ -55,15 +55,16 @@ class Collection extends BaseController
             }
 
             $id = $colModel->getIdByName($id);
-            //$exp = "/\/.*\/(.*)/";
+            $exp = "/\/.*\/(.*)/";
 
             $collection = $colModel->getCollection($id, filter: ["id", "name", "dateUpdated", "description", "link", "iconPath", "category_id"], assoc: true);
             $collection["category_id"] = $catModel->getCategory($collection["category_id"], filter: ["name"]);
 
-            // $matches = [];
-            // preg_match($exp, $collection["iconPath"], $matches);
+            //gets rid of the assets/collection
+            $matches = []; 
+            preg_match($exp, $collection["iconPath"], $matches);
 
-            // $collection["iconPath"] = $matches[1];
+            $collection["iconPath"] = $matches[1];
 
             $categories = $catModel->getCollumn("name", $brandname);
             $collection = array_merge($collection, ["categoryNames" => $categories]);
@@ -77,9 +78,42 @@ class Collection extends BaseController
     public function update(){
         $session = session();
         if ($session->get("logIn")) {
+            $catModel = new CategoryModel();
+            $colModel = new CollectionModel();
+            $assets = new Assets();
+
             //delete caches
-            unlink("../writable/cache/ImageImage_Detail");
-            unlink("../writable/cache/ImageImage_List");
+            if (file_exists("../writable/cache/CollectionCollection_Detail")){
+                unlink("../writable/cache/CollectionCollection_Detail");
+                unlink("../writable/cache/CollectionCollection_List");
+            }
+
+            $post = $this->request->getPost(["id", "name", "description", "link", "category"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $categoryId = $catModel->getCategory($post["category"], "name", ["id"]);
+
+            $data = [
+                "name" => $post["name"],
+                "description" => $post["description"],
+                "link" => $post["link"],
+                "category_id" => $categoryId
+            ];
+
+            if (count($_FILES) > 0){
+                $type = $this->request->getPost("type", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $type = explode("image/", (string)$type)[1];
+
+                $oldPath = $colModel->getCollection($post["id"], ["iconPath"]);
+                $oldName = explode("assets/collection/", $oldPath)[1];
+
+                $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
+                $data["iconPath"] = "assets/collection/" . $assets->updateCollection($tmpPath, $type, $oldName);
+            }
+
+            echo var_dump($data);
+
+            $colModel->updateCollection($post["id"], $data);
+
+            return json_encode(["success" => true]);
         }
     }
 }

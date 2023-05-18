@@ -42,6 +42,7 @@ function getUser(e) {
     })
 }
 
+//IMAGES
 function getImg(e){
     
     tableRow = $(e);
@@ -148,6 +149,7 @@ $("#imageFile").on("change", function(e){
     $("#imageFileText").html(imageName);
 })
 
+//COLLECTIONS
 function getColl(e){
     tableRow = $(e);
 
@@ -178,18 +180,13 @@ function getColl(e){
     },
     function(data, status){
         collection = JSON.parse(data);
-        console.log(collection);
         nameTextBox.val(collection.name);
         descTextBox.val(collection.description);
         linkTextBox.val(collection.link);
 
-        
+        $("#collectionData").attr("collection-id", collection.id);
 
-        if (collection.iconPath != null){
-            img.attr("src", collection.iconPath);
-            file.hide();
-        }
-
+        $("#collfileText").html(collection.iconPath);
 
         catSelect.empty();
 
@@ -204,6 +201,40 @@ function getColl(e){
         updatedText.html("Date Updated: " + time.toLocaleString());
     });
 }
+$("#collfile").on("change", function (e) {
+    filename = $("#collfile")[0].files[0].name;
+    $("#collfileText").html(filename);
+})
+
+$("#collectionData").submit(function(e){
+    e.preventDefault();
+
+    var formData = new FormData(e[0]);
+    formData.append("id", $("#collectionData").attr("collection-id"))
+    formData.append("name", $("#collName").val())
+    formData.append("description", $("#collDesc").val());
+    formData.append("link", $("#collLink").val())
+
+
+    if ($("#collfile")[0].files.length > 0) {
+        file = $("#collfile")[0].files[0];
+        formData.append("file", file.slice(0, file.size), $("#collfile")[0].files[0].name)
+        formData.append("type", file.type)
+    }
+
+    formData.append("category", $("#select").val())
+
+    $.ajax({
+        url: "/collections/update",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            console.log(data);
+        }
+    });
+})
 
 function getCat(e){
     id = e.id

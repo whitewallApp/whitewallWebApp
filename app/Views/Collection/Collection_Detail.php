@@ -8,7 +8,7 @@
   </div>
 </div>
 <div id="form-div" style="display: none">
-  <form class="mr-4" id="data">
+  <form class="mr-4" id="collectionData">
     <div class="form-group">
       <label for="collName">Name</label>
       <input type="text" class="form-control" id="collName" aria-describedby="emailHelp" placeholder="Collection Name">
@@ -29,8 +29,8 @@
     </div>
     <div class="form-group">
       <div id="file-icon" class="custom-file">
-        <input type="file" class="custom-file-input" id="customFile">
-        <label class="custom-file-label" for="customFile">Icon Image</label>
+        <input type="file" class="custom-file-input" id="collfile">
+        <label class="custom-file-label" for="collfile" id="collfileText">Icon Image</label>
       </div>
     </div>
     <div class="form-group">
