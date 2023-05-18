@@ -23,12 +23,14 @@ class Assets extends BaseController {
         $this->session = session();
 
         $userModel = new UserModel();
+        $brandModel = new BrandModel();
         $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
+        $brandId = $brandModel->getBrand($this->session->get("brand_name"), "name", ["id"]);
 
-        $this->imgPath = getenv("BASE_PATH") . $accountId . "/" . $this->session->get("brand_name") . "/images/";
-        $this->catPath = getenv("BASE_PATH") . $accountId . "/" . $this->session->get("brand_name") . "/images/categories/";
+        $this->imgPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/";
+        $this->catPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/categories/";
         $this->userPath = getenv("BASE_PATH") . $accountId . "/users/";
-        $this->collPath = getenv("BASE_PATH") . $accountId . "/" . $this->session->get("brand_name") . "/images/collections/";  
+        $this->collPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/collections/";  
     }
     /**
      * Returns image files
