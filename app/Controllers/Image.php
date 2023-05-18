@@ -120,6 +120,7 @@ class Image extends BaseController
                 ];
                 $imageModel->updateImage($imageID, $data);
             }
+            echo var_dump($_FILES);
         }else if (isset($_POST["link"])){
             $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $imageID = htmlspecialchars((string)$this->request->getPost("id"));
