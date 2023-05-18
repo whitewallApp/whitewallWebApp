@@ -11,7 +11,7 @@ $routes = Services::routes();
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Login');
+$routes->setDefaultController('LogIn');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -58,7 +58,7 @@ $routes->post('/collections', 'Collection::post');
 $routes->post('/categories', 'Category::post');
 $routes->post('/notifications', 'Notification::post');
 $routes->post('/brand', 'Brand::setBrand');
-$routes->post('/', 'Login::post');
+$routes->post('/', 'LogIn::post');
 $routes->get('/brand/users/user', 'Brand::userData');
 $routes->post('/account', 'Account::post');
 $routes->post('/reset', 'Reset::post');
