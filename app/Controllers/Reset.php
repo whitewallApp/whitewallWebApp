@@ -121,7 +121,7 @@ class Reset extends BaseController
                 'subject' => 'Password Reset at Whitewall',
                 'template'    => 'password_reset',
                 'text'    => 'Testing some Mailgun awesomness!',
-                'h:X-Mailgun-Variables'    => json_encode(["link" => "http://localhost/reset/" . $resetKey])
+                'h:X-Mailgun-Variables'    => json_encode(["link" => getenv("app.baseURL") . "reset/" . $resetKey])
             );
 
         # Make the call to the client.
