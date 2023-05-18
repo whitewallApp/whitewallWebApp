@@ -109,8 +109,6 @@ class Collection extends BaseController
                 $data["iconPath"] = "assets/collection/" . $assets->updateCollection($tmpPath, $type, $oldName);
             }
 
-            echo var_dump($data);
-
             $colModel->updateCollection($post["id"], $data);
 
             return json_encode(["success" => true]);
