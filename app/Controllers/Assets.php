@@ -147,7 +147,7 @@ class Assets extends BaseController {
         if(move_uploaded_file($tmpPath, $file)){
             echo var_dump($file);
             // return explode("images\\", $file)[1];
-            return "hello"
+            return "hello";
         }else{
             return false;
         }
