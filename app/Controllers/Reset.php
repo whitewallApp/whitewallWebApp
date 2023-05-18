@@ -28,10 +28,10 @@ class Reset extends BaseController
             if ($found){
                 return view('Reset', ["key" => $key]) . Navigation::renderFooter();
             }else{
-                return view("errors/html/error_404");
+                return view("errors/html/error_404", ["message" => "Not a Valid Key"]);
             }
         }else{
-            return view("errors/html/error_404");
+            return view("errors/html/error_404", ["message" => "No Key Found"]);
         }
     }
 
