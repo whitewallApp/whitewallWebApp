@@ -144,8 +144,6 @@ class Image extends BaseController
             $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $imageID = htmlspecialchars((string)$this->request->getPost("id"));
 
-            echo var_dump($post);
-
             $data = [
                 "imagePath" => $post["link"],
                 "thumbnail" => "none",
@@ -153,6 +151,16 @@ class Image extends BaseController
                 "description" => $post["description"],
                 "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
                 "externalPath" => $post["externalPath"]
+            ];
+            $imageModel->updateImage($imageID, $data);
+        }else{
+            $post = $this->request->getPost(["name", "description", "collection"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $imageID = htmlspecialchars((string)$this->request->getPost("id"));
+
+            $data = [
+                "name" => $post["name"],
+                "description" => $post["description"],
+                "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
             ];
             $imageModel->updateImage($imageID, $data);
         }
