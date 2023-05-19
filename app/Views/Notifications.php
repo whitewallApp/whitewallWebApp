@@ -13,12 +13,9 @@
             </div>
             <div class="col-sm-4">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-funnel" viewBox="0 0 16 16">
-                            <path
-                                d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" />
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+                            <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" />
                         </svg>
                         Filters
                     </button>
@@ -55,17 +52,23 @@
     <div class="col-sm-8 mt-3">
         <div class="card m-2 p-2">
             <form>
-                <div class="form-group row">
-                    <label for="title" class="col-sm-3 col-form-label">Notification Title</label>
-                    <input type="text" class="form-control col-sm-8" id="title" placeholder="Check out this new thing!">
+                <div class="form-group">
+                    <label for="title">Notification Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="Check out this new thing!">
                 </div>
-                <div class="form-group row">
-                    <label for="text" class="col-sm-3 col-form-label">Notification Description</label>
-                    <input type="textarea" class="form-control col-sm-8" id="text"
-                        placeholder="New shop item out now! Click to see!" aria-describedby="description">
-                    <small id="description" class="form-text text-muted col-sm-1">
-                        Optional
-                    </small>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-2">
+                            <label for="text">Notification Description</label>
+                        </div>
+                        <div class="col-2">
+                            <small id="description" class="form-text text-muted">Optional</small>
+                        </div>
+                        <div class="col-10">
+
+                        </div>
+                    </div>
+                    <input type="textarea" class="form-control" id="text" placeholder="New shop item out now! Click to see!" aria-describedby="description">
                 </div>
                 <div class="row">
                     <div class="col-sm-3">
@@ -79,7 +82,7 @@
                             </div>
                             <div id="force-select-div" class="col-sm-11" style="display: none;">
                                 <select id="force-select" class="custom-select">
-                                    <?php foreach($images as $image) : ?>
+                                    <?php foreach ($images as $image) : ?>
                                         <option value="<?= $image["id"] ?>"><?= $image["name"] ?></option>
                                     <?php endforeach ?>
                                 </select>
@@ -98,14 +101,18 @@
                     </select>
                 </div>
                 <div id="app-input" style="display: none">
-                    <div class="container row justify-content-center">
-                        <div class="form-check mr-4">
-                            <input class="form-check-input" type="radio" name="menuRadio" id="menuRadio">
-                            <label class="form-check-label" for="menuRadio">Menu Item</label>
+                    <div class="container row justify-content-center row">
+                        <div class="col-6">
+                            <div class="form-check mr-4">
+                                <input class="form-check-input" type="radio" name="menuRadio" id="menuRadio">
+                                <label class="form-check-label" for="menuRadio">Menu Item</label>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="appRadio" id="appRadio">
-                            <label class="form-check-label" for="appRadio">Category/Collection/Image</label>
+                        <div class="col-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="appRadio" id="appRadio">
+                                <label class="form-check-label" for="appRadio">Category/Collection/Image</label>
+                            </div>
                         </div>
                     </div>
 
@@ -132,7 +139,7 @@
                             </select>
                         </div>
 
-                        <div id="img-select-group" class=" form-group row">      
+                        <div id="img-select-group" class=" form-group row">
                             <label for="img-select" class="col-sm-4 col-form-label">Image</label>
                             <select id="img-select" class="custom-select col-sm-7">
                                 <option value="link">Link to Parent Collection</option>
@@ -140,9 +147,9 @@
                         </div>
                     </div>
                 </div>
-                <div id="link-input" class="form-group row" style="display: none">
-                    <label for="link" class="col-sm-3 col-form-label">Link</label>
-                    <input type="text" class="form-control col-sm-8" id="link" placeholder="https://yoursite.com/image">
+                <div id="link-input" class="form-group" style="display: none">
+                    <label for="link">Link</label>
+                    <input type="text" class="form-control" id="link" placeholder="https://yoursite.com/image">
                 </div>
                 <div class="float-right row">
                     <p id="updated" class="mr-2"></p>

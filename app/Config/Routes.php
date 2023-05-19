@@ -68,6 +68,7 @@ $routes->post('/reset/update', 'Reset::update');
 $routes->post('/images/update', 'Image::update');
 $routes->post('/collections/update', 'Collection::update');
 $routes->post('/categories/update', 'Category::update');
+$routes->post('/notifications/update', 'Notification::update');
 
 /*
  * --------------------------------------------------------------------
