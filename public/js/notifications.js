@@ -37,11 +37,20 @@ $("#appRadio").on('click', function(){
     $("#menu").hide();
     $("#app").show();
 
+    //clear the select box
+    $("#img-select").empty();
+    $("#img-select").append(`<option value="parent">Link to Parent Collection</option>`);
+
+    //clear the select box
+    $("#col-select").empty();
+    $("#col-select").append(`<option value="parent">Link to Parent Category</option>`);
+
     //load in defaults
     categoryNames = Object.keys(categories);
     categoryNames.forEach(name => {
         $("#cat-select").append(`<option value="${name}">${name}</option>`);
     });
+
 });
 
 $("#menuRadio").on('click', function(){
@@ -56,7 +65,11 @@ $("#cat-select").on("change", function(){
 
     //clear the select box
     $("#col-select").empty();
-    $("#col-select").append(`<option value="parent">Link to Parent Category</option>`);
+    $("#col-select").append(`<option value="parent" selected>Link to Parent Category</option>`);
+
+    //clear the select box
+    $("#img-select").empty();
+    $("#img-select").append(`<option value="parent" selected>Link to Parent Collection</option>`);
 
     //load in defaults
     collections.forEach(name => {
