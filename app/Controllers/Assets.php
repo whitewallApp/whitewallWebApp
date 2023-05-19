@@ -224,7 +224,7 @@ class Assets extends BaseController {
      */
     public function updateCategory($tmpPath, $type, $oldPath)
     {
-        unlink($this->collPath . $oldPath);
+        unlink($this->catPath . $oldPath);
         return $this->saveCollection($tmpPath, $type);
     }
 
@@ -238,7 +238,7 @@ class Assets extends BaseController {
     public function saveCategory($tmpPath, $type)
     {
 
-        $filename = tempnam($this->collPath, '');
+        $filename = tempnam($this->catPath, '');
         unlink($filename); // Need to delete the created tmp file, just want the name
 
         $file = explode(".tmp", $filename)[0];
