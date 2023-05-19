@@ -6,7 +6,7 @@
     <div class="col-sm-4">
         <div class="row m-2">
             <div class="col-sm-8">
-                <div id="actions" class="row" style="display: none">
+                <div id="actions" class="row">
                     <p id="infoSelect" class="mr-2"></p>
                     <a href="#">Delete</a>
                 </div>
@@ -80,7 +80,7 @@
                                 <input type="checkbox" class="custom-control-input" id="force-switch">
                                 <label class="custom-control-label" for="force-switch"></label>
                             </div>
-                            <div id="force-select-div" class="col-sm-11" style="display: none;">
+                            <div id="force-select-div" class="col-sm-11">
                                 <select id="force-select" class="custom-select">
                                     <?php foreach ($images as $image) : ?>
                                         <option value="<?= $image["id"] ?>"><?= $image["name"] ?></option>
@@ -100,8 +100,8 @@
                         <option value="Link">Go to Custom link</option>
                     </select>
                 </div>
-                <div id="app-input" style="display: none">
-                    <div class="container row justify-content-center row">
+                <div>
+                    <div class="container row justify-content-center row" id="app-input" style="display: none;">
                         <div class="col-6">
                             <div class="form-check mr-4">
                                 <input class="form-check-input" type="radio" name="menuRadio" id="menuRadio">
@@ -116,7 +116,7 @@
                         </div>
                     </div>
 
-                    <div id="menu" class="form-group row" style="display: none">
+                    <div id="menu" class="form-group row" style="display: none;">
                         <label for="menu-select" class="col-sm-3 col-form-label">Menu Item</label>
 
                         <select id="menu-select" class="custom-select col-sm-8">
@@ -125,7 +125,8 @@
                             <?php endforeach ?>
                         </select>
                     </div>
-                    <div id="app" style="display: none">
+
+                    <div id="app" style="display: none;">
                         <div class="form-group row">
                             <label for="cat-select" class="col-sm-4 col-form-label">Category</label>
                             <select id="cat-select" class="custom-select col-sm-7">
@@ -147,7 +148,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="link-input" class="form-group" style="display: none">
+                <div id="link-input" class="form-group" style="display: none;">
                     <label for="link">Link</label>
                     <input type="text" class="form-control" id="link" placeholder="https://yoursite.com/image">
                 </div>
@@ -160,3 +161,4 @@
         </div>
     </div>
 </div>
+<script src="/js/notifications.js"></script>

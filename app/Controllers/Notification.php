@@ -75,12 +75,19 @@ class Notification extends BaseController
         if ($session->get("logIn")){
             $request = \Config\Services::request();
             $notModel = new NotificationModel;
+            $imgModel = new ImageModel();
             $colModel = new CollectionModel;
             $catModel = new CategoryModel;
 
             $id = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            return json_encode($notModel->getNotification($id, assoc: true));
+            $notification = $notModel->getNotification($id, assoc: true);
+
+            if ($notification[0]["clickAction"] == "Wallpaper"){
+                $notification[0]["data"] = $imgModel->getImage($notification[0]["data"], filter: ["name"]);
+            }
+
+            return json_encode($notification);
         }else{
             return json_encode(["success" => false]);
         }

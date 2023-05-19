@@ -1,6 +1,4 @@
 $("document").ready(function(){
-    notifications_start();
-
     setImageStart();
 
     loadingBars();

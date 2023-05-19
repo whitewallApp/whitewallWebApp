@@ -339,40 +339,7 @@ function getNot(e){
         "id": id
     },
     function(data, status){
-        notification = JSON.parse(data);
-        notification = notification[0]
-        $("#title").val(notification.title);
-        $("#text").val(notification.description);
-
         
-
-        $("#link-input").hide();
-        $("#wall-select").hide();
-
-        if (notification.forceWall == '1'){
-            $("#force-switch")[0].checked = true;
-            $("#force-option").hide();
-            $("#wall-select").show();
-            $('#select>option[value="' + notification.forceId + '"]').prop("selected", true);
-        }else{
-            $("#force-switch")[0].checked = false;
-        }
-
-        if (notification.clickAction == "Wallpaper"){
-            $("#wall-select").show();
-            $('#select>option[value="' + notification.data + '"]').prop("selected", true);
-            $('#selections>option[value="' + notification.clickAction + '"]').prop("selected", true);
-        }
-
-        if (notification.clickAction == "Link"){
-            $("#link-input").show();
-            $('#selections>option[value="' + notification.clickAction + '"]').prop("selected", true);
-            $("#link").val(notification.data)
-        }
-
-        if (notification.clickAction == "None"){
-            $('#selections>option[value="' + notification.clickAction + '"]').prop("selected", true);
-        }
     });
 }
 

@@ -36,7 +36,6 @@ class Navigation extends BaseController
     public static function renderFooter(){
         return '</body></html><!-- MDB -->
         <script type="text/javascript" src="/js/mdb.min.js"></script>
-        <script src="/js/notifications.js"></script>
         <script src="/js/breadcrumbs.js"></script>
         <script src="/js/getset.js"></script>
         <script src="/js/actions.js"></script>
