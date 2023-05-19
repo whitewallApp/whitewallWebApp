@@ -58,13 +58,13 @@
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-4">
                             <label for="text">Notification Description</label>
                         </div>
                         <div class="col-2">
                             <small id="description" class="form-text text-muted">Optional</small>
                         </div>
-                        <div class="col-10">
+                        <div class="col-8">
 
                         </div>
                     </div>

@@ -81,10 +81,14 @@ class Notification extends BaseController
 
             $id = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            $notification = $notModel->getNotification($id, assoc: true);
+            $notification = $notModel->getNotification($id, assoc: true)[0];
 
-            if ($notification[0]["clickAction"] == "Wallpaper"){
-                $notification[0]["data"] = $imgModel->getImage($notification[0]["data"], filter: ["name"]);
+            if ($notification["clickAction"] == "Wallpaper"){
+                $notification["data"] = $imgModel->getImage($notification["data"], filter: ["name"]);
+            }
+
+            if ($notification["forceWall"]){
+                $notification["forceId"] = $imgModel->getImage($notification["forceId"], filter: ["name"]);
             }
 
             return json_encode($notification);

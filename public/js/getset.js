@@ -339,7 +339,58 @@ function getNot(e){
         "id": id
     },
     function(data, status){
-        
+        notifcation = JSON.parse(data);
+        console.log(notifcation);
+
+        $("#link-input").hide();
+        $("#app").hide();
+
+        $("#title").val(notifcation.title);
+        $("#text").val(notifcation.description);
+
+        if(notifcation.forceWall == "1"){
+            $("#force-switch").prop("checked", true);
+            $("#force-select-div").show();
+            $(`#force-select>option[value=${notifcation.forceId}]`).prop("selected", true);
+        }else{
+            $("#force-switch").prop("checked", false);
+            $("#force-select-div").hide();
+        }
+
+        $(`#selections>option[value=${notifcation.clickAction}]`).prop("selected", true);
+
+        if (notifcation.clickAction == "Link"){
+            $("#link-input").show();
+            $("#link").val(notifcation.data);
+        }
+
+        if (notifcation.clickAction == "Wallpaper"){
+            $("#app").show();
+
+            imageCategory = "";
+            imageCollection = "";
+
+            console.log(categories);
+            // get where the image is from
+            Object.keys(categories).forEach(category => {
+                Object.keys(categories[category]).forEach(collection => {
+                    categories[category][collection].forEach(image => {
+                        if (image == notifcation.data){
+                            imageCollection = collection;
+                            imageCategory = category
+                        }
+                    })
+                })
+            })
+
+            $("#cat-select").append(`<option value="${imageCategory}" selected>${imageCategory}</option>`);
+            $("#col-select").append(`<option value="${imageCollection}" selected>${imageCollection}</option>`);
+            $("#img-select").append(`<option value="${notifcation.data}" selected>${notifcation.data}</option>`);
+        }
+
+        if (notifcation.clickAction == ""){
+            
+        }
     });
 }
 
