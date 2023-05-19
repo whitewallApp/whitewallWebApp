@@ -29,6 +29,7 @@ $("#selections").on("change", function(){
         $("#link-input").hide();
         $("#app-input").hide();
         $("#app").hide();
+        $("#menu").hide();
     }
 })
 
@@ -99,11 +100,12 @@ $("#force-switch").on("change", function(){
     if (checked){
         $("#force-select-div").show();
         $("#force-option").hide();
-        $("#app").hide();
-        $('#selections>option[value=None]').prop("selected", true);
+        if ($("#selections").val() == "Wallpaper"){
+            $('#selections>option[value=None]').prop("selected", true);
+            $("#app").hide();
+        }
     }else{
         $("#force-select-div").hide();
         $("#force-option").show();
-        $("#app").show();
     }
 })
