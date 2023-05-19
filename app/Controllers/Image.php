@@ -160,6 +160,7 @@ class Image extends BaseController
             ];
             $imageModel->updateImage($imageID, $data);
         }else{
+            //update just the data
             $post = $this->request->getPost(["name", "description", "collection"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $imageID = htmlspecialchars((string)$this->request->getPost("id"));
 
