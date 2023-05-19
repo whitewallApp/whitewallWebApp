@@ -214,6 +214,47 @@ class Assets extends BaseController {
         }
     }
 
+    /**
+     * updated the image by deleting the old one then saving the new one
+     *
+     * @param string $tmpPath | the temporary path of the new image
+     * @param string $type | the type of the image (png, jpg, bmp, webp)
+     * @param string $oldPath | the old name/path of the image
+     * @return string name of the new file
+     */
+    public function updateCategory($tmpPath, $type, $oldPath)
+    {
+        unlink($this->collPath . $oldPath);
+        return $this->saveCollection($tmpPath, $type);
+    }
+
+    /**
+     * Saves the image file to the correct directory
+     *
+     * @param string $tmpPath | The temp path from the file upload
+     * @param string $type | the type of image (png, jpg, bmp, webp)
+     * @return string | the unique file name to save in database
+     */
+    public function saveCategory($tmpPath, $type)
+    {
+
+        $filename = tempnam($this->collPath, '');
+        unlink($filename); // Need to delete the created tmp file, just want the name
+
+        $file = explode(".tmp", $filename)[0];
+        $file = $file . "." . $type;
+
+        if (move_uploaded_file($tmpPath, $file)) {
+            if (PHP_OS == "Linux") {
+                return explode("categories/", $file)[1];
+            } else {
+                return explode("categories\\", $file)[1];
+            }
+        } else {
+            return false;
+        }
+    }
+
     private function mapType($inputType): string {
         return match ($inputType) {
             "png" => "png",

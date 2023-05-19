@@ -40,7 +40,7 @@ class Category extends BaseController
             "categories" => $categories,
         ];
 
-        return Navigation::renderNavBar("Categories", [true, "Images"]) . view('Category/Category_Detail', $data) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Categories", [true, "Images"]) . view('Category/Category_Detail', $data, ["cache" => 86400]) . Navigation::renderFooter();
     }
 
     public function post(){
@@ -66,6 +66,49 @@ class Category extends BaseController
     }
 
     public function update(){
-        return json_encode(["hello" => true]);
+        $categoryModel = new CategoryModel();
+        $assets = new Assets();
+
+        //delete caches
+        if (file_exists("../writable/cache/CategoryCategory_Detail")) {
+            unlink("../writable/cache/CategoryCategory_Detail");
+            unlink("../writable/cache/CategoryCategory_List");
+        }
+
+        $post = $this->request->getPost(["id", "name", "description", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+
+        if (count($_FILES) > 0){
+            //get rid of the assets/category/
+            $oldName = explode("category/", (string)$categoryModel->getCategory($post["id"], filter: ["iconPath"]))[1];
+            $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
+            $type = $this->request->getPost("type", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            $newName = $assets->updateCategory($tmpPath, $type, $oldName);
+
+            if(!$newName){
+                return json_encode(["success" => false, "message" => "File Error"]);
+                exit();
+            }
+
+            $data = [
+                "name" => $post["name"],
+                "description" => $post["description"],
+                "iconPath" => "assets/category/" . $newName,
+                "link" => $post["link"]
+            ];
+
+            $categoryModel->updateCategory($post["id"], $data);
+        }else{
+            $data = [
+                "name" => $post["name"],
+                "description" => $post["description"],
+                "link" => $post["link"]
+            ];
+
+            $categoryModel->updateCategory($post["id"], $data);
+        }
+
+        return json_encode(["success" => true]);
     }
 }

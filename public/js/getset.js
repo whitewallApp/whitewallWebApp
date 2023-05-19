@@ -243,9 +243,6 @@ function getCat(e){
 
     showData("/categories");
 
-    // $("#img-icon").hide();
-    // $("#fileDiv").hide();
-
     if (lastElement != ""){
         lastElement.css("background-color", "white");
     }
@@ -275,11 +272,16 @@ function getCat(e){
     });
 }
 
+$("#file").on("change", function (e) {
+    filename = $("#file")[0].files[0].name;
+    $("[for=file]").html(filename);
+})
+
 $("#categoryData").submit(function(e){
     e.preventDefault();
 
     var formData = new FormData(e[0]);
-    formData.append("id", $("#categoryData").attr("collection-id"))
+    formData.append("id", $("#categoryData").attr("category-id"))
     formData.append("name", $("#name").val())
     formData.append("description", $("#desc").val());
     formData.append("link", $("#link").val())

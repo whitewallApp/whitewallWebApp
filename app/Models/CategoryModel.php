@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use CodeIgniter\Database\RawSql;
 
 class CategoryModel extends Model
 {
@@ -89,5 +90,14 @@ class CategoryModel extends Model
             $collection = $builder->get()->getResultArray()[0];
             return $collection;
         }
+    }
+
+    public function updateCategory($id, $data, $updateBy = "id")
+    {
+        $data["dateUpdated"] = new RawSql('CURRENT_TIMESTAMP');
+
+        $builder = $this->db->table("category");
+        $builder->where($updateBy, $id);
+        $builder->update($data);
     }
 }

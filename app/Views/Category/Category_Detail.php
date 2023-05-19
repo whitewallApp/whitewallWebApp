@@ -10,8 +10,8 @@
 <div id="form-div" style="display: none">
   <form id="categoryData" class="mr-4">
     <div class="form-group">
-      <label for="catname">Name</label>
-      <input type="text" class="form-control" id="catname" aria-describedby="emailHelp" placeholder="Category Name">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Category Name">
     </div>
     <div class="form-group">
       <label for="desc">Description</label>
