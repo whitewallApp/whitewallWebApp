@@ -130,7 +130,7 @@
                         <div class="form-group row">
                             <label for="cat-select" class="col-sm-4 col-form-label">Category</label>
                             <select id="cat-select" class="custom-select col-sm-7">
-                                <option value="none"></option>
+                                <option value="none">None</option>
                             </select>
                         </div>
 

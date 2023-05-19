@@ -373,6 +373,7 @@ function getNot(e){
             console.log(categories);
             // get where the image is from
             Object.keys(categories).forEach(category => {
+                $("#cat-select").append(`<option value="${category}">${category}</option>`);
                 Object.keys(categories[category]).forEach(collection => {
                     categories[category][collection].forEach(image => {
                         if (image == notifcation.data){
@@ -383,13 +384,20 @@ function getNot(e){
                 })
             })
 
-            $("#cat-select").append(`<option value="${imageCategory}" selected>${imageCategory}</option>`);
-            $("#col-select").append(`<option value="${imageCollection}" selected>${imageCollection}</option>`);
-            $("#img-select").append(`<option value="${notifcation.data}" selected>${notifcation.data}</option>`);
+            Object.keys(categories[imageCategory]).forEach(collection => {
+                $("#col-select").append(`<option value="${collection}">${collection}</option>`);
+                categories[imageCategory][collection].forEach(image => {
+                    $("#img-select").append(`<option value="${image}" >${image}</option>`);
+                })
+            })
+
+            $(`#cat-select>option[value="${imageCategory}"]`).prop("selected", true);
+            $(`#col-select>option[value="${imageCollection}"]`).prop("selected", true);
+            $(`#img-select>option[value="${notifcation.data}"]`).prop("selected", true);
         }
 
         if (notifcation.clickAction == ""){
-            
+
         }
     });
 }
