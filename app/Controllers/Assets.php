@@ -170,6 +170,10 @@ class Assets extends BaseController {
         return $this->saveImage($tmpPath, $type);
     }
 
+    public function removeImage($fileName){
+        unlink($this->imgPath . $fileName);
+    }
+
     /**
      * updated the image by deleting the old one then saving the new one
      *

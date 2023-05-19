@@ -144,6 +144,12 @@ class Image extends BaseController
             $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $imageID = htmlspecialchars((string)$this->request->getPost("id"));
 
+            //remove old file if there is one
+            if ($imageModel->getImage($imageID, filter: ["externalPath"]) == "0"){
+                $name = explode("assets/images/", $imageModel->getImage($imageID, filter: ["imagePath"]))[1];
+                $assets->removeImage($name);
+            }
+
             $data = [
                 "imagePath" => $post["link"],
                 "thumbnail" => "none",
