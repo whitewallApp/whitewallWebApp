@@ -225,7 +225,7 @@ class Assets extends BaseController {
     public function updateCategory($tmpPath, $type, $oldPath)
     {
         unlink($this->catPath . $oldPath);
-        return $this->saveCollection($tmpPath, $type);
+        return $this->saveCategory($tmpPath, $type);
     }
 
     /**
