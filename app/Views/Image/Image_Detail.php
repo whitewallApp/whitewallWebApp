@@ -11,19 +11,19 @@
   <form class="mr-4" id="data" action="/images/update" method="post">
     <div class="form-group">
       <label for="imageName">Name</label>
-      <input type="text" class="form-control" id="imageName" aria-describedby="imageName" placeholder="Image Name">
+      <input type="text" class="form-control" id="imageName" aria-describedby="imageName" placeholder="Image Name" data-mdb-toggle="popover" title="Popover title" data-mdb-content="And here's some amazing content. It's very engaging. Right?" data-mdb-trigger="hover">
     </div>
     <div class="form-group">
       <label for="imageDesc">Description</label>
-      <input type="text" class="form-control" id="imageDesc" aria-describedby="imageDescription" placeholder="Image Name">
+      <input type="text" class="form-control" id="imageDesc" aria-describedby="imageDescription" placeholder="Image Description" aria-describedby="imageName" placeholder="Image Name" data-mdb-toggle="popover" title="Popover title" data-mdb-content="And here's some amazing content. It's very engaging. Right?" data-mdb-trigger="hover">
     </div>
 
     <div class="container">
       <div class="row">
         <div class="col">
           <div class="form-check mr-4">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="linkRadio" value="option1">
-            <label class="form-check-label" for="linkRadio">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="linkRadio" value="option1" aria-describedby="imageName">
+            <label class="form-check-label" for="linkRadio" placeholder="Image Name" data-mdb-toggle="popover" title="Popover title" data-mdb-content="And here's some amazing content. It's very engaging. Right?" data-mdb-trigger="hover">
               External Link
             </label>
           </div>
@@ -31,7 +31,7 @@
         <div class="col">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="exampleRadios" id="fileRadio" value="option1">
-            <label class="form-check-label" for="fileRadio">
+            <label class="form-check-label" for="fileRadio" aria-describedby="imageName" placeholder="Image Name" data-mdb-toggle="popover" title="Popover title" data-mdb-content="And here's some amazing content. It's very engaging. Right?" data-mdb-trigger="hover">
               Uploaded File
             </label>
           </div>
@@ -50,7 +50,7 @@
     </div>
     <div class="form-group">
       <label for="select">Add to Collection</label>
-      <select class="form-control" id="select">
+      <select class="form-control" id="select" aria-describedby="imageName" placeholder="Image Name" data-mdb-toggle="popover" title="Popover title" data-mdb-content="And here's some amazing content. It's very engaging. Right?" data-mdb-trigger="hover">
 
       </select>
     </div>
