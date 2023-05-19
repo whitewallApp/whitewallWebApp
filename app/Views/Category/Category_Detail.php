@@ -36,5 +36,10 @@
       <button class="btn btn-danger">Remove</button>
     </div>
   </form>
+  <div class="alert alert-success" role="alert" style="display: none;">
+    Success
+  </div>
+  <div class="alert alert-danger" role="alert" style="display: none;">
+  </div>
 </div>
 <?= $this->endSection() ?>

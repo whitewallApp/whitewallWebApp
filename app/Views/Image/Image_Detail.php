@@ -60,5 +60,10 @@
     <button class="btn btn-primary mr-2" onclick="updateImage();">Save</button>
     <button class="btn btn-danger mr-2">Remove</button>
   </div>
+  <div class="alert alert-success" role="alert" style="display: none;">
+    Success
+  </div>
+  <div class="alert alert-danger" role="alert" style="display: none;">
+  </div>
 </div>
 <?= $this->endSection() ?>

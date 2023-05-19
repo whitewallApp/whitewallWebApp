@@ -53,6 +53,9 @@ function getImg(e){
     updatedText = $("#updated");
     filelabel = $("#imageFileText");
 
+    $(".alert-success").hide();
+    $(".alert-danger").hide();
+
     if (lastElement != ""){
         lastElement.css("background-color", "white");
     }
@@ -135,7 +138,13 @@ $("#data").submit(function(e){
         processData: false,
         contentType: false,
         success: function (data) {
-            console.log(data);
+            response = JSON.parse(data);
+            if (response.success) {
+                $(".alert-success").show();
+            } else {
+                $(".alert-danger").html(response.message);
+                $(".alert-danger").show();
+            }
         }
     });
 });
@@ -160,6 +169,9 @@ function getColl(e){
     id = e.id
 
     showData("/collections", false);
+
+    $(".alert-success").hide();
+    $(".alert-danger").hide();
 
     nameTextBox = $("#collName");
     linkTextBox = $("#collLink");
@@ -231,7 +243,13 @@ $("#collectionData").submit(function(e){
         processData: false,
         contentType: false,
         success: function (data) {
-            console.log(data);
+            response = JSON.parse(data);
+            if (response.success) {
+                $(".alert-success").show();
+            } else {
+                $(".alert-danger").html(response.message);
+                $(".alert-danger").show();
+            }
         }
     });
 })
@@ -249,6 +267,9 @@ function getCat(e){
 
     tableRow.css("background-color", "#c8cbcf");
     lastElement = tableRow;
+
+    $(".alert-success").hide();
+    $(".alert-danger").hide();
 
     $.post("/categories",
     {
@@ -300,7 +321,13 @@ $("#categoryData").submit(function(e){
         processData: false,
         contentType: false,
         success: function (data) {
-            console.log(data);
+            response = JSON.parse(data);
+            if(response.success){
+                $(".alert-success").show();
+            }else{
+                $(".alert-danger").html(response.message);
+                $(".alert-danger").show();
+            }
         }
     });
 })
