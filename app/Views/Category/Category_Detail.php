@@ -8,10 +8,10 @@
   </div>
 </div>
 <div id="form-div" style="display: none">
-  <form id="data" class="mr-4">
+  <form id="categoryData" class="mr-4">
     <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Category Name">
+      <label for="catname">Name</label>
+      <input type="text" class="form-control" id="catname" aria-describedby="emailHelp" placeholder="Category Name">
     </div>
     <div class="form-group">
       <label for="desc">Description</label>
@@ -23,8 +23,8 @@
     </div>
     <div class="form-group">
       <div id="fileDiv" class="custom-file">
-        <input type="file" class="custom-file-input" id="customFile">
-        <label class="custom-file-label" for="customFile">Icon Image</label>
+        <input type="file" class="custom-file-input" id="file">
+        <label class="custom-file-label" for="file">Icon Image</label>
       </div>
       <div id="img-icon" class="row m-2">
         <img id="icon" class="img-sm rounded mr-3">

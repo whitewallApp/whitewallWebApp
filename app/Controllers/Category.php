@@ -64,4 +64,8 @@ class Category extends BaseController
             return json_encode(["success" => false]);
         }
     }
+
+    public function update(){
+        return json_encode(["hello" => true]);
+    }
 }

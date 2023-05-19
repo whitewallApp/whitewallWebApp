@@ -236,14 +236,15 @@ $("#collectionData").submit(function(e){
     });
 })
 
+//CATEGORIES
 function getCat(e){
     id = e.id
     tableRow = $(e);
 
     showData("/categories");
 
-    $("#img-icon").hide();
-    $("#fileDiv").hide();
+    // $("#img-icon").hide();
+    // $("#fileDiv").hide();
 
     if (lastElement != ""){
         lastElement.css("background-color", "white");
@@ -259,20 +260,48 @@ function getCat(e){
     function (data, status){
         category = JSON.parse(data);
         
-
+        $("#categoryData").attr("category-id", category.id);
         $("#link").val(category.link);
         $("#name").val(category.name);
         $("#desc").val(category.description);
 
-        if (category.iconPath != ""){
-            $("#fileDiv").hide();
-            $("#img-icon").show();
-            $("#icon").prop("src", category.iconPath);
+        catname = category.iconPath.split("category/")[1];
+        if (catname == null){
+            $("[for=file]").html("File Icon");
         }else{
-            $("#fileDiv").show();
+            $("[for=file]").html(catname);
         }
+        
     });
 }
+
+$("#categoryData").submit(function(e){
+    e.preventDefault();
+
+    var formData = new FormData(e[0]);
+    formData.append("id", $("#categoryData").attr("collection-id"))
+    formData.append("name", $("#name").val())
+    formData.append("description", $("#desc").val());
+    formData.append("link", $("#link").val())
+
+
+    if ($("#file")[0].files.length > 0) {
+        file = $("#file")[0].files[0];
+        formData.append("file", file.slice(0, file.size), $("#file")[0].files[0].name)
+        formData.append("type", file.type)
+    }
+
+    $.ajax({
+        url: "/categories/update",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            console.log(data);
+        }
+    });
+})
 
 function getNot(e){
     id = e.id;
