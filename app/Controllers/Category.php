@@ -83,6 +83,7 @@ class Category extends BaseController
             $oldName = explode("category/", (string)$categoryModel->getCategory($post["id"], filter: ["iconPath"]))[1];
             $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
             $type = $this->request->getPost("type", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $type = explode("image/", (string)$type)[1];
 
             $newName = $assets->updateCategory($tmpPath, $type, $oldName);
 
