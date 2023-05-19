@@ -80,7 +80,7 @@
                                 <input type="checkbox" class="custom-control-input" id="force-switch">
                                 <label class="custom-control-label" for="force-switch"></label>
                             </div>
-                            <div id="force-select-div" class="col-sm-11">
+                            <div id="force-select-div" class="col-sm-11" style="display: none;">
                                 <select id="force-select" class="custom-select">
                                     <?php foreach ($images as $image) : ?>
                                         <option value="<?= $image["id"] ?>"><?= $image["name"] ?></option>

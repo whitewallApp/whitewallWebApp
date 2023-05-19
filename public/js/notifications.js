@@ -79,3 +79,18 @@ $("#col-select").on("change", function(){
         $("#img-select").append(`<option value="${name}">${name}</option>`);
     });
 })
+
+$("#force-switch").on("change", function(){
+    checked = $("#force-switch").prop("checked");
+
+    if (checked){
+        $("#force-select-div").show();
+        $("#force-option").hide();
+        $("#app").hide();
+        $('#selections>option[value=None]').prop("selected", true);
+    }else{
+        $("#force-select-div").hide();
+        $("#force-option").show();
+        $("#app").show();
+    }
+})
