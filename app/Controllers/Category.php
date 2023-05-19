@@ -82,8 +82,13 @@ class Category extends BaseController
             //get rid of the assets/category/
             $oldName = explode("category/", (string)$categoryModel->getCategory($post["id"], filter: ["iconPath"]))[1];
             $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
+
             $type = $this->request->getPost("type", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $type = explode("image/", (string)$type)[1];
+
+            if ($type == "svg+xml"){
+                $type = "svg";
+            }
 
             $newName = $assets->updateCategory($tmpPath, $type, $oldName);
 

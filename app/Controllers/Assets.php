@@ -258,7 +258,7 @@ class Assets extends BaseController {
     private function mapType($inputType): string {
         return match ($inputType) {
             "png" => "png",
-            "svg" => "svg+xml",
+            "svg", => "svg+xml",
             "jpg", "jpeg", "jfif" => "jpg",
             "webp" => "webp",
             "ico", "cur" => "x-icon",
