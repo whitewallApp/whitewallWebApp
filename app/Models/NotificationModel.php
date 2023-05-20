@@ -9,6 +9,9 @@ class NotificationModel extends Model
     protected $primaryKey = 'id';
     protected $returnType = 'array';
 
+    protected $table = "notifications";
+    protected $allowedFields = ["title", "description", "clickAction", "data", "forceWall", "forceId", "sendTime", "status"];
+
     public function getNotification($id, $filter = [], $fetchBy="id", $assoc=false){
         $builder = $this->db->table('notifications');
         

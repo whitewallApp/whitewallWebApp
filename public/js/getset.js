@@ -332,6 +332,7 @@ $("#categoryData").submit(function(e){
     });
 })
 
+//NOTIFICATIONS
 function getNot(e){
 
     tableRow = $(e);
@@ -351,7 +352,8 @@ function getNot(e){
     },
     function(data, status){
         notifcation = JSON.parse(data);
-        console.log(notifcation);
+        
+        $("#notData").attr("not-id", notifcation.id);
 
         $("#link-input").hide();
         $("#app").hide();
@@ -359,10 +361,12 @@ function getNot(e){
         $("#title").val(notifcation.title);
         $("#text").val(notifcation.description);
 
+        $("#sendtime").val(notifcation.sendTime);
+
         if(notifcation.forceWall == "1"){
             $("#force-switch").prop("checked", true);
             $("#force-select-div").show();
-            $(`#force-select>option[value=${notifcation.forceId}]`).prop("selected", true);
+            $(`#force-select>option[value="${notifcation.forceId}"]`).prop("selected", true);
         }else{
             $("#force-switch").prop("checked", false);
             $("#force-select-div").hide();
@@ -381,7 +385,7 @@ function getNot(e){
             imageCategory = "";
             imageCollection = "";
 
-            console.log(categories);
+            
             // get where the image is from
             Object.keys(categories).forEach(category => {
                 $("#cat-select").append(`<option value="${category}">${category}</option>`);
@@ -412,6 +416,64 @@ function getNot(e){
         }
     });
 }
+
+$("#notData").submit(function(e){
+    e.preventDefault();
+
+    formData = new FormData();
+
+    formData.append("id", $("#notData").attr("not-id"));
+    formData.append("title", $("#title").val());
+    formData.append("description", $("#text").val());
+    formData.append("forceSwitch", $("#force-switch").prop("checked"));
+    formData.append("sendtime", $("#sendtime").val());
+
+    if ($("#force-switch").prop("checked")){
+        formData.append("forceWallpaper", $("#force-select").val());
+    }
+
+    selection = $("#selections").val();
+
+    formData.append("selection", selection);
+
+    if (selection == "Link"){
+        formData.append("data", $("#link").val());
+    }
+
+    if (selection == "Wallpaper"){
+        formData.append("data", $("#img-select").val());
+    }
+
+    if (selection == "App"){
+        if ($("#menuRadio").prop("checked")){
+            formData.append("appSelection", "menu");
+            formData.append("data", $("#menu-select").val());
+        }
+
+        if ($("#appRadio").prop("checked")) {
+            formData.append("appSelection", "app");
+            formData.append("data", $("#img-select").val());
+        }
+    }
+
+    $.ajax({
+        url: "/notifications/update",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            response = JSON.parse(data);
+            console.log(response);
+            if (response.success) {
+                $(".alert-success").show();
+            } else {
+                $(".alert-danger").html(response.message);
+                $(".alert-danger").show();
+            }
+        }
+    });
+});
 
 function showData(link, list=true){
     form = $("#form-div");

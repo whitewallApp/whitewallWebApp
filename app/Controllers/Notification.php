@@ -97,4 +97,49 @@ class Notification extends BaseController
         }
 
     }
+
+    public function update(){
+        $notModel = new NotificationModel();
+        $imgModel = new ImageModel();
+        $menuModel = new MenuModel();
+        $post = $this->request->getPost(["id", "title", "description", "sendtime", "selection", "forceSwitch", "data"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        $data = [
+            "title" => $post["title"],
+            "description" => $post["description"],
+            "clickAction" => $post["selection"],
+            "sendTime" => $post["sendtime"],
+        ];
+
+        if ($post["selection"] == "Wallpaper"){
+            $data["data"] = $imgModel->getImage($post["data"], "name", ["id"]);
+        }
+
+        if ($post["selection"] == "App"){
+            $appSelection = $this->request->getPost("appSelection", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if ($appSelection == "app"){
+                $data["data"] = $imgModel->getImage($post["data"], "name", ["id"]);
+            }
+            if ($appSelection == "menu"){
+                $data["data"] = $menuModel->getMenuItem($post["data"], ["id"], "title");
+            }
+        }
+
+        if ($post["selection"] == "Link") {
+            $data["data"] = $post["data"];
+        }
+
+        if ($post["forceSwitch"] == "true"){
+            $wallpaperName = $this->request->getPost("forceWallpaper", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $data["forceId"] = $imgModel->getImage($wallpaperName, "name", ["id"]);
+            $data["forceWall"] = true;
+        }else{
+            $data["forceWall"] = false;
+        }
+
+        $notModel->update($post["id"], $data);
+
+        return json_encode(["success" => true]);
+        // return json_encode($data);
+    }
 }

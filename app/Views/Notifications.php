@@ -51,7 +51,7 @@
 
     <div class="col-sm-8 mt-3">
         <div class="card m-2 p-2">
-            <form>
+            <form id="notData">
                 <div class="form-group">
                     <label for="title">Notification Title</label>
                     <input type="text" class="form-control" id="title" placeholder="Check out this new thing!">
@@ -62,13 +62,17 @@
                             <label for="text">Notification Description</label>
                         </div>
                         <div class="col-2">
-                            <small id="description" class="form-text text-muted">Optional</small>
+                            <small class="form-text text-muted">Optional</small>
                         </div>
                         <div class="col-8">
 
                         </div>
                     </div>
                     <input type="textarea" class="form-control" id="text" placeholder="New shop item out now! Click to see!" aria-describedby="description">
+                </div>
+                <div class="form-group">
+                    <label for="sendtime">Send Time</label>
+                    <input type="datetime-local" id="sendtime" class="form-control" step="1">
                 </div>
                 <div class="row">
                     <div class="col-sm-3">
@@ -83,7 +87,7 @@
                             <div id="force-select-div" class="col-sm-11" style="display: none;">
                                 <select id="force-select" class="custom-select">
                                     <?php foreach ($images as $image) : ?>
-                                        <option value="<?= $image["id"] ?>"><?= $image["name"] ?></option>
+                                        <option value="<?= $image["name"] ?>"><?= $image["name"] ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -159,6 +163,11 @@
                     <button class="btn btn-danger m-2">Remove</button>
                 </div>
             </form>
+            <div class="alert alert-success" role="alert" style="display: none;">
+                Success
+            </div>
+            <div class="alert alert-danger" role="alert" style="display: none;">
+            </div>
         </div>
     </div>
 </div>
