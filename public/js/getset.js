@@ -333,6 +333,17 @@ $("#categoryData").submit(function(e){
 })
 
 function getNot(e){
+
+    tableRow = $(e);
+
+    if (lastElement != "") {
+        lastElement.css("background-color", "white");
+    }
+
+    tableRow.css("background-color", "#c8cbcf");
+    lastElement = tableRow;
+
+
     id = e.id;
     $.post("/notifications", 
     {
