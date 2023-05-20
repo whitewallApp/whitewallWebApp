@@ -74,9 +74,9 @@
                     <label for="s-select" class="col-sm-3 col-form-label">Sequence</label>
 
                     <select id="s-select" class="custom-select col-sm-8">
-                        <option selected value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <?php for($i = 1; $i <= count($menuItems); $i++) : ?>
+                            <option value="<?= $i ?>"><?= $i ?></option>
+                        <?php endfor ?>
                     </select>
                 </div>
 
