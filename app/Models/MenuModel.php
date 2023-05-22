@@ -6,8 +6,15 @@ use CodeIgniter\Model;
 
 class MenuModel extends Model
 {
+    protected $table = "menu";
     protected $primaryKey = 'id';
     protected $returnType = 'array';
+    
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'createDate';
+    protected $updatedField  = 'updatedDate';
+    protected $allowedFields = ["title", "target", "sequence", "externalLink", "internalContext"];
 
     public function getCollumn($column, $brandName, $getBy=[]){
         $builder = $this->db->table('brand');

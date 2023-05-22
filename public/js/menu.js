@@ -46,4 +46,33 @@ $("#menuData").submit(function(e){
     e.preventDefault();
 
     formData = new FormData();
+
+    formData.append("id", $("#menuData").attr("menu-id"));
+    formData.append("title", $("#title").val());
+    formData.append("sequence", $("#s-select").val());
+    if ($("#linkRadio").prop("checked")){
+        formData.append("target", 1);
+        formData.append("link", $("#link").val());
+    }else{
+        formData.append("target", 0);
+        formData.append("internalContext", $(".fr-element").html());
+    }
+
+    $.ajax({
+        url: "/menu/update",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            response = JSON.parse(data);
+            console.log(response);
+            // if (response.success) {
+            //     $(".alert-success").show();
+            // } else {
+            //     $(".alert-danger").html(response.message);
+            //     $(".alert-danger").show();
+            // }
+        }
+    });
 })
