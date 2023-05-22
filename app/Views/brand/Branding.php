@@ -31,70 +31,44 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row m-2">
-                                <div class="col-sm-6">
-                                    <div class="card">
-
-                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                                        <div class="collection-title">
-                                            <p>Collection Title</p>
+                            <?php for ($i = 0; $i < floor(count($collections) / 2); $i += 2) : ?>
+                                <div class="row m-2">
+                                    <div class="col-sm-6">
+                                        <div class="card">
+                                            <img class="card-img-top p-2" src="/<?= $collections[$i]["iconPath"] ?>" alt="Card image cap">
+                                            <div class="collection-title">
+                                                <p><?= $collections[$i]["name"] ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="card">
+                                            <img class="card-img-top p-2" src="/<?= $collections[$i + 1]["iconPath"] ?>" alt="Card image cap">
+                                            <div class="collection-title">
+                                                <p><?= $collections[$i + 1]["name"] ?></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            <?php endfor ?>
+                            <?php if (count($collections) % 2 != 0) : ?>
                                 <div class="col-sm-6">
                                     <div class="card">
-                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                        <img class="card-img-top p-2" src="/<?= $collections[count($collections)-1]["iconPath"] ?>" alt="Card image cap">
                                         <div class="collection-title">
-                                            <p>Collection Title</p>
+                                            <p><?= $collections[count($collections)-1]["name"] ?></p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row m-2">
-                                <div class="col-sm-6">
-                                    <div class="card">
-                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                                        <div class="collection-title">
-                                            <p>Collection Title</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="card">
-                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                                        <div class="collection-title">
-                                            <p>Collection Title</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row m-2">
-                                <div class="col-sm-6">
-                                    <div class="card">
-                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                                        <div class="collection-title">
-                                            <p>Collection Title</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="card">
-                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                                        <div class="collection-title">
-                                            <p>Collection Title</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php endif ?>
                             <div class="row bottom-nav">
-                                <div class="col text-center">
-                                    <i class="bi bi-palette-fill"></i>
-                                    <p>Category 1</p>
-                                </div>
-                                <div class="col text-center">
-                                    <i class="bi bi-camera2"></i>
-                                    <p>Category 2</p>
-                                </div>
+                                <?php foreach($categories as $category) : ?>
+                                    <div class="col text-center">
+                                        <!-- <i class="bi bi-palette-fill"></i> -->
+                                        <img class="category-img" src="/<?= $category["iconPath"] ?>">
+                                        <p><?= $category["name"] ?></p>
+                                    </div>
+                                <?php endforeach ?>
                             </div>
                         </div>
                     </div>

@@ -145,3 +145,8 @@ body {
     object-fit: cover;
     border-radius: 100%;
 }
+
+.card-img-top {
+    height: 100px;
+    object-fit: cover;
+}

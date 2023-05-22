@@ -3,6 +3,9 @@
 namespace App\Controllers;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
+use App\Models\CategoryModel;
+use App\Models\CollectionModel;
+use App\Models\ImageModel;
 use App\Models\UserModel;
 
 class Brand extends BaseController
@@ -28,7 +31,41 @@ class Brand extends BaseController
     }
 
     public function branding($brandId){
-            return Navigation::renderNavBar("Branding", [true, "Brands"]) . view("brand/Branding") . Navigation::renderFooter();
+        $session = session();
+        $brandModel = new BrandModel();
+        $colModel = new CollectionModel();
+        $catModel = new CategoryModel();
+        $imgModel = new ImageModel();
+        $brandname = $session->get("brand_name");
+
+        $categoryIds = $catModel->getCollumn("id", $brandname);
+        $categories = [];
+        foreach ($categoryIds as $id) {
+            $category = $catModel->getCategory($id, filter:["name", "iconPath"], assoc: true);
+            array_push($categories, $category);
+        }
+
+        $collectionIds = $colModel->getCollumn("id", $brandname);
+        $collections = [];
+        foreach($collectionIds as $id){
+            $collection = $colModel->getCollection($id, ["name", "iconPath"], assoc: true);
+            array_push($collections, $collection);
+        }
+
+        $imageids = $imgModel->getCollumn("id", $brandname);
+        $images = [];
+        foreach ($imageids as $id) {
+            $image = $imgModel->getImage($id, filter: ["name", "imagePath"], assoc: true);
+            array_push($images, $image);
+        }
+
+        $data = [
+            "categories" => $categories,
+            "collections" => $collections,
+            "images" => $images
+        ];
+
+        return Navigation::renderNavBar("Branding", [true, "Brands"]) . view("brand/Branding", $data) . Navigation::renderFooter();
     }
 
     public function users($brandId){
