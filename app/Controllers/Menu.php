@@ -27,6 +27,19 @@ class Menu extends BaseController
 
         return Navigation::renderNavBar("Menu Items", [true, "Menu Items"]) . view('Menu', $data) . Navigation::renderFooter();
     }
+
+    public function post(){
+        $menuModel = new MenuModel();
+        $name = $this->request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        $menuItem = $menuModel->getMenuItem($name, fetchBy: "title", assoc: true);
+
+        return json_encode($menuItem);
+    }
+
+    public function update(){
+
+    }
 }
 
 ?>

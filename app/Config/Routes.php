@@ -53,7 +53,7 @@ $routes->get('/assets/category/(:any)', 'Assets::catImages/$1');
 $routes->get('/assets/user/(:any)', 'Assets::user/$1');
 
 //Get URLs
-$routes->post('/images', 'Image::post');
+$routes->post('/images', 'Image::post'); //TODO: add view filters for these
 $routes->post('/collections', 'Collection::post');
 $routes->post('/categories', 'Category::post');
 $routes->post('/notifications', 'Notification::post');
@@ -62,13 +62,15 @@ $routes->post('/', 'LogIn::post');
 $routes->get('/brand/users/user', 'Brand::userData');
 $routes->post('/account', 'Account::post');
 $routes->post('/reset', 'Reset::post');
+$routes->post('/menu', 'Menu::post');
 
 //Update URLs
-$routes->post('/reset/update', 'Reset::update');
+$routes->post('/reset/update', 'Reset::update'); //TODO: add edit filters
 $routes->post('/images/update', 'Image::update');
 $routes->post('/collections/update', 'Collection::update');
 $routes->post('/categories/update', 'Category::update');
 $routes->post('/notifications/update', 'Notification::update');
+$routes->post('/menu/update', 'Menu::update');
 
 /*
  * --------------------------------------------------------------------

@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
                     <?php foreach ($menuItems as $menuItem) : ?>
-                        <tr id="<?= $menuItem["title"] ?>" onclick="">
+                        <tr id="<?= $menuItem["title"] ?>" onclick="getMenu(this);">
                             <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
                             <td><?= $menuItem["title"] ?></td>
                             <td><?= $menuItem["sequence"] ?></td>
@@ -48,7 +48,7 @@
 
     <div class="col-sm-8 mt-3">
         <div class="card m-2 p-2">
-            <form>
+            <form id="menuData">
                 <div class="form-group">
                     <label for="title">Menu Title</label>
                     <input type="text" class="form-control" id="title" placeholder="Instagram">
