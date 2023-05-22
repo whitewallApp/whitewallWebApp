@@ -51,6 +51,7 @@ $routes->get('/assets/images/(:any)', 'Assets::images/$1');
 $routes->get('/assets/collection/(:any)', 'Assets::colImages/$1');
 $routes->get('/assets/category/(:any)', 'Assets::catImages/$1');
 $routes->get('/assets/user/(:any)', 'Assets::user/$1');
+$routes->get('/assets/menu/(:any)', 'Assets::menu/$1');
 
 //Get URLs
 $routes->post('/images', 'Image::post'); //TODO: add view filters for these

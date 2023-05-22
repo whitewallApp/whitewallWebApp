@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\MenuModel;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
+use Google\Service\CloudAsset\Asset;
 use \HTMLPurifier_Config;
 use \HTMLPurifier;
 
@@ -54,17 +55,35 @@ class Menu extends BaseController
             if ($data["target"] == "1"){
                 $link = $this->request->getPost("link", FILTER_SANITIZE_URL);
                 $data["link"] = $link;
+                $data["internalContext"] = "";
             }else{
                 $html = $this->request->getPost("internalContext");
                 $config = HTMLPurifier_Config::createDefault();
                 $purifier = new HTMLPurifier($config);
 
                 $cleanHtml = $purifier->purify($html);
+                $data["link"] = "";
                 $data["internalContext"] = $cleanHtml;
             }
 
             $menuModel->update($post["id"], $data);
             return json_encode($data);
+        }
+
+        if (count($_FILES) > 0){ //TODO: this doesn't delete old files
+            $assets = new Assets();
+            $return = [];
+
+            foreach($_FILES as $file){
+                $tmpName = htmlspecialchars($file["tmp_name"]);
+                $type = explode("/", $file["type"])[1];
+
+                $name = $assets->saveMenu($tmpName, $type);
+
+                $return = ["link" => "/assets/menu/" . $name];
+            }
+
+            return json_encode($return);
         }
     }
 }

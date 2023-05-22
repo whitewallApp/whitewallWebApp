@@ -17,6 +17,7 @@ class Assets extends BaseController {
      private $collPath;
      private $catPath;
      private $userPath;
+     private $menuPath;
      private $session;
     
     public function __construct(){
@@ -30,7 +31,10 @@ class Assets extends BaseController {
         $this->imgPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/";
         $this->catPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/categories/";
         $this->userPath = getenv("BASE_PATH") . $accountId . "/users/";
-        $this->collPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/collections/";  
+        $this->collPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/collections/";
+        $this->menuPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/menu/";  
+
+        //TODO if not a directory make a directory
     }
     /**
      * Returns image files
@@ -101,6 +105,23 @@ class Assets extends BaseController {
 
             header("Content-Type: " . "image/" . $type);
             readfile($this->userPath . $file);
+            exit;
+        } else {
+            return view("errors/html/error_404", ["message" => "sorry we can't find that file"]);
+        }
+    }
+
+    function menu($file)
+    {
+        if (file_exists($this->menuPath . $file)) {
+
+            $matches = [];
+            preg_match("/\.(.*)/", $file, $matches);
+
+            $type = $this->mapType($matches[1]);
+
+            header("Content-Type: " . "image/" . $type);
+            readfile($this->menuPath . $file);
             exit;
         } else {
             return view("errors/html/error_404", ["message" => "sorry we can't find that file"]);
@@ -249,6 +270,33 @@ class Assets extends BaseController {
                 return explode("categories/", $file)[1];
             } else {
                 return explode("categories\\", $file)[1];
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Saves the image file to the correct directory
+     *
+     * @param string $tmpPath | The temp path from the file upload
+     * @param string $type | the type of image (png, jpg, bmp, webp)
+     * @return string | the unique file name to save in database
+     */
+    public function saveMenu($tmpPath, $type)
+    {
+
+        $filename = tempnam($this->menuPath, '');
+        unlink($filename); // Need to delete the created tmp file, just want the name
+
+        $file = explode(".tmp", $filename)[0];
+        $file = $file . "." . $type;
+
+        if (move_uploaded_file($tmpPath, $file)) {
+            if (PHP_OS == "Linux") {
+                return explode("menu/", $file)[1];
+            } else {
+                return explode("menu\\", $file)[1];
             }
         } else {
             return false;
