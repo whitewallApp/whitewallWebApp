@@ -7,7 +7,7 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class UserValidation implements FilterInterface
+class View implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {

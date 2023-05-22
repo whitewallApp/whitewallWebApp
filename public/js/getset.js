@@ -137,14 +137,21 @@ $("#data").submit(function(e){
         data: formData,
         processData: false,
         contentType: false,
-        success: function (data) {
+        success: function (data, status) {
             response = JSON.parse(data);
+            console.log(status);
             if (response.success) {
                 $(".alert-success").show();
             } else {
                 $(".alert-danger").html(response.message);
                 $(".alert-danger").show();
             }
+        },
+        error: function(data){
+            response = JSON.parse(data.responseText)
+
+            $(".alert-danger").html(response.message);
+            $(".alert-danger").show();
         }
     });
 });
@@ -250,6 +257,12 @@ $("#collectionData").submit(function(e){
                 $(".alert-danger").html(response.message);
                 $(".alert-danger").show();
             }
+        },
+        error: function (data) {
+            response = JSON.parse(data.responseText)
+
+            $(".alert-danger").html(response.message);
+            $(".alert-danger").show();
         }
     });
 })
@@ -328,6 +341,12 @@ $("#categoryData").submit(function(e){
                 $(".alert-danger").html(response.message);
                 $(".alert-danger").show();
             }
+        },
+        error: function (data) {
+            response = JSON.parse(data.responseText)
+
+            $(".alert-danger").html(response.message);
+            $(".alert-danger").show();
         }
     });
 })
@@ -471,6 +490,12 @@ $("#notData").submit(function(e){
                 $(".alert-danger").html(response.message);
                 $(".alert-danger").show();
             }
+        },
+        error: function (data) {
+            response = JSON.parse(data.responseText)
+
+            $(".alert-danger").html(response.message);
+            $(".alert-danger").show();
         }
     });
 });

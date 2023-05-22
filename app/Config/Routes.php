@@ -32,18 +32,18 @@ $routes->set404Override();
 
 //Base URLs
 $routes->get('/', 'LogIn::index');
-$routes->get('/dashboard', 'Dashboard::index', ["filter" => "login:nocheck"]);
-$routes->get('/collections', 'Collection::index', ["filter" => "login:collections"]);
-$routes->get('/categories','Category::index', ["filter" => "login:categories"]);
-$routes->get('/images','Image::index', ["filter" => "login:images"]);
-$routes->get('/account', 'Account::index', ["filter" => "login:nocheck"]);
-$routes->get('/notifications','Notification::index', ["filter" => "login:notifications"]);
-$routes->get('/menu','Menu::index', ["filter" => "login:menu"]);
-$routes->get('/brand','Brand::index', ["filter" => "login:brands"]);
-$routes->get('/app','App::index', ["filter" => "login:builds"]);
-$routes->get('/brand/branding/(:num)','Brand::branding/$1', ["filter" => "login:branding"]);
-$routes->get('/brand/users/(:num)','Brand::users/$1', ["filter" => "login:admin"]);
-$routes->get('/billing',"Account::billing", ["filter" => "login:nocheck"]); //TODO move this to account view
+$routes->get('/dashboard', 'Dashboard::index', ["filter" => "view:nocheck"]);
+$routes->get('/collections', 'Collection::index', ["filter" => "view:collections"]);
+$routes->get('/categories','Category::index', ["filter" => "view:categories"]);
+$routes->get('/images','Image::index', ["filter" => "view:images"]);
+$routes->get('/account', 'Account::index', ["filter" => "view:nocheck"]);
+$routes->get('/notifications','Notification::index', ["filter" => "view:notifications"]);
+$routes->get('/menu','Menu::index', ["filter" => "view:menu"]);
+$routes->get('/brand','Brand::index', ["filter" => "view:brands"]);
+$routes->get('/app','App::index', ["filter" => "view:builds"]);
+$routes->get('/brand/branding/(:num)','Brand::branding/$1', ["filter" => "view:branding"]);
+$routes->get('/brand/users/(:num)','Brand::users/$1', ["filter" => "view:admin"]);
+$routes->get('/billing',"Account::billing", ["filter" => "view:nocheck"]); //TODO move this to account view
 $routes->get('/reset/(:any)', 'Reset::index/$1');
 
 //Asset URLS
@@ -67,11 +67,11 @@ $routes->post('/menu', 'Menu::post');
 
 //Update URLs
 $routes->post('/reset/update', 'Reset::update'); //TODO: add edit filters
-$routes->post('/images/update', 'Image::update');
-$routes->post('/collections/update', 'Collection::update');
-$routes->post('/categories/update', 'Category::update');
-$routes->post('/notifications/update', 'Notification::update');
-$routes->post('/menu/update', 'Menu::update');
+$routes->post('/images/update', 'Image::update', ["filter" => "edit:images"]);
+$routes->post('/collections/update','Collection::update', ["filter" => "edit:collections"]);
+$routes->post('/categories/update','Category::update', ["filter" => "edit:categories"]);
+$routes->post('/notifications/update','Notification::update', ["filter" => "edit:notifications"]);
+$routes->post('/menu/update','Menu::update', ["filter" => "edit:menu"]);
 
 /*
  * --------------------------------------------------------------------
