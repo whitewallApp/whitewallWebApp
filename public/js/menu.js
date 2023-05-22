@@ -36,8 +36,9 @@ function getMenu(e){
             $("#linkRadio").prop("checked", false);
             $("#linkDiv").hide();
 
-            $(".fr-wrapper").removeClass("show-placeholder");
-            $(".fr-element").html(menuItem.internalContext);
+            // $(".fr-wrapper").removeClass("show-placeholder");
+            // $(".fr-element").html(menuItem.internalContext);
+            $(".note-editable").html(menuItem.internalContext);
         }
     })
 }
@@ -55,7 +56,8 @@ $("#menuData").submit(function(e){
         formData.append("link", $("#link").val());
     }else{
         formData.append("target", 0);
-        formData.append("internalContext", $(".fr-element").html());
+        // formData.append("internalContext", $(".fr-element").html());
+        formData.append("internalContext", $(".note-editable").html());
     }
 
     $.ajax({
