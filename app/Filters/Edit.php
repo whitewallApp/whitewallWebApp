@@ -16,13 +16,13 @@ class Edit implements FilterInterface
 
         if (!$session->get("logIn")){
             http_response_code(403);
-            die('Not logged in');
+            die(json_encode(["success" => false, "message" => "You Need to be logged in"]));
         }
 
         if (isset($arguments[1]) && $arguments[1] == "admin"){
             if (!$session->get("is_admin")){
                 http_response_code(403);
-                die('Need to be admin');
+                die(json_encode(["success" => false, "message" => "You have to be an admin"]));
             }
         }
 
