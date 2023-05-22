@@ -41,3 +41,9 @@ function getMenu(e){
         }
     })
 }
+
+$("#menuData").submit(function(e){
+    e.preventDefault();
+
+    formData = new FormData();
+})
