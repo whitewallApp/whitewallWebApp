@@ -1,6 +1,5 @@
 $("#categoryColor").on("input", function(e){
     color = $(this).val();
-    $(".row.bottom-nav").css("color", color)
 })
 
 $("#categoryFontColor").on("input", function (e) {
@@ -27,4 +26,9 @@ $("#catFontStyle").on("input", function (e) {
 $("#catFont").on("input", function (e) {
     font = $(this).val();
     $(".row.bottom-nav").css("font-family", font)
+})
+
+$("#backgroundColor").on("input", function(e){
+    color = $(this).val();
+    $(".background-phone-collection").css("background-color", color);
 })
