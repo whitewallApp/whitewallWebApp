@@ -50,7 +50,6 @@ body {
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
-    background-color: black;
 }
 
 .background-phone-collection::-webkit-scrollbar {
@@ -152,11 +151,4 @@ body {
 .card-img-top {
     height: 100px;
     object-fit: cover;
-}
-
-.category-img {
-    /* background-color: white;
-    color: white;
-    flood-color: white;
-    accent-color: white; */
 }

@@ -54,15 +54,15 @@
                             <?php if (count($collections) % 2 != 0) : ?>
                                 <div class="col-sm-6">
                                     <div class="card">
-                                        <img class="card-img-top p-2" src="/<?= $collections[count($collections)-1]["iconPath"] ?>" alt="Card image cap">
+                                        <img class="card-img-top p-2" src="/<?= $collections[count($collections) - 1]["iconPath"] ?>" alt="Card image cap">
                                         <div class="collection-title">
-                                            <p><?= $collections[count($collections)-1]["name"] ?></p>
+                                            <p><?= $collections[count($collections) - 1]["name"] ?></p>
                                         </div>
                                     </div>
                                 </div>
                             <?php endif ?>
                             <div class="row bottom-nav">
-                                <?php foreach($categories as $category) : ?>
+                                <?php foreach ($categories as $category) : ?>
                                     <div class="col text-center">
                                         <!-- <i class="bi bi-palette-fill"></i> -->
                                         <img class="category-img" src="/<?= $category["iconPath"] ?>">
@@ -278,11 +278,16 @@
                         <div class="card-body">
                             <form>
                                 <div class="form-group">
-                                    <select class="custom-select">
-                                        <option selected>Font 1</option>
-                                        <option value="1">font 2</option>
-                                        <option value="2">font 3</option>
-                                        <option value="3">Three</option>
+                                    <select class="custom-select" id="imgCollabelFont">
+                                        <option value="Arial">Arial (sans-serif)</option>
+                                        <option value="Verdana">Verdana (sans-serif)</option>
+                                        <option value="Tahoma">Tahoma (sans-serif)</option>
+                                        <option value="Trebuchet MS">Trebuchet MS (sans-serif)</option>
+                                        <option value="Times New Roman">Times New Roman (serif)</option>
+                                        <option value="Georgia">Georgia (serif)</option>
+                                        <option value="Garamond">Garamond (serif)</option>
+                                        <option value="Courier New">Courier New (monospace)</option>
+                                        <option value="Brush Script MT, cursive">Brush Script MT (cursive)</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -290,16 +295,16 @@
                                     <input type="color" class="form-control" id="collImgLabelFontColor">
                                 </div>
                                 <div class="form-group">
-                                    <select class="custom-select">
-                                        <option selected>Normal</option>
-                                        <option value="1">Bold</option>
-                                        <option value="2">Italicized</option>
+                                    <select class="custom-select" id="imgCollabelFontStyle">
+                                        <option selected value="normal">Normal</option>
+                                        <option value="bold">Bold</option>
+                                        <option value="italic">Italicized</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="imgCollabelFont">Font Size</label>
+                                    <label class="form-label" for="imgCollabelFontsize">Font Size</label>
                                     <div class="range">
-                                        <input type="range" class="form-range" step="1" min="0" max="60" id="imgCollabelFont" />
+                                        <input type="range" class="form-range" step="1" min="0" max="60" id="imgCollabelFontsize" />
                                     </div>
                                 </div>
                             </form>
@@ -319,31 +324,36 @@
                             <form>
                                 <div class="form-group">
                                     <label class="form-label" for="dropdownColor">Dropdown Icon Color</label>
-                                    <input type="color" class="form-control" id="categoryColor">
+                                    <input type="color" class="form-control" id="dropdownColor">
                                 </div>
                                 <div class="form-group">
-                                    <select class="custom-select">
-                                        <option selected>Font 1</option>
-                                        <option value="1">font 2</option>
-                                        <option value="2">font 3</option>
-                                        <option value="3">Three</option>
+                                    <select class="custom-select" id="dropdownFont">
+                                        <option value="Arial">Arial (sans-serif)</option>
+                                        <option value="Verdana">Verdana (sans-serif)</option>
+                                        <option value="Tahoma">Tahoma (sans-serif)</option>
+                                        <option value="Trebuchet MS">Trebuchet MS (sans-serif)</option>
+                                        <option value="Times New Roman">Times New Roman (serif)</option>
+                                        <option value="Georgia">Georgia (serif)</option>
+                                        <option value="Garamond">Garamond (serif)</option>
+                                        <option value="Courier New">Courier New (monospace)</option>
+                                        <option value="Brush Script MT, cursive">Brush Script MT (cursive)</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="dropdownFontColor">Font Color</label>
-                                    <input type="color" class="form-control" id="categoryFontColor">
+                                    <input type="color" class="form-control" id="dropdownFontColor">
                                 </div>
                                 <div class="form-group">
-                                    <select class="custom-select">
-                                        <option selected>Normal</option>
-                                        <option value="1">Bold</option>
-                                        <option value="2">Italicized</option>
+                                    <select class="custom-select" id="dropdownFontStyle">
+                                        <option selected value="normal">Normal</option>
+                                        <option value="bold">Bold</option>
+                                        <option value="italic">Italicized</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="dropdownFont">Font Size</label>
                                     <div class="range">
-                                        <input type="range" class="form-range" min="0" max="60" id="dropdownFont" />
+                                        <input type="range" class="form-range" min="0" max="60" id="dropdownFontsize" />
                                     </div>
                                 </div>
                             </form>
