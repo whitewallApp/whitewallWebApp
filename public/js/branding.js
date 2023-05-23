@@ -95,3 +95,80 @@ $("#dropdownColor").on("input", function(){
 })
 
 //checkmark
+$("#checkmarkColor").on("input", function(){
+ //TODO: make a custom checkbox
+})
+
+$("#checkmarkBackground").on("input", function(){
+    // console.log($(this).val() + " !important");
+    color = $(this).val();
+    array = $(".checkbox-branding:checked")
+    for (let i = 0; i < array.length; i++) {
+        const element = array[i];
+        element.style.setProperty('background-color', color, 'important');
+        element.style.setProperty('border-color', color, 'important');
+    }
+})
+
+//image and collection images
+$("#imgBorderRadius").on("input", function(){
+    $(".img-branding").css("border-radius", $(this).val()+"px");
+})
+
+$("#imgBorderWidth").on("input", function(){
+    $(".img-branding").css("border", $(this).val() + "px solid");
+})
+
+$("#borderColor").on("input", function(){
+    $(".img-branding").css("border-color", $(this).val());
+})
+
+//image & collection cards/frams
+$("#collBorderColor").on("input", function(){
+    $(".card-branding").css("border-color", $(this).val());
+})
+
+$("#frameBorderWidth").on("input", function(){
+    $(".card-branding").css("border", $(this).val() + "px solid");
+})
+
+$("#frameRadius").on("input", function(){
+    $(".card-branding").css("border-radius", $(this).val() + "px");
+})
+
+$("#collBackgroundColor").on("input", function(){
+    $(".card-branding").css("background-color", $(this).val());
+})
+
+//buttons
+$("#buttonFontSize").on("input", function(){
+    $(".btn-branding").css("font-size", $(this).val() + "px");
+})
+
+$("#buttonFontStyle").on("input", function(){
+    fontType = $(this).val();
+    if (fontType == "bold") {
+        $(".btn-branding").css("font-weight", fontType)
+        $(".btn-branding").css("font-style", "normal")
+    } else {
+        $(".btn-branding").css("font-weight", "normal")
+        $(".btn-branding").css("font-style", fontType)
+    }
+})
+
+$("#buttonFontColor").on("input", function(){
+    $(".btn-branding").css("color", $(this).val());
+})
+
+$("#buttonFont").on("input", function(){
+    $(".btn-branding").css("font-family", $(this).val());
+})
+
+$("#buttonBorderRadius").on("input", function(){
+    $(".btn-branding").css("border-radius", $(this).val() + "px");
+})
+
+$("#buttonColor").on("input", function(){
+    $(".btn-branding").css("background-color", $(this).val());
+})
+

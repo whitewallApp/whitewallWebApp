@@ -34,16 +34,18 @@
                             <?php for ($i = 0; $i < floor(count($collections) / 2); $i += 2) : ?>
                                 <div class="row m-2">
                                     <div class="col-sm-6">
-                                        <div class="card">
-                                            <img class="card-img-top p-2" src="/<?= $collections[$i]["iconPath"] ?>" alt="Card image cap">
+                                        <div class="card card-branding">
+                                            <input type="checkbox" class="form-check-input checkbox-branding" checked>
+                                            <img class="card-img-top img-branding p-2" src="/<?= $collections[$i]["iconPath"] ?>" alt="Card image cap">
                                             <div class="collection-title">
                                                 <p><?= $collections[$i]["name"] ?></p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <div class="card">
-                                            <img class="card-img-top p-2" src="/<?= $collections[$i + 1]["iconPath"] ?>" alt="Card image cap">
+                                        <div class="card card-branding">
+                                            <input type="checkbox" class="form-check-input checkbox-branding">
+                                            <img class="card-img-top p-2 img-branding" src="/<?= $collections[$i + 1]["iconPath"] ?>" alt="Card image cap">
                                             <div class="collection-title">
                                                 <p><?= $collections[$i + 1]["name"] ?></p>
                                             </div>
@@ -53,8 +55,8 @@
                             <?php endfor ?>
                             <?php if (count($collections) % 2 != 0) : ?>
                                 <div class="col-sm-6">
-                                    <div class="card">
-                                        <img class="card-img-top p-2" src="/<?= $collections[count($collections) - 1]["iconPath"] ?>" alt="Card image cap">
+                                    <div class="card card-branding">
+                                        <img class="card-img-top p-2 img-branding" src="/<?= $collections[count($collections) - 1]["iconPath"] ?>" alt="Card image cap">
                                         <div class="collection-title">
                                             <p><?= $collections[count($collections) - 1]["name"] ?></p>
                                         </div>
@@ -80,20 +82,20 @@
                         <img class="phone-img" src="/Icons/phone.png">
                         <div class="background-phone-image">
                             <div class="col top-nav mt-2 mb-2">
-                                <button class="btn btn-primary w-100">Back</button>
+                                <button class="btn btn-primary w-100 btn-branding">Back</button>
                             </div>
                             <div class="row m-2">
                                 <div class="col-sm-6">
-                                    <div class="card">
-                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                    <div class="card card-branding">
+                                        <img class="card-img-top p-2 img-branding" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
                                         <div class="image-title">
                                             <p>Image Title</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="card">
-                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                    <div class="card card-branding">
+                                        <img class="card-img-top p-2 img-branding" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
                                         <div class="image-title">
                                             <p>Image Title</p>
                                         </div>
@@ -471,11 +473,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <select class="custom-select">
-                                        <option selected>Font 1</option>
-                                        <option value="1">font 2</option>
-                                        <option value="2">font 3</option>
-                                        <option value="3">Three</option>
+                                    <select class="custom-select" id="buttonFont">
+                                        <option value="Arial">Arial (sans-serif)</option>
+                                        <option value="Verdana">Verdana (sans-serif)</option>
+                                        <option value="Tahoma">Tahoma (sans-serif)</option>
+                                        <option value="Trebuchet MS">Trebuchet MS (sans-serif)</option>
+                                        <option value="Times New Roman">Times New Roman (serif)</option>
+                                        <option value="Georgia">Georgia (serif)</option>
+                                        <option value="Garamond">Garamond (serif)</option>
+                                        <option value="Courier New">Courier New (monospace)</option>
+                                        <option value="Brush Script MT, cursive">Brush Script MT (cursive)</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -483,10 +490,10 @@
                                     <input type="color" class="form-control" id="buttonFontColor">
                                 </div>
                                 <div class="form-group">
-                                    <select class="custom-select">
-                                        <option selected>Normal</option>
-                                        <option value="1">Bold</option>
-                                        <option value="2">Italicized</option>
+                                    <select class="custom-select" id="buttonFontStyle">
+                                        <option selected value="normal">Normal</option>
+                                        <option value="bold">Bold</option>
+                                        <option value="italic">Italicized</option>
                                     </select>
                                 </div>
                                 <div class="form-group">

@@ -147,8 +147,17 @@ body {
     object-fit: cover;
     border-radius: 100%;
 }
+.checkbox-branding {
+    position: relative;
+    left: 80px;
+    top: 8px;
+    margin-bottom: -30px;
+    /* background-color: red !important;
+        border-color: red !important; */
+}
 
-.card-img-top {
+.img-branding {
     height: 100px;
     object-fit: cover;
+    margin-top: 10px;
 }
