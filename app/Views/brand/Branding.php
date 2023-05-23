@@ -36,7 +36,7 @@
                                     <div class="col-sm-6">
                                         <div class="card card-branding">
                                             <input type="checkbox" class="form-check-input checkbox-branding" checked>
-                                            <img class="card-img-top img-branding p-2" src="/<?= $collections[$i]["iconPath"] ?>" alt="Card image cap">
+                                            <img class="card-img-top img-branding p-2" src="<?= $collections[$i]["iconPath"] ?>" alt="Card image cap">
                                             <div class="collection-title">
                                                 <p><?= $collections[$i]["name"] ?></p>
                                             </div>
@@ -45,7 +45,7 @@
                                     <div class="col-sm-6">
                                         <div class="card card-branding">
                                             <input type="checkbox" class="form-check-input checkbox-branding">
-                                            <img class="card-img-top p-2 img-branding" src="/<?= $collections[$i + 1]["iconPath"] ?>" alt="Card image cap">
+                                            <img class="card-img-top p-2 img-branding" src="<?= $collections[$i + 1]["iconPath"] ?>" alt="Card image cap">
                                             <div class="collection-title">
                                                 <p><?= $collections[$i + 1]["name"] ?></p>
                                             </div>
@@ -56,7 +56,7 @@
                             <?php if (count($collections) % 2 != 0) : ?>
                                 <div class="col-sm-6">
                                     <div class="card card-branding">
-                                        <img class="card-img-top p-2 img-branding" src="/<?= $collections[count($collections) - 1]["iconPath"] ?>" alt="Card image cap">
+                                        <img class="card-img-top p-2 img-branding" src="<?= $collections[count($collections) - 1]["iconPath"] ?>" alt="Card image cap">
                                         <div class="collection-title">
                                             <p><?= $collections[count($collections) - 1]["name"] ?></p>
                                         </div>
@@ -67,7 +67,7 @@
                                 <?php foreach ($categories as $category) : ?>
                                     <div class="col text-center">
                                         <!-- <i class="bi bi-palette-fill"></i> -->
-                                        <img class="category-img" src="/<?= $category["iconPath"] ?>">
+                                        <img class="category-img" src="<?= $category["iconPath"] ?>">
                                         <p><?= $category["name"] ?></p>
                                     </div>
                                 <?php endforeach ?>
@@ -84,60 +84,36 @@
                             <div class="col top-nav mt-2 mb-2">
                                 <button class="btn btn-primary w-100 btn-branding">Back</button>
                             </div>
-                            <div class="row m-2">
+                            <?php for ($i = 0; $i < floor(count($images) / 2); $i += 2) : ?>
+                                <div class="row m-2">
+                                    <div class="col-sm-6">
+                                        <div class="card card-branding">
+                                            <img class="card-img-top p-2 img-branding" src="<?= $images[$i]["imagePath"] ?>" alt="Card image cap">
+                                            <div class="image-title">
+                                                <p><?= $images[$i]["name"] ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="card card-branding">
+                                            <img class="card-img-top p-2 img-branding" src="<?= $images[$i + 1]["imagePath"] ?>" alt="Card image cap">
+                                            <div class="image-title">
+                                                <p><?= $images[$i + 1]["name"] ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endfor ?>
+                            <?php if (count($collections) % 2 != 0) : ?>
                                 <div class="col-sm-6">
                                     <div class="card card-branding">
-                                        <img class="card-img-top p-2 img-branding" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
+                                        <img class="card-img-top p-2 img-branding" src="<?= $images[count($images) - 1]["imagePath"] ?>" alt="Card image cap">
                                         <div class="image-title">
-                                            <p>Image Title</p>
+                                            <p><?= $images[count($images) - 1]["name"] ?></p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="card card-branding">
-                                        <img class="card-img-top p-2 img-branding" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                                        <div class="image-title">
-                                            <p>Image Title</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row m-2">
-                                <div class="col-sm-6">
-                                    <div class="card">
-                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                                        <div class="image-title">
-                                            <p>Image Title</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="card">
-                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                                        <div class="image-title">
-                                            <p>Image Title</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row m-2">
-                                <div class="col-sm-6">
-                                    <div class="card">
-                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                                        <div class="image-title">
-                                            <p>Image Title</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="card">
-                                        <img class="card-img-top p-2" src="/Icons/Whitewall-ICON.png" alt="Card image cap">
-                                        <div class="collection-title">
-                                            <p>Collection Title</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php endif ?>
                         </div>
                     </div>
                 </div>
@@ -146,6 +122,8 @@
                 <div class="tab-pane fade" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab">
                     <div class="phone">
                         <img class="phone-img" src="/Icons/phone.png">
+                        <img class="phone-wallpaper" src="<?= $images[0]["imagePath"] ?>">
+                        <button class="btn btn-primary btn-branding" id="setWallpaper">Set Wallpaper</button>
                     </div>
                 </div>
 
@@ -155,11 +133,9 @@
                         <img class="phone-img" src="/Icons/phone.png">
                         <i class="bi bi-list menu-icon" style="top:-455px; left: 188px;"></i>
                         <div class="list-group list-group-light menu-list">
-                            <a href="#" class="list-group-item list-group-item-action px-3 border-0">The current link item</a>
-                            <a href="#" class="list-group-item list-group-item-action px-3 border-0">A second link item</a>
-                            <a href="#" class="list-group-item list-group-item-action px-3 border-0">A third link item</a>
-                            <a href="#" class="list-group-item list-group-item-action px-3 border-0">A fourth link item</a>
-                            <a href="#" class="list-group-item list-group-item-action px-3 border-0">A disabled link item</a>
+                            <?php foreach ($menu as $item) : ?>
+                                <a href="#" class="list-group-item list-group-item-action px-3 border-0"><?= $item ?></a>
+                            <?php endforeach ?>
                         </div>
                     </div>
                 </div>

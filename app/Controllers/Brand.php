@@ -6,6 +6,7 @@ use App\Controllers\Navigation;
 use App\Models\CategoryModel;
 use App\Models\CollectionModel;
 use App\Models\ImageModel;
+use App\Models\MenuModel;
 use App\Models\UserModel;
 
 class Brand extends BaseController
@@ -36,6 +37,7 @@ class Brand extends BaseController
         $colModel = new CollectionModel();
         $catModel = new CategoryModel();
         $imgModel = new ImageModel();
+        $menuModel = new MenuModel();
         $brandname = $session->get("brand_name");
 
         $categoryIds = $catModel->getCollumn("id", $brandname);
@@ -59,10 +61,13 @@ class Brand extends BaseController
             array_push($images, $image);
         }
 
+        $menu = $menuModel->getCollumn("title", $session->get("brand_name"));
+
         $data = [
             "categories" => $categories,
             "collections" => $collections,
-            "images" => $images
+            "images" => $images,
+            "menu"=> $menu
         ];
 
         return Navigation::renderNavBar("Branding", [true, "Brands"]) . view("brand/Branding", $data) . Navigation::renderFooter();

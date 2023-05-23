@@ -77,6 +77,17 @@ body {
     /* Firefox */
 }
 
+.phone-wallpaper {
+    position: relative;
+    top: -530px;
+    left: 5px;
+    width: 238px;
+    height: 500px;
+    margin-bottom: -400px;
+    border-radius: 40px;
+    object-fit: cover;
+}
+
 .background-phone-image::-webkit-scrollbar {
     display: none;
 }
@@ -160,4 +171,15 @@ body {
     height: 100px;
     object-fit: cover;
     margin-top: 10px;
+}
+
+.btn-branding {
+
+}
+
+#setWallpaper {
+    position: relative;
+    top: -160px;
+    left: -220px;
+    width: 210px;
 }
