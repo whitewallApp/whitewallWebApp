@@ -1,7 +1,3 @@
-/*
- * Some helper functions to work with our UI and keep our code cleaner
- */
-
 // Adds an entry to our debug area
 function ui_add_log(message, color) {
     var d = new Date();
@@ -60,3 +56,13 @@ function ui_multi_update_file_progress(id, percent, color, active) {
         bar.addClass('bg-' + color);
     }
 }
+
+$(".next").on("click", function(event){
+    // event.stopPropagation();
+    // event.stopImmediatePropagation();
+    console.log("working");
+    // $('.carousel').carousel('next');
+    // $("#step" ).removeClass("active");
+    // console.log("#step" + $(this).prop("set-active"));
+    // $("#step" + $(this).prop("set-active")).addClass("active");
+})
