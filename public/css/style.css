@@ -183,3 +183,8 @@ body {
     left: -220px;
     width: 210px;
 }
+
+.file-box {
+    height: 300px !important;
+    overflow-y: scroll;
+}
