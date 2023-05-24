@@ -174,4 +174,12 @@ class Image extends BaseController
 
         return json_encode(["success" => true]);
     }
+
+    public function uploadView(){
+        return Navigation::renderNavBar("Images", [false, "Images"]) . view('Image/Image_Upload') . Navigation::renderFooter();
+    }
+
+    public function upload(){
+        return json_encode(["status" => "ok", "path" => "/assets/images/630D.jpeg"]);
+    }
 }

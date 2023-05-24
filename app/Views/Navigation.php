@@ -135,17 +135,19 @@
     </div>
     <div class="col-8">
         <?php if (isset($actions[0])) : ?>
-            <div class="row row-cols-3 float-right p-3">
-                <div class="col p-3">
-                    <p>Add <?= $actions[1] ?></p>
+            <?php if ($actions[0]) : ?>
+                <div class="row row-cols-3 float-right p-3">
+                    <div class="col p-3">
+                        <p>Add <?= $actions[1] ?></p>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary m-2">Individual</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary m-2">Bulk Upload</button>
+                    </div>
                 </div>
-                <div class="col">
-                    <button class="btn btn-primary m-2">Individual</button>
-                </div>
-                <div class="col">
-                    <button class="btn btn-primary m-2">Bulk Upload</button>
-                </div>
-            </div>
+            <?php endif ?>
         <?php endif ?>
     </div>
 </div>

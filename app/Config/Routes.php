@@ -65,6 +65,10 @@ $routes->post('/account', 'Account::post');
 $routes->post('/reset', 'Reset::post');
 $routes->post('/menu', 'Menu::post');
 
+//image upload
+$routes->get("/images/upload", "Image::uploadView");
+$routes->post("/images/upload", "Image::upload");
+
 //Update URLs
 $routes->post('/reset/update', 'Reset::update'); //TODO: add edit filters
 $routes->post('/images/update', 'Image::update', ["filter" => "edit:images"]);
