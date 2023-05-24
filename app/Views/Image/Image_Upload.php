@@ -8,7 +8,7 @@
     <title>Image Uploads</title>
 
     <!-- Custom styles -->
-    <link href="/js/uploader/dist/css/jquery.dm-uploader.min.css" rel="stylesheet">
+    <link href="/js/uploader/src/css/jquery.dm-uploader.css" rel="stylesheet">
 </head>
 
 <body>
@@ -83,10 +83,7 @@
 
     </main> <!-- /container -->
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
-
-    <script src="/js/uploader/dist/js/jquery.dm-uploader.min.js"></script>
+    <script src="/js/uploader/src/js/jquery.dm-uploader.js"></script>
     <script src="/js/uploader/ui.js"></script>
     <script src="/js/uploader/config.js"></script>
 
