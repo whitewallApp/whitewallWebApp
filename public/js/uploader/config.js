@@ -68,8 +68,8 @@ $(function () {
         url: '/images/upload',
         maxFileSize: 15000000,
         multiple: false,
+        extFilter: ["csv", "xlsx"],
         onNewFile: function(id, file){
-            console.log(file);
             var template = $('#files-template').text();
             template = template.replace('%%filename%%', file.name).replace("%%id%%", id);
 
@@ -77,6 +77,7 @@ $(function () {
             template.prop('id', 'uploaderFile' + id);
             template.data('file-id', id);
 
+            $('#csvFile').empty();
             $('#csvFile').find('li.empty').fadeOut(); // remove the 'no files yet'
             $('#csvFile').prepend(template);
 
@@ -88,6 +89,15 @@ $(function () {
         onUploadSuccess: function(id, data){
             ui_multi_update_file_status(id, 'success', 'Upload Complete');
             ui_multi_update_file_progress(id, 100, 'success', true);
+        },
+        onFileExtError: function(file){
+            template = '<li class="media"><span class="status text-danger">File is not the correct type</span></li>'
+            $('#csvFile').find('li.empty').fadeOut(); // remove the 'no files yet'
+            $('#csvFile').prepend(template);
+        },
+        onFallbackMode: function () {
+            // When the browser doesn't support this plugin :(
+            console.log("hello");
         }
-    })
+    });
 });
