@@ -57,12 +57,9 @@ function ui_multi_update_file_progress(id, percent, color, active) {
     }
 }
 
-$(".next").on("click", function(event){
-    // event.stopPropagation();
-    // event.stopImmediatePropagation();
-    console.log("working");
-    // $('.carousel').carousel('next');
-    // $("#step" ).removeClass("active");
-    // console.log("#step" + $(this).prop("set-active"));
-    // $("#step" + $(this).prop("set-active")).addClass("active");
+$(".next").on("click", function(){
+    $('.carousel').carousel('next');
+    $("#step" + ($(this).attr("set-active") - 1)).removeClass("active");
+    $("#step" + $(this).attr("set-active")).addClass("active");
 })
+

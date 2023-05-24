@@ -65,7 +65,7 @@
 
                             <div class="row">
                                 <div class="col-12 m-4 d-flex justify-content-center">
-                                    <button class="btn btn-primary w-50">Next</button>
+                                    <button class="btn btn-primary w-50 next" set-active="2">Next</button>
                                 </div>
                             </div>
 
