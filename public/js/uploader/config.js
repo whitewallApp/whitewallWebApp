@@ -63,4 +63,31 @@ $(function () {
             ui_add_log('File \'' + file.name + '\' cannot be added: size excess limit', 'danger');
         }
     });
+
+    $("#csv-upload").dmUploader({
+        url: '/images/upload',
+        maxFileSize: 15000000,
+        multiple: false,
+        onNewFile: function(id, file){
+            console.log(file);
+            var template = $('#files-template').text();
+            template = template.replace('%%filename%%', file.name).replace("%%id%%", id);
+
+            template = $(template);
+            template.prop('id', 'uploaderFile' + id);
+            template.data('file-id', id);
+
+            $('#csvFile').find('li.empty').fadeOut(); // remove the 'no files yet'
+            $('#csvFile').prepend(template);
+
+            ui_multi_update_file_progress(id, 0, '', true);
+        },
+        onUploadProgress: function(id, percent){
+            ui_multi_update_file_progress(id, percent);
+        },
+        onUploadSuccess: function(id, data){
+            ui_multi_update_file_status(id, 'success', 'Upload Complete');
+            ui_multi_update_file_progress(id, 100, 'success', true);
+        }
+    })
 });

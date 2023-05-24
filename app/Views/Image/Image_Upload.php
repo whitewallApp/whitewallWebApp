@@ -19,16 +19,16 @@
 
             <div class="col-2">
                 <ul class="list-group">
-                    <li class="list-group-item active" id="step1">
+                    <li class="list-group-item active" id="step1" onclick="change(1);" style="cursor: pointer;">
                         <h3>Step 1</h3><span class="text-muted">Upload Images</span>
                     </li>
-                    <li class="list-group-item" id="step2">
+                    <li class="list-group-item" id="step2" onclick="change(2);" style="cursor: pointer;">
                         <h3>Step 2</h3><span class="text-muted">Download CSV</span>
                     </li>
-                    <li class="list-group-item" id="step3">
+                    <li class="list-group-item" id="step3" onclick="change(3);" style="cursor: pointer;">
                         <h3>Step 3</h3><span class="text-muted">Edit CSV</span>
                     </li>
-                    <li class="list-group-item" id="step4">
+                    <li class="list-group-item" id="step4" onclick="change(4);" style="cursor: pointer;">
                         <h3>Step 4</h3><span class="text-muted">Upload CSV</span>
                     </li>
                 </ul>
@@ -86,16 +86,19 @@
                     </div>
 
                     <div class="carousel-item">
-                        <h1>Hello</h1>
                         <div class="row">
                             <div class="col-12 m-4 d-flex justify-content-center">
-                                <button class="btn btn-primary w-50 next" set-active="3">Next</button>
+                                <div class="col-6">
+                                    <a href="#"><button class="btn btn-primary w-50" style="font-size: x-large;">Download <i class="bi bi-box-arrow-down" style="font-size: x-large;"></i></button></a>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn btn-primary w-50 next" set-active="3">Next</button>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="carousel-item">
-                        <h1>Hello Again</h1>
                         <div class="row">
                             <div class="col-12 m-4 d-flex justify-content-center">
                                 <button class="btn btn-primary w-50 next" set-active="4">Next</button>
@@ -104,7 +107,15 @@
                     </div>
 
                     <div class="carousel-item">
-                        <h1>And Again</h1>
+                        <div id="csv-upload" class="dm-uploader p-5">
+                            <div class="btn btn-primary btn-block mb-5">
+                                <span>Open the file Browser</span>
+                                <input type="file" title='Upload CSV' />
+                            </div>
+                            <ul class="list-unstyled p-2 d-flex flex-column col" id="csvFile">
+                                <li class="text-muted text-center empty">No file uploaded.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
