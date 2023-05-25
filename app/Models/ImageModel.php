@@ -10,11 +10,14 @@ class ImageModel extends Model
 {
     protected $primaryKey = 'id';
     protected $returnType = 'array';
+    protected $table = "wallpaper";
+    protected $useAutoIncrement = true;
 
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'dateCreated';
     protected $updatedField  = 'dateUpdated';
+    protected $allowedFields = ["link", "name", "description", "thumbnail", "imagePath", "resolution", "externalPath", "brand_id", "collection_id"];
 
     public function getAllIds($brandName){
         $builder = $this->db->table('brand');

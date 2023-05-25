@@ -89,7 +89,7 @@
                         <div class="row">
                             <div class="col-12 m-4 d-flex justify-content-center">
                                 <div class="col-6">
-                                    <a href="#"><button class="btn btn-primary w-50" style="font-size: x-large;">Download <i class="bi bi-box-arrow-down" style="font-size: x-large;"></i></button></a>
+                                    <a href="/images/upload/csv"><button class="btn btn-primary w-50" style="font-size: x-large;">Download <i class="bi bi-box-arrow-down" style="font-size: x-large;"></i></button></a>
                                 </div>
                                 <div class="col-6">
                                     <button class="btn btn-primary w-50 next" set-active="3">Next</button>

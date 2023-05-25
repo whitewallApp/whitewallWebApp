@@ -303,6 +303,39 @@ class Assets extends BaseController {
         }
     }
 
+    //image upload csv
+    public function checkCSV(): bool {
+        if(file_exists($this->imgPath . "../images.csv")){
+            return true;
+        }else{
+            header('Content-Type: text/csv');
+            header('Content-Disposition: attachment; filename="sample.csv"');
+            $columns = array(
+                "id",
+                "uploaded_name",
+                "name",
+                "description",
+                "link",
+                "collection_name"
+            );
+
+            $fp = fopen($this->imgPath . "../images.csv", 'wb');
+            fputcsv($fp, $columns);
+            fclose($fp);
+            return false;
+        }
+    }
+
+    public function writeLineCSV($data){
+        $fp = fopen($this->imgPath . "../images.csv", 'a');
+        fputcsv($fp, $data);
+        fclose($fp);
+    }
+
+    public function getCSV(){
+        return $this->imgPath . "../images.csv";
+    }
+
     private function mapType($inputType): string {
         return match ($inputType) {
             "png" => "png",

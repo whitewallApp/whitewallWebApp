@@ -7,7 +7,7 @@ $(function () {
      */
     $('#drag-and-drop-zone').dmUploader({ //
         url: '/images/upload',
-        maxFileSize: 15000000, // 3 Megs 
+        maxFileSize: 15000000, // 3 Megs
         onDragEnter: function () {
             // Happens when dragging something over the DnD area
             this.addClass('active');
@@ -52,7 +52,7 @@ $(function () {
             ui_multi_update_file_progress(id, 100, 'success', false);
         },
         onUploadError: function (id, xhr, status, message) {
-            ui_multi_update_file_status(id, 'danger', message);
+            ui_multi_update_file_status(id, 'danger', xhr.responseText);
             ui_multi_update_file_progress(id, 0, 'danger', false);
         },
         onFallbackMode: function () {

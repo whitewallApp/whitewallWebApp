@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\ImageModel;
 use App\Models\CollectionModel;
 use App\Models\CategoryModel;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
+use Google\Service\CloudAsset\Asset;
+use RuntimeException;
 
 class Image extends BaseController
 {
@@ -30,15 +33,15 @@ class Image extends BaseController
 
             $image = [
                 "id" => $id,
-                "path" => $imageModel->getImage($id, filter: ["imagePath"]), 
-                "name" => $imageModel->getImage($id, filter: ["name"]), 
+                "path" => $imageModel->getImage($id, filter: ["imagePath"]),
+                "name" => $imageModel->getImage($id, filter: ["name"]),
                 "collection" => $collModel->getCollection($colID, filter: ["name"]),
                 "category" => $catModel->getCategory($catID, filter: ["name"])
             ];
             array_push($images, $image);
         }
 
-        
+
 
         // compile data to be sent to view
         $data = [
@@ -48,9 +51,10 @@ class Image extends BaseController
         return Navigation::renderNavBar("Images", [true, "Images"]) . view('Image/Image_Detail', $data, ["cache" => 86400]) . Navigation::renderFooter();
     }
 
-    public function post(){
+    public function post()
+    {
         $session = session();
-        if ($session->get("logIn")){
+        if ($session->get("logIn")) {
             $request = \Config\Services::request();
             $imageModel = new ImageModel;
             $colModel = new CollectionModel;
@@ -59,7 +63,7 @@ class Image extends BaseController
             $id = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $req = $request->getVar("UpperReq", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            if ($req == "true"){
+            if ($req == "true") {
                 return json_encode($colModel->getCollumn("name", $brandname));
             }
 
@@ -68,7 +72,7 @@ class Image extends BaseController
 
             $image["collection_id"] = $colModel->getCollection($image["collection_id"], filter: ["name"]);
 
-            if (!$image["externalPath"]){ //removes the assets/images
+            if (!$image["externalPath"]) { //removes the assets/images
                 $exp = "/\/.*\/(.*)/";
                 $matches = [];
                 preg_match($exp, $image["imagePath"], $matches);
@@ -79,37 +83,37 @@ class Image extends BaseController
             $image = array_merge($image, ["collectionNames" => $collections]);
 
             return json_encode($image);
-        }else{
+        } else {
             return json_encode(["success" => false]);
         }
-        
     }
 
-    public function update(){
+    public function update()
+    {
         $assets = new Assets();
         $imageModel = new ImageModel();
         $collectionModel = new CollectionModel();
 
         //delete caches
-        if (file_exists("../writable/cache/ImageImage_Detail")){
+        if (file_exists("../writable/cache/ImageImage_Detail")) {
             unlink("../writable/cache/ImageImage_Detail");
             unlink("../writable/cache/ImageImage_List");
         }
 
-        if (isset($_POST["type"])){
+        if (isset($_POST["type"])) {
             //file -> file
             $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
             $imageID = htmlspecialchars((string)$this->request->getPost("id"));
             $type = explode("/", (string)$this->request->getPost("type"))[1];
 
             $name = $imageModel->getImage($imageID, filter: ["imagePath", "externalPath"], assoc: true);
-            if ($name["externalPath"] == "0"){
+            if ($name["externalPath"] == "0") {
                 //get rid of the assets/images
                 $name = explode("assets/images/", $name["imagePath"])[1];
 
                 $newPath = $assets->updateImage($tmpPath, $type, $name);
 
-                if ($newPath){ //if no error
+                if ($newPath) { //if no error
                     $post = $this->request->getPost(["name", "description", "collection", "externalPath"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                     $data = [
@@ -122,7 +126,7 @@ class Image extends BaseController
                     ];
                     $imageModel->updateImage($imageID, $data);
                 }
-            }else{
+            } else {
                 //link -> file
                 $name = $assets->saveImage($tmpPath, $type);
 
@@ -138,14 +142,13 @@ class Image extends BaseController
                 ];
                 $imageModel->updateImage($imageID, $data);
             }
-
-        }else if (isset($_POST["link"])){
+        } else if (isset($_POST["link"])) {
             //link -> link or file -> link
             $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $imageID = htmlspecialchars((string)$this->request->getPost("id"));
 
             //remove old file if there is one
-            if ($imageModel->getImage($imageID, filter: ["externalPath"]) == "0"){
+            if ($imageModel->getImage($imageID, filter: ["externalPath"]) == "0") {
                 $name = explode("assets/images/", $imageModel->getImage($imageID, filter: ["imagePath"]))[1];
                 $assets->removeImage($name);
             }
@@ -159,7 +162,7 @@ class Image extends BaseController
                 "externalPath" => $post["externalPath"]
             ];
             $imageModel->updateImage($imageID, $data);
-        }else{
+        } else {
             //update just the data
             $post = $this->request->getPost(["name", "description", "collection"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $imageID = htmlspecialchars((string)$this->request->getPost("id"));
@@ -175,11 +178,82 @@ class Image extends BaseController
         return json_encode(["success" => true]);
     }
 
-    public function uploadView(){
+    public function uploadView()
+    {
         return Navigation::renderNavBar("Images", [false, "Images"]) . view('Image/Image_Upload') . Navigation::renderFooter();
     }
 
-    public function upload(){
-        return json_encode(["status" => "ok", "path" => "/assets/images/630D.jpeg"]);
+    public function upload()
+    {
+        $file = $this->request->getFile("file");
+        $imageModel = new ImageModel();
+        $brandModel = new BrandModel();
+        $colModel = new CollectionModel();
+        $assets = new Assets();
+        $session = session();
+
+        try {
+            if (!$file->isValid()) {
+                throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
+            }
+
+            if (preg_match("/image/", $file->getMimeType()) == 0 && preg_match("/csv/", $file->getMimeType()) == 0) {
+                throw new RuntimeException("File needs to be a image or csv");
+            }
+
+            //save the image
+            $imagePath = $assets->saveImage($file->getTempName(), $file->guessExtension());
+
+            //add image to database with their uploaded name add .validate to so we can grab it later if need be
+            $tempName = htmlspecialchars($file->getName()) . ".validate";
+            $colIds = $colModel->getAllIds($session->get("brand_name"));
+
+            $data = [
+                "description" => $tempName,
+                "brand_id" => $brandModel->getBrand($session->get("brand_name"), "name", ["id"]),
+                "collection_id" => $colIds[0],
+                "externalPath" => 0,
+                "imagePath" => "/assets/images/" . $imagePath
+            ];
+
+            $imageModel->insert($data);
+
+            return json_encode(["status" => "success"]);
+        } catch (\Exception $e) {
+            http_response_code(400);
+            echo json_encode($e->getMessage());
+            exit;
+        }
+    }
+
+    public function makeCSV()
+    {
+        $imageModel = new ImageModel();
+        $session = session();
+        $assets = new Assets();
+
+        $assets->checkCSV();
+        $ids = $imageModel->getAllIds($session->get("brand_name"));
+
+        foreach ($ids as $id) {
+            //append to csv
+            $image = $imageModel->getImage($id, assoc: true)[0];
+            if (preg_match("/\.validate$/", $image["description"]) == 1) {
+                $description = explode(".validate", $image["description"])[0];
+                $csvData = [
+                    $id,
+                    $description,
+                    "",
+                    "",
+                    "",
+                    "",
+                ];
+                $assets->writeLineCSV($csvData);   
+            }
+        }
+
+        header("Content-Type: " . "text/csv");
+        readfile($assets->getCSV());
+        exit;
     }
 }
