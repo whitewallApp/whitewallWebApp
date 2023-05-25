@@ -304,21 +304,12 @@ class Assets extends BaseController {
     }
 
     //image upload csv
-    public function checkCSV(): bool {
+    public function checkCSV($columns): bool {
         if(file_exists($this->imgPath . "../images.csv")){
             return true;
         }else{
             header('Content-Type: text/csv');
             header('Content-Disposition: attachment; filename="sample.csv"');
-            $columns = array(
-                "id",
-                "uploaded_name",
-                "name",
-                "description",
-                "link",
-                "collection_name"
-            );
-
             $fp = fopen($this->imgPath . "../images.csv", 'wb');
             fputcsv($fp, $columns);
             fclose($fp);

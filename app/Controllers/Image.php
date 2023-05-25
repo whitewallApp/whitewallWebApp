@@ -201,24 +201,32 @@ class Image extends BaseController
                 throw new RuntimeException("File needs to be a image or csv");
             }
 
-            //save the image
-            $imagePath = $assets->saveImage($file->getTempName(), $file->guessExtension());
+            // if its an image
+            if (preg_match("/image/", $file->getMimeType()) == 1){
+                //save the image
+                $imagePath = $assets->saveImage($file->getTempName(), $file->guessExtension());
 
-            //add image to database with their uploaded name add .validate to so we can grab it later if need be
-            $tempName = htmlspecialchars($file->getName()) . ".validate";
-            $colIds = $colModel->getAllIds($session->get("brand_name"));
+                //add image to database with their uploaded name add .validate to so we can grab it later if need be
+                $tempName = htmlspecialchars($file->getName()) . ".validate";
+                $colIds = $colModel->getAllIds($session->get("brand_name"));
 
-            $data = [
-                "description" => $tempName,
-                "brand_id" => $brandModel->getBrand($session->get("brand_name"), "name", ["id"]),
-                "collection_id" => $colIds[0],
-                "externalPath" => 0,
-                "imagePath" => "/assets/images/" . $imagePath
-            ];
+                $data = [
+                    "description" => $tempName,
+                    "brand_id" => $brandModel->getBrand($session->get("brand_name"), "name", ["id"]),
+                    "collection_id" => $colIds[0],
+                    "externalPath" => 0,
+                    "imagePath" => "/assets/images/" . $imagePath
+                ];
 
-            $imageModel->insert($data);
+                $imageModel->insert($data);
 
-            return json_encode(["status" => "success"]);
+                return json_encode(["status" => "success"]);
+            }
+
+            // if its a csv read in the images
+            if (preg_match("/csv/", $file->getMimeType()) == 1){
+                $fp = fopen($this->request->getFile("file")->getTempName(), "r");
+            }
         } catch (\Exception $e) {
             http_response_code(400);
             echo json_encode($e->getMessage());
@@ -226,19 +234,20 @@ class Image extends BaseController
         }
     }
 
-    public function makeCSV()
+    public function makeCSV($group)
     {
         $imageModel = new ImageModel();
         $session = session();
         $assets = new Assets();
 
-        $assets->checkCSV();
         $ids = $imageModel->getAllIds($session->get("brand_name"));
 
         foreach ($ids as $id) {
             //append to csv
             $image = $imageModel->getImage($id, assoc: true)[0];
-            if (preg_match("/\.validate$/", $image["description"]) == 1) {
+            if (preg_match("/\.validate$/", $image["description"]) == 1 && $group == "detail") {
+                $assets->checkCSV(["id", "uploaded_name", "name", "description", "link", "collection_name"]);
+
                 $description = explode(".validate", $image["description"])[0];
                 $csvData = [
                     $id,
@@ -249,11 +258,24 @@ class Image extends BaseController
                     "",
                 ];
                 $assets->writeLineCSV($csvData);   
+            }else{
+                $assets->checkCSV(["id", "name", "description", "link", "collection_name"]);
+                $collectionModel = new CollectionModel();
+                $colname = $collectionModel->getCollection($image["collection_id"], ["name"]);
+                $csvData = [
+                    $id,
+                    $image["name"],
+                    $image["description"],
+                    $image["link"],
+                    $colname,
+                ];
+                $assets->writeLineCSV($csvData);   
             }
         }
 
         header("Content-Type: " . "text/csv");
         readfile($assets->getCSV());
+        unlink($assets->getCSV());
         exit;
     }
 }

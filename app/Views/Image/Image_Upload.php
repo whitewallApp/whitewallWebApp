@@ -86,10 +86,20 @@
                     </div>
 
                     <div class="carousel-item">
+                        <div class="col">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="detailRadio" id="detailRadio" checked/>
+                                <label class="form-check-label" for="detailRadio">Only Images with No Details</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="allRadio" id="allRadio" />
+                                <label class="form-check-label" for="allRadio">All Images</label>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-12 m-4 d-flex justify-content-center">
                                 <div class="col-6">
-                                    <a href="/images/upload/csv"><button class="btn btn-primary w-50" style="font-size: x-large;">Download <i class="bi bi-box-arrow-down" style="font-size: x-large;"></i></button></a>
+                                    <a href="/images/upload/csv/detail" id="download"><button class="btn btn-primary w-50" style="font-size: x-large;">Download <i class="bi bi-box-arrow-down" style="font-size: x-large;"></i></button></a>
                                 </div>
                                 <div class="col-6">
                                     <button class="btn btn-primary w-50 next" set-active="3">Next</button>

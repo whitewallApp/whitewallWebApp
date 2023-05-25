@@ -68,7 +68,7 @@ $routes->post('/menu', 'Menu::post');
 //image upload
 $routes->get("/images/upload", "Image::uploadView");
 $routes->post("/images/upload", "Image::upload");
-$routes->get("/images/upload/csv", "Image::makeCSV");
+$routes->get("/images/upload/csv/(:segment)", "Image::makeCSV/$1");
 
 //Update URLs
 $routes->post('/reset/update', 'Reset::update'); //TODO: add edit filters

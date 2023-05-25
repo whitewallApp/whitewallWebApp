@@ -101,3 +101,12 @@ $(function () {
         }
     });
 });
+
+$("#allRadio").on("click", function(){
+    $("#download").prop("href", "/images/upload/csv/all")
+    $("#detailRadio").prop("checked", false);
+});
+$("#detailRadio").on("click", function () {
+    $("#download").prop("href", "/images/upload/csv/detail")
+    $("#allRadio").prop("checked", false);
+});
