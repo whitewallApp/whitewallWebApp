@@ -202,7 +202,7 @@ class Image extends BaseController
             }
 
             // if its an image
-            if (preg_match("/image/", $file->getMimeType()) == 1){
+            if (preg_match("/image/", $file->getMimeType()) == 1) {
                 //save the image
                 $imagePath = $assets->saveImage($file->getTempName(), $file->guessExtension());
 
@@ -224,7 +224,7 @@ class Image extends BaseController
             }
 
             // if its a csv read in the images
-            if (preg_match("/csv/", $file->getMimeType()) == 1){
+            if (preg_match("/csv/", $file->getMimeType()) == 1) {
                 $fp = fopen($this->request->getFile("file")->getTempName(), "r");
             }
         } catch (\Exception $e) {
@@ -242,26 +242,38 @@ class Image extends BaseController
 
         $ids = $imageModel->getAllIds($session->get("brand_name"));
 
-        foreach ($ids as $id) {
-            //append to csv
-            $image = $imageModel->getImage($id, assoc: true)[0];
-            if (preg_match("/\.validate$/", $image["description"]) == 1 && $group == "detail") {
-                $assets->checkCSV(["id", "uploaded_name", "name", "description", "link", "collection_name"]);
 
-                $description = explode(".validate", $image["description"])[0];
-                $csvData = [
-                    $id,
-                    $description,
-                    "",
-                    "",
-                    "",
-                    "",
-                ];
-                $assets->writeLineCSV($csvData);   
-            }else{
-                $assets->checkCSV(["id", "name", "description", "link", "collection_name"]);
+        if ($group == "detail") {
+            $assets->makeCSV(["id", "uploaded_name", "name", "description", "link", "collection_name"]);
+            foreach ($ids as $id) {
+                $image = $imageModel->getImage($id, assoc: true)[0];
+                if (preg_match("/\.validate$/", $image["description"]) == 1){
+                    //append to csv
+                    $description = explode(".validate", $image["description"])[0];
+                    $csvData = [
+                        $id,
+                        $description,
+                        "",
+                        "",
+                        "",
+                        "",
+                    ];
+                    $assets->writeLineCSV($csvData);
+                }
+            }
+        } else {
+            $assets->makeCSV(["id", "name", "description", "link", "collection_name"]);
+            foreach ($ids as $id) {
+                //append to csv
+                $image = $imageModel->getImage($id, assoc: true)[0];
                 $collectionModel = new CollectionModel();
                 $colname = $collectionModel->getCollection($image["collection_id"], ["name"]);
+
+                if (preg_match("/\.validate$/", $image["description"]) == 1){
+                    $image["name"] = explode(".validate", $image["description"])[0];
+                    $image["description"] = "";
+                }
+
                 $csvData = [
                     $id,
                     $image["name"],
@@ -269,13 +281,13 @@ class Image extends BaseController
                     $image["link"],
                     $colname,
                 ];
-                $assets->writeLineCSV($csvData);   
+                $assets->writeLineCSV($csvData);
             }
         }
 
         header("Content-Type: " . "text/csv");
         readfile($assets->getCSV());
-        unlink($assets->getCSV());
+        $assets->deleteCSV();
         exit;
     }
 }

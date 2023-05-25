@@ -304,17 +304,13 @@ class Assets extends BaseController {
     }
 
     //image upload csv
-    public function checkCSV($columns): bool {
-        if(file_exists($this->imgPath . "../images.csv")){
-            return true;
-        }else{
-            header('Content-Type: text/csv');
-            header('Content-Disposition: attachment; filename="sample.csv"');
-            $fp = fopen($this->imgPath . "../images.csv", 'wb');
-            fputcsv($fp, $columns);
-            fclose($fp);
-            return false;
-        }
+    public function makeCSV($columns) {
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="sample.csv"');
+        $fp = fopen($this->imgPath . "../images.csv", 'wb');
+        fputcsv($fp, $columns);
+        fclose($fp);
+        return false;
     }
 
     public function writeLineCSV($data){
@@ -325,6 +321,10 @@ class Assets extends BaseController {
 
     public function getCSV(){
         return $this->imgPath . "../images.csv";
+    }
+
+    public function deleteCSV(){
+        unlink($this->imgPath . "../images.csv");
     }
 
     private function mapType($inputType): string {
