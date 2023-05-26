@@ -256,6 +256,13 @@ class Image extends BaseController
                     fclose($handle);
                 }
             }
+            
+            //delete caches
+            if (file_exists("../writable/cache/ImageImage_Detail")) {
+                unlink("../writable/cache/ImageImage_Detail");
+                unlink("../writable/cache/ImageImage_List");
+            }
+
         } catch (\Exception $e) {
             http_response_code(400);
             echo json_encode($e->getMessage());
