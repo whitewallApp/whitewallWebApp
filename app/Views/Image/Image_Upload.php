@@ -88,7 +88,7 @@
                     <div class="carousel-item">
                         <div class="col">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="detailRadio" id="detailRadio" checked/>
+                                <input class="form-check-input" type="radio" name="detailRadio" id="detailRadio" checked />
                                 <label class="form-check-label" for="detailRadio">Only Images with No Details</label>
                             </div>
                             <div class="form-check">
@@ -117,6 +117,16 @@
                     </div>
 
                     <div class="carousel-item">
+                        <div class="col">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="safeRadio" id="safeRadio" checked />
+                                <label class="form-check-label" for="safeRadio">Do Not Overwrite Existing Data</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="overwriteRadio" id="overwriteRadio" />
+                                <label class="form-check-label" for="overwriteRadio">Overwrite Data</label>
+                            </div>
+                        </div>
                         <div id="csv-upload" class="dm-uploader p-5">
                             <div class="btn btn-primary btn-block mb-5">
                                 <span>Open the file Browser</span>

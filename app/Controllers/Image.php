@@ -225,7 +225,36 @@ class Image extends BaseController
 
             // if its a csv read in the images
             if (preg_match("/csv/", $file->getMimeType()) == 1) {
-                $fp = fopen($this->request->getFile("file")->getTempName(), "r");
+                $row = 1;
+                if (($handle = fopen($this->request->getFile("file")->getTempName(), "r")) !== FALSE) {
+                    $columns = [];
+                    $ids = $imageModel->getAllIds($session->get("brand_name"));
+                    while (($data = fgetcsv($handle, 1000)) !== FALSE) {
+
+                        foreach($data as &$item){
+                            $item = htmlspecialchars($item);
+                        }
+
+                        if ($row == 1){
+                            $columns = array_flip($data);
+                            $row++;
+                        }else{
+                            foreach($ids as $id){
+                                if ($data[$columns["id"]] == $id){
+                                    $image = [
+                                        "name" => $data[$columns["name"]],
+                                        "description" => $data[$columns["description"]],
+                                        "link" => $data[$columns["link"]],
+                                        "collection_id" => $colModel->getCollection($data[$columns["collection_name"]], ["id"], "name")
+                                    ];
+                                    // echo var_dump($image);
+                                    $imageModel->update($id, $image);
+                                }  
+                            }
+                        }
+                    }
+                    fclose($handle);
+                }
             }
         } catch (\Exception $e) {
             http_response_code(400);

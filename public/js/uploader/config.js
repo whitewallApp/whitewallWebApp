@@ -69,6 +69,7 @@ $(function () {
         maxFileSize: 15000000,
         multiple: false,
         extFilter: ["csv", "xlsx"],
+        extraData: { overwrite: $("overwriteRadio").prop("checked")},
         onNewFile: function(id, file){
             var template = $('#files-template').text();
             template = template.replace('%%filename%%', file.name).replace("%%id%%", id);
@@ -109,4 +110,11 @@ $("#allRadio").on("click", function(){
 $("#detailRadio").on("click", function () {
     $("#download").prop("href", "/images/upload/csv/detail")
     $("#allRadio").prop("checked", false);
+});
+
+$("#safeRadio").on("click", function () {
+    $("#overwriteRadio").prop("checked", false);
+});
+$("#overwriteRadio").on("click", function () {
+    $("#safeRadio").prop("checked", false);
 });
