@@ -9,11 +9,13 @@ class CategoryModel extends Model
 {
     protected $primaryKey = 'id';
     protected $returnType = 'array';
+    protected $table = "category";
 
     protected $useTimestamps = true;
-    protected $dateFormat    = 'timestamp';
+    protected $dateFormat    = 'datetime';
     protected $createdField  = 'dateCreated';
     protected $updatedField  = 'dateUpdated';
+    protected $allowedFields = ["name", "description", "iconPath", "link", "brand_id"];
     
     /**
      * Get the column(s) in the Category table based on brand name.

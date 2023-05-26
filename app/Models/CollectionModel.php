@@ -13,9 +13,10 @@ class CollectionModel extends Model
     protected $table = "collection";
 
     protected $useTimestamps = true;
-    protected $dateFormat    = 'timestamp';
+    protected $dateFormat    = 'datetime';
     protected $createdField  = 'dateCreated';
     protected $updatedField  = 'dateUpdated';
+    protected $allowedFields = ["name", "description", "iconPath", "link", "category_id", "brand_id"];
 
     public function getAllIds($brandName){
         $builder = $this->db->table('brand');

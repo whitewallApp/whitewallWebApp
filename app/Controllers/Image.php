@@ -7,6 +7,7 @@ use App\Models\CollectionModel;
 use App\Models\CategoryModel;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
+use App\Models\MobleModel;
 use Google\Service\CloudAsset\Asset;
 use RuntimeException;
 
@@ -93,6 +94,7 @@ class Image extends BaseController
         $assets = new Assets();
         $imageModel = new ImageModel();
         $collectionModel = new CollectionModel();
+        $catModel = new CategoryModel();
 
         //delete caches
         if (file_exists("../writable/cache/ImageImage_Detail")) {
@@ -189,6 +191,7 @@ class Image extends BaseController
         $imageModel = new ImageModel();
         $brandModel = new BrandModel();
         $colModel = new CollectionModel();
+        $catModel = new CategoryModel();
         $assets = new Assets();
         $session = session();
 
@@ -229,40 +232,107 @@ class Image extends BaseController
                 if (($handle = fopen($this->request->getFile("file")->getTempName(), "r")) !== FALSE) {
                     $columns = [];
                     $ids = $imageModel->getAllIds($session->get("brand_name"));
+                    //read from csv while there is lines
                     while (($data = fgetcsv($handle, 1000)) !== FALSE) {
 
-                        foreach($data as &$item){
+                        //sanitize csv row
+                        foreach ($data as &$item) {
                             $item = htmlspecialchars($item);
                         }
 
-                        if ($row == 1){
+                        if ($row == 1) {
+                            //flip the first row so you know idecies to use
                             $columns = array_flip($data);
                             $row++;
-                        }else{
-                            foreach($ids as $id){
-                                if ($data[$columns["id"]] == $id){
-                                    $image = [
-                                        "name" => $data[$columns["name"]],
-                                        "description" => $data[$columns["description"]],
-                                        "link" => $data[$columns["link"]],
-                                        "collection_id" => $colModel->getCollection($data[$columns["collection_name"]], ["id"], "name")
-                                    ];
-                                    // echo var_dump($image);
-                                    $imageModel->update($id, $image);
-                                }  
+                        } else {
+                            //check if they have access to those image ids
+                            $imgfound = false;
+                            foreach ($ids as $imgId) {
+                                if ($data[$columns["id"]] == $imgId) {
+                                    $imgfound = true;
+                                }
                             }
+
+                            if ($imgfound) {
+                                echo var_dump([$imgId, $imgfound]);
+                                //check if category exists
+                                $catfound = false;
+                                $categoryNames = $catModel->getCollumn("name", $session->get("brand_name"));
+                                foreach ($categoryNames as $categoryName) {
+                                    if ($categoryName == $data[$columns["category_name"]]) {
+                                        $catfound = true;
+                                    }
+                                }
+
+                                //check if collection exists
+                                $colfound = false;
+                                $columnNames = $colModel->getCollumn("name", $session->get("brand_name"));
+                                foreach ($columnNames as $columnName) {
+                                    if ($columnName == $data[$columns["collection_name"]]) {
+                                        $colfound = true;
+                                    }
+                                }
+
+
+                                $brandid = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
+
+                                // echo var_dump(["row" => $row, "collectionFound" => $colfound, "categoryFound" => $catfound]);
+
+                                //if cateogory doesn't exist make it (needs to be done before collection)
+                                if (!$catfound) {
+                                    $category = [
+                                        "name" => $data[$columns["category_name"]],
+                                        "brand_id" => $brandid
+                                    ];
+                                    $catModel->insert($category);
+                                }
+
+                                //if collection doesn't exist make it
+                                if (!$colfound) {
+                                    $collection = [
+                                        "name" => $data[$columns["collection_name"]],
+                                        "category_id" => $catModel->getCategory($data[$columns["category_name"]], "name", ["id"]),
+                                        "brand_id" => $brandid
+                                    ];
+                                    $colModel->insert($collection);
+                                }
+
+                                //finally update the image
+                                $image = [
+                                    "name" => $data[$columns["name"]],
+                                    "description" => $data[$columns["description"]],
+                                    "link" => $data[$columns["link"]],
+                                    "collection_id" => $colModel->getCollection($data[$columns["collection_name"]], ["id"], "name")
+                                ];
+
+                                // echo var_dump(["id" => $imgId, "imageFound" => $imgfound, "image" => $image]);
+
+                                $imageModel->update($data[$columns["id"]], $image);
+                            }
+                            $row++;
                         }
                     }
-                    fclose($handle);
                 }
+                fclose($handle);
             }
-            
-            //delete caches
+
+            //delete caches images
             if (file_exists("../writable/cache/ImageImage_Detail")) {
                 unlink("../writable/cache/ImageImage_Detail");
                 unlink("../writable/cache/ImageImage_List");
             }
 
+            //delete caches categories
+            if (file_exists("../writable/cache/CategoryCategory_Detail")) {
+                unlink("../writable/cache/CategoryCategory_Detail");
+                unlink("../writable/cache/CategoryCategory_List");
+            }
+
+            //delete caches collections
+            if (file_exists("../writable/cache/CollectionCollection_Detail")) {
+                unlink("../writable/cache/CollectionCollection_Detail");
+                unlink("../writable/cache/CollectionCollection_List");
+            }
         } catch (\Exception $e) {
             http_response_code(400);
             echo json_encode($e->getMessage());
@@ -273,6 +343,8 @@ class Image extends BaseController
     public function makeCSV($group)
     {
         $imageModel = new ImageModel();
+        $colModel = new CollectionModel();
+        $catModel = new CategoryModel();
         $session = session();
         $assets = new Assets();
 
@@ -280,10 +352,10 @@ class Image extends BaseController
 
 
         if ($group == "detail") {
-            $assets->makeCSV(["id", "uploaded_name", "name", "description", "link", "collection_name"]);
+            $assets->makeCSV(["id", "uploaded_name", "name", "description", "link", "collection_name", "category_name"]);
             foreach ($ids as $id) {
                 $image = $imageModel->getImage($id, assoc: true)[0];
-                if (preg_match("/\.validate$/", $image["description"]) == 1){
+                if (preg_match("/\.validate$/", $image["description"]) == 1) {
                     //append to csv
                     $description = explode(".validate", $image["description"])[0];
                     $csvData = [
@@ -293,19 +365,20 @@ class Image extends BaseController
                         "",
                         "",
                         "",
+                        ""
                     ];
                     $assets->writeLineCSV($csvData);
                 }
             }
         } else {
-            $assets->makeCSV(["id", "name", "description", "link", "collection_name"]);
+            $assets->makeCSV(["id", "name", "description", "link", "collection_name", "category_name"]);
             foreach ($ids as $id) {
                 //append to csv
                 $image = $imageModel->getImage($id, assoc: true)[0];
-                $collectionModel = new CollectionModel();
-                $colname = $collectionModel->getCollection($image["collection_id"], ["name"]);
+                $collection = $colModel->getCollection($image["collection_id"], ["name", "category_id"], assoc: true);
+                $catname = $catModel->getCategory($collection["category_id"], filter: ["name"]);
 
-                if (preg_match("/\.validate$/", $image["description"]) == 1){
+                if (preg_match("/\.validate$/", $image["description"]) == 1) {
                     $image["name"] = explode(".validate", $image["description"])[0];
                     $image["description"] = "";
                 }
@@ -315,7 +388,8 @@ class Image extends BaseController
                     $image["name"],
                     $image["description"],
                     $image["link"],
-                    $colname,
+                    $collection["name"],
+                    $catname
                 ];
                 $assets->writeLineCSV($csvData);
             }

@@ -16,19 +16,17 @@ class Notification extends BaseController
     {
         $session = session();
         $brandModel = new BrandModel;
-        $appModel = new AppModel;
         $notModel = new NotificationModel;
+        $menuModel = new MenuModel();
         $imageModel = new ImageModel;
         $catModel = new CategoryModel;
         $colModel = new CollectionModel;
-        $menuModel = new MenuModel;
         $brandname = $session->get("brand_name");
 
         $brandID = $brandModel->getBrand($brandname, filter: ["id"], fetchBy: "name");
-        $appID = $appModel->getIdByBrandId($brandID);
 
         //add time to notifications
-        $notifications = $notModel->getNotification($appID, fetchBy: "mobleApp_id");
+        $notifications = $notModel->getNotification($brandID, fetchBy: "brand_id");
         foreach ($notifications as &$notification) {
             $date = date_create($notification["sendTime"]); //TODO: this will need conversion
             $notification["sendTime"] = date_format($date, "m/d/Y h:m:s A");
