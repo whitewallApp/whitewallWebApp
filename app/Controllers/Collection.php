@@ -64,7 +64,9 @@ class Collection extends BaseController
             $matches = []; 
             preg_match($exp, $collection["iconPath"], $matches);
 
-            $collection["iconPath"] = $matches[1];
+            if (count($matches) > 0){
+                $collection["iconPath"] = $matches[1];
+            }
 
             $categories = $catModel->getCollumn("name", $brandname);
             $collection = array_merge($collection, ["categoryNames" => $categories]);
