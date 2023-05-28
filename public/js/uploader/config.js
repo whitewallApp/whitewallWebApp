@@ -64,12 +64,16 @@ $(function () {
         }
     });
 
+    var uploader = 
+
     $("#csv-upload").dmUploader({
         url: '/images/upload',
         maxFileSize: 15000000,
         multiple: false,
         extFilter: ["csv", "xlsx"],
-        extraData: { overwrite: $("overwriteRadio").prop("checked")},
+        extraData: function() {
+            return { overwrite: $("#overwriteRadio").prop("checked")}
+        },
         onNewFile: function(id, file){
             var template = $('#files-template').text();
             template = template.replace('%%filename%%', file.name).replace("%%id%%", id);
@@ -99,6 +103,14 @@ $(function () {
         onFallbackMode: function () {
             // When the browser doesn't support this plugin :(
             console.log("hello");
+        },
+        onUploadError: function (id, xhr, status, message){
+            errors = JSON.parse(JSON.parse(xhr.responseText));
+            ui_multi_update_file_status(id, 'danger', "Error");
+            ui_multi_update_file_progress(id, 0, 'danger', false);
+            errors.forEach(element => {
+                $("#csvFile").append(`<li class="text-danger">Image: ${element.image} Error: ${element.message}</li>`);
+            });
         }
     });
 });
