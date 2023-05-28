@@ -89,7 +89,7 @@
                         <div class="col">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="detailRadio" id="detailRadio" checked />
-                                <label class="form-check-label" for="detailRadio">Only Images with No Details</label>
+                                <label class="form-check-label" for="detailRadio">Only Images With No Details</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="allRadio" id="allRadio" />
@@ -109,7 +109,40 @@
                     </div>
 
                     <div class="carousel-item">
-                        <div class="row">
+                        <div class="row text-center">
+                            <div class="row">
+                                <div class="col-4">
+                                    <h2><span class="badge badge-primary">Info</span></h2>
+                                    <ul class="list-group list-group-light">
+                                        <li class="list-group-item">A collection goes with one category</li>
+                                        <li class="list-group-item">A category can have mulitpule collections</li>
+                                        <li class="list-group-item">Images can be changed later through a csv upload or the website</li>
+                                        <li class="list-group-item">Only <span class="fw-bolder">name</span>, <span class="fw-bolder">description</span> and <span class="fw-bolder">link</span> columns can be blank</li>
+                                    </ul>
+                                </div>
+                                <div class="col-4">
+                                    <h2><span class="badge badge-success">Do</span></h2>
+                                    <ul class="list-group list-group-light">
+                                        <li class="list-group-item">Edit the <span class="fw-bolder">name</span> column</li>
+                                        <li class="list-group-item">Edit the <span class="fw-bolder">description</span> column</li>
+                                        <li class="list-group-item">Edit the <span class="fw-bolder">link</span> column</li>
+                                        <li class="list-group-item lh-1">
+                                            <p>Edit the <span class="fw-bolder">collection_name</span> column</p> <span class="text-muted fs-6">A collection will be made if it does not exist</span>
+                                        </li>
+                                        <li class="list-group-item lh-1">
+                                            <p>Edit the <span class="fw-bolder">category_name</span> column</p> <span class="text-muted fs-6">A category will be made if it does not exist</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-4">
+                                    <h2><span class="badge badge-danger">Don't</span></h2>
+                                    <ul class="list-group list-group-light">
+                                        <li class="list-group-item">Edit the <span class="fw-bolder">Id</span> column</li>
+                                        <li class="list-group-item">Leave the <span class="fw-bolder">category_name</span> or <span class="fw-bolder">collection_name</span> blank</li>
+                                        <li class="list-group-item">Put <span class="fw-bolder">collection_name</span> with mulitpule <span class="fw-bolder">category_name</span></li>
+                                    </ul>
+                                </div>
+                            </div>
                             <div class="col-12 m-4 d-flex justify-content-center">
                                 <button class="btn btn-primary w-50 next" set-active="4">Next</button>
                             </div>
