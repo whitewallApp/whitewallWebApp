@@ -201,7 +201,7 @@ class Image extends BaseController
             }
 
             if (preg_match("/image/", $file->getMimeType()) == 0 && preg_match("/csv/", $file->getMimeType()) == 0) {
-                throw new RuntimeException("File needs to be a image or csv");
+                throw new RuntimeException("File needs to be a image");
             }
 
             // if its an image save the image to the server and database
@@ -266,6 +266,16 @@ class Image extends BaseController
                                     }
                                 }else{
                                     $structure[$data[$columns["collection_name"]]] = $data[$columns["category_name"]];
+                                }
+
+                                //check if collection and category is blank
+                                if ($data[$columns["collection_name"]] == ""){
+                                    array_push($errors, ["image" => $data[$columns["name"]], "message" => "Image must have a collection"]);
+                                    continue;
+                                }
+                                if ($data[$columns["category_name"]] == "") {
+                                    array_push($errors, ["image" => $data[$columns["name"]], "message" => "Image must have a category"]);
+                                    continue;
                                 }
 
                                 //check if category exists
@@ -334,7 +344,7 @@ class Image extends BaseController
                                             $image["name"] = $data[$columns["name"]];
                                         }
 
-                                        if ($imageDatabase["description"] == "" || preg_match("/\.validate$/", $image["description"]) == 1){
+                                        if ($imageDatabase["description"] == "" || preg_match("/\.validate$/", $imageDatabase["description"]) == 1){
                                             $image["description"] = $data[$columns["description"]];
                                         }
 
@@ -346,9 +356,6 @@ class Image extends BaseController
                                     }
 
                                 }
-
-                            $imageDatabase = $imageModel->getImage($data[$columns["id"]], assoc: true);
-                            echo var_dump($imageDatabase);
 
                             }else{
                                 //add error to error array
