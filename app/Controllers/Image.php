@@ -334,7 +334,7 @@ class Image extends BaseController
                                             $image["name"] = $data[$columns["name"]];
                                         }
 
-                                        if ($imageDatabase["description"] == ""){
+                                        if ($imageDatabase["description"] == "" || preg_match("/\.validate$/", $image["description"]) == 1){
                                             $image["description"] = $data[$columns["description"]];
                                         }
 
