@@ -137,9 +137,9 @@
                                 <div class="col-4">
                                     <h2><span class="badge badge-danger">Don't</span></h2>
                                     <ul class="list-group list-group-light">
-                                        <li class="list-group-item">Edit the <span class="fw-bolder">Id</span> column</li>
-                                        <li class="list-group-item">Leave the <span class="fw-bolder">category_name</span> or <span class="fw-bolder">collection_name</span> blank</li>
-                                        <li class="list-group-item">Put <span class="fw-bolder">collection_name</span> with mulitpule <span class="fw-bolder">category_name</span></li>
+                                        <li class="list-group-item">Don't Edit the <span class="fw-bolder">Id</span> column</li>
+                                        <li class="list-group-item">Don't Leave the <span class="fw-bolder">category_name</span> or <span class="fw-bolder">collection_name</span> blank</li>
+                                        <li class="list-group-item">Don't Put <span class="fw-bolder">collection_name</span> with mulitpule <span class="fw-bolder">category_name</span></li>
                                     </ul>
                                 </div>
                             </div>
