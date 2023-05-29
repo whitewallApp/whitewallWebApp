@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\BrandModel;
 use App\Models\UserModel;
+use RuntimeException;
 
 class Assets extends BaseController {
     
@@ -59,7 +60,7 @@ class Assets extends BaseController {
             readfile($this->imgPath . $file);
             exit;
         }else{
-            return view("errors/html/error_404", ["message" => "sorry we can't find that file"]);
+            return view("errors/html/error_404", ["message" => "sorry we can't find that image"]);
         }
     }
 
@@ -74,10 +75,10 @@ class Assets extends BaseController {
             // echo $type;
 
             header("Content-Type: " . "image/" . $type);
-            readfile($this->imgPath . $file);
+            readfile($this->imgTmbPath . $file);
             exit;
         } else {
-            return view("errors/html/error_404", ["message" => "sorry we can't find that file"]);
+            return view("errors/html/error_404", ["message" => "sorry we can't find that thumbnail"]);
         }
     }
 
@@ -171,7 +172,7 @@ class Assets extends BaseController {
     }
 
     /**
-     * Saves the image file to the correct directory
+     * Saves the image file to the correct directory and creates a thumbnail
      *
      * @param string $tmpPath | The temp path from the file upload
      * @param string $type | the type of image (png, jpg, bmp, webp)
@@ -191,6 +192,7 @@ class Assets extends BaseController {
 
             $imageData = getimagesize($file);
             $src = $this->correctImageOrientation($file);
+
             $src = imagecrop($src, ["x" => 0, "y" => 0, "width" => $imageData[1], "height" => $imageData[1]]);
 
             $dst = imagecreatetruecolor($tmbsize, $tmbsize);
@@ -212,31 +214,33 @@ class Assets extends BaseController {
     }
 
     private function correctImageOrientation($filename){
-        if (function_exists('exif_read_data')) {
-            $exif = exif_read_data($filename);
-            if ($exif && isset($exif['Orientation'])) {
-                $orientation = $exif['Orientation'];
-                if ($orientation != 1) {
-                    $img = $this->imagecreatefromfile($filename);
-                    $deg = 0;
-                    switch ($orientation) {
-                        case 3:
-                            $deg = 180;
-                            break;
-                        case 6:
-                            $deg = 270;
-                            break;
-                        case 8:
-                            $deg = 90;
-                            break;
-                    }
-                    if ($deg) {
-                        $img = imagerotate($img, $deg, 0);
-                        return $img;
-                    }
-                } // if there is some rotation necessary
-            } // if have the exif orientation info
-        } // if function exists      
+        $exif = exif_read_data($filename);
+        if ($exif && isset($exif['Orientation'])) {
+            $orientation = $exif['Orientation'];
+            $img = $this->imagecreatefromfile($filename);
+            if ($orientation != 1) {
+                $deg = 0;
+                switch ($orientation) {
+                    case 3:
+                        $deg = 180;
+                        break;
+                    case 6:
+                        $deg = 270;
+                        break;
+                    case 8:
+                        $deg = 90;
+                        break;
+                }
+                if ($deg) {
+                    $img = imagerotate($img, $deg, 0);
+                    return $img;
+                }
+            }else{
+                return $img;
+            }
+        }else{
+            throw new RuntimeException("Image Malformated (exif data missing)");
+        }
     }
 
     private function imagecreatefromfile($filename) {
@@ -244,6 +248,7 @@ class Assets extends BaseController {
             throw new \InvalidArgumentException('File "' . $filename . '" not found.');
         }
         switch (strtolower(pathinfo($filename, PATHINFO_EXTENSION))) {
+            case "JPG":
             case 'jpeg':
             case 'jpg':
                 return imagecreatefromjpeg($filename);

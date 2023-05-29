@@ -34,7 +34,7 @@ class Image extends BaseController
 
             $image = [
                 "id" => $id,
-                "path" => $imageModel->getImage($id, filter: ["imagePath"]),
+                "path" => $imageModel->getImage($id, filter: ["thumbnail"]),
                 "name" => $imageModel->getImage($id, filter: ["name"]),
                 "collection" => $collModel->getCollection($colID, filter: ["name"]),
                 "category" => $catModel->getCategory($catID, filter: ["name"])
@@ -119,8 +119,8 @@ class Image extends BaseController
                     $post = $this->request->getPost(["name", "description", "collection", "externalPath"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                     $data = [
-                        "imagePath" => "assets/images/" . $newPath,
-                        "thumbnail" => "assets/thumbnail/" . $newPath,
+                        "imagePath" => "/assets/images/" . $newPath,
+                        "thumbnail" => "/assets/thumbnail/" . $newPath,
                         "name" => $post["name"],
                         "description" => $post["description"],
                         "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
@@ -135,8 +135,8 @@ class Image extends BaseController
                 $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                 $data = [
-                    "imagePath" => "assets/images/" . $name,
-                    "thumbnail" => "assets/thumbnail/" . $name,
+                    "imagePath" => "/assets/images/" . $name,
+                    "thumbnail" => "/assets/thumbnail/" . $name,
                     "name" => $post["name"],
                     "description" => $post["description"],
                     "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
@@ -195,7 +195,7 @@ class Image extends BaseController
         $assets = new Assets();
         $session = session();
 
-        // try {
+        try {
             if (!$file->isValid()) {
                 throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
             }
@@ -401,11 +401,11 @@ class Image extends BaseController
                 }
             }
 
-        // } catch (\Exception $e) {
-        //     http_response_code(400);
-        //     echo json_encode($e->getMessage());
-        //     exit;
-        // }
+        } catch (\Exception $e) {
+            http_response_code(400);
+            echo json_encode($e->getMessage());
+            exit;
+        }
     }
 
     public function makeCSV($group)
