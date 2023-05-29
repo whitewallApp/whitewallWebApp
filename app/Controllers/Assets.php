@@ -188,15 +188,18 @@ class Assets extends BaseController {
 
         if(move_uploaded_file($tmpPath, $file)){
 
-            $tmbsize = 200;
+            $tmbsizey = 200;
+            $tmbsizex = (int)$tmbsizey / 1.778;
 
-            $imageData = getimagesize($file);
             $src = $this->correctImageOrientation($file);
 
-            $src = imagecrop($src, ["x" => 0, "y" => 0, "width" => $imageData[1], "height" => $imageData[1]]);
+            $srcheight = imagesy($src);
+            $srcwidth = (int)$srcheight / 1.778;
 
-            $dst = imagecreatetruecolor($tmbsize, $tmbsize);
-            imagecopyresampled($dst, $src, 0, 0, 0, 0, $tmbsize, $tmbsize, $imageData[1], $imageData[1]);
+            $src = imagecrop($src, ["x" => ((imagesx($src) / 2) - ($srcwidth / 2)), "y" => 0, "width" => $srcwidth, "height" => $srcheight]);
+
+            $dst = imagecreatetruecolor($tmbsizex, $tmbsizey);
+            imagecopyresampled($dst, $src, 0, 0, 0, 0, $tmbsizex, $tmbsizey, $srcwidth, $srcheight);
 
             if (PHP_OS == "Linux"){
                 $name = explode("images/", $file)[1];
