@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                <?php if ($view["brands"]["p_view"]) : ?>
+                <?php if ($view["brands"]["view"]) : ?>
                     <a class="dropdown-item" href="/brand">Manage Brands</a>
                 <?php endif ?>
 
@@ -66,43 +66,43 @@
                 <a class="nav-link" href="/dashboard">Home</a>
             </li>
 
-            <?php if ($view["categories"]["p_view"]) : ?>
+            <?php if ($view["categories"]["view"]) : ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/categories">Categories</a>
                 </li>
             <?php endif ?>
 
-            <?php if ($view["collections"]["p_view"]) : ?>
+            <?php if ($view["collections"]["view"]) : ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/collections">Collections</a>
                 </li>
             <?php endif ?>
 
-            <?php if ($view["images"]["p_view"]) : ?>
+            <?php if ($view["images"]["view"]) : ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/images">Images</a>
                 </li>
             <?php endif ?>
 
-            <?php if ($view["notifications"]["p_view"]) : ?>
+            <?php if ($view["notifications"]["view"]) : ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/notifications">Notifications</a>
                 </li>
             <?php endif ?>
 
-            <?php if ($view["menu"]["p_view"]) : ?>
+            <?php if ($view["menu"]["view"]) : ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/menu">Menu Items</a>
                 </li>
             <?php endif ?>
 
-            <?php if ($view["builds"]["p_view"]) : ?>
+            <?php if ($view["builds"]["view"]) : ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/app">Versions</a>
                 </li>
             <?php endif ?>
 
-            <?php if ($view["branding"]["p_view"]) : ?>
+            <?php if ($view["branding"]["view"]) : ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/brand/branding/<?= $brandId ?>">Branding</a>
                 </li>
@@ -134,8 +134,8 @@
         </div>
     </div>
     <div class="col-8">
-        <?php if (isset($actions[0])) : ?>
-            <?php if ($actions[0]) : ?>
+        <?php if ($pageName != "nopermission") : ?>
+            <?php if (isset($actions[0]) && $view[strtolower($pageName)]["add"]) : ?>
                 <div class="row row-cols-3 float-right p-3">
                     <div class="col p-3">
                         <p>Add <?= $actions[1] ?></p>

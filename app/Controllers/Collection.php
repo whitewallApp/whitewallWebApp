@@ -36,7 +36,7 @@ class Collection extends BaseController
             "collections" => $collections,
         ];
 
-        return Navigation::renderNavBar("Collections", [true, "Images"]) . view('Collection/Collection_Detail', $data, ["cache" => 86400]) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Collections", "collections", [true, "Images"]) . view('Collection/Collection_Detail', $data, ["cache" => 86400]) . Navigation::renderFooter();
     }
 
     public function post(){

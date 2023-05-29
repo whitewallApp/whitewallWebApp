@@ -40,7 +40,7 @@ class Category extends BaseController
             "categories" => $categories,
         ];
 
-        return Navigation::renderNavBar("Categories", [true, "Images"]) . view('Category/Category_Detail', $data, ["cache" => 86400]) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Categories","categories", [true, "Images"]) . view('Category/Category_Detail', $data, ["cache" => 86400]) . Navigation::renderFooter();
     }
 
     public function post(){

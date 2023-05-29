@@ -28,7 +28,7 @@ class Menu extends BaseController
             "menuItems" => $menuItems,
         ];
 
-        return Navigation::renderNavBar("Menu Items", [true, "Menu Items"]) . view('Menu', $data) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Menu Items", "menu", [true, "Menu Items"]) . view('Menu', $data) . Navigation::renderFooter();
     }
 
     public function post(){

@@ -47,28 +47,28 @@ $routes->get('/billing',"Account::billing", ["filter" => "view:nocheck"]); //TOD
 $routes->get('/reset/(:any)', 'Reset::index/$1');
 
 //Asset URLS
-$routes->get('/assets/images/(:any)', 'Assets::images/$1');
+$routes->get('/assets/images/(:any)', 'Assets::images/$1'); //TODO: add filters
 $routes->get('/assets/collection/(:any)', 'Assets::colImages/$1');
 $routes->get('/assets/category/(:any)', 'Assets::catImages/$1');
 $routes->get('/assets/user/(:any)', 'Assets::user/$1');
 $routes->get('/assets/menu/(:any)', 'Assets::menu/$1');
 
 //Get URLs
-$routes->post('/images', 'Image::post'); //TODO: add view filters for these
-$routes->post('/collections', 'Collection::post');
-$routes->post('/categories', 'Category::post');
-$routes->post('/notifications', 'Notification::post');
-$routes->post('/brand', 'Brand::setBrand');
-$routes->post('/', 'LogIn::post');
-$routes->get('/brand/users/user', 'Brand::userData');
-$routes->post('/account', 'Account::post');
-$routes->post('/reset', 'Reset::post');
-$routes->post('/menu', 'Menu::post');
+$routes->post('/images','Image::post', ["filter" => "view:images"]);
+$routes->post('/collections','Collection::post', ["filter" => "view:collections"]);
+$routes->post('/categories','Category::post', ["filter" => "view:categories"]);
+$routes->post('/notifications','Notification::post', ["filter" => "view:notifications"]);
+$routes->post('/brand','Brand::setBrand', ["filter" => "view:nocheck"]);
+$routes->post('/','LogIn::post');
+$routes->get('/brand/users/user','Brand::userData', ["filter" => "view:admin"]);
+$routes->post('/account','Account::post', ["filter" => "view:nocheck"]);
+$routes->post('/reset','Reset::post');
+$routes->post('/menu','Menu::post', ["filter" => "view:menu"]);
 
 //image upload
-$routes->get("/images/upload", "Image::uploadView");
-$routes->post("/images/upload", "Image::upload/1");
-$routes->get("/images/upload/csv/(:segment)", "Image::makeCSV/$1");
+$routes->get("/images/upload","Image::uploadView", ["filter" => "add:images"]);
+$routes->post("/images/upload","Image::upload/1", ["filter" => "add:images"]);
+$routes->get("/images/upload/csv/(:segment)","Image::makeCSV/$1", ["filter" => "add:images"]);
 
 //Update URLs
 $routes->post('/reset/update', 'Reset::update'); //TODO: add edit filters

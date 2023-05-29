@@ -7,13 +7,13 @@ use App\Models\UserModel;
 
 class Navigation extends BaseController
 {
-    public static function renderNavBar($pageTitle, $actions = [])
+    public static function renderNavBar($pageTitle, $pageName = "nopermission", $actions = [])
     {
         $brandModel = new BrandModel;
         $userModel = new UserModel();
         $session = session();
 
-        $canView = $userModel->getPermissions($session->get("user_id"), $session->get("brand_name"), permissions: ["p_view"]);
+        $canView = $userModel->getPermissions($session->get("user_id"), $session->get("brand_name"));
 
         // echo var_dump($canView);
 
@@ -26,6 +26,7 @@ class Navigation extends BaseController
             "pageTitle" => $pageTitle,
             "actions" => $actions,
             "view" => $canView,
+            "pageName" => $pageName,
             "admin" => $session->get("is_admin")
         ];
 

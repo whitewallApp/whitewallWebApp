@@ -10,6 +10,6 @@ class App extends BaseController
     public function index()
     {
 
-        return Navigation::renderNavBar("Versions") . view('App') . Navigation::renderFooter();
+        return Navigation::renderNavBar("Versions",  "builds") . view('App') . Navigation::renderFooter();
     }
 }

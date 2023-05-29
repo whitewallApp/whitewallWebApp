@@ -65,7 +65,7 @@ class Notification extends BaseController
             "menuItems" => $menuModel->getCollumn("title", $brandname),
         ];
 
-        return Navigation::renderNavBar("Notifications", [true, "Notifications"]) . view('Notifications', $data) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Notifications", "notifications", [true, "Notifications"]) . view('Notifications', $data) . Navigation::renderFooter();
     }
 
     public function post(){

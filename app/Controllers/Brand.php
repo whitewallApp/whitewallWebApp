@@ -28,7 +28,7 @@ class Brand extends BaseController
             "admin" => $session->get("is_admin")
         ];
 
-        return Navigation::renderNavBar("Brands") . view('brand/Brand', $data) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Brands",  "brands") . view('brand/Brand', $data) . Navigation::renderFooter();
     }
 
     public function branding($brandId){
@@ -70,7 +70,7 @@ class Brand extends BaseController
             "menu"=> $menu
         ];
 
-        return Navigation::renderNavBar("Branding", [true, "Brands"]) . view("brand/Branding", $data) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Branding","branding", [true, "Brands"]) . view("brand/Branding", $data) . Navigation::renderFooter();
     }
 
     public function users($brandId){

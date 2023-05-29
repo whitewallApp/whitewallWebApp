@@ -49,7 +49,7 @@ class Image extends BaseController
             "images" => $images,
         ];
 
-        return Navigation::renderNavBar("Images", [true, "Images"]) . view('Image/Image_Detail', $data, ["cache" => 86400]) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Images", "images", [true, "Images"]) . view('Image/Image_Detail', $data, ["cache" => 86400]) . Navigation::renderFooter();
     }
 
     public function post()
