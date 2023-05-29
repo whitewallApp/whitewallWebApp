@@ -195,7 +195,7 @@ class Image extends BaseController
         $assets = new Assets();
         $session = session();
 
-        try {
+        // try {
             if (!$file->isValid()) {
                 throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
             }
@@ -218,7 +218,8 @@ class Image extends BaseController
                     "brand_id" => $brandModel->getBrand($session->get("brand_name"), "name", ["id"]),
                     "collection_id" => $colIds[0],
                     "externalPath" => 0,
-                    "imagePath" => "/assets/images/" . $imagePath
+                    "imagePath" => "/assets/images/" . $imagePath,
+                    "thumbnail" => "/assets/images/thumbnail/" . $imagePath
                 ];
 
                 $imageModel->insert($data);
@@ -400,11 +401,11 @@ class Image extends BaseController
                 }
             }
 
-        } catch (\Exception $e) {
-            http_response_code(400);
-            echo json_encode($e->getMessage());
-            exit;
-        }
+        // } catch (\Exception $e) {
+        //     http_response_code(400);
+        //     echo json_encode($e->getMessage());
+        //     exit;
+        // }
     }
 
     public function makeCSV($group)

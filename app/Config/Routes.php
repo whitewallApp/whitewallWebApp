@@ -48,6 +48,7 @@ $routes->get('/reset/(:any)', 'Reset::index/$1');
 
 //Asset URLS
 $routes->get('/assets/images/(:any)', 'Assets::images/$1'); //TODO: add filters
+$routes->get('/assets/images/thumbnail/(:any)', 'Assets::imageThumbnail/$1');
 $routes->get('/assets/collection/(:any)', 'Assets::colImages/$1');
 $routes->get('/assets/category/(:any)', 'Assets::catImages/$1');
 $routes->get('/assets/user/(:any)', 'Assets::user/$1');

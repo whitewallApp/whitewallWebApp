@@ -19,6 +19,7 @@ class Assets extends BaseController {
      private $userPath;
      private $menuPath;
      private $session;
+     private $imgTmbPath;
     
     public function __construct(){
         $this->session = session();
@@ -29,6 +30,7 @@ class Assets extends BaseController {
         $brandId = $brandModel->getBrand($this->session->get("brand_name"), "name", ["id"]);
 
         $this->imgPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/";
+        $this->imgTmbPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/thumbnails/";
         $this->catPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/categories/";
         $this->userPath = getenv("BASE_PATH") . $accountId . "/users/";
         $this->collPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/collections/";
@@ -57,6 +59,24 @@ class Assets extends BaseController {
             readfile($this->imgPath . $file);
             exit;
         }else{
+            return view("errors/html/error_404", ["message" => "sorry we can't find that file"]);
+        }
+    }
+
+    function imageThumbnail($file){
+        if (file_exists($this->imgTmbPath . $file)) {
+
+            $matches = [];
+            preg_match("/\.(.*)/", $file, $matches);
+
+            $type = $this->mapType($matches[1]);
+
+            // echo $type;
+
+            header("Content-Type: " . "image/" . $type);
+            readfile($this->imgPath . $file);
+            exit;
+        } else {
             return view("errors/html/error_404", ["message" => "sorry we can't find that file"]);
         }
     }
@@ -166,15 +186,85 @@ class Assets extends BaseController {
         $file = $file . "." . $type;
 
         if(move_uploaded_file($tmpPath, $file)){
+
+            $tmbsize = 200;
+
+            $imageData = getimagesize($file);
+            $src = $this->correctImageOrientation($file);
+            $src = imagecrop($src, ["x" => 0, "y" => 0, "width" => $imageData[1], "height" => $imageData[1]]);
+
+            $dst = imagecreatetruecolor($tmbsize, $tmbsize);
+            imagecopyresampled($dst, $src, 0, 0, 0, 0, $tmbsize, $tmbsize, $imageData[1], $imageData[1]);
+
             if (PHP_OS == "Linux"){
-                return explode("images/", $file)[1];
+                $name = explode("images/", $file)[1];
+                imagejpeg($dst, $this->imgTmbPath . $name);
+                return $name;
             }else{
-                return explode("images\\", $file)[1];
+                $name = explode("images\\", $file)[1];
+                imagejpeg($dst, $this->imgTmbPath . $name);
+                return $name;
             }
         }else{
             return false;
         }
         
+    }
+
+    private function correctImageOrientation($filename){
+        if (function_exists('exif_read_data')) {
+            $exif = exif_read_data($filename);
+            if ($exif && isset($exif['Orientation'])) {
+                $orientation = $exif['Orientation'];
+                if ($orientation != 1) {
+                    $img = $this->imagecreatefromfile($filename);
+                    $deg = 0;
+                    switch ($orientation) {
+                        case 3:
+                            $deg = 180;
+                            break;
+                        case 6:
+                            $deg = 270;
+                            break;
+                        case 8:
+                            $deg = 90;
+                            break;
+                    }
+                    if ($deg) {
+                        $img = imagerotate($img, $deg, 0);
+                        return $img;
+                    }
+                } // if there is some rotation necessary
+            } // if have the exif orientation info
+        } // if function exists      
+    }
+
+    private function imagecreatefromfile($filename) {
+        if (!file_exists($filename)) {
+            throw new \InvalidArgumentException('File "' . $filename . '" not found.');
+        }
+        switch (strtolower(pathinfo($filename, PATHINFO_EXTENSION))) {
+            case 'jpeg':
+            case 'jpg':
+                return imagecreatefromjpeg($filename);
+                break;
+
+            case 'png':
+                return imagecreatefrompng($filename);
+                break;
+
+            case 'gif':
+                return imagecreatefromgif($filename);
+                break;
+
+            case 'webp':
+                return imagecreatefromwebp($filename);
+                break;
+
+            default:
+                throw new \InvalidArgumentException('File "' . $filename . '" is not valid jpg, png, webp or gif image.');
+                break;
+        }
     }
 
     /**
