@@ -159,7 +159,9 @@
                 </div>
                 <div class="float-right row">
                     <p id="updated" class="mr-2"></p>
-                    <button class="btn btn-primary m-2">Save</button>
+                    <?php if ($view[$pageName]["edit"]) : ?>
+                        <button class="btn btn-primary m-2">Save</button>
+                    <?php endif ?>
                     <button class="btn btn-danger m-2">Remove</button>
                 </div>
             </form>

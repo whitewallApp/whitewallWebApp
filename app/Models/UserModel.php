@@ -150,4 +150,41 @@ class UserModel extends Model
             return $return;
         }
     }
+    /**
+     * Update permissions for a user
+     *
+     * @param int $userId
+     * @param array $permissions
+     * @return void
+     */
+    public function updatePermissions($userId, $permissions){
+        $builder = $this->db->table("permissions");
+        
+        foreach ($permissions as $key => $permission) {
+            $builder->where("user_id", $userId);
+            $builder->where("area", $key);
+            
+            $data = [
+                "p_view" => isset($permission["view"]),
+                "p_add" => isset($permission["add"]),
+                "p_edit" => isset($permission["edit"]),
+                "p_remove" => isset($permission["remove"]),
+            ];
+
+            $builder->update($data);
+        }
+    }
+
+    /**
+     * Update a user if they are an admin
+     *
+     * @param integer $userId
+     * @param boolean $admin
+     * @return void
+     */
+    public function updateAdmin(int $userId, bool $admin){
+        $builder = $this->db->table("branduser");
+        $builder->where("user_id", $userId);
+        $builder->update(["admin" => $admin]);
+    }
 }

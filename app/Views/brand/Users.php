@@ -343,7 +343,14 @@
                     </div>
                 </div>
             </div>
+            <button class="btn btn-primary">Save Permissions</button>
         </form>
-        <button class="btn btn-primary" id="savePermissions">Save Permissions</button>
+        <div class="alert alert-success" role="alert" style="display: none;">
+            Success
+        </div>
+        <div class="alert alert-danger" role="alert" style="display: none;">
+        </div>
     </div>
 </div>
+
+<script src="/js/users.js"></script>

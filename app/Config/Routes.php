@@ -77,6 +77,7 @@ $routes->post('/collections/update','Collection::update', ["filter" => "edit:col
 $routes->post('/categories/update','Category::update', ["filter" => "edit:categories"]);
 $routes->post('/notifications/update','Notification::update', ["filter" => "edit:notifications"]);
 $routes->post('/menu/update','Menu::update', ["filter" => "edit:menu"]);
+$routes->post('/brand/users/update', 'Brand::updateUsers', ["filter" => "edit:admin"]);
 
 /*
  * --------------------------------------------------------------------

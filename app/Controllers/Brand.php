@@ -118,6 +118,36 @@ class Brand extends BaseController
         }
     }
 
+    public function updateUsers(){
+        try {
+            $data = $this->request->getPost(["name", "active", "admin", "email", "name", "permissions", FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
+            $email = $this->request->getPost("email", FILTER_SANITIZE_EMAIL);
+            $id = $this->request->getPost("userId", FILTER_SANITIZE_NUMBER_INT);
+            $permissions = $data["permissions"];
+            $session = session();
+
+            $userModel = new UserModel();
+
+            $userModel->updatePermissions($id, $permissions);
+            $userModel->updateAdmin((int)$id, isset($data["admin"]));
+
+            $user = [
+                "name" => $data["name"],
+                "email" => $email,
+                "status" => isset($data["active"])
+            ];
+
+            $userModel->update($id, $user);
+
+            return json_encode(["success" => true]);
+        } catch (\Exception $e) {
+            http_response_code(400);
+            echo json_encode(["success" => false, "message" => $e->getMessage()]);
+            exit;
+        }
+
+    }
+
     public function setBrand() //Post
     {
         $session = session();
