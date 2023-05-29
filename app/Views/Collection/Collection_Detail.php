@@ -2,10 +2,12 @@
 
 <?= $this->section('Detail') ?>
 <div class="row">
-  <div class="col d-flex justify-content-center">
-    <h2 id="data-title" class="mr-4"></h2>
-    <button id="add-button" class="btn btn-primary" onclick="showData('/collections');">Add</button>
-  </div>
+  <?php if ($view[$pageName]["add"]) : ?>
+    <div class="col d-flex justify-content-center">
+      <h2 id="data-title" class="mr-4"></h2>
+      <button id="add-button" class="btn btn-primary" onclick="showData('/collections');">Add</button>
+    </div>
+  <?php endif ?>
 </div>
 <div id="form-div" style="display: none">
   <form class="mr-4" id="collectionData">
@@ -41,7 +43,9 @@
     </div>
     <div class="float-right row">
       <p id="updated" class="mr-2"></p>
-      <button id="submit" class="btn btn-primary mr-2">Save</button>
+      <?php if ($view[$pageName]["edit"]) : ?>
+        <button id="submit" class="btn btn-primary mr-2">Save</button>
+      <?php endif ?>
       <button id="delete" class="btn btn-danger mr-2">Remove</button>
     </div>
   </form>
