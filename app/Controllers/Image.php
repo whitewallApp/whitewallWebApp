@@ -491,7 +491,7 @@ class Image extends BaseController
                         "",
                         ""
                     ];
-                    // $assets->writeLineCSV($csvData);
+                    $assets->writeLineCSV($csvData);
                 }
             }
         } else {
