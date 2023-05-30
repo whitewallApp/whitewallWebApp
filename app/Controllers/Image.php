@@ -475,7 +475,7 @@ class Image extends BaseController
 
 
         if ($group == "detail") {
-            $assets->makeCSV(["id", "uploaded_name", "name", "description", "path", "link", "collection_name", "category_name"]);
+            $assets->makeCSV(["id", "uploaded_name", "path", "name", "description", "link", "collection_name", "category_name"]);
             foreach ($ids as $id) {
                 $image = $imageModel->getImage($id, assoc: true)[0];
                 if (preg_match("/\.validate$/", $image["description"]) == 1) {
@@ -484,18 +484,18 @@ class Image extends BaseController
                     $csvData = [
                         $id,
                         $description,
-                        "",
+                        $image["imagePath"],
                         "",
                         "",
                         "",
                         "",
                         ""
                     ];
-                    $assets->writeLineCSV($csvData);
+                    // $assets->writeLineCSV($csvData);
                 }
             }
         } else {
-            $assets->makeCSV(["id", "name", "description", "path", "link", "collection_name", "category_name"]);
+            $assets->makeCSV(["id","path", "name", "description", "link", "collection_name", "category_name"]);
             foreach ($ids as $id) {
                 //append to csv
                 $image = $imageModel->getImage($id, assoc: true)[0];
@@ -511,7 +511,7 @@ class Image extends BaseController
                     $id,
                     $image["name"],
                     $image["description"],
-                    $image["iconPath"],
+                    $image["imagePath"],
                     $image["link"],
                     $collection["name"],
                     $catname
