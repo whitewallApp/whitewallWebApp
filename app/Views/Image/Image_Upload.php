@@ -118,6 +118,7 @@
                                         <li class="list-group-item">A category can have mulitpule collections</li>
                                         <li class="list-group-item">Images can be changed later through a csv upload or the website</li>
                                         <li class="list-group-item">Only <span class="fw-bolder">name</span>, <span class="fw-bolder">description</span> and <span class="fw-bolder">link</span> columns can be blank</li>
+                                        <li class="list-group-item">Images will be created if the id column is left blank</li>
                                     </ul>
                                 </div>
                                 <div class="col-4">
@@ -126,6 +127,7 @@
                                         <li class="list-group-item">Edit the <span class="fw-bolder">name</span> column</li>
                                         <li class="list-group-item">Edit the <span class="fw-bolder">description</span> column</li>
                                         <li class="list-group-item">Edit the <span class="fw-bolder">link</span> column</li>
+                                        <li class="list-group-item">Edit the <span class="fw-bolder">path</span> column if it is a link</li>
                                         <li class="list-group-item lh-1">
                                             <p>Edit the <span class="fw-bolder">collection_name</span> column</p> <span class="text-muted fs-6">A collection will be made if it does not exist</span>
                                         </li>
@@ -140,6 +142,7 @@
                                         <li class="list-group-item">Don't Edit the <span class="fw-bolder">Id</span> column</li>
                                         <li class="list-group-item">Don't Leave the <span class="fw-bolder">category_name</span> or <span class="fw-bolder">collection_name</span> blank</li>
                                         <li class="list-group-item">Don't Put <span class="fw-bolder">collection_name</span> with mulitpule <span class="fw-bolder">category_name</span></li>
+                                        <li class="list-group-item">Don't Modify <span class="fw-bolder">path</span> if it is a file</span></li>
                                     </ul>
                                 </div>
                             </div>

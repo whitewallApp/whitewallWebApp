@@ -9,6 +9,7 @@ use App\Models\BrandModel;
 use App\Controllers\Navigation;
 use App\Models\MobleModel;
 use Google\Service\CloudAsset\Asset;
+use PhpParser\Node\Stmt\Break_;
 use RuntimeException;
 
 class Image extends BaseController
@@ -195,17 +196,44 @@ class Image extends BaseController
         $assets = new Assets();
         $session = session();
 
-        try {
+        // try {
             if (!$file->isValid()) {
                 throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
             }
 
-            if (preg_match("/image/", $file->getMimeType()) == 0 && preg_match("/csv/", $file->getMimeType()) == 0) {
-                throw new RuntimeException("File needs to be a image");
+            $type = "";
+            switch ($file->getMimeType()) {
+                case 'text/csv':
+                    $type = "csv";
+                    break;
+                case 'text/plain':
+                    $type = "csv";
+                    break;
+                case 'image/webp':
+                    $type = "image";
+                    break;
+                case 'image/jpg':
+                    $type = "image";
+                    break;
+                case 'image/jpeg':
+                    $type = "image";
+                    break;
+                case 'image/svg+xml':
+                    $type = "image";
+                    break;
+                case 'image/png':
+                    $type = "image";
+                    break;
+                case 'image/giff':
+                    $type = "image";
+                    break;
+                default:
+                    throw new RuntimeException($file->getMimeType() . " file is not an image");
+                    break;
             }
 
             // if its an image save the image to the server and database
-            if (preg_match("/image/", $file->getMimeType()) == 1) {
+            if ($type == "image") {
                 //save the image
                 $imagePath = $assets->saveImage($file->getTempName(), $file->guessExtension());
 
@@ -227,11 +255,13 @@ class Image extends BaseController
                 return json_encode(["status" => "success"]);
             }
 
+
+            $errors = [];
+
             // if its a csv read in the images
-            if (preg_match("/csv/", $file->getMimeType()) == 1) {
+            if ($type == "csv") {
                 $overwrite = filter_var($this->request->getPost("overwrite", FILTER_SANITIZE_FULL_SPECIAL_CHARS), FILTER_VALIDATE_BOOL);
                 $row = 1;
-                $errors = [];
                 if (($handle = fopen($this->request->getFile("file")->getTempName(), "r")) !== FALSE) {
                     $columns = [];
                     $ids = $imageModel->getAllIds($session->get("brand_name"));
@@ -257,7 +287,7 @@ class Image extends BaseController
                                 }
                             }
 
-                            if ($imgfound) {
+                            if ($imgfound || $data[$columns["id"]] == "") {
                                 
                                 //check if a collection is in multipule categories
                                 if (array_key_exists($data[$columns["collection_name"]], $structure)){
@@ -326,34 +356,60 @@ class Image extends BaseController
                                     }
 
                                     //finally update the image
-
                                     if ($overwrite){
-
                                         $image = [
                                             "name" => $data[$columns["name"]],
                                             "description" => $data[$columns["description"]],
                                             "link" => $data[$columns["link"]],
-                                            "collection_id" => $colModel->getCollection($data[$columns["collection_name"]], ["id"], "name")
+                                            "imagePath" => $data[$columns["path"]],
+                                            "collection_id" => $colModel->getCollection($data[$columns["collection_name"]], ["id"], "name"),
+                                            "externalPath" => preg_match("/^https/", $data[$columns["path"]]),
+                                            "brand_id" => $brandid
                                         ];
 
-                                        $imageModel->update($data[$columns["id"]], $image);
+                                        //delete the file if going file -> link
+                                        if ($data[$columns["id"]] != ""){
+                                            $imageDatabase = $imageModel->getImage($data[$columns["id"]], assoc: true)[0];
+                                            if (preg_match("/^https/", $imageDatabase["imagePath"]) == 0 && preg_match("/^https/", $data[$columns["path"]]) == 1){
+                                                $assets->removeImage(explode("/images/", $imageDatabase["imagePath"])[1]);
+                                                $image["thumbnail"] = $data[$columns["path"]];
+                                            }
+                                        }
+
+                                        $imageModel->updateImage($image, $data[$columns["id"]]);
                                     }else{
-                                        $imageDatabase = $imageModel->getImage($data[$columns["id"]], assoc: true)[0];
+                                        $imageDatabase = $imageModel->getImage($data[$columns["id"]], assoc: true);
+
                                         $image = [];
+                                        if (count($imageDatabase) > 0 ){
+                                            $imageDatabase = $imageDatabase[0];
 
-                                        if ($imageDatabase["name"] == ""){
-                                            $image["name"] = $data[$columns["name"]];
+                                            if ($imageDatabase["name"] == ""){
+                                                $image["name"] = $data[$columns["name"]];
+                                            }
+
+                                            if ($imageDatabase["description"] == "" || preg_match("/\.validate$/", $imageDatabase["description"]) == 1){
+                                                $image["description"] = $data[$columns["description"]];
+                                            }
+
+                                            if ($imageDatabase["link"] == ""){
+                                                $image["link"] = $data[$columns["link"]];
+                                            }
+                                        }else{
+                                            $image = [
+                                                "name" => $data[$columns["name"]],
+                                                "description" => $data[$columns["description"]],
+                                                "link" => $data[$columns["link"]],
+                                                "thumbnail" => $data[$columns["path"]],
+                                                "imagePath" => $data[$columns["path"]],
+                                                "collection_id" => $colModel->getCollection($data[$columns["collection_name"]], ["id"], "name"),
+                                                "brand_id"=> $brandid
+                                            ];
                                         }
 
-                                        if ($imageDatabase["description"] == "" || preg_match("/\.validate$/", $imageDatabase["description"]) == 1){
-                                            $image["description"] = $data[$columns["description"]];
-                                        }
+                                        $image["externalPath"] = preg_match("/^https/", $data[$columns["path"]]);
 
-                                        if ($imageDatabase["link"] == ""){
-                                            $image["link"] = $data[$columns["link"]];
-                                        }
-
-                                        $imageModel->update($data[$columns["id"]], $image);
+                                        $imageModel->updateImage($image,$data[$columns["id"]]);
                                     }
 
                                 }
@@ -390,7 +446,6 @@ class Image extends BaseController
                 unlink("../writable/cache/CollectionCollection_List");
             }
             
-            // echo var_dump($structure);
 
             //if there were errors say so
             if (count($errors) > 0) {
@@ -401,11 +456,11 @@ class Image extends BaseController
                 }
             }
 
-        } catch (\Exception $e) {
-            http_response_code(400);
-            echo json_encode($e->getMessage());
-            exit;
-        }
+        // } catch (\Exception $e) {
+        //     http_response_code(400);
+        //     echo json_encode($e->getMessage());
+        //     exit;
+        // }
     }
 
     public function makeCSV($group)
@@ -420,7 +475,7 @@ class Image extends BaseController
 
 
         if ($group == "detail") {
-            $assets->makeCSV(["id", "uploaded_name", "name", "description", "link", "collection_name", "category_name"]);
+            $assets->makeCSV(["id", "uploaded_name", "name", "description", "path", "link", "collection_name", "category_name"]);
             foreach ($ids as $id) {
                 $image = $imageModel->getImage($id, assoc: true)[0];
                 if (preg_match("/\.validate$/", $image["description"]) == 1) {
@@ -433,13 +488,14 @@ class Image extends BaseController
                         "",
                         "",
                         "",
+                        "",
                         ""
                     ];
                     $assets->writeLineCSV($csvData);
                 }
             }
         } else {
-            $assets->makeCSV(["id", "name", "description", "link", "collection_name", "category_name"]);
+            $assets->makeCSV(["id", "name", "description", "path", "link", "collection_name", "category_name"]);
             foreach ($ids as $id) {
                 //append to csv
                 $image = $imageModel->getImage($id, assoc: true)[0];
@@ -455,6 +511,7 @@ class Image extends BaseController
                     $id,
                     $image["name"],
                     $image["description"],
+                    $image["iconPath"],
                     $image["link"],
                     $collection["name"],
                     $catname

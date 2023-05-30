@@ -291,6 +291,7 @@ class Assets extends BaseController {
 
     public function removeImage($fileName){
         unlink($this->imgPath . $fileName);
+        unlink($this->imgTmbPath . $fileName);
     }
 
     /**

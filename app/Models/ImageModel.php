@@ -97,12 +97,15 @@ class ImageModel extends Model
         }
     }
 
-    public function updateImage($id, $data, $updateBy="id"){
+    public function updateImage($data, $id = "", $updateBy="id"){
         $data["dateUpdated"] = new RawSql('CURRENT_TIMESTAMP');
+        if ($id != ""){
+            $data["id"] = $id;
+            $data["dateCreated"] = new RawSql('CURRENT_TIMESTAMP');
+        }
 
         $builder = $this->db->table("wallpaper");
-        $builder->where($updateBy, $id);
-        $builder->update($data);
+        $builder->upsert($data);
     }
 
     public function getImgByName($name){
