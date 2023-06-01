@@ -475,7 +475,7 @@
                                 <div class="form-group">
                                     <label class="form-label" for="buttonFontSize">Font Size</label>
                                     <div class="range">
-                                        <input type="range" class="form-range" min="0" max="60" id="buttonFontSize" />
+                                        <input type="range" class="form-range" min="0" max="60" id="buttonFontSize" value="0"/>
                                     </div>
                                 </div>
                             </form>
