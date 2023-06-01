@@ -1,6 +1,6 @@
-<div class="container">
+<div class="m-4">
     <div class="row">
-        <div class="col-6">
+        <div class="col-5">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home Page</a>
@@ -142,8 +142,6 @@
             </div>
         </div>
 
-
-
         <!-- Branding Buttons -->
         <div class="col-6">
             <div class="accordion" id="accordionBranding">
@@ -168,8 +166,12 @@
                                     <input type="file" class="form-control" id="appLoading" />
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="appHeader">App Icon</label>
+                                    <label class="form-label" for="appHeader">App Header</label>
                                     <input type="file" class="form-control" id="appHeader" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="appBanner">App Banner</label>
+                                    <input type="file" class="form-control" id="appBanner" />
                                 </div>
                             </form>
                         </div>
@@ -475,7 +477,7 @@
                                 <div class="form-group">
                                     <label class="form-label" for="buttonFontSize">Font Size</label>
                                     <div class="range">
-                                        <input type="range" class="form-range" min="0" max="60" id="buttonFontSize" value="0"/>
+                                        <input type="range" class="form-range" min="0" max="60" id="buttonFontSize" value="0" />
                                     </div>
                                 </div>
                             </form>
@@ -483,6 +485,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-1">
+            <button style="height: 50%;" class="btn btn-primary" id="save">Save</button>
         </div>
     </div>
 </div>

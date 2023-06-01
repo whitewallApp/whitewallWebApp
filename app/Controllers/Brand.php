@@ -148,6 +148,10 @@ class Brand extends BaseController
 
     }
 
+    public function updateBrand(){
+        echo var_dump($_FILES);
+    }
+
     public function setBrand() //Post
     {
         $session = session();

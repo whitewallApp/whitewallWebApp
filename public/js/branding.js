@@ -218,3 +218,52 @@ $("#buttonColor").on("input", function(){
     branding.buttons.borderColor = $(this).val();
 })
 
+$("#save").on("click", function(){
+    formData = new FormData();
+    formData.append("branding", JSON.stringify(branding));
+
+    if ($("#appIcon")[0].files.length > 0){
+        file = $("#appIcon")[0].files[0]
+        formData.append("files[]", file);
+    }
+
+    if ($("#appLoading")[0].files.length > 0) {
+        file = $("#appLoading")[0].files[0]
+        formData.append("files[]", file);
+    }
+
+    if ($("#appHeader")[0].files.length > 0) {
+        file = $("#appHeader")[0].files[0]
+        formData.append("apfiles[]", file);
+    }
+
+    if ($("#appBanner")[0].files.length > 0) {
+        file = $("#appBanner")[0].files[0]
+        formData.append("apfiles[]", file);
+    }
+
+    $.ajax({
+        url: "/brand/branding/update",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data, status) {
+            // response = JSON.parse(data);
+            // console.log(status);
+            // if (response.success) {
+            //     $(".alert-success").show();
+            // } else {
+            //     $(".alert-danger").html(response.message);
+            //     $(".alert-danger").show();
+            // }
+        },
+        error: function (data) {
+            // response = JSON.parse(data.responseText)
+
+            // $(".alert-danger").html(response.message);
+            // $(".alert-danger").show();
+        }
+    });
+})
+
