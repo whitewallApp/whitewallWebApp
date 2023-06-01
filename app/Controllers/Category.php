@@ -80,7 +80,7 @@ class Category extends BaseController
 
         if (count($_FILES) > 0){
             //get rid of the assets/category/
-            $oldName = explode("category/", (string)$categoryModel->getCategory($post["id"], filter: ["iconPath"]))[1];
+            $oldName = (string)$categoryModel->getCategory($post["id"], filter: ["iconPath"]);
             $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
 
             $type = $this->request->getPost("type", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -90,7 +90,12 @@ class Category extends BaseController
                 $type = "svg";
             }
 
-            $newName = $assets->updateCategory($tmpPath, $type, $oldName);
+            if ($oldName == ""){
+                $newName = $assets->saveCategory($tmpPath, $type);
+            }else{
+                $oldName = explode("category/", $oldName)[1];
+                $newName = $assets->updateCategory($tmpPath, $type, $oldName);
+            }
 
             if(!$newName){
                 return json_encode(["success" => false, "message" => "File Error"]);
