@@ -491,4 +491,25 @@
         </div>
     </div>
 </div>
+<script>
+    <?php if ($branding == "") : ?>
+        $(function() {
+            branding = {
+                background: {},
+                categories: {},
+                cards: {
+                    frames: {},
+                    images: {}
+                },
+                dropdowns: {},
+                checkmarks: {},
+                buttons: {}
+            };
+        })
+    <?php else : ?>
+        $(function() {
+            branding = <?= $branding ?>;
+        })
+    <?php endif ?>
+</script>
 <script src="/js/branding.js"></script>

@@ -67,7 +67,8 @@ class Brand extends BaseController
             "categories" => $categories,
             "collections" => $collections,
             "images" => $images,
-            "menu"=> $menu
+            "menu"=> $menu,
+            "branding" => $brandModel->getBrand($session->get("brand_name"), "name", ["branding"])
         ];
 
         return Navigation::renderNavBar("Branding","branding", [true, "Brands"]) . view("brand/Branding", $data) . Navigation::renderFooter();
@@ -192,6 +193,10 @@ class Brand extends BaseController
                     ];
                     $brandModel->update($brand["id"], $updatedBrand);
                 }
+            }else{
+                $branding = (string)$this->request->getPost("branding");
+                // echo var_dump(json_decode($branding));
+                $brandModel->update($brandModel->getBrand($session->get("brand_name"), "name", ["id"]), $branding);
             }
 
         // } catch (\Exception $e){

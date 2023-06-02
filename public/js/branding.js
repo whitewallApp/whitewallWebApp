@@ -1,13 +1,3 @@
-$(function(){
-    branding = {
-        background: {},
-        categories: {},
-        cards: {frames: {}, images: {}},
-        dropdowns: {},
-        checkmarks: {},
-        buttons: {}
-    };
-})
 $("#categoryColor").on("input", function(e){
     color = $(this).val();
     branding.categories.backgroundcolor = $(this).val();
