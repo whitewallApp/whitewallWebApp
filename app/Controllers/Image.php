@@ -196,7 +196,7 @@ class Image extends BaseController
         $assets = new Assets();
         $session = session();
 
-        // try {
+        try {
             if (!$file->isValid()) {
                 throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
             }
@@ -456,11 +456,11 @@ class Image extends BaseController
                 }
             }
 
-        // } catch (\Exception $e) {
-        //     http_response_code(400);
-        //     echo json_encode($e->getMessage());
-        //     exit;
-        // }
+        } catch (\Exception $e) {
+            http_response_code(400);
+            echo json_encode($e->getMessage());
+            exit;
+        }
     }
 
     public function makeCSV($group)

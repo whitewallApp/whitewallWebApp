@@ -21,6 +21,7 @@ class Assets extends BaseController {
      private $menuPath;
      private $session;
      private $imgTmbPath;
+    private $brandPath;
     
     public function __construct(){
         $this->session = session();
@@ -35,7 +36,8 @@ class Assets extends BaseController {
         $this->catPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/categories/";
         $this->userPath = getenv("BASE_PATH") . $accountId . "/users/";
         $this->collPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/collections/";
-        $this->menuPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/menu/";  
+        $this->menuPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/menu/";
+        $this->brandPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/branding/";  
 
         //TODO if not a directory make a directory
     }
@@ -60,6 +62,31 @@ class Assets extends BaseController {
             readfile($this->imgPath . $file);
             exit;
         }else{
+            return view("errors/html/error_404", ["message" => "sorry we can't find that image"]);
+        }
+    }
+
+    /**
+     * Returns image files
+     *
+     * @access    public
+     * @param    string    file path
+     */
+    function branding($file)
+    {
+        if (file_exists($this->brandPath . $file)) {
+
+            $matches = [];
+            preg_match("/\.(.*)/", $file, $matches);
+
+            $type = $this->mapType($matches[1]);
+
+            // echo $type;
+
+            header("Content-Type: " . "image/" . $type);
+            readfile($this->brandPath . $file);
+            exit;
+        } else {
             return view("errors/html/error_404", ["message" => "sorry we can't find that image"]);
         }
     }
@@ -400,6 +427,39 @@ class Assets extends BaseController {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Saves the image file to the correct directory
+     *
+     * @param string $tmpPath | The temp path from the file upload
+     * @param string $type | the type of image (png, jpg, bmp, webp)
+     * @return string | the unique file name to save in database
+     */
+    public function saveBrandImg($tmpPath, $type, $name)
+    {
+        $file = $this->brandPath . $name . "." . $type;
+
+        if (move_uploaded_file($tmpPath, $file)) {
+            return $name . "." . $type;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * updated the image by deleting the old one then saving the new one
+     *
+     * @param string $tmpPath | the temporary path of the new image
+     * @param string $type | the type of the image (png, jpg, bmp, webp)
+     * @param string $oldPath | the old name/path of the image
+     * @return string name of the new file
+     */
+    public function updateBrandImg($tmpPath, $type, $name)
+    {
+        unlink($this->brandPath . $name);
+        $name = explode(".", $name)[0];
+        return $this->saveBrandImg($tmpPath, $type, $name);
     }
 
     //image upload csv

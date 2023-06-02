@@ -8,6 +8,8 @@ class BrandModel extends Model
 {
     protected $primaryKey = 'id';
     protected $returnType = 'array';
+    protected $table = "brand";
+    protected $allowedFields = ["name", "logo", "appIcon", "appLoading", "appHeading", "appBanner", "branding"];
     
     /**
      * Gets a column of the table based on an account ID. Use $getBy to do additional filtering

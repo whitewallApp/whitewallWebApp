@@ -149,7 +149,56 @@ class Brand extends BaseController
     }
 
     public function updateBrand(){
-        echo var_dump($_FILES);
+        // try {
+            $brandModel = new BrandModel();
+            $session = session();
+
+            // echo var_dump(array_keys($this->request->getFiles())[0]);
+
+            if (count($this->request->getFiles()) > 0){
+                $imageType = htmlspecialchars(array_keys($this->request->getFiles())[0]);
+                $file = $this->request->getFiles()[$imageType];
+                $assets = new Assets();
+
+                //preform checks
+                if (!$file->isValid()) {
+                    throw new \RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
+                }
+                
+                //check if the name of the file has not been modified
+                $typeCheck = false;
+                foreach(["appIcon", "appLoading", "appHeading", "appBanner"] as $type){
+                    if ($imageType == $type){
+                        $typeCheck = true;
+                    }
+                }
+
+                if (!$typeCheck){
+                    throw new \RuntimeException("File Name Error");
+                }
+
+                $brand = $brandModel->getBrand($session->get("brand_name"), "name", ["id", "appIcon", "appLoading", "appHeading", "appBanner"], true);
+
+                if ($brand[$imageType] == ""){
+                    $name = $assets->saveBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], $imageType);
+                    $updatedBrand = [
+                        $imageType => "/assets/branding/" . $name
+                    ];
+                    $brandModel->update($brand["id"], $updatedBrand);
+                }else{
+                    $name = $assets->updateBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], explode("/", $brand[$imageType])[3]);
+                    $updatedBrand = [
+                        $imageType => "/assets/branding/" . $name
+                    ];
+                    $brandModel->update($brand["id"], $updatedBrand);
+                }
+            }
+
+        // } catch (\Exception $e){
+        //     http_response_code(400);
+        //     echo json_encode($e->getMessage());
+        //     exit;
+        // }
     }
 
     public function setBrand() //Post

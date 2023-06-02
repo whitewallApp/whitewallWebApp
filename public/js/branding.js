@@ -218,29 +218,86 @@ $("#buttonColor").on("input", function(){
     branding.buttons.borderColor = $(this).val();
 })
 
+$("#appIcon").on("input", function(){
+    formData = new FormData();
+    formData.append("appIcon", this.files[0]);
+
+    $.ajax({
+        url: "/brand/branding/update",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data, status) {
+           
+        },
+        error: function (data) {
+           
+        }
+    });
+})
+
+$("#appLoading").on("input", function(){
+    formData = new FormData();
+    formData.append("appLoading", this.files[0]);
+
+    $.ajax({
+        url: "/brand/branding/update",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data, status) {
+
+        },
+        error: function (data) {
+
+        }
+    });
+})
+
+$("#appHeader").on("input", function(){
+    formData = new FormData();
+    formData.append("appHeader", this.files[0]);
+
+    $.ajax({
+        url: "/brand/branding/update",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data, status) {
+
+        },
+        error: function (data) {
+
+        }
+    });
+})
+
+$("#appBanner").on("input", function(){
+    formData = new FormData();
+    formData.append("appBanner", this.files[0]);
+
+    $.ajax({
+        url: "/brand/branding/update",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data, status) {
+
+        },
+        error: function (data) {
+
+        }
+    });
+})
+
+
 $("#save").on("click", function(){
     formData = new FormData();
     formData.append("branding", JSON.stringify(branding));
-
-    if ($("#appIcon")[0].files.length > 0){
-        file = $("#appIcon")[0].files[0]
-        formData.append("files[]", file);
-    }
-
-    if ($("#appLoading")[0].files.length > 0) {
-        file = $("#appLoading")[0].files[0]
-        formData.append("files[]", file);
-    }
-
-    if ($("#appHeader")[0].files.length > 0) {
-        file = $("#appHeader")[0].files[0]
-        formData.append("apfiles[]", file);
-    }
-
-    if ($("#appBanner")[0].files.length > 0) {
-        file = $("#appBanner")[0].files[0]
-        formData.append("apfiles[]", file);
-    }
 
     $.ajax({
         url: "/brand/branding/update",
