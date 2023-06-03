@@ -244,35 +244,39 @@ class Assets extends BaseController {
     }
 
     private function correctImageOrientation($filename, $type){
-        if ($type == "JPG" || $type == "jpg" || $type == "jpeg" || $type == "tiff" || $type == "tiff"){
-            $exif = exif_read_data($filename);
-            if ($exif && isset($exif['Orientation'])) {
-                $orientation = $exif['Orientation'];
-                $img = $this->imagecreatefromfile($filename);
-                if ($orientation != 1) {
-                    $deg = 0;
-                    switch ($orientation) {
-                        case 3:
-                            $deg = 180;
-                            break;
-                        case 6:
-                            $deg = 270;
-                            break;
-                        case 8:
-                            $deg = 90;
-                            break;
-                    }
-                    if ($deg) {
-                        $img = imagerotate($img, $deg, 0);
+        try {
+            if ($type == "JPG" || $type == "jpg" || $type == "jpeg" || $type == "tiff" || $type == "tiff"){
+                $exif = exif_read_data($filename);
+                if ($exif && isset($exif['Orientation'])) {
+                    $orientation = $exif['Orientation'];
+                    $img = $this->imagecreatefromfile($filename);
+                    if ($orientation != 1) {
+                        $deg = 0;
+                        switch ($orientation) {
+                            case 3:
+                                $deg = 180;
+                                break;
+                            case 6:
+                                $deg = 270;
+                                break;
+                            case 8:
+                                $deg = 90;
+                                break;
+                        }
+                        if ($deg) {
+                            $img = imagerotate($img, $deg, 0);
+                            return $img;
+                        }
+                    }else{
                         return $img;
                     }
                 }else{
-                    return $img;
+                    throw new RuntimeException("Image Malformated (exif data missing)");
                 }
             }else{
-                throw new RuntimeException("Image Malformated (exif data missing)");
+                return $this->imagecreatefromfile($filename);
             }
-        }else{
+        }catch (\Exception $e){
             return $this->imagecreatefromfile($filename);
         }
     }
@@ -281,28 +285,33 @@ class Assets extends BaseController {
         if (!file_exists($filename)) {
             throw new \InvalidArgumentException('File "' . $filename . '" not found.');
         }
-        switch (strtolower(pathinfo($filename, PATHINFO_EXTENSION))) {
-            case "JPG":
-            case 'jpeg':
-            case 'jpg':
-                return imagecreatefromjpeg($filename);
-                break;
 
-            case 'png':
-                return imagecreatefrompng($filename);
-                break;
+        try {
+            switch (strtolower(pathinfo($filename, PATHINFO_EXTENSION))) {
+                case "JPG":
+                case 'jpeg':
+                case 'jpg':
+                    return imagecreatefromjpeg($filename);
+                    break;
 
-            case 'gif':
-                return imagecreatefromgif($filename);
-                break;
+                case 'png':
+                    return imagecreatefrompng($filename);
+                    break;
 
-            case 'webp':
-                return imagecreatefromwebp($filename);
-                break;
+                case 'gif':
+                    return imagecreatefromgif($filename);
+                    break;
 
-            default:
-                throw new \InvalidArgumentException('File "' . $filename . '" is not valid jpg, png, webp or gif image.');
-                break;
+                case 'webp':
+                    return imagecreatefromwebp($filename);
+                    break;
+
+                default:
+                    throw new \InvalidArgumentException('File "' . $filename . '" is not valid jpg, png, webp or gif image.');
+                    break;
+            }
+        }catch (\Exception $e){
+            throw new \InvalidArgumentException('Error creating file: ' . $filename );
         }
     }
 
