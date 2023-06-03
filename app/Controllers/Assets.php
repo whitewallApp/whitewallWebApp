@@ -218,7 +218,7 @@ class Assets extends BaseController {
             $tmbsizey = 200;
             $tmbsizex = (int)$tmbsizey / 1.778;
 
-            $src = $this->correctImageOrientation($file);
+            $src = $this->correctImageOrientation($file, $type);
 
             $srcheight = imagesy($src);
             $srcwidth = (int)$srcheight / 1.778;
@@ -243,33 +243,37 @@ class Assets extends BaseController {
         
     }
 
-    private function correctImageOrientation($filename){
-        $exif = exif_read_data($filename);
-        if ($exif && isset($exif['Orientation'])) {
-            $orientation = $exif['Orientation'];
-            $img = $this->imagecreatefromfile($filename);
-            if ($orientation != 1) {
-                $deg = 0;
-                switch ($orientation) {
-                    case 3:
-                        $deg = 180;
-                        break;
-                    case 6:
-                        $deg = 270;
-                        break;
-                    case 8:
-                        $deg = 90;
-                        break;
-                }
-                if ($deg) {
-                    $img = imagerotate($img, $deg, 0);
+    private function correctImageOrientation($filename, $type){
+        if ($type == "JPG" || $type == "jpg" || $type == "jpeg" || $type == "tiff" || $type == "tiff"){
+            $exif = exif_read_data($filename);
+            if ($exif && isset($exif['Orientation'])) {
+                $orientation = $exif['Orientation'];
+                $img = $this->imagecreatefromfile($filename);
+                if ($orientation != 1) {
+                    $deg = 0;
+                    switch ($orientation) {
+                        case 3:
+                            $deg = 180;
+                            break;
+                        case 6:
+                            $deg = 270;
+                            break;
+                        case 8:
+                            $deg = 90;
+                            break;
+                    }
+                    if ($deg) {
+                        $img = imagerotate($img, $deg, 0);
+                        return $img;
+                    }
+                }else{
                     return $img;
                 }
             }else{
-                return $img;
+                throw new RuntimeException("Image Malformated (exif data missing)");
             }
         }else{
-            throw new RuntimeException("Image Malformated (exif data missing)");
+            return $this->imagecreatefromfile($filename);
         }
     }
 
