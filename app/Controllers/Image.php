@@ -479,7 +479,7 @@ class Image extends BaseController
 
 
         if ($group == "detail") {
-            $assets->makeCSV(["id", "uploaded_name", "path", "name", "description", "link", "collection_name", "category_name"]);
+            $assets->makeCSV(["id", "path", "name", "description", "link", "collection_name", "category_name"]);
             foreach ($ids as $id) {
                 $image = $imageModel->getImage($id, assoc: true)[0];
                 if (preg_match("/\.validate$/", $image["description"]) == 1) {
@@ -487,10 +487,9 @@ class Image extends BaseController
                     $description = explode(".validate", $image["description"])[0];
                     $csvData = [
                         $id,
-                        $description,
                         $image["imagePath"],
                         "",
-                        "",
+                        $description,
                         "",
                         "",
                         ""
