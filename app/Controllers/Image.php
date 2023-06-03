@@ -197,8 +197,12 @@ class Image extends BaseController
         $session = session();
 
         try {
-            if (!$file->isValid()) {
-                throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
+            if ($file != null){
+                if (!$file->isValid()) {
+                    throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
+                }
+            }else{
+                throw new RuntimeException("Error uploading, try again");
             }
 
             $type = "";
