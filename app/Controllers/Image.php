@@ -238,6 +238,15 @@ class Image extends BaseController
 
             // if its an image save the image to the server and database
             if ($type == "image") {
+                //check for duplicates
+                $imageDescription = $imageModel->getCollumn("description", $session->get("brand_name"));
+                
+                foreach($imageDescription as $description){
+                    if (preg_match("/" . $file->getName() . "/", $description) == 1){
+                        throw new RuntimeException("Dupicate Image Found");
+                    }
+                }
+
                 //save the image
                 $imagePath = $assets->saveImage($file->getTempName(), $file->guessExtension());
 

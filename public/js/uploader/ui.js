@@ -58,7 +58,7 @@ function ui_multi_update_file_progress(id, percent, color, active) {
 }
 
 function errorAdd(name){
-    $("#errors").append(`<li class="status text-danger">${name}</li>`)
+    $("#errors").append(`<li class="status text-danger">ID: ${name}</li>`)
 }
 
 function scrollUp(){

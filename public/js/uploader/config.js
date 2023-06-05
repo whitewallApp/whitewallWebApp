@@ -57,6 +57,7 @@ $(function () {
             ui_multi_update_file_status(id, 'danger', xhr.responseText);
             ui_multi_update_file_progress(id, 0, 'danger', false);
             errorAdd(id);
+            scrollUp();
         },
         onFallbackMode: function () {
             // When the browser doesn't support this plugin :(
