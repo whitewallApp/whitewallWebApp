@@ -202,7 +202,7 @@ class Image extends BaseController
                     throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
                 }
             }else{
-                throw new RuntimeException("Error uploading, try again");
+                throw new RuntimeException("Error uploading, clear cache, reload and try again");
             }
 
             $type = "";

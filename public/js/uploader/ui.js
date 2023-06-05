@@ -57,6 +57,28 @@ function ui_multi_update_file_progress(id, percent, color, active) {
     }
 }
 
+function scrollUp(){
+    $("#files").parent()[0].scrollBy({
+        top: -66,
+        behavior: "smooth",
+    });
+}
+
+function scrollTop(){
+    $("#files").parent()[0].scrollBy({
+        top: 0,
+        behavior: "smooth",
+    });
+}
+
+function scrollBottom(){
+    element = $("#files").parent()[0];
+    element.scrollBy({
+        top: element.scrollHeight,
+        behavior: "smooth",
+    });
+}
+
 function change(id){
     $('.carousel').carousel(id - 1);
     for (i = 1; i<5; i++){

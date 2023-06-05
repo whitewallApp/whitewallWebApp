@@ -28,6 +28,7 @@ $(function () {
             // When a new file is added using the file selector or the DnD area
             ui_add_log('New file added ' + file.name + " ID: " + id);
             ui_multi_add_file(id, file);
+            scrollBottom();
         },
         onBeforeUpload: function (id) {
             // about tho start uploading a file
@@ -50,6 +51,7 @@ $(function () {
             ui_add_log('Upload of file #' + id + ' COMPLETED', 'success');
             ui_multi_update_file_status(id, 'success', 'Upload Complete');
             ui_multi_update_file_progress(id, 100, 'success', false);
+            scrollUp();
         },
         onUploadError: function (id, xhr, status, message) {
             ui_multi_update_file_status(id, 'danger', xhr.responseText);
@@ -63,8 +65,6 @@ $(function () {
             ui_add_log('File \'' + file.name + '\' cannot be added: size excess limit', 'danger');
         }
     });
-
-    var uploader = 
 
     $("#csv-upload").dmUploader({
         url: '/images/upload',

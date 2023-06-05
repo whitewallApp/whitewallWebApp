@@ -44,7 +44,7 @@
 
                                         <div class="btn btn-primary btn-block mb-5">
                                             <span>Open the file Browser</span>
-                                            <input type="file" title='Click to add Files' />
+                                            <input type="file" title='Click to add Files' name="file"/>
                                         </div>
                                     </div><!-- /uploader -->
 
