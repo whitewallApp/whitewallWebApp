@@ -40,19 +40,21 @@ class Account extends BaseController
     public function post(){
         $session = session();
 
-        if ($session->get("logIn")) {
+        try {
             $assetControler = new Assets();
             $userModel = new UserModel();
             $brandName = esc($this->request->getPost("brand"));
             $email = esc($this->request->getPost("email", FILTER_VALIDATE_EMAIL));
 
             if (isset($_FILES["profilePhoto"])){
-                //set new user info
-                $tempPath = $_FILES["profilePhoto"]["tmp_name"];
-                $imgName = $_FILES["profilePhoto"]["name"];
+                    //set new user info
+                $file = $this->request->getFile("profilePhoto");
+                if ($file->isValid()){
+                    $tempPath = $file->getTempName();
 
-                $link = $assetControler->saveProfilePhoto($session->get("user_id"), $imgName, $tempPath);
-                $userModel->update($session->get("user_id"), ["icon" => $link]);
+                    $link = $assetControler->saveProfilePhoto($session->get("user_id"), $tempPath, $file->guessExtension());
+                    $userModel->update($session->get("user_id"), ["icon" => $link]);
+                }
             }
 
             $userModel->update($session->get("user_id"), ["email" => $email]);
@@ -68,19 +70,10 @@ class Account extends BaseController
                     $userModel->update($session->get("user_id"), ["default_brand" => $brandId]);
                 }
             }
-
-            $data = [
-                "brands" => $brandnames,
-                "email" => $userModel->getUser($session->get("user_id"), filter: ["email"]),
-                "default_brand" => $brandName,
-                "success" => true
-            ];
-
-            return Navigation::renderNavBar("Account Settings") . view('Account', $data) . Navigation::renderFooter();
-
-        }else{
-            $this->response->setStatusCode(401);
-            return $this->response->send();
+        }catch (\Exception $e){
+            http_response_code(400);
+            echo json_encode($e->getMessage());
+            exit;
         }
     }
 }

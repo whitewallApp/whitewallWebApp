@@ -199,26 +199,10 @@ class Assets extends BaseController {
         }
     }
 
-    public function saveProfilePhoto($userId, $imgName, $tmpPath): string
+    public function saveProfilePhoto($userId, $tmpPath, $extention): string
     {
-        $matches = [];
-        preg_match("/\.(.*)/", $imgName, $matches);
-
-        $path = $this->userPath . $userId . $matches[0];
-        $dir = $this->userPath;
-
-        if (is_dir($dir)) {
-            if (!file_exists($path)) {
-                move_uploaded_file($tmpPath, $path);
-            }
-        } else {
-            mkdir($dir, recursive: true);
-            if (!file_exists($path)) {
-                move_uploaded_file($tmpPath, $path);
-            }
-        }
-
-        return "assets/user/" . $userId . $matches[0];
+        move_uploaded_file($tmpPath, $this->userPath . $userId . "." . $extention);
+        return "/assets/user/" . $userId . "." . $extention;
     }
 
     /**

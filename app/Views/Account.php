@@ -1,5 +1,5 @@
 <div class="col-sm-8 mt-3">
-  <form id="userForm" action="/account" method="post">
+  <form id="userForm">
     <div class=" form-group row">
       <label for="email" class="col-sm-2 col-form-label">Change Email</label>
       <div class="col-sm-8">
@@ -38,7 +38,6 @@
       </div>
     </div>
   </form>
-  <?php if ($success) : ?>
-    <h1><span class="badge badge-success">Success</span></h1>
-  <?php endif ?>
+    <h1 style="display: none;"><span class="badge"></span></h1>
 </div>
+<script src="/js/account.js"></script>

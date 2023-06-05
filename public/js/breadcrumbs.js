@@ -10,22 +10,6 @@ $("document").ready(function(){
     startCheckBoxes();
 });
 
-function saveAccount() {
-    $("form#userForm").submit(function (e) {
-        e.preventDefault();
-        var formData = new FormData(e[0]);
-
-        $.ajax({
-            url: "/account",
-            type: 'POST',
-            data: formData,
-            success: function (data) {
-                console.log(data);
-            }
-        });
-    })
-}
-
 function setUser(){
     $("#savePermissions").on("click", function () {
         var form = $("form#permissionsForm");
