@@ -7,7 +7,7 @@ $(function () {
      */
     $('#drag-and-drop-zone').dmUploader({ //
         url: '/images/upload',
-        maxFileSize: 15000000, // 3 Megs
+        maxFileSize: 150000000,
         onDragEnter: function () {
             // Happens when dragging something over the DnD area
             this.addClass('active');
@@ -64,7 +64,7 @@ $(function () {
         },
         onFileSizeError: function (file) {
             ui_add_log('File \'' + file.name + '\' cannot be added: size excess limit', 'danger');
-            errorAdd(id);
+            errorAdd(file.name + " size limit reached");
         }
     });
 

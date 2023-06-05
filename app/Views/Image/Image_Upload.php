@@ -48,7 +48,7 @@
                                 </div><!-- /uploader -->
 
                                 <div class="row">
-                                    <div class="col-10">
+                                    <div class="col-9">
                                         <div class="card file-box">
                                             <div class="card-header">
                                                 File List
@@ -59,7 +59,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-3">
                                         <div class="card file-box">
                                             <div class="card-header">
                                                 File Error List
