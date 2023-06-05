@@ -195,8 +195,9 @@ class Brand extends BaseController
                 }
             }else{
                 $branding = (string)$this->request->getPost("branding");
-                // echo var_dump(json_decode($branding));
-                $brandModel->update($brandModel->getBrand($session->get("brand_name"), "name", ["id"]), $branding);
+
+                $brandId = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
+                $brandModel->update($brandId, ["branding" => $branding]);
             }
 
         // } catch (\Exception $e){
