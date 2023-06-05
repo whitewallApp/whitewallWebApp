@@ -188,3 +188,9 @@ body {
     height: 300px !important;
     overflow-y: scroll;
 }
+
+.header {
+    position: sticky !important;
+    top: 0 !important;
+    background-color: white !important;
+}

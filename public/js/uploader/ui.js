@@ -74,3 +74,9 @@ $(".next").on("click", function(){
     $("#step" + $(this).attr("set-active")).addClass("active");
 })
 
+$("#download").on("click", function(){
+    $('.carousel').carousel('next');
+    $("#step2").removeClass("active");
+    $("#step3").addClass("active");
+})
+

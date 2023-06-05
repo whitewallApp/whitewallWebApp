@@ -50,7 +50,7 @@ class Image extends BaseController
             "images" => $images,
         ];
 
-        return Navigation::renderNavBar("Images", "images", [true, "Images"]) . view('Image/Image_Detail', $data, ["cache" => 86400]) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Images", "images", [true, "Images"]) . view('Image/Image_Detail', $data) . Navigation::renderFooter();
     }
 
     public function post()
@@ -367,14 +367,14 @@ class Image extends BaseController
                                             "link" => $data[$columns["link"]],
                                             "imagePath" => $data[$columns["path"]],
                                             "collection_id" => $colModel->getCollection($data[$columns["collection_name"]], ["id"], "name"),
-                                            "externalPath" => preg_match("/^https/", $data[$columns["path"]]),
+                                            "externalPath" => preg_match("/^http/", $data[$columns["path"]]),
                                             "brand_id" => $brandid
                                         ];
 
                                         //delete the file if going file -> link
                                         if ($data[$columns["id"]] != ""){
                                             $imageDatabase = $imageModel->getImage($data[$columns["id"]], assoc: true)[0];
-                                            if (preg_match("/^https/", $imageDatabase["imagePath"]) == 0 && preg_match("/^https/", $data[$columns["path"]]) == 1){
+                                            if (preg_match("/^http/", $imageDatabase["imagePath"]) == 0 && preg_match("/^http/", $data[$columns["path"]]) == 1){
                                                 $assets->removeImage(explode("/images/", $imageDatabase["imagePath"])[1]);
                                                 $image["thumbnail"] = $data[$columns["path"]];
                                             }
@@ -433,21 +433,21 @@ class Image extends BaseController
             }
 
             //delete caches images
-            if (file_exists("../writable/cache/ImageImage_Detail")) {
-                unlink("../writable/cache/ImageImage_Detail");
-                unlink("../writable/cache/ImageImage_List");
+            if (file_exists("../../writable/cache/ImageImage_Detail")) {
+                unlink("../../writable/cache/ImageImage_Detail");
+                unlink("../../writable/cache/ImageImage_List");
             }
 
             //delete caches categories
-            if (file_exists("../writable/cache/CategoryCategory_Detail")) {
-                unlink("../writable/cache/CategoryCategory_Detail");
-                unlink("../writable/cache/CategoryCategory_List");
+            if (file_exists("../../writable/cache/CategoryCategory_Detail")) {
+                unlink("../../writable/cache/CategoryCategory_Detail");
+                unlink("../../writable/cache/CategoryCategory_List");
             }
 
             //delete caches collections
-            if (file_exists("../writable/cache/CollectionCollection_Detail")) {
-                unlink("../writable/cache/CollectionCollection_Detail");
-                unlink("../writable/cache/CollectionCollection_List");
+            if (file_exists("../../writable/cache/CollectionCollection_Detail")) {
+                unlink("../../writable/cache/CollectionCollection_Detail");
+                unlink("../../writable/cache/CollectionCollection_List");
             }
             
 

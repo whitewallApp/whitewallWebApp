@@ -38,8 +38,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="row">
-                                <div class="col-md-6 col-sm-12">
-                                    <!-- Our markup, the important part here! -->
+                                <div class="col-12">
                                     <div id="drag-and-drop-zone" class="dm-uploader p-5">
                                         <h3 class="mb-5 mt-5 text-muted">Drag &amp; drop files here</h3>
 
@@ -49,8 +48,6 @@
                                         </div>
                                     </div><!-- /uploader -->
 
-                                </div>
-                                <div class="col-md-6 col-sm-12">
                                     <div class="card file-box">
                                         <div class="card-header">
                                             File List
@@ -69,14 +66,14 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row" data-mdb-toggle="collapse" data-mdb-target="#debug" aria-expanded="false" aria-controls="debug">
                                 <div class="col-12">
                                     <div class="card h-100">
                                         <div class="card-header">
                                             Debug Messages
                                         </div>
 
-                                        <ul class="list-group list-group-flush" id="debug">
+                                        <ul class="list-group list-group-flush collapse" id="debug">
                                             <li class="list-group-item text-muted empty">Loading plugin....</li>
                                         </ul>
                                     </div>

@@ -47,11 +47,11 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col"><input id="check-all" type="checkbox" class="checkbox-lg"></th>
-                        <th scope="col">Thumbnail</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Collection</th>
-                        <th scope="col">Category</th>
+                        <th class="header" scope="col"><input id="check-all" type="checkbox" class="checkbox-lg"></th>
+                        <th class="header" scope="col">Thumbnail</th>
+                        <th class="header" scope="col">Name</th>
+                        <th class="header" scope="col">Collection</th>
+                        <th class="header" scope="col">Category</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,7 +73,7 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="card p-2">
+        <div class="card p-2 header">
             <?= $this->renderSection('Detail') ?>
         </div>
     </div>

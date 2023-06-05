@@ -39,7 +39,30 @@ class Assets extends BaseController {
         $this->menuPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/menu/";
         $this->brandPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/branding/";  
 
-        //TODO if not a directory make a directory
+        if (!file_exists(getenv("BASE_PATH") . $accountId . "/" . $brandId)){
+            mkdir(getenv("BASE_PATH") . $accountId . "/" . $brandId, 0777, true);
+        }
+        if (!file_exists($this->imgPath)){
+            mkdir($this->imgPath);
+        }
+        if (!file_exists($this->imgTmbPath)) {
+            mkdir($this->imgTmbPath);
+        }
+        if (!file_exists($this->catPath)) {
+            mkdir($this->catPath);
+        }
+        if (!file_exists($this->userPath)) {
+            mkdir($this->userPath);
+        }
+        if (!file_exists($this->collPath)) {
+            mkdir($this->collPath);
+        }
+        if (!file_exists($this->menuPath)) {
+            mkdir($this->menuPath);
+        }
+        if (!file_exists($this->brandPath)) {
+            mkdir($this->brandPath);
+        }
     }
     /**
      * Returns image files
@@ -215,7 +238,7 @@ class Assets extends BaseController {
 
         if(move_uploaded_file($tmpPath, $file)){
 
-            $tmbsizey = 200;
+            $tmbsizey = 80;
             $tmbsizex = (int)$tmbsizey / 1.778;
 
             $src = $this->correctImageOrientation($file, $type);
@@ -477,8 +500,10 @@ class Assets extends BaseController {
 
     //image upload csv
     public function makeCSV($columns) {
+        $session = session();
+        $time = time();
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="sample.csv"');
+        header('Content-Disposition: attachment; filename="' . preg_replace('/\s+/', '', $session->get("brand_name")) . date("Ymdgis", $time) . '"');
         $fp = fopen($this->imgPath . "../images.csv", 'wb');
         fputcsv($fp, $columns);
         fclose($fp);
