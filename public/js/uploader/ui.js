@@ -57,6 +57,10 @@ function ui_multi_update_file_progress(id, percent, color, active) {
     }
 }
 
+function errorAdd(name){
+    $("#errors").append(`<li class="status text-danger">${name}</li>`)
+}
+
 function scrollUp(){
     $("#files").parent()[0].scrollBy({
         top: -66,

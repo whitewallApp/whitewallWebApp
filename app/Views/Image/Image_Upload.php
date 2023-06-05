@@ -37,28 +37,41 @@
                 <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div id="drag-and-drop-zone" class="dm-uploader p-5">
-                                        <h3 class="mb-5 mt-5 text-muted">Drag &amp; drop files here</h3>
+                            <div class="col-12">
+                                <div id="drag-and-drop-zone" class="dm-uploader p-5">
+                                    <h3 class="mb-5 mt-5 text-muted">Drag &amp; drop files here</h3>
 
-                                        <div class="btn btn-primary btn-block mb-5">
-                                            <span>Open the file Browser</span>
-                                            <input type="file" title='Click to add Files' name="file"/>
+                                    <div class="btn btn-primary btn-block mb-5">
+                                        <span>Open the file Browser</span>
+                                        <input type="file" title='Click to add Files' name="file" />
+                                    </div>
+                                </div><!-- /uploader -->
+
+                                <div class="row">
+                                    <div class="col-10">
+                                        <div class="card file-box">
+                                            <div class="card-header">
+                                                File List
+                                            </div>
+
+                                            <ul class="list-unstyled p-2 d-flex flex-column col" id="files">
+                                                <li class="text-muted text-center empty">No files uploaded.</li>
+                                            </ul>
                                         </div>
-                                    </div><!-- /uploader -->
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="card file-box">
+                                            <div class="card-header">
+                                                File Error List
+                                            </div>
 
-                                    <div class="card file-box">
-                                        <div class="card-header">
-                                            File List
+                                            <ul class="list-unstyled p-2 d-flex flex-column col" id="errors">
+
+                                            </ul>
                                         </div>
-
-                                        <ul class="list-unstyled p-2 d-flex flex-column col" id="files">
-                                            <li class="text-muted text-center empty">No files uploaded.</li>
-                                        </ul>
                                     </div>
                                 </div>
-                            </div><!-- /file list -->
+                            </div>
 
                             <div class="row">
                                 <div class="col-12 m-4 d-flex justify-content-center">

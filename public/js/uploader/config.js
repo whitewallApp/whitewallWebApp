@@ -56,6 +56,7 @@ $(function () {
         onUploadError: function (id, xhr, status, message) {
             ui_multi_update_file_status(id, 'danger', xhr.responseText);
             ui_multi_update_file_progress(id, 0, 'danger', false);
+            errorAdd(id);
         },
         onFallbackMode: function () {
             // When the browser doesn't support this plugin :(
@@ -63,6 +64,7 @@ $(function () {
         },
         onFileSizeError: function (file) {
             ui_add_log('File \'' + file.name + '\' cannot be added: size excess limit', 'danger');
+            errorAdd(id);
         }
     });
 
