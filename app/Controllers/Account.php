@@ -24,6 +24,11 @@ class Account extends BaseController
             "success" => false
         ];
 
+        if ($this->request->getGet("logout") !== null){
+            session_destroy();
+            return redirect()->to("");
+        }
+
         return Navigation::renderNavBar("Account Settings") . view('Account', $data) . Navigation::renderFooter();
         
     }

@@ -47,6 +47,7 @@
                     <a class="dropdown-item" href="/brand/users/<?= $brandId ?>">Manage Users</a>
                 <?php endif ?>
                 <a class="dropdown-item" href="/account">Account</a>
+                <a class="dropdown-item" href="/account?logout=true">Logout</a>
                 <a class="dropdown-item" href="/billing">Billing</a>
             </div>
         </div>
