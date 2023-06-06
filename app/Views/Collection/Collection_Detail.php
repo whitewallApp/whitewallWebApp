@@ -46,7 +46,9 @@
       <?php if ($view[$pageName]["edit"]) : ?>
         <button id="submit" class="btn btn-primary mr-2">Save</button>
       <?php endif ?>
-      <button id="delete" class="btn btn-danger mr-2">Remove</button>
+      <?php if ($view[$pageName]["remove"]) : ?>
+        <button id="delete" class="btn btn-danger mr-2">Remove</button>
+      <?php endif ?>
     </div>
   </form>
   <div class="alert alert-success" role="alert" style="display: none;">

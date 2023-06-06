@@ -37,7 +37,9 @@
       <?php if ($view[$pageName]["edit"]) : ?>
         <button type="submit" class="btn btn-primary">Save</button>
       <?php endif ?>
-      <button class="btn btn-danger">Remove</button>
+      <?php if ($view[$pageName]["remove"]) : ?>
+        <button class="btn btn-danger">Remove</button>
+      <?php endif ?>
     </div>
   </form>
   <div class="alert alert-success" role="alert" style="display: none;">

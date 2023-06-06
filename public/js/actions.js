@@ -131,14 +131,14 @@ $("#delete").on("click", function(){
         }
 
         $.ajax({
-            url: window.location + "/delete", 
+            url: window.origin + window.location.pathname + "/delete", 
             type: "post",
             data: {"ids": JSON.stringify(ids)}, 
             success: function(result){
                 window.location.reload();
             },
             error: function(xhr, status, error){
-
+                alert(JSON.parse(xhr.responseText).message);
             }
         })
     }

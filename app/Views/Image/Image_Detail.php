@@ -7,7 +7,7 @@
       <h2 id="data-title" class="mr-4"></h2>
       <button id="add-button" class="btn btn-primary" onclick="showData('/images');">Add</button>
     </div>
-    <?php endif ?>
+  <?php endif ?>
 </div>
 <div id="form-div" style="display: none">
   <form class="mr-4" id="data" action="/images/update" method="post">
@@ -62,7 +62,9 @@
     <?php if ($view[$pageName]["edit"]) : ?>
       <button class="btn btn-primary mr-2" onclick="updateImage();">Save</button>
     <?php endif ?>
-    <button class="btn btn-danger mr-2">Remove</button>
+    <?php if ($view[$pageName]["remove"]) : ?>
+      <button class="btn btn-danger mr-2">Remove</button>
+    <?php endif ?>
   </div>
   <div class="alert alert-success" role="alert" style="display: none;">
     Success
