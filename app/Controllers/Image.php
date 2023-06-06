@@ -29,7 +29,8 @@ class Image extends BaseController
 
         if ($this->request->getGet("collection") != null){
             $collectionID = $this->request->getGet("collection", FILTER_SANITIZE_NUMBER_INT);
-            $imgcol = $imageModel->select("id")->where("collection_id", $collectionID)->get()->getResultArray();
+            $brandid = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
+            $imgcol = $imageModel->select("id")->where("collection_id", $collectionID)->where("brand_id", $brandid)->get()->getResultArray();
 
             $tempids = [];
             foreach($imgcol as $key => $imgcolid){
