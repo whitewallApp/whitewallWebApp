@@ -71,6 +71,9 @@
                 </tbody>
             </table>
         </div>
+        <div>
+            <?= $pager->links() ?>
+        </div>
     </div>
     <div class="col-sm-4">
         <div class="card p-2 header">

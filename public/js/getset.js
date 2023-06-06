@@ -1,5 +1,15 @@
 lastElement = "";
 
+$(function(){
+    children = $(".pagination").children()
+
+    for (let i = 0; i < children.length; i++) {
+        const element = $(children[i]);
+        element.addClass("page-item");
+        element.children().addClass("page-link");
+    }
+})
+
 //IMAGES
 function getImg(e){
     

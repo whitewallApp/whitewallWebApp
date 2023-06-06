@@ -7,9 +7,6 @@ use App\Models\CollectionModel;
 use App\Models\CategoryModel;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
-use App\Models\MobleModel;
-use Google\Service\CloudAsset\Asset;
-use PhpParser\Node\Stmt\Break_;
 use RuntimeException;
 
 class Image extends BaseController
@@ -24,30 +21,24 @@ class Image extends BaseController
         $brandModel = new BrandModel;
         $brandname = $session->get("brand_name");
 
-        $ids = $imageModel->getAllIds($brandname);
+        $brandId = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
+        $dbImages = $imageModel->where("brand_id", $brandId)->paginate(10);
+
         $images = [];
 
         if ($this->request->getGet("collection") != null){
             $collectionID = $this->request->getGet("collection", FILTER_SANITIZE_NUMBER_INT);
-            $brandid = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
-            $imgcol = $imageModel->select("id")->where("collection_id", $collectionID)->where("brand_id", $brandid)->get()->getResultArray();
-
-            $tempids = [];
-            foreach($imgcol as $key => $imgcolid){
-                $tempids[$key] = $imgcolid["id"];
-            }
-
-            $ids = $tempids;
+            $dbImages = $imageModel->where("brand_id", $brandId)->where("collection_id", $collectionID)->paginate(10);
         }
 
-        foreach ($ids as $id) {
-            $colID = $imageModel->getImage($id, filter: ["collection_id"]);
+        foreach ($dbImages as $image) {
+            $colID = $imageModel->getImage($image["id"], filter: ["collection_id"]);
             $catID = $collModel->getCollection($colID, filter: ["category_id"]);
 
             $image = [
-                "id" => $id,
-                "path" => $imageModel->getImage($id, filter: ["thumbnail"]),
-                "name" => $imageModel->getImage($id, filter: ["name"]),
+                "id" => $image["id"],
+                "path" => $image["thumbnail"],
+                "name" => $image["name"],
                 "collection" => $collModel->getCollection($colID, filter: ["name"]),
                 "category" => $catModel->getCategory($catID, filter: ["name"])
             ];
@@ -59,6 +50,7 @@ class Image extends BaseController
         // compile data to be sent to view
         $data = [
             "images" => $images,
+            'pager' => $imageModel->pager,
         ];
 
         return Navigation::renderNavBar("Images", "images", [true, "Images"]) . view('Image/Image_Detail', $data) . Navigation::renderFooter();
@@ -138,7 +130,7 @@ class Image extends BaseController
                         "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
                         "externalPath" => $post["externalPath"]
                     ];
-                    $imageModel->updateImage($imageID, $data);
+                    $imageModel->updateImage($data, $imageID);
                 }
             } else {
                 //link -> file
@@ -154,7 +146,7 @@ class Image extends BaseController
                     "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
                     "externalPath" => $post["externalPath"]
                 ];
-                $imageModel->updateImage($imageID, $data);
+                $imageModel->updateImage($data, $imageID);
             }
         } else if (isset($_POST["link"])) {
             //link -> link or file -> link
@@ -175,7 +167,7 @@ class Image extends BaseController
                 "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
                 "externalPath" => $post["externalPath"]
             ];
-            $imageModel->updateImage($imageID, $data);
+            $imageModel->updateImage($data, $imageID);
         } else {
             //update just the data
             $post = $this->request->getPost(["name", "description", "collection"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -186,7 +178,7 @@ class Image extends BaseController
                 "description" => $post["description"],
                 "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
             ];
-            $imageModel->updateImage($imageID, $data);
+            $imageModel->updateImage($data, $imageID);
         }
 
         return json_encode(["success" => true]);
