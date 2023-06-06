@@ -221,7 +221,17 @@ class Image extends BaseController
                 $imageModel->delete($id);
             }
         }else{
+            $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
+            $dbids = $imageModel->getAllIds($session->get("brand_name"));
 
+            foreach ($dbids as $dbid) {
+                if ($dbid == $id){
+                    $path = $imageModel->getImage($id, filter: ["imagePath"]);
+                    $name = explode("/", $path)[3];
+                    $assets->removeImage($name);
+                    $imageModel->delete($id);
+                }
+            }
         }
     }
 
