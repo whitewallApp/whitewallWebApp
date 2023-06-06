@@ -31,6 +31,20 @@ class Image extends BaseController
             $dbImages = $imageModel->where("brand_id", $brandId)->where("collection_id", $collectionID)->paginate(10);
         }
 
+        $collections = [];
+
+        $dbcollections = $collModel->getAllIds($session->get("brand_name"));
+
+        foreach ($dbcollections as $dbcollectionid) {
+            $dbcollection = $collModel->getCollection($dbcollectionid);
+            
+            $collection = [
+                "id" => $dbcollection["id"],
+                "name" => $dbcollection["name"]
+            ];
+            array_push($collections, $collection);
+        }
+
         foreach ($dbImages as $image) {
             $colID = $imageModel->getImage($image["id"], filter: ["collection_id"]);
             $catID = $collModel->getCollection($colID, filter: ["category_id"]);
@@ -51,6 +65,7 @@ class Image extends BaseController
         $data = [
             "images" => $images,
             'pager' => $imageModel->pager,
+            "collections" => $collections
         ];
 
         return Navigation::renderNavBar("Images", "images", [true, "Images"]) . view('Image/Image_Detail', $data) . Navigation::renderFooter();

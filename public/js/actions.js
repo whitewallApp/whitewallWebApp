@@ -103,3 +103,15 @@ $("#resetBtn").on("click", function(e){
         }
     })
 })
+
+$("[aria-labelledby='filters']").on("click", function(e){
+    id = $(e.target).attr("collection-id");
+    
+    if (window.location.toString().includes("page")){
+        window.location = window.location + "&collection=" + id;
+    } else if (window.location.toString().includes("collection")) {
+        window.location = window.location.toString().replace(/collection=[\d]*/, "collection=" + id);
+    }else{
+        window.location = window.location + "?collection=" + id;
+    }
+})

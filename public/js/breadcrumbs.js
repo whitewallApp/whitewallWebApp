@@ -1,5 +1,5 @@
 $("document").ready(function(){
-    setImageStart();
+    // setImageStart();
 
     loadingBars();
 
@@ -88,19 +88,6 @@ function startCheckBoxes(){
         var element = boxes[i];
         element.addEventListener("click", singlebox.bind(boxes[i])); //for starting checkboxes
     }
-}
-
-function breadcrumbs(){
-    var breadcrumbs = document.getElementById("breadcrumbs");
-    var url = document.URL;
-    var url = url.replace("http://", "");
-    var page = url.split("/")[1];
-
-    var html;
-    var link = page.charAt(0).toUpperCase() + page.slice(1);
-
-
-    breadcrumbs.innerHTML = link;
 }
 
 function setImageStart(){
