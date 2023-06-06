@@ -28,12 +28,13 @@ class Image extends BaseController
 
         if ($this->request->getGet("collection") != null){
             $collectionID = $this->request->getGet("collection", FILTER_SANITIZE_NUMBER_INT);
-            $dbImages = $imageModel->where("brand_id", $brandId)->where("collection_id", $collectionID)->paginate(10);
-        }
 
-        if ($this->request->getGet("orderby") != null) {
-            $column = $this->request->getGet("orderby", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $dbImages = $imageModel->where("brand_id", $brandId)->orderBy($column, "ASC")->paginate(10);
+            if ($this->request->getGet("orderby") != null) {
+                $column = $this->request->getGet("orderby", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $dbImages = $imageModel->where("brand_id", $brandId)->where("collection_id", $collectionID)->orderBy($column, "ASC")->paginate(10);
+            }else{
+                $dbImages = $imageModel->where("brand_id", $brandId)->where("collection_id", $collectionID)->paginate(10);
+            }
         }
 
         $collections = [];
