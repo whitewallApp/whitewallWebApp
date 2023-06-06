@@ -381,6 +381,12 @@ class Assets extends BaseController {
         }
     }
 
+    public function removeCollection($name){
+        if (file_exists($this->collPath . $name)){
+            unlink($this->collPath . $name);
+        }
+    }
+
     /**
      * updated the image by deleting the old one then saving the new one
      *
@@ -393,6 +399,13 @@ class Assets extends BaseController {
     {
         unlink($this->catPath . $oldPath);
         return $this->saveCategory($tmpPath, $type);
+    }
+
+    public function removeCategory($name)
+    {
+        if (file_exists($this->catPath . $name)) {
+            unlink($this->catPath . $name);
+        }
     }
 
     /**

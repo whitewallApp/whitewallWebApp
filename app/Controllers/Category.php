@@ -122,4 +122,39 @@ class Category extends BaseController
 
         return json_encode(["success" => true]);
     }
+
+    //delete collections
+    public function delete()
+    {
+        $catModel = new CategoryModel();
+        $session = session();
+        $assets = new Assets();
+
+        //bulk image or single
+        if ($this->request->getPost("ids") != null) {
+            $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_NUMBER_INT);
+            $dbids = $catModel->getAllIds($session->get("brand_name"));
+
+            $vallidIds = array_intersect($dbids, $ids);
+
+            foreach ($vallidIds as $id) {
+                $path = $catModel->getCategory($id, filter: ["iconPath"])[0];
+                $name = explode("/", $path)[3];
+                $assets->removeCategory($name);
+                $catModel->delete($id);
+            }
+        } else {
+            $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
+            $dbids = $catModel->getAllIds($session->get("brand_name"));
+
+            foreach ($dbids as $dbid) {
+                if ($dbid == $id) {
+                    $path = $catModel->getCategory($id, filter: ["iconPath"])[0];
+                    $name = explode("/", $path)[3];
+                    $assets->removeCategory($name);
+                    $catModel->delete($id);
+                }
+            }
+        }
+    }
 }

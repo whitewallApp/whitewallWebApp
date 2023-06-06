@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\ImageModel;
 use App\Models\CollectionModel;
 use App\Models\CategoryModel;
 use App\Models\BrandModel;
@@ -117,6 +116,41 @@ class Collection extends BaseController
             $colModel->updateCollection($post["id"], $data);
 
             return json_encode(["success" => true]);
+        }
+    }
+
+    //delete
+    public function delete()
+    {
+        $collModel = new CollectionModel();
+        $session = session();
+        $assets = new Assets();
+
+        //bulk image or single
+        if ($this->request->getPost("ids") != null) {
+            $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_NUMBER_INT);
+            $dbids = $collModel->getAllIds($session->get("brand_name"));
+
+            $vallidIds = array_intersect($dbids, $ids);
+
+            foreach ($vallidIds as $id) {
+                $path = $collModel->getCollection($id, filter: ["iconPath"]);
+                $name = explode("/", $path)[3];
+                $assets->removeCollection($name);
+                $collModel->delete($id);
+            }
+        } else {
+            $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
+            $dbids = $collModel->getAllIds($session->get("brand_name"));
+
+            foreach ($dbids as $dbid) {
+                if ($dbid == $id) {
+                    $path = $collModel->getImage($id, filter: ["iconPath"]);
+                    $name = explode("/", $path)[3];
+                    $assets->removeCollection($name);
+                    $collModel->delete($id);
+                }
+            }
         }
     }
 }
