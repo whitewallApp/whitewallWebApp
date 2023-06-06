@@ -487,7 +487,7 @@ class Assets extends BaseController {
         $session = session();
         $time = time();
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="' . preg_replace('/\s+/', '', $session->get("brand_name")) . date("Ymdgis", $time) . '"');
+        header('Content-Disposition: attachment; filename="' . preg_replace('/\s+/', '', $session->get("brand_name")) . date("Ymdgis", $time) . '.csv"');
         $fp = fopen($this->imgPath . "../images.csv", 'wb');
         fputcsv($fp, $columns);
         fclose($fp);

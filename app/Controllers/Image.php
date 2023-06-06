@@ -27,11 +27,21 @@ class Image extends BaseController
         $ids = $imageModel->getAllIds($brandname);
         $images = [];
 
+        if ($this->request->getGet("collection") != null){
+            $collectionID = $this->request->getGet("collection", FILTER_SANITIZE_NUMBER_INT);
+            $imgcol = $imageModel->select("id")->where("collection_id", $collectionID)->get()->getResultArray();
+
+            $tempids = [];
+            foreach($imgcol as $key => $imgcolid){
+                $tempids[$key] = $imgcolid["id"];
+            }
+
+            $ids = $tempids;
+        }
+
         foreach ($ids as $id) {
             $colID = $imageModel->getImage($id, filter: ["collection_id"]);
             $catID = $collModel->getCollection($colID, filter: ["category_id"]);
-
-
 
             $image = [
                 "id" => $id,
