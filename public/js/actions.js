@@ -115,3 +115,31 @@ $("[aria-labelledby='filters']").on("click", function(e){
         window.location = window.location + "?collection=" + id;
     }
 })
+
+$("#delete").on("click", function(){
+    if (confirm("Are you sure you want to delete")){
+        checkboxes = $(".checkbox-lg:checkbox:checked");
+
+        ids = [];
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            const element = checkboxes[i];
+            let id = $(element).parent().parent().prop("id");
+            if (id != ""){
+                ids.push(id);
+            }
+        }
+
+        $.ajax({
+            url: window.location + "/delete", 
+            type: "post",
+            data: {"ids": JSON.stringify(ids)}, 
+            success: function(result){
+                window.location.reload();
+            },
+            error: function(xhr, status, error){
+
+            }
+        })
+    }
+})

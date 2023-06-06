@@ -71,6 +71,7 @@ class Image extends BaseController
         return Navigation::renderNavBar("Images", "images", [true, "Images"]) . view('Image/Image_Detail', $data) . Navigation::renderFooter();
     }
 
+    //get image data
     public function post()
     {
         $session = session();
@@ -108,6 +109,7 @@ class Image extends BaseController
         }
     }
 
+    //update the image
     public function update()
     {
         $assets = new Assets();
@@ -199,6 +201,31 @@ class Image extends BaseController
         return json_encode(["success" => true]);
     }
 
+    //delete images
+    public function delete(){
+        $imageModel = new ImageModel();
+        $session = session();
+        $assets = new Assets();
+
+        //bulk image or single
+        if ($this->request->getPost("ids") != null){
+            $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_NUMBER_INT);
+            $dbids = $imageModel->getAllIds($session->get("brand_name"));
+
+            $vallidIds = array_intersect($dbids, $ids);
+
+            foreach($vallidIds as $id){
+                $path = $imageModel->getImage($id, filter: ["imagePath"]);
+                $name = explode("/", $path)[3];
+                $assets->removeImage($name);
+                $imageModel->delete($id);
+            }
+        }else{
+
+        }
+    }
+
+    //upload functions
     public function uploadView()
     {
         return Navigation::renderNavBar("Images", [false, "Images"]) . view('Image/Image_Upload') . Navigation::renderFooter();

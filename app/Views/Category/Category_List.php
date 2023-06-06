@@ -10,16 +10,16 @@
                         <div class="col-4">
                             <div class="row">
                                 <div class="col-1">
-                                    |
+
                                 </div>
                                 <div class="col-4 text-center">
-                                    <a href="#">Delete</a>
+                                    <button class="btn btn-danger">Delete</button>
                                 </div>
                                 <div class="col-1">
-                                    |
+
                                 </div>
                                 <div class="col-6">
-                                    <a href="#">Change Categories</a>
+                                    <button class="btn btn-info">Change</button>
                                 </div>
                             </div>
                         </div>

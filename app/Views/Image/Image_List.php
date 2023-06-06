@@ -7,24 +7,21 @@
                         <div class="col-2">
                             <p id="infoSelect" class=""></p>
                         </div>
-                        <div class="col-4">
+                        <div class="col-10">
                             <div class="row">
                                 <div class="col-1">
-                                    |
+
                                 </div>
                                 <div class="col-4 text-center">
-                                    <a href="#">Delete</a>
+                                    <button class="btn btn-danger" id="delete">Delete</button>
                                 </div>
                                 <div class="col-1">
-                                    |
+
                                 </div>
                                 <div class="col-6">
-                                    <a href="#">Change Image</a>
+                                    <button class="btn btn-info" id="change">Change</button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-
                         </div>
                     </div>
                 </div>

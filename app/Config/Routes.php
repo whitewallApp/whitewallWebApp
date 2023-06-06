@@ -67,6 +67,9 @@ $routes->post('/account','Account::post', ["filter" => "view:nocheck"]);
 $routes->post('/reset','Reset::post');
 $routes->post('/menu','Menu::post', ["filter" => "view:menu"]);
 
+//remove urls
+$routes->post('/images/delete', 'Image::delete', ["filter" => "remove:images"]);
+
 //image upload
 $routes->get("/images/upload","Image::uploadView", ["filter" => "add:images"]);
 $routes->post("/images/upload","Image::upload/1", ["filter" => "add:images"]);
