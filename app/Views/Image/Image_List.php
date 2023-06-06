@@ -2,7 +2,7 @@
     <div class="col-sm-8">
         <div class="card p-2">
             <div class="row m-2">
-                <div class="col-sm-10">
+                <div class="col-8">
                     <div id="actions" class="row" style="display: none">
                         <div class="col-2">
                             <p id="infoSelect" class=""></p>
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-2">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="filters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
@@ -39,6 +39,19 @@
                             <?php foreach ($collections as $collection) : ?>
                                 <button class="dropdown-item" type="button" collection-id="<?= $collection["id"] ?>"><?= $collection["name"] ?></button>
                             <?php endforeach ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="orderby" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i style="font-size: 16px;" class="bi bi-sort-down"></i>
+                            Order By
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="orderby">
+                            <button class="dropdown-item" type="button" column="name">Name</button>
+                            <button class="dropdown-item" type="button" column="dateUpdated">Date Updated</button>
+                            <button class="dropdown-item" type="button" column="dateCreated">Date Created</button>
                         </div>
                     </div>
                 </div>

@@ -116,6 +116,18 @@ $("[aria-labelledby='filters']").on("click", function(e){
     }
 })
 
+$("[aria-labelledby='orderby']").on("click", function (e) {
+    id = $(e.target).attr("column");
+
+    if (window.location.toString() == (window.origin + window.location.pathname)){
+        window.location = window.location + "?orderby=" + id
+    } else if (window.location.toString().includes("orderby")){
+        window.location = window.location.toString().replace(/orderby=[\w]*/, "orderby=" + id);
+    }else{
+        window.location = window.location + "&orderby=" + id;
+    }
+})
+
 $("#delete").on("click", function(){
     if (confirm("Are you sure you want to delete")){
         checkboxes = $(".checkbox-lg:checkbox:checked");

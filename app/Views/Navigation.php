@@ -145,7 +145,7 @@
                         <button class="btn btn-primary m-2">Individual</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary m-2" onclick="window.location = window.location + '/upload'">Bulk Upload</button>
+                        <button class="btn btn-primary m-2" onclick="window.location = window.origin + window.location.pathname + '/upload'">Bulk Upload</button>
                     </div>
                 </div>
             <?php endif ?>
