@@ -14,7 +14,7 @@ class MenuModel extends Model
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'createDate';
     protected $updatedField  = 'updatedDate';
-    protected $allowedFields = ["title", "target", "sequence", "externalLink", "internalContext"];
+    protected $allowedFields = ["title", "target", "sequence", "externalLink", "internalContext", "brand_id"];
 
     public function getCollumn($column, $brandName, $getBy=[]){
         $builder = $this->db->table('brand');

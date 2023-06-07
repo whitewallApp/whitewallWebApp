@@ -43,7 +43,7 @@ class Menu extends BaseController
     public function update(){
         //TODO: handle file Uploads
         $menuModel = new MenuModel();
-        if (count($_POST) > 0){
+        try {
             $post = $this->request->getPost(["id", "title", "sequence", "target"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             $data = [
@@ -66,26 +66,40 @@ class Menu extends BaseController
                 $data["internalContext"] = $cleanHtml;
             }
 
-            $menuModel->update($post["id"], $data);
-            return json_encode($data);
-        }
+            if ($post["id"] == "undefined"){
+                $brandModel = new BrandModel();
+                $session = session();
+                $data["brand_id"] = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
 
-        if (count($_FILES) > 0){ //TODO: this doesn't delete old files
-            $assets = new Assets();
-            $return = [];
-
-            foreach($_FILES as $file){
-                $tmpName = htmlspecialchars($file["tmp_name"]);
-                $type = explode("/", $file["type"])[1];
-
-                $name = $assets->saveMenu($tmpName, $type);
-
-                $return = ["link" => "/assets/menu/" . $name];
+                $menuModel->save($data);
+            }else{
+                $menuModel->update($post["id"], $data);
             }
+            return json_encode(["success" => true]);
 
-            return json_encode($return);
+            //THIS IS OLD CODE FOR WYSIWYG
+            // if (count($_FILES) > 0){ //TODO: this doesn't delete old files
+            //     $assets = new Assets();
+            //     $return = [];
+
+            //     foreach($_FILES as $file){
+            //         $tmpName = htmlspecialchars($file["tmp_name"]);
+            //         $type = explode("/", $file["type"])[1];
+
+            //         $name = $assets->saveMenu($tmpName, $type);
+
+            //         $return = ["link" => "/assets/menu/" . $name];
+            //     }
+
+            //     return json_encode($return);
+            // }
+        } catch (\Exception $e){
+            http_response_code(400);
+            return json_encode($e->getMessage());
+            exit;
         }
     }
+
 }
 
 ?>
