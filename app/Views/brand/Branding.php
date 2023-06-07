@@ -484,10 +484,48 @@
                         </div>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-header" id="button">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#linkCollapse" aria-expanded="false" aria-controls="collapseTwo">
+                                Custom Links
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="linkCollapse" class="collapse" aria-labelledby="button" data-parent="#accordionBranding">
+                        <div class="card-body">
+                            <form>
+                                <div class="form-text">
+                                    Avalible placeholders: {{collection_id}}, {{collection_name}}, {{category_id}}, {{category_name}}
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="collectionLinkTitle">Collections</span>
+                                    <input type="text" class="form-control" id="collectionLink" aria-describedby="collectionLinkTitle" placeholder="?collection={{collection_id}}" />
+                                </div>
+
+                                <div class="form-text">
+                                    Avalible placeholders: {{category_id}}, {{category_name}}
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="categoryLinkTitle">Categories</span>
+                                    <input type="text" class="form-control" id="categoryLink" aria-describedby="categoryLinkTitle" placeholder="?category={{category_id}}" />
+                                </div>
+
+                                <div class="form-text">
+                                    Avalible placeholders: {{menu_id}}, {{menu_title}}
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="menuLinkTitle">Menu Items</span>
+                                    <input type="text" class="form-control" id="menuLink" aria-describedby="menuLinkTitle" placeholder="?menu_item={{menu_id}}" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-1">
-            <button style="height: 50%;" class="btn btn-primary" id="save">Save</button>
+            <button style="height: 55%;" class="btn btn-primary" id="save">Save</button>
         </div>
     </div>
 </div>

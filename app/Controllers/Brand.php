@@ -150,11 +150,9 @@ class Brand extends BaseController
     }
 
     public function updateBrand(){
-        // try {
+        try {
             $brandModel = new BrandModel();
             $session = session();
-
-            // echo var_dump(array_keys($this->request->getFiles())[0]);
 
             if (count($this->request->getFiles()) > 0){
                 $imageType = htmlspecialchars(array_keys($this->request->getFiles())[0]);
@@ -194,17 +192,65 @@ class Brand extends BaseController
                     $brandModel->update($brand["id"], $updatedBrand);
                 }
             }else{
-                $branding = (string)$this->request->getPost("branding");
+                //TODO: needs validation and filtering
+                $branding = $this->request->getPost("branding");
+                $post = $this->request->getPost(["collectionLink", "categoryLink", "menuLink"]);
 
                 $brandId = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
                 $brandModel->update($brandId, ["branding" => $branding]);
+
+                $colModel = new CollectionModel();
+                $catModel = new CategoryModel();
+
+                if ($post["collectionLink"] != ""){
+                    $ids = $colModel->getAllIds($session->get("brand_name"));
+                    foreach($ids as $id){
+                        $collection = $colModel->getCollection($id, assoc: true);
+                        $cateogory = $catModel->getCategory($collection["category_id"], assoc: true);
+
+                        $link = preg_replace("/{{collection_id}}/", $id, $post["collectionLink"]);
+                        $link = preg_replace("/{{collection_name}}/", urlencode($collection["name"]), $link);
+                        $link = preg_replace("/{{category_id}}/", $collection["category_id"], $link);
+                        $link = preg_replace("/{{category_name}}/", urlencode($cateogory["name"]), $link);
+
+                        $finalLink = $collection["link"] . $link;
+                        $colModel->update($id, ["link" => $finalLink]);
+                    }
+                }
+                if ($post["categoryLink"] != "") {
+                    $ids = $catModel->getCollumn("id", $session->get("brand_name"));
+
+                    foreach($ids as $id){
+                        $cateogory = $catModel->getCategory($id, assoc: true);
+
+                        $link = preg_replace("/{{category_id}}/", $id, $post["categoryLink"]);
+                        $link = preg_replace("/{{category_name}}/", urlencode($cateogory["name"]), $link);
+
+                        $finalLink = $cateogory["link"] . $link;
+                        $catModel->update($id, ["link" => $finalLink]);
+                    }
+                }
+                if ($post["menuLink"] != "") {
+                    $menuModel = new MenuModel();
+                    $ids = $menuModel->getCollumn("id", $session->get("brand_name"));
+
+                    foreach($ids as $id){
+                        $menuItem = $menuModel->getMenuItem($id, assoc: true);
+
+                        $link = preg_replace("/{{menu_id}}/", $id, $post["menuLink"]);
+                        $link = preg_replace("/{{menu_title}}/", urlencode($menuItem["title"]), $link);
+
+                        $finalLink = $menuItem["externalLink"] . $link;
+                        $menuModel->update($id, ["externalLink" => $finalLink]);
+                    }
+                }
             }
 
-        // } catch (\Exception $e){
-        //     http_response_code(400);
-        //     echo json_encode($e->getMessage());
-        //     exit;
-        // }
+        } catch (\Exception $e){
+            http_response_code(400);
+            echo json_encode($e->getMessage());
+            exit;
+        }
     }
 
     public function setBrand() //Post

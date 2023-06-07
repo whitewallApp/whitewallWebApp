@@ -288,6 +288,9 @@ $("#appBanner").on("input", function(){
 $("#save").on("click", function(){
     formData = new FormData();
     formData.append("branding", JSON.stringify(branding));
+    formData.append("collectionLink", $("#collectionLink").val());
+    formData.append("categoryLink", $("#categoryLink").val());
+    formData.append("menuLink", $("#menuLink").val());
 
     $.ajax({
         url: "/brand/branding/update",
