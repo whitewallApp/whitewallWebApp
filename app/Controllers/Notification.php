@@ -135,7 +135,15 @@ class Notification extends BaseController
             $data["forceWall"] = false;
         }
 
-        $notModel->update($post["id"], $data);
+        if ($post["id"] == "undefined"){
+            $brandModel = new BrandModel();
+            $session = session();
+
+            $data["brand_id"] = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
+            $notModel->save($data);
+        }else{
+            $notModel->update($post["id"], $data);
+        }
 
         return json_encode(["success" => true]);
         // return json_encode($data);
