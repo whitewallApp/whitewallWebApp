@@ -69,12 +69,12 @@ $("#menuData").submit(function(e){
         success: function (data) {
             response = JSON.parse(data);
             console.log(response);
-            // if (response.success) {
-            //     $(".alert-success").show();
-            // } else {
-            //     $(".alert-danger").html(response.message);
-            //     $(".alert-danger").show();
-            // }
+            if (response.success) {
+                $(".alert-success").show();
+            } else {
+                $(".alert-danger").html(response.message);
+                $(".alert-danger").show();
+            }
         }
     });
 })
