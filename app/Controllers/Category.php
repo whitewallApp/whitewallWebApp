@@ -5,6 +5,7 @@ use App\Models\CategoryModel;
 use App\Models\CollectionModel;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
+use RuntimeException;
 
 class Category extends BaseController
 {
@@ -29,6 +30,8 @@ class Category extends BaseController
 
                 if ($colCatId["category_id"] == $id){
                     $category["collectionName"] = $colCatId["name"];
+                }else{
+                    $category["collectionName"] = "None";
                 }
             }
 
@@ -75,52 +78,84 @@ class Category extends BaseController
             unlink("../writable/cache/CategoryCategory_List");
         }
 
-        $post = $this->request->getPost(["id", "name", "description", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        try {
+            $brandModel = new BrandModel();
+            $session = session();
+            $post = $this->request->getPost(["id", "name", "description", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+            if ($post["id"] == "undefined"){
+                $data = [
+                    "name" => $post["name"],
+                    "description" => $post["description"],
+                    "link" => $post["link"],
+                    "brand_id" => $brandModel->getBrand($session->get("brand_name"), "name", ["id"])
+                ];
 
-        if (count($_FILES) > 0){
-            //get rid of the assets/category/
-            $oldName = (string)$categoryModel->getCategory($post["id"], filter: ["iconPath"]);
-            $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
+                if (count($this->request->getFiles()) > 0){
+                    $file = $this->request->getFile("file");
 
-            $type = $this->request->getPost("type", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $type = explode("image/", (string)$type)[1];
+                    if (!$file->isValid()){
+                        throw new RuntimeException("Invalid File");
+                    }
 
-            if ($type == "svg+xml"){
-                $type = "svg";
+                    $name = $assets->saveCategory($file->getTempName(), $file->guessExtension());
+                    $data["iconPath"] = "/assets/category/" . $name;
+                }
+
+                $categoryModel->save($data);
+                return json_encode(["success" => true]);
+                die;
             }
 
-            if ($oldName == ""){
-                $newName = $assets->saveCategory($tmpPath, $type);
+
+            if (count($_FILES) > 0){
+                //get rid of the assets/category/
+                $oldName = (string)$categoryModel->getCategory($post["id"], filter: ["iconPath"]);
+                $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
+
+                $type = $this->request->getPost("type", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $type = explode("image/", (string)$type)[1];
+
+                if ($type == "svg+xml"){
+                    $type = "svg";
+                }
+
+                if ($oldName == ""){
+                    $newName = $assets->saveCategory($tmpPath, $type);
+                }else{
+                    $oldName = explode("category/", $oldName)[1];
+                    $newName = $assets->updateCategory($tmpPath, $type, $oldName);
+                }
+
+                if(!$newName){
+                    return json_encode(["success" => false, "message" => "File Error"]);
+                    exit();
+                }
+
+                $data = [
+                    "name" => $post["name"],
+                    "description" => $post["description"],
+                    "iconPath" => "/assets/category/" . $newName,
+                    "link" => $post["link"]
+                ];
+
+                $categoryModel->updateCategory($post["id"], $data);
             }else{
-                $oldName = explode("category/", $oldName)[1];
-                $newName = $assets->updateCategory($tmpPath, $type, $oldName);
+                $data = [
+                    "name" => $post["name"],
+                    "description" => $post["description"],
+                    "link" => $post["link"]
+                ];
+
+                $categoryModel->updateCategory($post["id"], $data);
             }
 
-            if(!$newName){
-                return json_encode(["success" => false, "message" => "File Error"]);
-                exit();
-            }
-
-            $data = [
-                "name" => $post["name"],
-                "description" => $post["description"],
-                "iconPath" => "assets/category/" . $newName,
-                "link" => $post["link"]
-            ];
-
-            $categoryModel->updateCategory($post["id"], $data);
-        }else{
-            $data = [
-                "name" => $post["name"],
-                "description" => $post["description"],
-                "link" => $post["link"]
-            ];
-
-            $categoryModel->updateCategory($post["id"], $data);
+            return json_encode(["success" => true]);
+        }catch (\Exception $e){
+            http_response_code(400);
+            return json_encode($e->getMessage());
+            die;
         }
-
-        return json_encode(["success" => true]);
     }
 
     //delete collections

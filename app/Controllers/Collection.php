@@ -5,6 +5,7 @@ use App\Models\CollectionModel;
 use App\Models\CategoryModel;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
+use RuntimeException;
 
 class Collection extends BaseController
 {
@@ -78,7 +79,7 @@ class Collection extends BaseController
 
     public function update(){
         $session = session();
-        if ($session->get("logIn")) {
+        try {
             $catModel = new CategoryModel();
             $colModel = new CollectionModel();
             $assets = new Assets();
@@ -91,6 +92,34 @@ class Collection extends BaseController
 
             $post = $this->request->getPost(["id", "name", "description", "link", "category"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $categoryId = $catModel->getCategory($post["category"], "name", ["id"]);
+
+            //create the collection
+            if ($post["id"] == "undefined"){
+                $brandModel = new BrandModel();
+
+                $data = [
+                    "name" => $post["name"],
+                    "description" => $post["description"],
+                    "link" => $post["link"],
+                    "category_id" => $categoryId,
+                    "brand_id" => $brandModel->getBrand($session->get("brand_name"), "name", ["id"])
+                ];
+
+                if (count($this->request->getFiles()) > 0){
+                    $file = $this->request->getFile("file");
+
+                    if (!$file->isValid()){
+                        throw new RuntimeException("Invalid File");
+                    }
+
+                    $name = $assets->saveCollection($file->getTempName(), $file->guessExtension());
+                    $data["iconPath"] = "/assets/collection/" . $name;
+                }
+
+                $colModel->save($data);
+                return json_encode(["success" => true]);
+                die;
+            }
 
             $data = [
                 "name" => $post["name"],
@@ -116,6 +145,10 @@ class Collection extends BaseController
             $colModel->updateCollection($post["id"], $data);
 
             return json_encode(["success" => true]);
+        }catch (\Exception $e){
+            http_response_code(400);
+            return json_encode($e->getMessage());
+            exit;
         }
     }
 

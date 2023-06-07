@@ -474,7 +474,7 @@ function showData(link, list=true){
     button = $("#add-button");
 
     button.hide();
-    title.html("Edit " + link.substring(1, link.length));
+    title.html("Edit " + window.location.pathname.substring(1, window.location.pathname.length));
 
 
     catSelect = $("#select");
