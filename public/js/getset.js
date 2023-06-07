@@ -339,6 +339,7 @@ function getNot(e){
     },
     function(data, status){
         notifcation = JSON.parse(data);
+        $($("#notData").children().get(0)).html("<h2>Edit Notification</h2>")
         
         $("#notData").attr("not-id", notifcation.id);
 

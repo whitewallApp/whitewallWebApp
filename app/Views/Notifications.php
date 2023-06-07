@@ -52,6 +52,9 @@
     <div class="col-sm-8 mt-3">
         <div class="card m-2 p-2">
             <form id="notData">
+                <div class="text-center">
+                    <h2>Add Notification</h2>
+                </div>
                 <div class="form-group">
                     <label for="title">Notification Title</label>
                     <input type="text" class="form-control" id="title" placeholder="Check out this new thing!">

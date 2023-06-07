@@ -142,7 +142,7 @@
                         <p>Add <?= $actions[1] ?></p>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary m-2" onclick="showData();">Individual</button>
+                        <button class="btn btn-primary m-2" onclick="">Individual</button>
                     </div>
                     <div class="col">
                         <button class="btn btn-primary m-2" onclick="window.location = window.origin + window.location.pathname + '/upload'">Bulk Upload</button>
