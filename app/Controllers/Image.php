@@ -118,36 +118,90 @@ class Image extends BaseController
     //update the image
     public function update()
     {
-        $assets = new Assets();
-        $imageModel = new ImageModel();
-        $collectionModel = new CollectionModel();
-        $catModel = new CategoryModel();
+        // try {
+            $assets = new Assets();
+            $imageModel = new ImageModel();
+            $collectionModel = new CollectionModel();
+            $brandModel = new BrandModel();
+            $catModel = new CategoryModel();
+            $session = session();
 
-        //delete caches
-        if (file_exists("../writable/cache/ImageImage_Detail")) {
-            unlink("../writable/cache/ImageImage_Detail");
-            unlink("../writable/cache/ImageImage_List");
-        }
+            //delete caches
+            if (file_exists("../writable/cache/ImageImage_Detail")) {
+                unlink("../writable/cache/ImageImage_Detail");
+                unlink("../writable/cache/ImageImage_List");
+            }
 
-        if (isset($_POST["type"])) {
-            //file -> file
-            $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
-            $imageID = htmlspecialchars((string)$this->request->getPost("id"));
-            $type = explode("/", (string)$this->request->getPost("type"))[1];
+            if (isset($_POST["type"])) {
+                //file -> file
+                $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
+                $imageID = htmlspecialchars((string)$this->request->getPost("id"));
+                $type = explode("/", (string)$this->request->getPost("type"))[1];
 
-            $name = $imageModel->getImage($imageID, filter: ["imagePath", "externalPath"], assoc: true);
-            if ($name["externalPath"] == "0") {
-                //get rid of the assets/images
-                $name = explode("assets/images/", $name["imagePath"])[1];
 
-                $newPath = $assets->updateImage($tmpPath, $type, $name);
+                //create image
+                if ($imageID == "undefined"){
+                    $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-                if ($newPath) { //if no error
-                    $post = $this->request->getPost(["name", "description", "collection", "externalPath"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                    $collectionId = $collectionModel->getCollection($post["collection"], ["id"], "name");
+                    $brandId = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
 
                     $data = [
-                        "imagePath" => "/assets/images/" . $newPath,
-                        "thumbnail" => "/assets/thumbnail/" . $newPath,
+                        "name" => $post["name"],
+                        "description" => $post["description"],
+                        "externalPath" => $post["externalPath"],
+                        "collection_id" => $collectionId,
+                        "brand_id" => $brandId
+                    ];
+                    
+                    if ($post["externalPath"] == "0"){
+                        $file = $this->request->getFile("file");
+                        if (!$file->isValid()){
+                            throw new RuntimeException("Invalid File");
+                        }
+
+                        $name = $assets->saveImage($file->getTempName(), $file->guessExtension());
+                        $data["imagePath"] = "/assets/images/" . $name;
+                        $data["thumbnail"] = "/assets/images/thumbnail/" . $name;
+                    }else{
+                        $data["imagePath"] = $post["link"];
+                        $data["thumbnail"] = $post["link"];
+                    }
+
+                    $imageModel->updateImage($data, "");
+                    return json_encode(["success" => true]);
+                    die;
+                }
+
+                $name = $imageModel->getImage($imageID, filter: ["imagePath", "externalPath"], assoc: true);
+                if ($name["externalPath"] == "0") {
+                    //get rid of the assets/images
+                    $name = explode("assets/images/", $name["imagePath"])[1];
+
+                    $newPath = $assets->updateImage($tmpPath, $type, $name);
+
+                    if ($newPath) { //if no error
+                        $post = $this->request->getPost(["name", "description", "collection", "externalPath"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                        $data = [
+                            "imagePath" => "/assets/images/" . $newPath,
+                            "thumbnail" => "/assets/images/thumbnail/" . $newPath,
+                            "name" => $post["name"],
+                            "description" => $post["description"],
+                            "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
+                            "externalPath" => $post["externalPath"]
+                        ];
+                        $imageModel->updateImage($data, $imageID);
+                    }
+                } else {
+                    //link -> file
+                    $name = $assets->saveImage($tmpPath, $type);
+
+                    $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                    $data = [
+                        "imagePath" => "/assets/images/" . $name,
+                        "thumbnail" => "/assets/images/thumbnail/" . $name,
                         "name" => $post["name"],
                         "description" => $post["description"],
                         "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
@@ -155,56 +209,45 @@ class Image extends BaseController
                     ];
                     $imageModel->updateImage($data, $imageID);
                 }
-            } else {
-                //link -> file
-                $name = $assets->saveImage($tmpPath, $type);
-
+            } else if (isset($_POST["link"])) {
+                //link -> link or file -> link
                 $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $imageID = htmlspecialchars((string)$this->request->getPost("id"));
+
+                //remove old file if there is one
+                if ($imageModel->getImage($imageID, filter: ["externalPath"]) == "0") {
+                    $name = explode("assets/images/", $imageModel->getImage($imageID, filter: ["imagePath"]))[1];
+                    $assets->removeImage($name);
+                }
 
                 $data = [
-                    "imagePath" => "/assets/images/" . $name,
-                    "thumbnail" => "/assets/thumbnail/" . $name,
+                    "imagePath" => $post["link"],
+                    "thumbnail" => "none",
                     "name" => $post["name"],
                     "description" => $post["description"],
                     "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
                     "externalPath" => $post["externalPath"]
                 ];
                 $imageModel->updateImage($data, $imageID);
+            } else {
+                //update just the data
+                $post = $this->request->getPost(["name", "description", "collection"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $imageID = htmlspecialchars((string)$this->request->getPost("id"));
+
+                $data = [
+                    "name" => $post["name"],
+                    "description" => $post["description"],
+                    "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
+                ];
+                $imageModel->updateImage($data, $imageID);
             }
-        } else if (isset($_POST["link"])) {
-            //link -> link or file -> link
-            $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $imageID = htmlspecialchars((string)$this->request->getPost("id"));
 
-            //remove old file if there is one
-            if ($imageModel->getImage($imageID, filter: ["externalPath"]) == "0") {
-                $name = explode("assets/images/", $imageModel->getImage($imageID, filter: ["imagePath"]))[1];
-                $assets->removeImage($name);
-            }
-
-            $data = [
-                "imagePath" => $post["link"],
-                "thumbnail" => "none",
-                "name" => $post["name"],
-                "description" => $post["description"],
-                "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
-                "externalPath" => $post["externalPath"]
-            ];
-            $imageModel->updateImage($data, $imageID);
-        } else {
-            //update just the data
-            $post = $this->request->getPost(["name", "description", "collection"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $imageID = htmlspecialchars((string)$this->request->getPost("id"));
-
-            $data = [
-                "name" => $post["name"],
-                "description" => $post["description"],
-                "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
-            ];
-            $imageModel->updateImage($data, $imageID);
-        }
-
-        return json_encode(["success" => true]);
+            return json_encode(["success" => true]);
+        // }catch (\Exception $e){
+        //     http_response_code(403);
+        //     return json_encode($e->getMessage());
+        //     exit;
+        // }
     }
 
     //delete images
@@ -222,8 +265,10 @@ class Image extends BaseController
 
             foreach($vallidIds as $id){
                 $path = $imageModel->getImage($id, filter: ["imagePath"]);
-                $name = explode("/", $path)[3];
-                $assets->removeImage($name);
+                if (preg_match("/assets/", $path) == 1){
+                    $name = explode("/", $path)[3];
+                    $assets->removeImage($name);
+                }
                 $imageModel->delete($id);
             }
         }else{

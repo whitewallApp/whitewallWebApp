@@ -155,3 +155,14 @@ $("#delete").on("click", function(){
         })
     }
 })
+
+$("#linkRadio").on("click", function(){
+    $("#linkDiv").show();
+    $("#fileDiv").hide();
+    $("#fileRadio").prop("checked", false);
+})
+$("#fileRadio").on("click", function () {
+    $("#linkDiv").hide();
+    $("#fileDiv").show();
+    $("#linkRadio").prop("checked", false);
+})

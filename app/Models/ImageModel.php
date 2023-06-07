@@ -99,9 +99,13 @@ class ImageModel extends Model
 
     public function updateImage($data, $id = "", $updateBy="id"){
         $data["dateUpdated"] = new RawSql('CURRENT_TIMESTAMP');
+        $brandModel = new BrandModel();
+        $session = session();
+
         if ($id != ""){
             $data["id"] = $id;
             $data["dateCreated"] = new RawSql('CURRENT_TIMESTAMP');
+            $data["brand_id"] = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
         }
 
         $builder = $this->db->table("wallpaper");

@@ -83,8 +83,25 @@
                 </tbody>
             </table>
         </div>
-        <div>
-            <?= $pager->links() ?>
+        <div class="m-2">
+            <div class="row">
+                <div class="col-sm-5 d-flex justify-content-center">
+                    <?= $pager->links() ?>
+                </div>
+                <div class="col-sm-2">
+                    <select class="custom-select">
+                        <option>5</option>
+                        <option selected>10</option>
+                        <option>15</option>
+                        <option>20</option>
+                        <option>50</option>
+                        <option>100</option>
+                    </select>
+                </div>
+                <div class="col-sm-5">
+
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-sm-4">
