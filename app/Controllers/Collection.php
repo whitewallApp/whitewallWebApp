@@ -185,12 +185,10 @@ class Collection extends BaseController
                         }
                     }
 
-                    // if ($path["iconPath"] != "" && preg_match("/http/", $path["iconPath"]) != 1){
-                    //     $name = explode("/", $path["iconPath"])[3];
-                    //     $assets->removeCollection($name);
-                    // }
-
-                    // echo var_dump($collModel->delete($path["id"]));
+                    if ($path["iconPath"] != "" && preg_match("/http/", $path["iconPath"]) != 1){
+                        $name = explode("/", $path["iconPath"])[3];
+                        $assets->removeCollection($name);
+                    }
                 }
             } else {
                 $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
