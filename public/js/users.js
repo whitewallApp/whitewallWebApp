@@ -86,14 +86,14 @@ $("#admin").on("click", function(){
 
 $("#permissionsForm").submit(function(e){
     e.preventDefault();
+    var disabled = $("[name^='permissions[']").prop("disabled");
+    $("[name^='permissions[']").prop("disabled", false);
 
     formData = new FormData(document.getElementById("permissionsForm"));
 
     formData.append("userId", $("#permissionsForm").prop("user-id"));
 
-    for (const value of formData.values()) {
-        console.log(value);
-    }
+    $("[name^='permissions[']").prop("disabled", disabled);
 
     $.ajax({
         url: "/brand/users/update",
