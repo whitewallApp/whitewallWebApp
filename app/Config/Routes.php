@@ -72,6 +72,7 @@ $routes->post('/images/delete', 'Image::delete', ["filter" => "remove:images"]);
 $routes->post('/collections/delete', 'Collection::delete', ["filter" => "remove:collections"]);
 $routes->post('/categories/delete', 'Category::delete', ["filter" => "remove:categories"]);
 $routes->post('/notifications/delete', 'Notification::delete', ["filter" => "remove:notifications"]);
+$routes->post('/menu/delete', 'Menu::delete', ["filter" => "remove:menu"]);
 
 //image upload
 $routes->get("/images/upload","Image::uploadView", ["filter" => "add:images"]);

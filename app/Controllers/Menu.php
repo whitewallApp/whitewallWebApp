@@ -100,6 +100,41 @@ class Menu extends BaseController
         }
     }
 
+    public function delete()
+    {
+        // try {
+            $menuModel = new MenuModel();
+            $session = session();
+
+            if ($this->request->getPost("ids") != null) {
+                $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_SPECIAL_CHARS);
+                $dbids = $menuModel->getCollumn("id", $session->get("brand_name"));
+
+                $numIds = [];
+                foreach($ids as $id){
+                    array_push($numIds, $menuModel->getMenuItem($id, ["id"], "title"));
+                }
+
+                $vallidIds = array_intersect($dbids, $numIds);
+
+                $menuModel->delete($vallidIds);
+            } else {
+                $id = $this->request->getPost("id", FILTER_SANITIZE_SPECIAL_CHARS);
+                $dbids = $menuModel->getCollumn("id", $session->get("brand_name"));
+
+                foreach ($dbids as $dbid) {
+                    if ($dbid == $id) {
+                        $menuModel->delete($id);
+                    }
+                }
+            }
+        // } catch (\Exception $e) {
+        //     http_response_code(400);
+        //     echo json_encode($e->getMessage());
+        //     exit;
+        // }
+    }
+
 }
 
 ?>
