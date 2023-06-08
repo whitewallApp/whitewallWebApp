@@ -42,6 +42,7 @@ function getImg(e){
         image = JSON.parse(data);
 
         $("#data").attr("image-id", image.id);
+        $("#remove").attr("remove-id", image.id)
         
         nameTextBox.val(image.name);
         descTextBox.val(image.description);
@@ -172,6 +173,7 @@ function getColl(e){
         linkTextBox.val(collection.link);
 
         $("#collectionData").attr("collection-id", collection.id);
+        $("#remove").attr("remove-id", collection.id)
 
         $("#collfileText").html(collection.iconPath);
 
@@ -260,6 +262,7 @@ function getCat(e){
         category = JSON.parse(data);
         
         $("#categoryData").attr("category-id", category.id);
+        $("#remove").attr("remove-id", category.id)
         $("#link").val(category.link);
         $("#name").val(category.name);
         $("#desc").val(category.description);
@@ -342,6 +345,7 @@ function getNot(e){
         $($("#notData").children().get(0)).html("<h2>Edit Notification</h2>")
         
         $("#notData").attr("not-id", notifcation.id);
+        $("#remove").attr("remove-id", notifcation.id)
 
         $("#link-input").hide();
         $("#app").hide();

@@ -183,6 +183,7 @@ class Category extends BaseController
                 foreach($vallidIds as $id){
                     $category = $catModel->getCategory($id, "name", ["iconPath", "id"], true);
 
+                    //foreign key check
                     foreach($colIds as $colId){
                         $collCatId = $colModel->getCollection($colId, ["category_id"]);
                         if ($collCatId == $category["id"]){
@@ -190,6 +191,7 @@ class Category extends BaseController
                         }
                     }
 
+                    //delete assets
                     if ($category["iconPath"] != "" && preg_match("/http/", $category["iconPath"]) != 1) {
                         $name = explode("/", $category["iconPath"])[3];
                         $assets->removeCategory($name);
@@ -199,7 +201,31 @@ class Category extends BaseController
                 }
 
             } else {
-                $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
+                $id = $this->request->getPost("id", FILTER_SANITIZE_SPECIAL_CHARS);
+
+                if ($id != null){
+                    $category = $catModel->getCategory($id, assoc: true);
+                    $dbids = $catModel->getCollumn("id", $session->get("brand_name"));
+
+                    $validId = array_intersect($dbids, [$id]);
+
+                    //foreign key check
+                    $colIds = $colModel->getAllIds($session->get("brand_name"));
+                    foreach($colIds as $colId){
+                        $collection = $colModel->getCollection($colId, assoc: true);
+                        if ($category["id"] == $collection["category_id"]){
+                            throw new RuntimeException("You can not delete a category that contains collections");
+                        }
+                    }
+
+                    //delete assets
+                    if ($category["iconPath"] != "" && preg_match("/http/", $category["iconPath"]) != 1) {
+                        $name = explode("/", $category["iconPath"])[3];
+                        $assets->removeCategory($name);
+                    }
+
+                    $catModel->delete($validId);
+                }
             }
         } catch (\Exception $e) {
             http_response_code(400);

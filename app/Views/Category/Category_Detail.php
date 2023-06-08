@@ -33,15 +33,15 @@
         <button class="btn btn-primary">Change</button>
       </div>
     </div>
-    <div class="float-right">
-      <?php if ($view[$pageName]["edit"]) : ?>
-        <button type="submit" class="btn btn-primary">Save</button>
-      <?php endif ?>
-      <?php if ($view[$pageName]["remove"]) : ?>
-        <button class="btn btn-danger">Remove</button>
-      <?php endif ?>
-    </div>
   </form>
+  <div class="float-right">
+    <?php if ($view[$pageName]["edit"]) : ?>
+      <button type="submit" class="btn btn-primary" onclick="$('#categoryData').submit();">Save</button>
+    <?php endif ?>
+    <?php if ($view[$pageName]["remove"]) : ?>
+      <button class="btn btn-danger" id="remove">Remove</button>
+    <?php endif ?>
+  </div>
   <div class="alert alert-success" role="alert" style="display: none;">
     Success
   </div>

@@ -156,6 +156,21 @@ $("#delete").on("click", function(){
     }
 })
 
+$("#remove").on("click", function(){
+    $.ajax({
+        url: window.origin + window.location.pathname + "/delete",
+        type: "post",
+        data: { "id": $("#remove").attr("remove-id")},
+        success: function (result) {
+            window.location.reload();
+        },
+        error: function (xhr, status, error) {
+            $(".alert-danger").show();
+            $(".alert-danger").html(JSON.parse(xhr.responseText).message);
+        }
+    })
+})
+
 $("#linkRadio").on("click", function(){
     $("#linkDiv").show();
     $("#fileDiv").hide();
