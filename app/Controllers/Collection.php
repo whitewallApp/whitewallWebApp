@@ -155,35 +155,42 @@ class Collection extends BaseController
     //delete
     public function delete()
     {
-        $collModel = new CollectionModel();
-        $session = session();
-        $assets = new Assets();
+        // try {
+            $collModel = new CollectionModel();
+            $session = session();
+            $assets = new Assets();
 
-        //bulk image or single
-        if ($this->request->getPost("ids") != null) {
-            $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_NUMBER_INT);
-            $dbids = $collModel->getAllIds($session->get("brand_name"));
+            //bulk image or single
+            if ($this->request->getPost("ids") != null) {
+                $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_SPECIAL_CHARS);
+                $dbids = $collModel->getCollumn("name", $session->get("brand_name"));
 
-            $vallidIds = array_intersect($dbids, $ids);
+                $vallidIds = array_intersect($dbids, $ids);
+                array_shift($vallidIds);
 
-            foreach ($vallidIds as $id) {
-                $path = $collModel->getCollection($id, filter: ["iconPath"]);
-                $name = explode("/", $path)[3];
-                $assets->removeCollection($name);
-                $collModel->delete($id);
-            }
-        } else {
-            $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
-            $dbids = $collModel->getAllIds($session->get("brand_name"));
-
-            foreach ($dbids as $dbid) {
-                if ($dbid == $id) {
-                    $path = $collModel->getImage($id, filter: ["iconPath"]);
+                foreach ($vallidIds as $id) {
+                    $path = $collModel->getCollection($id, filter: ["iconPath"]);
                     $name = explode("/", $path)[3];
                     $assets->removeCollection($name);
                     $collModel->delete($id);
                 }
+            } else {
+                $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
+                $dbids = $collModel->getAllIds($session->get("brand_name"));
+
+                foreach ($dbids as $dbid) {
+                    if ($dbid == $id) {
+                        $path = $collModel->getImage($id, filter: ["iconPath"]);
+                        $name = explode("/", $path)[3];
+                        $assets->removeCollection($name);
+                        $collModel->delete($id);
+                    }
+                }
             }
-        }
+        // }catch (\Exception $e){
+        //     http_response_code(400);
+        //     return json_encode($e->getMessage());
+        //     exit;
+        // }
     }
 }
