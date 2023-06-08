@@ -14,7 +14,7 @@
                                 </div>
                                 <div class="col-4 text-center">
                                     <?php if ($view[$pageName]["remove"]) : ?>
-                                        <button class="btn btn-danger">Delete</button>
+                                        <button class="btn btn-danger" id="delete">Delete</button>
                                     <?php endif ?>
                                 </div>
                                 <div class="col-1">

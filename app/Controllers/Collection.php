@@ -193,17 +193,7 @@ class Collection extends BaseController
                     $collModel->delete($path["id"]);
                 }
             } else {
-                $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
-                $dbids = $collModel->getAllIds($session->get("brand_name"));
-
-                foreach ($dbids as $dbid) {
-                    if ($dbid == $id) {
-                        $path = $collModel->getImage($id, filter: ["iconPath"]);
-                        $name = explode("/", $path)[3];
-                        $assets->removeCollection($name);
-                        $collModel->delete($id);
-                    }
-                }
+                $id = $this->request->getPost("id", FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }catch (\Exception $e){
             http_response_code(400);

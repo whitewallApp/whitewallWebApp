@@ -161,35 +161,50 @@ class Category extends BaseController
     //delete collections
     public function delete()
     {
-        $catModel = new CategoryModel();
-        $session = session();
-        $assets = new Assets();
+        try {
+            $catModel = new CategoryModel();
+            $colModel = new CollectionModel();
+            $session = session();
+            $assets = new Assets();
 
-        //bulk image or single
-        if ($this->request->getPost("ids") != null) {
-            $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_NUMBER_INT);
-            $dbids = $catModel->getAllIds($session->get("brand_name"));
+            //bulk image or single
+            if ($this->request->getPost("ids") != null) {
+                $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_SPECIAL_CHARS);
+                $dbids = $catModel->getCollumn("name", $session->get("brand_name"));
 
-            $vallidIds = array_intersect($dbids, $ids);
+                $vallidIds = array_intersect($dbids, $ids);
 
-            foreach ($vallidIds as $id) {
-                $path = $catModel->getCategory($id, filter: ["iconPath"])[0];
-                $name = explode("/", $path)[3];
-                $assets->removeCategory($name);
-                $catModel->delete($id);
-            }
-        } else {
-            $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
-            $dbids = $catModel->getAllIds($session->get("brand_name"));
-
-            foreach ($dbids as $dbid) {
-                if ($dbid == $id) {
-                    $path = $catModel->getCategory($id, filter: ["iconPath"])[0];
-                    $name = explode("/", $path)[3];
-                    $assets->removeCategory($name);
-                    $catModel->delete($id);
+                if (count($vallidIds) > 1) {
+                    array_shift($vallidIds);
                 }
+
+                $colIds = $colModel->getAllIds($session->get("brand_name"));
+                
+                foreach($vallidIds as $id){
+                    $category = $catModel->getCategory($id, "name", ["iconPath", "id"], true);
+
+                    foreach($colIds as $colId){
+                        $collCatId = $colModel->getCollection($colId, ["category_id"]);
+                        if ($collCatId == $category["id"]){
+                            throw new RuntimeException("You can not delete a category that contains collections");
+                        }
+                    }
+
+                    if ($category["iconPath"] != "" && preg_match("/http/", $category["iconPath"]) != 1) {
+                        $name = explode("/", $category["iconPath"])[3];
+                        $assets->removeCategory($name);
+                    }
+
+                    $catModel->delete($category["id"]);
+                }
+
+            } else {
+                $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
             }
+        } catch (\Exception $e) {
+            http_response_code(400);
+            echo json_encode(["message" => $e->getMessage()]);
+            exit;
         }
     }
 }
