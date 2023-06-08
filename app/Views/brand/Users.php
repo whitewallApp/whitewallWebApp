@@ -99,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
+            <div class="container" id="permissionsDiv">
                 <div class="row">
                     <div class="col">
 
