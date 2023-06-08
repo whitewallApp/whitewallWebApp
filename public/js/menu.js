@@ -18,6 +18,7 @@ function getMenu(e){
         menuItem = JSON.parse(data);
 
         $("#menuData").attr("menu-id", menuItem.id);
+        $("#remove").attr("remove-id", menuItem.id);
         $("#title").val(menuItem.title);
         $(`#s-select>option[value="${menuItem.sequence}"`).prop("selected", true);
 

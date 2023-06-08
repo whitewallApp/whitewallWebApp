@@ -114,18 +114,17 @@
                         <?php endfor ?>
                     </select>
                 </div>
-
-                <div class="float-right row">
-                    <p id="updated" class="mr-2"></p>
-                    <button class="btn btn-primary m-2">Save</button>
-                    <button class="btn btn-danger m-2">Remove</button>
-                </div>
-                <div class="alert alert-success" role="alert" style="display: none;">
-                    Success
-                </div>
-                <div class="alert alert-danger" role="alert" style="display: none;">
-                </div>
             </form>
+            <div class="float-right">
+                <p id="updated" class="mr-2"></p>
+                <button class="btn btn-primary m-2" onclick="$('#menuData').submit();">Save</button>
+                <button class="btn btn-danger m-2" id="remove">Remove</button>
+            </div>
+            <div class="alert alert-success" role="alert" style="display: none;">
+                Success
+            </div>
+            <div class="alert alert-danger" role="alert" style="display: none;">
+            </div>
         </div>
     </div>
 </div>
