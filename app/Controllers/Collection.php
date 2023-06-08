@@ -189,6 +189,8 @@ class Collection extends BaseController
                         $name = explode("/", $path["iconPath"])[3];
                         $assets->removeCollection($name);
                     }
+
+                    $collModel->delete($path["id"]);
                 }
             } else {
                 $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);

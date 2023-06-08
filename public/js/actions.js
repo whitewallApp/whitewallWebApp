@@ -147,7 +147,7 @@ $("#delete").on("click", function(){
             type: "post",
             data: {"ids": JSON.stringify(ids)}, 
             success: function(result){
-                // window.location.reload();
+                window.location.reload();
             },
             error: function(xhr, status, error){
                 alert(JSON.parse(xhr.responseText).message);
