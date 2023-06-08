@@ -148,4 +148,33 @@ class Notification extends BaseController
         return json_encode(["success" => true]);
         // return json_encode($data);
     }
+
+    public function delete(){
+        try {
+            $notModel = new NotificationModel();
+            $session = session();
+
+            if ($this->request->getPost("ids") != null) {
+                $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_NUMBER_INT);
+                $dbids = $notModel->getCollumn("id", $session->get("brand_name"));
+
+                $vallidIds = array_intersect($dbids, $ids);
+
+                $notModel->delete($vallidIds);
+            } else {
+                $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
+                $dbids = $notModel->getCollumn("id", $session->get("brand_name"));
+
+                foreach ($dbids as $dbid) {
+                    if ($dbid == $id) {
+                        $notModel->delete($id);
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            http_response_code(400);
+            echo json_encode($e->getMessage());
+            exit;
+        }
+    }
 }

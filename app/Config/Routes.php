@@ -69,8 +69,9 @@ $routes->post('/menu','Menu::post', ["filter" => "view:menu"]);
 
 //remove urls
 $routes->post('/images/delete', 'Image::delete', ["filter" => "remove:images"]);
-$routes->post('/collections/delete', 'Collection::delete');
+$routes->post('/collections/delete', 'Collection::delete', ["filter" => "remove:collections"]);
 $routes->post('/categories/delete', 'Category::delete', ["filter" => "remove:categories"]);
+$routes->post('/notifications/delete', 'Notification::delete', ["filter" => "remove:notifications"]);
 
 //image upload
 $routes->get("/images/upload","Image::uploadView", ["filter" => "add:images"]);

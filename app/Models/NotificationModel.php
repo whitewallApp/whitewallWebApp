@@ -12,6 +12,34 @@ class NotificationModel extends Model
     protected $table = "notifications";
     protected $allowedFields = ["title", "description", "clickAction", "data", "forceWall", "forceId", "sendTime", "status", "brand_id"];
 
+    public function getCollumn($column, $brandName, $getBy = [])
+    {
+        $builder = $this->db->table('brand');
+        $builder->select("id")->where("name", $brandName);
+        $brandID = $builder->get()->getResultArray()[0];
+
+        $builder = $this->db->table('notifications');
+        $builder->select($column);
+        $builder->where("brand_id", $brandID);
+
+        if (count($getBy) > 0) {
+            $keys = array_keys($getBy);
+            foreach ($keys as $key) {
+                $builder->where($key, $getBy[$key]);
+            }
+        }
+
+        $return = $builder->get()->getResultArray();
+
+        $returnArray = [];
+
+        foreach ($return as $thing) {
+            array_push($returnArray, $thing[$column]);
+        }
+
+        return $returnArray;
+    }
+
     public function getNotification($id, $filter = [], $fetchBy="id", $assoc=false){
         $builder = $this->db->table('notifications');
         
