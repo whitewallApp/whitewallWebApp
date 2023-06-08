@@ -179,14 +179,14 @@
                     <label for="link">Link</label>
                     <input type="text" class="form-control" id="link" placeholder="https://yoursite.com/image">
                 </div>
-                <div class="float-right row">
-                    <p id="updated" class="mr-2"></p>
-                    <?php if ($view[$pageName]["edit"]) : ?>
-                        <button class="btn btn-primary m-2">Save</button>
-                    <?php endif ?>
-                    <button class="btn btn-danger m-2">Remove</button>
-                </div>
             </form>
+            <div class="float-right">
+                <p id="updated" class="mr-2"></p>
+                <?php if ($view[$pageName]["edit"]) : ?>
+                    <button class="btn btn-primary m-2" onclick="$('#notData').submit();">Save</button>
+                <?php endif ?>
+                <button class="btn btn-danger m-2" id="remove">Remove</button>
+            </div>
             <div class="alert alert-success" role="alert" style="display: none;">
                 Success
             </div>
