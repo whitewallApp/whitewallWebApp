@@ -5,6 +5,7 @@ use App\Models\CollectionModel;
 use App\Models\CategoryModel;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
+use App\Models\ImageModel;
 use RuntimeException;
 
 class Collection extends BaseController
@@ -155,8 +156,9 @@ class Collection extends BaseController
     //delete
     public function delete()
     {
-        // try {
+        try {
             $collModel = new CollectionModel();
+            $imageModel = new ImageModel();
             $session = session();
             $assets = new Assets();
 
@@ -166,13 +168,29 @@ class Collection extends BaseController
                 $dbids = $collModel->getCollumn("name", $session->get("brand_name"));
 
                 $vallidIds = array_intersect($dbids, $ids);
-                array_shift($vallidIds);
+
+                if (count($vallidIds) > 1){
+                    array_shift($vallidIds);
+                }
+
+                $imageIds = $imageModel->getAllIds($session->get("brand_name"));
 
                 foreach ($vallidIds as $id) {
-                    $path = $collModel->getCollection($id, filter: ["iconPath"]);
-                    $name = explode("/", $path)[3];
-                    $assets->removeCollection($name);
-                    $collModel->delete($id);
+                    $path = $collModel->getCollection($id, ["iconPath", "id"], "name", true);
+
+                    foreach($imageIds as $imageId){
+                        $imagecol = $imageModel->getImage($imageId, filter: ["collection_id"]);
+                        if ($imagecol == $path["id"]){
+                            throw new RuntimeException("You can not delete a collection that contains images");
+                        }
+                    }
+
+                    // if ($path["iconPath"] != "" && preg_match("/http/", $path["iconPath"]) != 1){
+                    //     $name = explode("/", $path["iconPath"])[3];
+                    //     $assets->removeCollection($name);
+                    // }
+
+                    // echo var_dump($collModel->delete($path["id"]));
                 }
             } else {
                 $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
@@ -187,10 +205,10 @@ class Collection extends BaseController
                     }
                 }
             }
-        // }catch (\Exception $e){
-        //     http_response_code(400);
-        //     return json_encode($e->getMessage());
-        //     exit;
-        // }
+        }catch (\Exception $e){
+            http_response_code(400);
+            echo json_encode(["message" => $e->getMessage()]);
+            exit;
+        }
     }
 }
