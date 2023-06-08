@@ -194,6 +194,30 @@ class Collection extends BaseController
                 }
             } else {
                 $id = $this->request->getPost("id", FILTER_SANITIZE_SPECIAL_CHARS);
+
+                if ($id != null) {
+                    $collection = $collModel->getCollection($id, assoc: true);
+                    $dbids = $collModel->getCollumn("id", $session->get("brand_name"));
+
+                    $validId = array_intersect($dbids, [$id]);
+
+                    //foreign key check
+                    $imgIds = $imageModel->getAllIds($session->get("brand_name"));
+                    foreach ($imgIds as $imgid) {
+                        $image = $imageModel->getImage($imgid, assoc: true)[0];
+                        if ($collection["id"] == $image["collection_id"]) {
+                            throw new RuntimeException("You can not delete a collection that contains images");
+                        }
+                    }
+
+                    //delete assets
+                    if ($collection["iconPath"] != "" && preg_match("/http/", $collection["iconPath"]) != 1) {
+                        $name = explode("/", $collection["iconPath"])[3];
+                        $assets->removeCollection($name);
+                    }
+
+                    $collModel->delete($validId);
+                }
             }
         }catch (\Exception $e){
             http_response_code(400);

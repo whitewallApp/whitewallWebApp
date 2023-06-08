@@ -41,16 +41,16 @@
         <button class="btn btn-primary">Change</button>
       </div>
     </div>
-    <div class="float-right row">
-      <p id="updated" class="mr-2"></p>
-      <?php if ($view[$pageName]["edit"]) : ?>
-        <button id="submit" class="btn btn-primary mr-2">Save</button>
-      <?php endif ?>
-      <?php if ($view[$pageName]["remove"]) : ?>
-        <button id="delete" class="btn btn-danger mr-2">Remove</button>
-      <?php endif ?>
-    </div>
   </form>
+  <div class="float-right">
+    <p id="updated" class="mr-2"></p>
+    <?php if ($view[$pageName]["edit"]) : ?>
+      <button id="submit" class="btn btn-primary mr-2" onclick="$('#collectionData').submit();">Save</button>
+    <?php endif ?>
+    <?php if ($view[$pageName]["remove"]) : ?>
+      <button id="remove" class="btn btn-danger mr-2">Remove</button>
+    <?php endif ?>
+  </div>
   <div class="alert alert-success" role="alert" style="display: none;">
     Success
   </div>
