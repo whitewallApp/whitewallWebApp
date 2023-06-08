@@ -57,13 +57,13 @@
       </select>
     </div>
   </form>
-  <div class="float-right row">
+  <div class="float-right">
     <p id="updated" class="mr-2"></p>
     <?php if ($view[$pageName]["edit"]) : ?>
       <button class="btn btn-primary mr-2" onclick="updateImage();">Save</button>
     <?php endif ?>
     <?php if ($view[$pageName]["remove"]) : ?>
-      <button class="btn btn-danger mr-2">Remove</button>
+      <button class="btn btn-danger mr-2" id="remove">Remove</button>
     <?php endif ?>
   </div>
   <div class="alert alert-success" role="alert" style="display: none;">
