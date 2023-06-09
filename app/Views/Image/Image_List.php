@@ -89,13 +89,13 @@
                     <?= $pager->links() ?>
                 </div>
                 <div class="col-sm-2">
-                    <select class="custom-select">
-                        <option>5</option>
-                        <option selected>10</option>
-                        <option>15</option>
-                        <option>20</option>
-                        <option>50</option>
-                        <option>100</option>
+                    <select class="custom-select" id="items">
+                        <option value="5">5</option>
+                        <option selected value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
                     </select>
                 </div>
                 <div class="col-sm-5">
@@ -110,3 +110,6 @@
         </div>
     </div>
 </div>
+<script>
+    $("option[value='<?= $pageamount ?>']").attr("selected", true);
+</script>

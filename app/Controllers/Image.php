@@ -20,9 +20,14 @@ class Image extends BaseController
         $catModel = new CategoryModel;
         $brandModel = new BrandModel;
         $brandname = $session->get("brand_name");
+        $paginate = 10;
 
-        $brandId = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
-        $dbImages = $imageModel->where("brand_id", $brandId)->paginate(10);
+        if ($this->request->getGet("items") != null){
+            $paginate = $this->request->getGet("items", FILTER_SANITIZE_NUMBER_INT);
+        }
+
+        $brandId = $brandModel->getBrand($brandname, "name", ["id"]);
+        $dbImages = $imageModel->where("brand_id", $brandId)->paginate($paginate);
 
         $images = [];
 
@@ -31,15 +36,15 @@ class Image extends BaseController
 
             if ($this->request->getGet("orderby") != null) {
                 $column = $this->request->getGet("orderby", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $dbImages = $imageModel->where("brand_id", $brandId)->where("collection_id", $collectionID)->orderBy($column, "ASC")->paginate(10);
+                $dbImages = $imageModel->where("brand_id", $brandId)->where("collection_id", $collectionID)->orderBy($column, "ASC")->paginate($paginate);
             }else{
-                $dbImages = $imageModel->where("brand_id", $brandId)->where("collection_id", $collectionID)->paginate(10);
+                $dbImages = $imageModel->where("brand_id", $brandId)->where("collection_id", $collectionID)->paginate($paginate);
             }
         }
 
         $collections = [];
 
-        $dbcollections = $collModel->getAllIds($session->get("brand_name"));
+        $dbcollections = $collModel->getAllIds($brandname);
 
         foreach ($dbcollections as $dbcollectionid) {
             $dbcollection = $collModel->getCollection($dbcollectionid);
@@ -71,7 +76,8 @@ class Image extends BaseController
         $data = [
             "images" => $images,
             'pager' => $imageModel->pager,
-            "collections" => $collections
+            "collections" => $collections,
+            "pageamount" => $paginate
         ];
 
         return Navigation::renderNavBar("Images", "images", [true, "Images"]) . view('Image/Image_Detail', $data) . Navigation::renderFooter();

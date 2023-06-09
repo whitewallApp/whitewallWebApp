@@ -181,3 +181,15 @@ $("#fileRadio").on("click", function () {
     $("#fileDiv").show();
     $("#linkRadio").prop("checked", false);
 })
+
+$("#items").on("input", function(){
+    id = $("#items").val();
+
+    if (window.location.toString().includes("page") && !window.location.toString().includes("items")) {
+        window.location = window.location + "&items=" + id;
+    } else if (window.location.toString().includes("items")) {
+        window.location = window.location.toString().replace(/items=[\d]*/, "items=" + id);
+    } else {
+        window.location = window.location + "?items=" + id;
+    }
+})
