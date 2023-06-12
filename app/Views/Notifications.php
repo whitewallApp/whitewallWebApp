@@ -3,7 +3,7 @@
 </script>
 
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-8">
         <div class="row m-2">
             <div class="col-sm-8">
                 <div id="actions" class="row" style="display: none">
@@ -24,7 +24,7 @@
 
                             </div>
                             <div class="col-6">
-                                <button class="btn btn-info" id="change">Change</button>
+                                
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
         </div>
     </div>
 
-    <div class="col-sm-8 mt-3">
+    <div class="col-sm-4 mt-3">
         <div class="card m-2 p-2">
             <form id="notData">
                 <div class="text-center">

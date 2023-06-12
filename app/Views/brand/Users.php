@@ -14,7 +14,7 @@
                             <p class="mr-2 ml-2"> | </p>
                         </div>
                         <div class="col-2">
-                            <a href="#">Change User</a>
+                           
                         </div>
                     </div>
                 </div>

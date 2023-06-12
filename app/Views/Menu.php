@@ -28,7 +28,7 @@
 
                             </div>
                             <div class="col-6">
-                                <button class="btn btn-info" id="change">Change</button>
+                                
                             </div>
                         </div>
                     </div>
