@@ -299,20 +299,20 @@ $("#save").on("click", function(){
         processData: false,
         contentType: false,
         success: function (data, status) {
-            // response = JSON.parse(data);
-            // console.log(status);
-            // if (response.success) {
-            //     $(".alert-success").show();
-            // } else {
-            //     $(".alert-danger").html(response.message);
-            //     $(".alert-danger").show();
-            // }
+            response = JSON.parse(data);
+            console.log(status);
+            if (response.success) {
+                $(".alert-success").show();
+            } else {
+                $(".alert-danger").html(response.message);
+                $(".alert-danger").show();
+            }
         },
         error: function (data) {
-            // response = JSON.parse(data.responseText)
+            response = JSON.parse(data.responseText)
 
-            // $(".alert-danger").html(response.message);
-            // $(".alert-danger").show();
+            $(".alert-danger").html(response.message);
+            $(".alert-danger").show();
         }
     });
 })

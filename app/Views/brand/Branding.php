@@ -7,6 +7,7 @@
                     <a class="nav-item nav-link" id="nav-profile-img-pg" data-toggle="tab" href="#nav-img-pg" role="tab" aria-controls="nav-img-pg" aria-selected="false">Image List</a>
                     <a class="nav-item nav-link" id="nav-contact-img" data-toggle="tab" href="#nav-img" role="tab" aria-controls="nav-img" aria-selected="false">Wallpaper Preview</a>
                     <a class="nav-item nav-link" id="nav-contact-menu" data-toggle="tab" href="#nav-menu" role="tab" aria-controls="nav-menu" aria-selected="false">Custom Page</a>
+                    <a class="nav-item nav-link" id="nav-contact-loading" data-toggle="tab" href="#loading-img" role="tab" aria-controls="loading-img" aria-selected="false">Loading Page</a>
                 </div>
             </nav>
             <div class="tab-content" id="myTabContent">
@@ -124,6 +125,14 @@
                         <img class="phone-img" src="/Icons/phone.png">
                         <img class="phone-wallpaper" src="<?= $images[0]["imagePath"] ?>">
                         <button class="btn btn-primary btn-branding" id="setWallpaper">Set Wallpaper</button>
+                    </div>
+                </div>
+
+                <!-- Loading Pane -->
+                <div class="tab-pane fade" id="loading-img" role="tabpanel" aria-labelledby="loading-img-tab">
+                    <div class="phone">
+                        <img class="phone-img" src="/Icons/phone.png">
+                        <img class="phone-loading" src="<?= $brandimages["appLoading"] ?>">
                     </div>
                 </div>
 
@@ -523,9 +532,14 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-1">
-            <button style="height: 55%;" class="btn btn-primary" id="save">Save</button>
+            <div class="float-right m-3">
+                <button class="btn btn-primary" id="save">Save</button>
+            </div>
+            <div class="alert alert-success" role="alert" style="display: none;">
+                Success
+            </div>
+            <div class="alert alert-danger" role="alert" style="display: none;">
+            </div>
         </div>
     </div>
 </div>

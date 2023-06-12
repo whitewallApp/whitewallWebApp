@@ -529,7 +529,8 @@ class Assets extends BaseController {
             "webp" => "webp",
             "ico", "cur" => "x-icon",
             "bmp" => "bmp",
-            "tiff", "tif" => "tiff"
+            "tiff", "tif" => "tiff",
+            "gif", "giff" => "gif"
         };
     }
 }

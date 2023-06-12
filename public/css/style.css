@@ -194,3 +194,12 @@ body {
     top: 0 !important;
     background-color: white !important;
 }
+
+.phone-loading {
+    width: 238px;
+    height: auto;
+
+    position: relative;
+    top: -400px;
+    left: 5px;
+}

@@ -64,11 +64,12 @@ class Brand extends BaseController
         $menu = $menuModel->getCollumn("title", $session->get("brand_name"));
 
         $data = [
-            "categories" => $categories,
-            "collections" => $collections,
-            "images" => $images,
+            "categories" => array_slice($categories, 0, 6),
+            "collections" => array_slice($collections, 0, 6),
+            "images" => array_slice($images, 0, 6),
             "menu"=> $menu,
-            "branding" => $brandModel->getBrand($session->get("brand_name"), "name", ["branding"])
+            "branding" => $brandModel->getBrand($session->get("brand_name"), "name", ["branding"]),
+            "brandimages" => $brandModel->getBrand($session->get("brand_name"), "name", ["appIcon", "appLoading", "appHeading", "appBanner"], true),
         ];
 
         return Navigation::renderNavBar("Branding","branding", [true, "Brands"]) . view("brand/Branding", $data) . Navigation::renderFooter();
@@ -245,6 +246,8 @@ class Brand extends BaseController
                     }
                 }
             }
+
+            return json_encode(["success" => true]);
 
         } catch (\Exception $e){
             http_response_code(400);
