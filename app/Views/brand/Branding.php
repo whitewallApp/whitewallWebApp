@@ -171,16 +171,42 @@
                                     <input type="file" class="form-control" id="appIcon" />
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="appLoading">App Loading</label>
-                                    <input type="file" class="form-control" id="appLoading" />
-                                </div>
-                                <div class="form-group">
                                     <label class="form-label" for="appHeader">App Header</label>
                                     <input type="file" class="form-control" id="appHeader" />
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="appBanner">App Banner</label>
                                     <input type="file" class="form-control" id="appBanner" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="loading">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#loadingCollapse" aria-expanded="true" aria-controls="collapseOne">
+                                Loading
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="loadingCollapse" class="collapse" aria-labelledby="loading" data-parent="#accordionBranding">
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label class="form-label" for="appLoading">App Loading</label>
+                                    <input type="file" class="form-control" id="appLoading" />
+                                    <div class="form-group">
+                                        <label class="form-label" for="loadingSize">Loading Image Size</label>
+                                        <div class="range">
+                                            <input type="range" class="form-range" min="0" max="100" id="loadingSize" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="loadingcolor">Loading Page Background color</label>
+                                        <input type="color" class="form-control" id="loadingcolor">
+                                    </div>
                                 </div>
                             </form>
                         </div>

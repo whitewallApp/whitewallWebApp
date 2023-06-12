@@ -284,6 +284,10 @@ $("#appBanner").on("input", function(){
     });
 })
 
+$("#loadingSize").on("input", function(){
+    $(".phone-loading").css("width", $(this).val());
+})
+
 
 $("#save").on("click", function(){
     formData = new FormData();

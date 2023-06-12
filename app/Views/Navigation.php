@@ -97,15 +97,15 @@
                 </li>
             <?php endif ?>
 
-            <?php if ($view["builds"]["view"]) : ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="/app">Versions</a>
-                </li>
-            <?php endif ?>
-
             <?php if ($view["branding"]["view"]) : ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/brand/branding/<?= $brandId ?>">Branding</a>
+                </li>
+            <?php endif ?>
+
+            <?php if ($view["builds"]["view"]) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/app">Versions</a>
                 </li>
             <?php endif ?>
         </ul>
