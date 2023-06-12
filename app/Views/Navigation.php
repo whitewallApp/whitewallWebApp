@@ -136,21 +136,24 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
 
     </div>
-    <div class="col-md-5">
+    <div class="col-md-6">
         <?php if ($pageName != "nopermission") : ?>
             <?php if (isset($actions[0]) && $view[strtolower($pageName)]["add"]) : ?>
-                <div class="row row-cols-3 float-right p-3">
-                    <div class="col p-3">
+                <div class="row p-3">
+                    <div class="col-4">
+
+                    </div>
+                    <div class="col-2 p-3">
                         <p>Add <?= $actions[1] ?></p>
                     </div>
-                    <div class="col">
+                    <div class="col-2">
                         <button class="btn btn-primary m-2" onclick="">Individual</button>
                     </div>
-                    <div class="col">
-                        <button class="btn btn-primary m-2" onclick="window.location = window.origin + window.location.pathname + '/upload'">Bulk Upload</button>
+                    <div class="col-4">
+                        <button class="btn btn-primary m-2" onclick="window.location = window.origin + window.location.pathname + '/upload'">Bulk Upload / Edit</button>
                     </div>
                 </div>
             <?php endif ?>
