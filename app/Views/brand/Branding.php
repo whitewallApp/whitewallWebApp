@@ -89,7 +89,7 @@
                                 <div class="row m-2">
                                     <div class="col-sm-6">
                                         <div class="card card-branding p-2">
-                                            <img class="img-branding" src="<?= $images[$i]["imagePath"] ?>" alt="Card image cap">
+                                            <img class="img-branding" src="<?= $images[$i]["thumbnail"] ?>" alt="Card image cap">
                                             <div class="image-title">
                                                 <p><?= $images[$i]["name"] ?></p>
                                             </div>
@@ -97,7 +97,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="card card-branding p-2">
-                                            <img class="card-img-top img-branding" src="<?= $images[$i + 1]["imagePath"] ?>" alt="Card image cap">
+                                            <img class="img-branding" src="<?= $images[$i + 1]["thumbnail"] ?>" alt="Card image cap">
                                             <div class="image-title">
                                                 <p><?= $images[$i + 1]["name"] ?></p>
                                             </div>
@@ -108,7 +108,7 @@
                             <?php if (count($collections) % 2 != 0) : ?>
                                 <div class="col-sm-6">
                                     <div class="card card-branding p-2">
-                                        <img class="img-branding" src="<?= $images[count($images) - 1]["imagePath"] ?>" alt="Card image cap">
+                                        <img class="img-branding" src="<?= $images[count($images) - 1]["thumbnail"] ?>" alt="Card image cap">
                                         <div class="image-title">
                                             <p><?= $images[count($images) - 1]["name"] ?></p>
                                         </div>
@@ -123,7 +123,7 @@
                 <div class="tab-pane fade" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab">
                     <div class="phone">
                         <img class="phone-img" src="/Icons/phone.png">
-                        <img class="phone-wallpaper" src="<?= $images[0]["imagePath"] ?>">
+                        <img class="phone-wallpaper" src="<?= $images[0]["thumbnail"] ?>">
                         <button class="btn btn-primary btn-branding" id="setWallpaper">Set Wallpaper</button>
                     </div>
                 </div>
@@ -133,8 +133,8 @@
                     <div class="phone">
                         <img class="phone-img" src="/Icons/phone.png">
                         <div class="background-phone-loading row">
-                            <div class="col-sm-12 my-auto">
-                                <img src="<?= $brandimages["appLoading"] ?>">
+                            <div class="col-sm-12 my-auto text-center">
+                                <img class="phone-loading" src="<?= $brandimages["appLoading"] ?>">
                             </div>
                         </div>
                     </div>
