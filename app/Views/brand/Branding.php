@@ -37,7 +37,7 @@
                                     <div class="col-sm-6">
                                         <div class="card card-branding">
                                             <input type="checkbox" class="form-check-input checkbox-branding" checked>
-                                            <img class="card-img-top img-branding p-2" src="<?= $collections[$i]["iconPath"] ?>" alt="Card image cap">
+                                            <img class="card-img-top img-branding p-2" src="<?= $collections[$i]["iconPath"] ?>">
                                             <div class="collection-title">
                                                 <p><?= $collections[$i]["name"] ?></p>
                                             </div>
@@ -46,7 +46,7 @@
                                     <div class="col-sm-6">
                                         <div class="card card-branding">
                                             <input type="checkbox" class="form-check-input checkbox-branding">
-                                            <img class="card-img-top p-2 img-branding" src="<?= $collections[$i + 1]["iconPath"] ?>" alt="Card image cap">
+                                            <img class="card-img-top p-2 img-branding" src="<?= $collections[$i + 1]["iconPath"] ?>">
                                             <div class="collection-title">
                                                 <p><?= $collections[$i + 1]["name"] ?></p>
                                             </div>
@@ -57,7 +57,7 @@
                             <?php if (count($collections) % 2 != 0) : ?>
                                 <div class="col-sm-6">
                                     <div class="card card-branding">
-                                        <img class="card-img-top p-2 img-branding" src="<?= $collections[count($collections) - 1]["iconPath"] ?>" alt="Card image cap">
+                                        <img class="card-img-top p-2 img-branding" src="<?= $collections[count($collections) - 1]["iconPath"] ?>">
                                         <div class="collection-title">
                                             <p><?= $collections[count($collections) - 1]["name"] ?></p>
                                         </div>
@@ -88,16 +88,16 @@
                             <?php for ($i = 0; $i < floor(count($images) / 2); $i += 2) : ?>
                                 <div class="row m-2">
                                     <div class="col-sm-6">
-                                        <div class="card card-branding">
-                                            <img class="card-img-top p-2 img-branding" src="<?= $images[$i]["imagePath"] ?>" alt="Card image cap">
+                                        <div class="card card-branding p-2">
+                                            <img class="img-branding" src="<?= $images[$i]["imagePath"] ?>" alt="Card image cap">
                                             <div class="image-title">
                                                 <p><?= $images[$i]["name"] ?></p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <div class="card card-branding">
-                                            <img class="card-img-top p-2 img-branding" src="<?= $images[$i + 1]["imagePath"] ?>" alt="Card image cap">
+                                        <div class="card card-branding p-2">
+                                            <img class="card-img-top img-branding" src="<?= $images[$i + 1]["imagePath"] ?>" alt="Card image cap">
                                             <div class="image-title">
                                                 <p><?= $images[$i + 1]["name"] ?></p>
                                             </div>
@@ -107,8 +107,8 @@
                             <?php endfor ?>
                             <?php if (count($collections) % 2 != 0) : ?>
                                 <div class="col-sm-6">
-                                    <div class="card card-branding">
-                                        <img class="card-img-top p-2 img-branding" src="<?= $images[count($images) - 1]["imagePath"] ?>" alt="Card image cap">
+                                    <div class="card card-branding p-2">
+                                        <img class="img-branding" src="<?= $images[count($images) - 1]["imagePath"] ?>" alt="Card image cap">
                                         <div class="image-title">
                                             <p><?= $images[count($images) - 1]["name"] ?></p>
                                         </div>
@@ -130,7 +130,7 @@
 
                 <!-- Loading Pane -->
                 <div class="tab-pane fade" id="loading-img" role="tabpanel" aria-labelledby="loading-img-tab">
-                    <div class="phone">
+                    <div class="phone text-center">
                         <img class="phone-img" src="/Icons/phone.png">
                         <img class="phone-loading" src="<?= $brandimages["appLoading"] ?>">
                     </div>
@@ -158,7 +158,14 @@
                     <div class="card-header" id="logos">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#logosCollapse" aria-expanded="true" aria-controls="collapseOne">
-                                Logos
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        Logos
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
+                                    </div>
+                                </div>
                             </button>
                         </h2>
                     </div>
@@ -186,7 +193,14 @@
                     <div class="card-header" id="loading">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#loadingCollapse" aria-expanded="true" aria-controls="collapseOne">
-                                Loading
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        Loading
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
+                                    </div>
+                                </div>
                             </button>
                         </h2>
                     </div>
@@ -195,18 +209,22 @@
                         <div class="card-body">
                             <form>
                                 <div class="form-group">
-                                    <label class="form-label" for="appLoading">App Loading</label>
+                                    <label class="form-label" for="appLoading">App Loading Image</label>
                                     <input type="file" class="form-control" id="appLoading" />
-                                    <div class="form-group">
-                                        <label class="form-label" for="loadingSize">Loading Image Size</label>
-                                        <div class="range">
-                                            <input type="range" class="form-range" min="0" max="100" id="loadingSize" />
-                                        </div>
+                                    <div class="form-text">
+                                        Animated GIF Preferred
                                     </div>
-                                    <div class="form-group">
-                                        <label for="loadingcolor">Loading Page Background color</label>
-                                        <input type="color" class="form-control" id="loadingcolor">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="loadingSize">Loading Image Size</label>
+                                    <div class="range">
+                                        <input type="range" class="form-range" min="0" max="100" value="100" id="loadingSize" />
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="loadingcolor">Loading Page Background color</label>
+                                    <input type="color" class="form-control" id="loadingcolor">
                                 </div>
                             </form>
                         </div>
@@ -216,7 +234,14 @@
                     <div class="card-header" id="catLabels">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#catLabelscollapse" aria-expanded="true" aria-controls="collapseOne">
-                                Category Labels
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        Category Labels
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
+                                    </div>
+                                </div>
                             </button>
                         </h2>
                     </div>
@@ -266,7 +291,14 @@
                     <div class="card-header" id="background">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#backgroundCollapse" aria-expanded="false" aria-controls="collapseTwo">
-                                Background
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        Background
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
+                                    </div>
+                                </div>
                             </button>
                         </h2>
                     </div>
@@ -285,7 +317,14 @@
                     <div class="card-header" id="colImgLabels">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#colImgLabelsCollapse" aria-expanded="false" aria-controls="collapseTwo">
-                                Collection & Image Labels
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        Collection & Image Labels
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
+                                    </div>
+                                </div>
                             </button>
                         </h2>
                     </div>
@@ -330,7 +369,14 @@
                     <div class="card-header" id="selection">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#sellectionCollapse" aria-expanded="false" aria-controls="collapseTwo">
-                                Selection Dropdown
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        Selection Dropdown
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
+                                    </div>
+                                </div>
                             </button>
                         </h2>
                     </div>
@@ -379,7 +425,14 @@
                     <div class="card-header" id="checkmark">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#checkmarkCollapse" aria-expanded="false" aria-controls="collapseTwo">
-                                Selection Checkmark
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        Selection Checkmark
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
+                                    </div>
+                                </div>
                             </button>
                         </h2>
                     </div>
@@ -402,7 +455,14 @@
                     <div class="card-header" id="imgCol">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#imgColCollapse" aria-expanded="false" aria-controls="collapseTwo">
-                                Images & Collections
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        Images & Collections
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
+                                    </div>
+                                </div>
                             </button>
                         </h2>
                     </div>
@@ -433,7 +493,14 @@
                     <div class="card-header" id="frame">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#frameCollapse" aria-expanded="false" aria-controls="collapseTwo">
-                                Images & Collections Frame
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        Images & Collections Frame
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
+                                    </div>
+                                </div>
                             </button>
                         </h2>
                     </div>
@@ -468,7 +535,14 @@
                     <div class="card-header" id="button">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#buttonCollapse" aria-expanded="false" aria-controls="collapseTwo">
-                                Buttons
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        Buttons
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
+                                    </div>
+                                </div>
                             </button>
                         </h2>
                     </div>
@@ -523,7 +597,14 @@
                     <div class="card-header" id="button">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#linkCollapse" aria-expanded="false" aria-controls="collapseTwo">
-                                Custom Links
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        Custom Links
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
+                                    </div>
+                                </div>
                             </button>
                         </h2>
                     </div>

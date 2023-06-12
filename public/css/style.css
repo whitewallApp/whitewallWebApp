@@ -68,7 +68,7 @@ body {
     top: -500px;
     left: 10px;
     width: 230px;
-    height: 500px;
+    height: 460px;
     overflow-y: scroll;
     overflow-x: hidden;
     -ms-overflow-style: none;
@@ -201,5 +201,5 @@ body {
 
     position: relative;
     top: -400px;
-    left: 5px;
+    left: -180px;
 }
