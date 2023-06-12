@@ -77,6 +77,21 @@ body {
     /* Firefox */
 }
 
+.background-phone-loading {
+    border-radius: 30px;
+    position: relative;
+    top: -500px;
+    left: 10px;
+    width: 230px;
+    height: 460px;
+    /* overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none; */
+    /* IE and Edge */
+    /* scrollbar-width: none; */
+    /* Firefox */
+}
+
 .phone-wallpaper {
     position: relative;
     top: -530px;
@@ -196,10 +211,10 @@ body {
 }
 
 .phone-loading {
-    width: 238px;
+    width: 100%;
     height: auto;
 
-    position: relative;
-    top: -400px;
-    left: -180px;
+    /* position: relative;
+    top: 50px; */
+    /* left: -180px; */
 }

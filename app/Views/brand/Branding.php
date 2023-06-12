@@ -130,9 +130,13 @@
 
                 <!-- Loading Pane -->
                 <div class="tab-pane fade" id="loading-img" role="tabpanel" aria-labelledby="loading-img-tab">
-                    <div class="phone text-center">
+                    <div class="phone">
                         <img class="phone-img" src="/Icons/phone.png">
-                        <img class="phone-loading" src="<?= $brandimages["appLoading"] ?>">
+                        <div class="background-phone-loading row">
+                            <div class="col-sm-12 my-auto">
+                                <img class="my-auto" src="<?= $brandimages["appLoading"] ?>">
+                            </div>
+                        </div>
                     </div>
                 </div>
 

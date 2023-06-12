@@ -284,6 +284,12 @@ $("#appBanner").on("input", function(){
     });
 })
 
+//loading
+$("#loadingcolor").on("input", function() {
+    $(".background-phone-loading").css("background-color", $(this).val());
+    console.log();
+})
+
 
 $("#save").on("click", function(){
     formData = new FormData();
