@@ -7,6 +7,6 @@ class Dashboard extends BaseController
 {
     public function index()
     {
-        return Navigation::renderNavBar("Dashboard for") . view('Dashboard') . Navigation::renderFooter();
+        return Navigation::renderNavBar("Dashboard") . view('Dashboard') . Navigation::renderFooter();
     }
 }

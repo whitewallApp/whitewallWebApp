@@ -112,29 +112,34 @@
 </nav>
 
 <div class="row">
-    <div class="col-4">
-        <div class="row">
-            <div class="col-sm-6 text-center">
-                <p class="breadcrumbs p-3"><?= $pageTitle ?></p>
-            </div>
-            <div class="col-sm-6 pl-0">
+    <div class="col-md-4">
+        <div class="row ml-4 mt-4">
+            <div class="col-sm-6" style="border-right-style: solid;">
                 <?php if ($pageTitle != "Account Settings" && $pageTitle != "Billing") : ?>
-                    <div class="mt-3">
-                        <select id="brandSelect" style="max-width: fit-content; font-size: 1.5rem;" class="h-50 custom-select">
-                            <?php foreach ($brands as $brand) : ?>
-                                <?php if ($brand["name"] == $brandName) : ?>
-                                    <option selected><?= $brand["name"] ?></option>
-                                <?php else : ?>
-                                    <option><?= $brand["name"] ?></option>
-                                <?php endif ?>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
+                        <?php if (count($brands) > 1) : ?>
+                            <select id="brandSelect" style="max-width: fit-content; font-size: 1.5rem;" class="custom-select">
+                                <?php foreach ($brands as $brand) : ?>
+                                    <?php if ($brand["name"] == $brandName) : ?>
+                                        <option selected><?= $brand["name"] ?></option>
+                                    <?php else : ?>
+                                        <option><?= $brand["name"] ?></option>
+                                    <?php endif ?>
+                                <?php endforeach ?>
+                            </select>
+                        <?php else : ?>
+                            <h2><?= $brands[0]["name"] ?></h2>
+                        <?php endif ?>
                 <?php endif ?>
+            </div>
+            <div class="col-sm-6">
+                <h2><?= $pageTitle ?></h2>
             </div>
         </div>
     </div>
-    <div class="col-8">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-5">
         <?php if ($pageName != "nopermission") : ?>
             <?php if (isset($actions[0]) && $view[strtolower($pageName)]["add"]) : ?>
                 <div class="row row-cols-3 float-right p-3">
