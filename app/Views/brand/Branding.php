@@ -134,7 +134,7 @@
                         <img class="phone-img" src="/Icons/phone.png">
                         <div class="background-phone-loading row">
                             <div class="col-sm-12 my-auto">
-                                <img class="my-auto" src="<?= $brandimages["appLoading"] ?>">
+                                <img src="<?= $brandimages["appLoading"] ?>">
                             </div>
                         </div>
                     </div>
