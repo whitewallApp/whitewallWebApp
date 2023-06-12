@@ -7,6 +7,14 @@ use App\Models\UserModel;
 
 class Navigation extends BaseController
 {
+    /**
+     * Renders the Navigation bar and everything assosiated with it
+     *
+     * @param string $pageTitle The name to display on the bread crumbs
+     * @param string $pageName The database permission category for the page
+     * @param array $actions [0] => if to display the upload buttons, [1] => the name of what to add on the UI
+     * @return string html to render
+     */
     public static function renderNavBar($pageTitle, $pageName = "nopermission", $actions = [])
     {
         $brandModel = new BrandModel;

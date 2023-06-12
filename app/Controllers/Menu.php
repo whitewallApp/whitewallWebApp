@@ -28,7 +28,7 @@ class Menu extends BaseController
             "menuItems" => $menuItems,
         ];
 
-        return Navigation::renderNavBar("Menu Items", "menu", [true, "Menu Items"]) . view('Menu', $data) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Menu Items", "menu") . view('Menu', $data) . Navigation::renderFooter();
     }
 
     public function post(){
@@ -102,7 +102,7 @@ class Menu extends BaseController
 
     public function delete()
     {
-        // try {
+        try {
             $menuModel = new MenuModel();
             $session = session();
 
@@ -128,11 +128,11 @@ class Menu extends BaseController
                     }
                 }
             }
-        // } catch (\Exception $e) {
-        //     http_response_code(400);
-        //     echo json_encode($e->getMessage());
-        //     exit;
-        // }
+        } catch (\Exception $e) {
+            http_response_code(400);
+            echo json_encode($e->getMessage());
+            exit;
+        }
     }
 
 }

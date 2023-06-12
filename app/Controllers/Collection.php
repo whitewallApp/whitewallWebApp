@@ -37,7 +37,7 @@ class Collection extends BaseController
             "collections" => $collections,
         ];
 
-        return Navigation::renderNavBar("Collections", "collections", [true, "Images"]) . view('Collection/Collection_Detail', $data) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Collections", "collections") . view('Collection/Collection_Detail', $data) . Navigation::renderFooter();
     }
 
     public function post(){
