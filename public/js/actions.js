@@ -60,7 +60,7 @@ function changeBrnd(e){
     element = $(e);
 
     $.post("/brand", {
-        id: element.prop('id')
+        name: element.prop('id')
     },
     function (data, state) {
         alert("Success");
@@ -194,4 +194,16 @@ $("#items").on("input", function(){
     } else {
         window.location = window.location + "?items=" + id;
     }
+})
+
+$("[set-brand]").on("click", function(e){
+    e.preventDefault();
+
+    $.post("/brand", {
+        default: $(this).attr("set-brand")
+    },function(data, state){
+        if (state == "success") {
+            location.reload()
+        }
+    })
 })

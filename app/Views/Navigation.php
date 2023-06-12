@@ -115,7 +115,7 @@
     <div class="col-md-4">
         <div class="row ml-4 mt-4">
             <div class="col-sm-6" style="border-right-style: solid;">
-                <?php if ($pageTitle != "Account Settings" && $pageTitle != "Billing") : ?>
+                <?php if ($pageTitle != "Account Settings" && $pageTitle != "Billing" && $pageTitle != "Brands"&& $pageTitle != "Brand Users") : ?>
                         <?php if (count($brands) > 1) : ?>
                             <select id="brandSelect" style="max-width: fit-content; font-size: 1.5rem;" class="custom-select">
                                 <?php foreach ($brands as $brand) : ?>

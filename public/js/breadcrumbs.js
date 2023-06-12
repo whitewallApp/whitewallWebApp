@@ -33,7 +33,7 @@ function selectBrand(){
         var brand_name = $("#brandSelect").val();
 
         $.post("/brand", {
-            id: brand_name
+            name: brand_name
         }, function(data, state){
             if (state == "success"){
                 location.reload()

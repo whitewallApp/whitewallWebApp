@@ -8,9 +8,10 @@
             <ul class="list-group list-group-flush">
                 <?php if ($admin) : ?>
                     <li class="list-group-item"><a href="/brand/users/<?= $brand["id"] ?>" class="badge badge-primary">Manage Users<i class="bi bi-people ml-1"></i></a></li>
-                    <?php if(false) : ?> <!-- TODO: needs to get is owner -->
-                        <li class="list-group-item"><a href="#" class="badge badge-danger">Delete<i class="bi bi-trash ml-1"></i></a></i></li>
-                    <?php endif ?>
+                    <li class="list-group-item"><a href="" class="badge badge-danger">Delete<i class="bi bi-trash ml-1"></i></a></i></li>
+                <?php endif ?>
+                <?php if ($brand["id"] != $default) : ?>
+                    <li class="list-group-item"><a href="" set-brand="<?= $brand["id"] ?>" class="badge badge-primary">Make Default</a></li>
                 <?php endif ?>
             </ul>
         </div>

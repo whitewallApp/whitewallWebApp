@@ -15,6 +15,7 @@ class Brand extends BaseController
     {
         $session = session();
         $brandModel = new BrandModel;
+        $userModel = new UserModel();
         $ids = $brandModel->getCollumn("id", $session->get("user_id"));
 
         $brands = [];
@@ -24,6 +25,7 @@ class Brand extends BaseController
         }
 
         $data = [
+            "default" => $userModel->getUser($session->get("user_id"), filter: ["default_brand"]),
             "brandInfo" => $brands,
             "admin" => $session->get("is_admin")
         ];
@@ -76,9 +78,14 @@ class Brand extends BaseController
     }
 
     public function users($brandId){
+        $brandId = filter_var($brandId, FILTER_VALIDATE_INT);
+
         $session = session();
         $userModel = new UserModel();
-        $userIds = $userModel->getCollumn("id", $session->get("brand_name"));
+        $brandModel = new BrandModel();
+        $brandname = $brandModel->getBrand($brandId, filter: ["name"]);
+
+        $userIds = $userModel->getCollumn("id", $brandname);
 
         $users = [];
 
@@ -263,22 +270,38 @@ class Brand extends BaseController
             $request = \Config\Services::request();
             $brandModel = new BrandModel();
             $userModel = new UserModel();
-            $name = esc($request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-            $session = session();
 
-            $brands = $brandModel->getCollumn("name", $session->get("user_id"));
-            $success = false;
+            //update session brand
+            if ($request->getPost("name") != null){
+                $name = $request->getPost("name", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            foreach($brands as $brand){
-                if ($brand["name"] == $name){
-                    $success = true;
+                $brands = $brandModel->getCollumn("name", $session->get("user_id"));
+                $success = false;
+
+                foreach ($brands as $brand) {
+                    if ($brand["name"] == $name) {
+                        $success = true;
+                    }
+                }
+
+                if ($success) {
+                    $session->set("brand_name", $name);
+                    $session->set('is_admin', $userModel->getAdmin($session->get("user_id"), $session->get("brand_name")));
+                    return json_encode(["success" => true]);
                 }
             }
 
-            if ($success){
-                $session->set("brand_name", $name);
-                $session->set('is_admin', $userModel->getAdmin($session->get("user_id"), $session->get("brand_name")));
-                return json_encode(["success" => true]);
+            //set a defalt brand if it comes in
+            if ($request->getPost("default") != null) {
+                $brandids = $brandModel->getCollumn("id", $session->get("user_id"));
+                $postId = $request->getPost("default", FILTER_VALIDATE_INT);
+
+                foreach ($brandids as $brandId) {
+                    if ($brandId["id"] == $postId){
+                        $userModel->update($session->get("user_id"), ["default_brand" => $postId]);
+                        return json_encode(["success" => true]);
+                    }
+                }
             }
 
         } else {
