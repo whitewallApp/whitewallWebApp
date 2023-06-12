@@ -111,6 +111,7 @@ $("#data").submit(function(e){
             console.log(status);
             if (response.success) {
                 $(".alert-success").show();
+                window.location.reload();
             } else {
                 $(".alert-danger").html(response.message);
                 $(".alert-danger").show();
@@ -223,6 +224,7 @@ $("#collectionData").submit(function(e){
             response = JSON.parse(data);
             if (response.success) {
                 $(".alert-success").show();
+                window.location.reload();
             } else {
                 $(".alert-danger").html(response.message);
                 $(".alert-danger").show();
@@ -308,6 +310,7 @@ $("#categoryData").submit(function(e){
             response = JSON.parse(data);
             if(response.success){
                 $(".alert-success").show();
+                window.location.reload();
             }else{
                 $(".alert-danger").html(response.message);
                 $(".alert-danger").show();
@@ -459,6 +462,7 @@ $("#notData").submit(function(e){
             console.log(response);
             if (response.success) {
                 $(".alert-success").show();
+                window.location.reload();
             } else {
                 $(".alert-danger").html(response.message);
                 $(".alert-danger").show();

@@ -29,7 +29,7 @@ class Account extends BaseController
             return redirect()->to("");
         }
 
-        return Navigation::renderNavBar("Account Settings") . view('Account', $data) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Account Settings") . view('account/Account', $data) . Navigation::renderFooter();
         
     }
 
@@ -75,6 +75,10 @@ class Account extends BaseController
             echo json_encode($e->getMessage());
             exit;
         }
+    }
+
+    public function create(){
+        return view('account/Create');
     }
 }
 

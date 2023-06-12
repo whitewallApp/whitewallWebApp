@@ -284,8 +284,10 @@ class Image extends BaseController
             foreach ($dbids as $dbid) {
                 if ($dbid == $id){
                     $path = $imageModel->getImage($id, filter: ["imagePath"]);
-                    $name = explode("/", $path)[3];
-                    $assets->removeImage($name);
+                    if (preg_match("/assets/", $path) == 1) {
+                        $name = explode("/", $path)[3];
+                        $assets->removeImage($name);
+                    }
                     $imageModel->delete($id);
                 }
             }

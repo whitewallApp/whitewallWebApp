@@ -23,8 +23,8 @@
                 <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signin_with" data-size="large" data-logo_alignment="left">
                 </div>
             </div>
-            <div class="col-6">
-
+            <div class="col-6 text-center">
+                <a href="/account/create"><p style="cursor: pointer;"><span class="badge badge-primary">Create Account</span></p></a>
             </div>
             <div class="col-3">
                 <p style="cursor: pointer;" data-mdb-toggle="modal" data-mdb-target="#resetModal"><span class="badge badge-primary">Forgot Username or Password</span></p>
