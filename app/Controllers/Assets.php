@@ -29,7 +29,7 @@ class Assets extends BaseController {
         $userModel = new UserModel();
         $brandModel = new BrandModel();
         $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
-        $brandId = $brandModel->getBrand($this->session->get("brand_name"), "name", ["id"]);
+        $brandId = $this->session->get("brand_id");
 
         $this->imgPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/";
         $this->imgTmbPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/thumbnails/";
@@ -498,9 +498,12 @@ class Assets extends BaseController {
     //image upload csv
     public function makeCSV($columns) {
         $session = session();
+        $brandModel = new BrandModel();
+        $brandName = $brandModel->getBrand($session->get("brand_id"), filter: ["name"]);
+
         $time = time();
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="' . preg_replace('/\s+/', '', $session->get("brand_name")) . date("Ymdgis", $time) . '.csv"');
+        header('Content-Disposition: attachment; filename="' . preg_replace('/\s+/', '', $brandName) . date("Ymdgis", $time) . '.csv"');
         $fp = fopen($this->imgPath . "../images.csv", 'wb');
         fputcsv($fp, $columns);
         fclose($fp);

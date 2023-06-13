@@ -21,15 +21,15 @@ class Navigation extends BaseController
         $userModel = new UserModel();
         $session = session();
 
-        $canView = $userModel->getPermissions($session->get("user_id"), $session->get("brand_name"));
+        $canView = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"));
 
         // echo var_dump($canView);
 
         $data = [
             "brands" => $brandModel->getCollumn(["name", "logo"], $session->get("user_id")),
-            "brandId" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["id"]),
-            "brandName" => $session->get("brand_name"),
-            "brandIcon" => $brandModel->getBrand($session->get("brand_name"), fetchBy: "name", filter: ["logo"]),
+            "brandId" => $session->get("brand_id"),
+            "brandName" => $brandModel->getBrand($session->get("brand_id"), filter: ["name"]),
+            "brandIcon" => $brandModel->getBrand($session->get("brand_id"), filter: ["logo"]),
             "userIcon" => $userModel->getUser($session->get("user_id"), filter: ["icon"]),
             "pageTitle" => $pageTitle,
             "actions" => $actions,

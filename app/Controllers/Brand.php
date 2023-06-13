@@ -40,7 +40,7 @@ class Brand extends BaseController
         $catModel = new CategoryModel();
         $imgModel = new ImageModel();
         $menuModel = new MenuModel();
-        $brandname = $session->get("brand_name");
+        $brandname = $session->get("brand_id");
 
         $categoryIds = $catModel->getCollumn("id", $brandname);
         $categories = [];
@@ -63,15 +63,15 @@ class Brand extends BaseController
             array_push($images, $image);
         }
 
-        $menu = $menuModel->getCollumn("title", $session->get("brand_name"));
+        $menu = $menuModel->getCollumn("title", $session->get("brand_id"));
 
         $data = [
             "categories" => array_slice($categories, 0, 6),
             "collections" => array_slice($collections, 0, 6),
             "images" => array_slice($images, 0, 6),
             "menu"=> $menu,
-            "branding" => $brandModel->getBrand($session->get("brand_name"), "name", ["branding"]),
-            "brandimages" => $brandModel->getBrand($session->get("brand_name"), "name", ["appIcon", "appLoading", "appHeading", "appBanner"], true),
+            "branding" => $brandModel->getBrand($session->get("brand_id"), "name", ["branding"]),
+            "brandimages" => $brandModel->getBrand($session->get("brand_id"), "name", ["appIcon", "appLoading", "appHeading", "appBanner"], true),
         ];
 
         return Navigation::renderNavBar("Branding","branding", [true, "Brands"]) . view("brand/Branding", $data) . Navigation::renderFooter();
@@ -111,9 +111,9 @@ class Brand extends BaseController
             $id = esc($request->getGet("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
             $user = $userModel->getUser($id, filter: ["name", "email", "status"]);
-            $permissions = $userModel->getPermissions($id, $session->get("brand_name"));
+            $permissions = $userModel->getPermissions($id, $session->get("brand_id"));
 
-            $permissions["admin"] = $userModel->getAdmin($id, $session->get("brand_name"));
+            $permissions["admin"] = $userModel->getAdmin($id, $session->get("brand_id"));
 
             $data = [
                 "user" => $user,
@@ -184,7 +184,7 @@ class Brand extends BaseController
                     throw new \RuntimeException("File Name Error");
                 }
 
-                $brand = $brandModel->getBrand($session->get("brand_name"), "name", ["id", "appIcon", "appLoading", "appHeading", "appBanner"], true);
+                $brand = $brandModel->getBrand($session->get("brand_id"), "name", ["id", "appIcon", "appLoading", "appHeading", "appBanner"], true);
 
                 if ($brand[$imageType] == ""){
                     $name = $assets->saveBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], $imageType);
@@ -204,14 +204,14 @@ class Brand extends BaseController
                 $branding = $this->request->getPost("branding");
                 $post = $this->request->getPost(["collectionLink", "categoryLink", "menuLink"]);
 
-                $brandId = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
+                $brandId = $brandModel->getBrand($session->get("brand_id"), "name", ["id"]);
                 $brandModel->update($brandId, ["branding" => $branding]);
 
                 $colModel = new CollectionModel();
                 $catModel = new CategoryModel();
 
                 if ($post["collectionLink"] != ""){
-                    $ids = $colModel->getAllIds($session->get("brand_name"));
+                    $ids = $colModel->getAllIds($session->get("brand_id"));
                     foreach($ids as $id){
                         $collection = $colModel->getCollection($id, assoc: true);
                         $cateogory = $catModel->getCategory($collection["category_id"], assoc: true);
@@ -226,7 +226,7 @@ class Brand extends BaseController
                     }
                 }
                 if ($post["categoryLink"] != "") {
-                    $ids = $catModel->getCollumn("id", $session->get("brand_name"));
+                    $ids = $catModel->getCollumn("id", $session->get("brand_id"));
 
                     foreach($ids as $id){
                         $cateogory = $catModel->getCategory($id, assoc: true);
@@ -240,7 +240,7 @@ class Brand extends BaseController
                 }
                 if ($post["menuLink"] != "") {
                     $menuModel = new MenuModel();
-                    $ids = $menuModel->getCollumn("id", $session->get("brand_name"));
+                    $ids = $menuModel->getCollumn("id", $session->get("brand_id"));
 
                     foreach($ids as $id){
                         $menuItem = $menuModel->getMenuItem($id, assoc: true);
@@ -285,8 +285,8 @@ class Brand extends BaseController
                 }
 
                 if ($success) {
-                    $session->set("brand_name", $name);
-                    $session->set('is_admin', $userModel->getAdmin($session->get("user_id"), $session->get("brand_name")));
+                    $session->set("brand_id", $name);
+                    $session->set('is_admin', $userModel->getAdmin($session->get("user_id"), $session->get("brand_id")));
                     return json_encode(["success" => true]);
                 }
             }

@@ -21,7 +21,7 @@ class Notification extends BaseController
         $imageModel = new ImageModel;
         $catModel = new CategoryModel;
         $colModel = new CollectionModel;
-        $brandname = $session->get("brand_name");
+        $brandname = $session->get("brand_id");
 
         $brandID = $brandModel->getBrand($brandname, filter: ["id"], fetchBy: "name");
 
@@ -139,7 +139,7 @@ class Notification extends BaseController
             $brandModel = new BrandModel();
             $session = session();
 
-            $data["brand_id"] = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
+            $data["brand_id"] = $brandModel->getBrand($session->get("brand_id"), "name", ["id"]);
             $notModel->save($data);
         }else{
             $notModel->update($post["id"], $data);
@@ -156,14 +156,14 @@ class Notification extends BaseController
 
             if ($this->request->getPost("ids") != null) {
                 $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_NUMBER_INT);
-                $dbids = $notModel->getCollumn("id", $session->get("brand_name"));
+                $dbids = $notModel->getCollumn("id", $session->get("brand_id"));
 
                 $vallidIds = array_intersect($dbids, $ids);
 
                 $notModel->delete($vallidIds);
             } else {
                 $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
-                $dbids = $notModel->getCollumn("id", $session->get("brand_name"));
+                $dbids = $notModel->getCollumn("id", $session->get("brand_id"));
 
                 foreach ($dbids as $dbid) {
                     if ($dbid == $id) {

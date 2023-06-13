@@ -18,11 +18,7 @@ class CollectionModel extends Model
     protected $updatedField  = 'dateUpdated';
     protected $allowedFields = ["name", "description", "iconPath", "link", "category_id", "brand_id"];
 
-    public function getAllIds($brandName){
-        $builder = $this->db->table('brand');
-        $builder->select("id")->where("name", $brandName);
-        $brandID = $builder->get()->getResultArray()[0];
-
+    public function getAllIds($brandID){
         $builder = $this->db->table('collection');
         $builder->select("id")->where("brand_id", $brandID);
         $query = $builder->get()->getResultArray();
@@ -36,11 +32,7 @@ class CollectionModel extends Model
         return $ids;
     }
 
-    public function getCollumn($column, $brandName, $getBy=[]){
-        $builder = $this->db->table('brand');
-        $builder->select("id")->where("name", $brandName);
-        $brandID = $builder->get()->getResultArray()[0];
-
+    public function getCollumn($column, $brandID, $getBy=[]){
         $builder = $this->db->table('collection');
         $builder->select($column)->where("brand_id", $brandID);
 

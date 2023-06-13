@@ -207,3 +207,7 @@ $("[set-brand]").on("click", function(e){
         }
     })
 })
+
+$("#updateBrand").on("click", function(){
+    
+})

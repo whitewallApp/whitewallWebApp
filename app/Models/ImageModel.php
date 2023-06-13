@@ -19,11 +19,7 @@ class ImageModel extends Model
     protected $updatedField  = 'dateUpdated';
     protected $allowedFields = ["link", "name", "description", "thumbnail", "imagePath", "resolution", "externalPath", "brand_id", "collection_id"];
 
-    public function getAllIds($brandName){
-        $builder = $this->db->table('brand');
-        $builder->select("id")->where("name", $brandName);
-        $brandID = $builder->get()->getResultArray()[0];
-
+    public function getAllIds($brandID){
         $builder = $this->db->table('wallpaper');
         $builder->select("id")->where("brand_id", $brandID);
         $query = $builder->get()->getResultArray();
@@ -37,11 +33,7 @@ class ImageModel extends Model
         return $ids;
     }
 
-    public function getCollumn($column, $brandName, $getBy=[]){
-        $builder = $this->db->table('brand');
-        $builder->select("id")->where("name", $brandName);
-        $brandID = $builder->get()->getResultArray()[0];
-
+    public function getCollumn($column, $brandID, $getBy=[]){
         $builder = $this->db->table('wallpaper');
         $builder->select($column);
         $builder->where("brand_id", $brandID);

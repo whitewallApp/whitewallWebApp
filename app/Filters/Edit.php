@@ -29,7 +29,7 @@ class Edit implements FilterInterface
         if (!$session->get("is_admin")){
             $userModel = new UserModel();
 
-            $canEdit = $userModel->getPermissions($session->get("user_id"), $session->get("brand_name"), permissions: ["p_edit"]);
+            $canEdit = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), permissions: ["p_edit"]);
 
             if (!$canEdit[$page]["p_edit"]){
                 http_response_code(403);

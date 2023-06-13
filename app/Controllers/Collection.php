@@ -16,7 +16,7 @@ class Collection extends BaseController
         $collModel = new CollectionModel;
         $catModel = new CategoryModel;
         $brandModel = new BrandModel;
-        $brandname = $session->get("brand_name");
+        $brandname = $session->get("brand_id");
 
         $ids = $collModel->getAllIds($brandname);
         $collections = [];
@@ -46,7 +46,7 @@ class Collection extends BaseController
             $request = \Config\Services::request();
             $colModel = new CollectionModel;
             $catModel = new CategoryModel;
-            $brandname = $session->get("brand_name");
+            $brandname = $session->get("brand_id");
 
             $id = $request->getVar("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $req = $request->getVar("UpperReq", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -103,7 +103,7 @@ class Collection extends BaseController
                     "description" => $post["description"],
                     "link" => $post["link"],
                     "category_id" => $categoryId,
-                    "brand_id" => $brandModel->getBrand($session->get("brand_name"), "name", ["id"])
+                    "brand_id" => $brandModel->getBrand($session->get("brand_id"), "name", ["id"])
                 ];
 
                 if (count($this->request->getFiles()) > 0){
@@ -165,7 +165,7 @@ class Collection extends BaseController
             //bulk image or single
             if ($this->request->getPost("ids") != null) {
                 $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_SPECIAL_CHARS);
-                $dbids = $collModel->getCollumn("name", $session->get("brand_name"));
+                $dbids = $collModel->getCollumn("name", $session->get("brand_id"));
 
                 $vallidIds = array_intersect($dbids, $ids);
 
@@ -173,7 +173,7 @@ class Collection extends BaseController
                     array_shift($vallidIds);
                 }
 
-                $imageIds = $imageModel->getAllIds($session->get("brand_name"));
+                $imageIds = $imageModel->getAllIds($session->get("brand_id"));
 
                 foreach ($vallidIds as $id) {
                     $path = $collModel->getCollection($id, ["iconPath", "id"], "name", true);
@@ -197,12 +197,12 @@ class Collection extends BaseController
 
                 if ($id != null) {
                     $collection = $collModel->getCollection($id, assoc: true);
-                    $dbids = $collModel->getCollumn("id", $session->get("brand_name"));
+                    $dbids = $collModel->getCollumn("id", $session->get("brand_id"));
 
                     $validId = array_intersect($dbids, [$id]);
 
                     //foreign key check
-                    $imgIds = $imageModel->getAllIds($session->get("brand_name"));
+                    $imgIds = $imageModel->getAllIds($session->get("brand_id"));
                     foreach ($imgIds as $imgid) {
                         $image = $imageModel->getImage($imgid, assoc: true)[0];
                         if ($collection["id"] == $image["collection_id"]) {

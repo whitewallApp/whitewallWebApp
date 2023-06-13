@@ -15,7 +15,7 @@ class Category extends BaseController
         $catModel = new CategoryModel;
         $colModel = new CollectionModel;
         $brandModel = new BrandModel;
-        $brandname = $session->get("brand_name");
+        $brandname = $session->get("brand_id");
 
         $ids = $catModel->getCollumn("id", $brandname);
         $colIds = $colModel->getCollumn("id", $brandname);
@@ -51,7 +51,7 @@ class Category extends BaseController
         if ($session->get("logIn")){
             $request = \Config\Services::request();
             $catModel = new CategoryModel;
-            $brandname = $session->get("brand_name");
+            $brandname = $session->get("brand_id");
 
             $id = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $req = $request->getVar("UpperReq", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -88,7 +88,7 @@ class Category extends BaseController
                     "name" => $post["name"],
                     "description" => $post["description"],
                     "link" => $post["link"],
-                    "brand_id" => $brandModel->getBrand($session->get("brand_name"), "name", ["id"])
+                    "brand_id" => $brandModel->getBrand($session->get("brand_id"), "name", ["id"])
                 ];
 
                 if (count($this->request->getFiles()) > 0){
@@ -170,7 +170,7 @@ class Category extends BaseController
             //bulk image or single
             if ($this->request->getPost("ids") != null) {
                 $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_SPECIAL_CHARS);
-                $dbids = $catModel->getCollumn("name", $session->get("brand_name"));
+                $dbids = $catModel->getCollumn("name", $session->get("brand_id"));
 
                 $vallidIds = array_intersect($dbids, $ids);
 
@@ -178,7 +178,7 @@ class Category extends BaseController
                     array_shift($vallidIds);
                 }
 
-                $colIds = $colModel->getAllIds($session->get("brand_name"));
+                $colIds = $colModel->getAllIds($session->get("brand_id"));
                 
                 foreach($vallidIds as $id){
                     $category = $catModel->getCategory($id, "name", ["iconPath", "id"], true);
@@ -205,12 +205,12 @@ class Category extends BaseController
 
                 if ($id != null){
                     $category = $catModel->getCategory($id, assoc: true);
-                    $dbids = $catModel->getCollumn("id", $session->get("brand_name"));
+                    $dbids = $catModel->getCollumn("id", $session->get("brand_id"));
 
                     $validId = array_intersect($dbids, [$id]);
 
                     //foreign key check
-                    $colIds = $colModel->getAllIds($session->get("brand_name"));
+                    $colIds = $colModel->getAllIds($session->get("brand_id"));
                     foreach($colIds as $colId){
                         $collection = $colModel->getCollection($colId, assoc: true);
                         if ($category["id"] == $collection["category_id"]){

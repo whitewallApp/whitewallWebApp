@@ -12,12 +12,8 @@ class UserModel extends Model
     protected $table = "user";
     protected $allowedFields = ["name", "password", "email", "phone", "icon", "status", "default_brand", "google_id"];
 
-    public function getCollumn($column, $brandName, $getBy = []): mixed
+    public function getCollumn($column, $brandId, $getBy = []): mixed
     {
-        $brandModel = new BrandModel();
-
-        $brandId = $brandModel->getBrand($brandName, "name", ["id"]);
-
         $builder = $this->db->table('user');
         $builder->join("branduser", "branduser.user_id = user.id", "inner");
         $builder->select($column)->where("brand_id", $brandId);
@@ -80,19 +76,16 @@ class UserModel extends Model
         }
     }
 
-    public function getAdmin($userId, $brandName){
+    public function getAdmin($userId, $brandId){
         $builder = $this->db->table('branduser');
-        $brandModel = new BrandModel();
-        $brandId = $brandModel->getBrand($brandName, "name", ["id"]);
 
         $builder->select("admin")->where("brand_id", $brandId)->where("user_id", $userId);
 
         return $builder->get()->getResultArray()[0]["admin"];
     }
 
-    public function getPermissions($userId, $brandName, $area=[], $permissions = ["p_view", "p_add", "p_edit", "p_remove"]): array {
+    public function getPermissions($userId, $brandID, $area=[], $permissions = ["p_view", "p_add", "p_edit", "p_remove"]): array {
         $brandModel = new BrandModel();
-        $brandID = $brandModel->getBrand($brandName, "name", ["id"]);
 
         if (count($area) > 0){
 
