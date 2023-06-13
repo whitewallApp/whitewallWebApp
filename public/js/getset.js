@@ -477,23 +477,40 @@ $("#notData").submit(function(e){
     });
 });
 
-function showData(link, list=true){
+function showData(ifadd, list=true){
     form = $("#form-div");
     title = $("#data-title");
     button = $("#add-button");
 
     button.hide();
-    title.html("Edit " + window.location.pathname.substring(1, window.location.pathname.length));
+
+    const value = window.location.pathname.substring(1, window.location.pathname.length);
+    var pageName = "";
+
+    switch (value) {
+        case 'images':
+            pageName = "Image";
+            break;
+        case 'categories':
+            pageName = "Category";
+            break;
+        case 'collections':
+            pageName = "Collection";
+            break;
+        default:
+            break;
+    }
+    title.html("Edit " + pageName);
 
 
     catSelect = $("#select");
     catSelect.empty();
     form.show();
 ;   
-    if (link != "func"){
+    if (window.location.pathname != "func"){
         $("#img-icon").hide();
 
-        $.post(link, 
+        $.post(window.location.pathname, 
         {
             "UpperReq": true
         }, 
