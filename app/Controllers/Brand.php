@@ -174,7 +174,7 @@ class Brand extends BaseController
                 
                 //check if the name of the file has not been modified
                 $typeCheck = false;
-                foreach(["appIcon", "appLoading", "appHeading", "appBanner"] as $type){
+                foreach(["appIcon", "appLoading", "appHeading", "appBanner", "logo"] as $type){
                     if ($imageType == $type){
                         $typeCheck = true;
                     }
@@ -184,9 +184,15 @@ class Brand extends BaseController
                     throw new \RuntimeException("File Name Error");
                 }
 
-                $brand = $brandModel->getBrand($session->get("brand_id"), "name", ["id", "appIcon", "appLoading", "appHeading", "appBanner"], true);
+                $brand = $brandModel->getBrand($session->get("brand_id"), filter: ["id", "appIcon", "appLoading", "appHeading", "appBanner", "logo"], assoc: true);
 
-                if ($brand[$imageType] == ""){
+                if ($this->request->getPost("name") != null) {
+                    $name = $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS);
+                    $brandModel->update($brand["id"], ["name" => $name]);
+                }
+
+                //if we seting it for the first time else delete old file
+                if ($brand[$imageType] == "" || preg_match("/^http/", $brand[$imageType]) == "1"){
                     $name = $assets->saveBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], $imageType);
                     $updatedBrand = [
                         $imageType => "/assets/branding/" . $name
@@ -204,11 +210,17 @@ class Brand extends BaseController
                 $branding = $this->request->getPost("branding");
                 $post = $this->request->getPost(["collectionLink", "categoryLink", "menuLink"]);
 
-                $brandId = $brandModel->getBrand($session->get("brand_id"), "name", ["id"]);
+                $brandId = $session->get("brand_id");
                 $brandModel->update($brandId, ["branding" => $branding]);
 
                 $colModel = new CollectionModel();
                 $catModel = new CategoryModel();
+
+                //update brandname if it comes in
+                if ($this->request->getPost("name") != null) {
+                    $name = $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS);
+                    $brandModel->update($brandId, ["name" => $name]);
+                }
 
                 if ($post["collectionLink"] != ""){
                     $ids = $colModel->getAllIds($session->get("brand_id"));

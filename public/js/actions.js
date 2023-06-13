@@ -209,5 +209,26 @@ $("[set-brand]").on("click", function(e){
 })
 
 $("#updateBrand").on("click", function(){
-    
+    formData = new FormData();
+
+    if ($("#brandIcon")[0].files.length > 0) {
+        formData.append("logo", $("#brandIcon")[0].files[0]);
+    }
+
+    formData.append("name", $("#brandName").val());
+
+    $.ajax({
+        url: "/brand/branding/update",
+        type: "post",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (result) {
+            window.location.reload();
+        },
+        error: function (xhr, status, error) {
+            $(".alert-danger").show();
+            $(".alert-danger").html(JSON.parse(xhr.responseText).message);
+        }
+    })
 })

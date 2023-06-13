@@ -81,7 +81,7 @@ $routes->post("/images/upload","Image::upload/1", ["filter" => "add:images"]);
 $routes->get("/images/upload/csv/(:segment)","Image::makeCSV/$1", ["filter" => "add:images"]);
 
 //Update URLs
-$routes->post('/reset/update', 'Reset::update'); //TODO: add edit filters
+$routes->post('/reset/update', 'Reset::update');
 $routes->post('/images/update', 'Image::update', ["filter" => "edit:images"]);
 $routes->post('/collections/update','Collection::update', ["filter" => "edit:collections"]);
 $routes->post('/categories/update','Category::update', ["filter" => "edit:categories"]);
