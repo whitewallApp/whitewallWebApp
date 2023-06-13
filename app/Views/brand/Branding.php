@@ -105,7 +105,7 @@
                                     </div>
                                 </div>
                             <?php endfor ?>
-                            <?php if (count($collections) % 2 != 0) : ?>
+                            <?php if (count($images) % 2 != 0) : ?>
                                 <div class="col-sm-6">
                                     <div class="card card-branding p-2">
                                         <img class="img-branding" src="<?= $images[count($images) - 1]["thumbnail"] ?>" alt="Card image cap">
@@ -123,7 +123,9 @@
                 <div class="tab-pane fade" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab">
                     <div class="phone">
                         <img class="phone-img" src="/Icons/phone.png">
-                        <img class="phone-wallpaper" src="<?= $images[0]["thumbnail"] ?>">
+                        <?php if (count($images) > 0) : ?>
+                            <img class="phone-wallpaper" src="<?= $images[0]["imagePath"] ?>">
+                        <?php endif ?>
                         <button class="btn btn-primary btn-branding" id="setWallpaper">Set Wallpaper</button>
                     </div>
                 </div>

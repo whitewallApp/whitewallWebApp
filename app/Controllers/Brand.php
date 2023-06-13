@@ -59,7 +59,7 @@ class Brand extends BaseController
         $imageids = $imgModel->getCollumn("id", $brandname);
         $images = [];
         foreach ($imageids as $id) {
-            $image = $imgModel->getImage($id, filter: ["name", "thumbnail"], assoc: true);
+            $image = $imgModel->getImage($id, filter: ["name", "thumbnail", "imagePath"], assoc: true);
             array_push($images, $image);
         }
 
