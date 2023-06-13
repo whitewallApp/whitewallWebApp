@@ -369,7 +369,7 @@ class Image extends BaseController
 
                 $data = [
                     "description" => $tempName,
-                    "brand_id" => $brandModel->getBrand($session->get("brand_id"), "name", ["id"]),
+                    "brand_id" => $session->get("brand_id"),
                     "collection_id" => $colIds[0],
                     "externalPath" => 0,
                     "imagePath" => "/assets/images/" . $imagePath,
@@ -461,7 +461,7 @@ class Image extends BaseController
                                 }
 
 
-                                $brandid = $brandModel->getBrand($session->get("brand_id"), "name", ["id"]);
+                                $brandid = $session->get("brand_id");
 
                                 // echo var_dump(["row" => $row, "collectionFound" => $colfound, "categoryFound" => $catfound]);
 
