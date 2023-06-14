@@ -29,7 +29,7 @@ class CollectionModel extends Model
             array_push($ids, $id["id"]);
         }
 
-        return $ids;
+        return array_slice($ids, 1, count($ids));
     }
 
     public function getCollumn($column, $brandID, $getBy=[]){
@@ -51,7 +51,11 @@ class CollectionModel extends Model
             array_push($returnArray, $thing[$column]);
         }
 
-        return $returnArray;
+        if ($column == "name" || $column == "id") {
+            return array_slice($returnArray, 1, count($returnArray));
+        } else {
+            return $returnArray;
+        }
     }
 
     public function getIdByName($name){

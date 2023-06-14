@@ -24,15 +24,10 @@ class Category extends BaseController
 
         foreach ($ids as $id){
             $category = $catModel->getCategory($id, assoc: true);
-
-            foreach($colIds as $colId){
-                $colCatId = $colModel->getCollection($colId, filter: ["category_id", "name"], assoc: true);
-
-                if ($colCatId["category_id"] == $id){
-                    $category["collectionName"] = $colCatId["name"];
-                }else{
-                    $category["collectionName"] = "None";
-                }
+            try {
+                $category["collectionName"] = $colModel->getCollection($id, ["name"], "category_id");
+            } catch (\Throwable $th) {
+                $category["collectionName"] = "None";
             }
 
             array_push($categories, $category);
