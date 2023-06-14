@@ -23,6 +23,10 @@ function getImg(e){
 
     $(".alert-success").hide();
     $(".alert-danger").hide();
+    $("#remove").show();
+    $("#form-div").show();
+    $("#save").html("Save");
+    $("#data-title").html("Edit Image");
 
     if (lastElement != ""){
         lastElement.css("background-color", "white");
@@ -35,8 +39,7 @@ function getImg(e){
 
     $.post("/images", 
     {
-        'id': id,
-        "UpperReq": false
+        'id': id
     },
     function(data, status){
         image = JSON.parse(data);
@@ -476,55 +479,3 @@ $("#notData").submit(function(e){
         }
     });
 });
-
-function showData(ifadd, list=true){
-    form = $("#form-div");
-    title = $("#data-title");
-    button = $("#add-button");
-
-    button.hide();
-
-    const value = window.location.pathname.substring(1, window.location.pathname.length);
-    var pageName = "";
-
-    switch (value) {
-        case 'images':
-            pageName = "Image";
-            break;
-        case 'categories':
-            pageName = "Category";
-            break;
-        case 'collections':
-            pageName = "Collection";
-            break;
-        default:
-            break;
-    }
-    title.html("Edit " + pageName);
-
-
-    catSelect = $("#select");
-    catSelect.empty();
-    form.show();
-;   
-    if (window.location.pathname != "func"){
-        $("#img-icon").hide();
-
-        $.post(window.location.pathname, 
-        {
-            "UpperReq": true
-        }, 
-        function(data, status){
-            collection = JSON.parse(data);
-            
-            if (list){
-                catSelect.empty();
-                collection.forEach(element => {
-                    catSelect.append('<option value="' + element +'">' + element + "</option>")
-                });
-            }
-        })
-    }
-
-    
-}

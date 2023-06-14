@@ -97,7 +97,7 @@ class ImageModel extends Model
         if ($id != ""){
             $data["id"] = $id;
             $data["dateCreated"] = new RawSql('CURRENT_TIMESTAMP');
-            $data["brand_id"] = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
+            $data["brand_id"] = $session->get("brand_id");
         }
 
         $builder = $this->db->table("wallpaper");

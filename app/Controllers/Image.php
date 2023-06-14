@@ -93,11 +93,6 @@ class Image extends BaseController
             $brandname = $session->get("brand_id");
 
             $id = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $req = $request->getVar("UpperReq", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-            if ($req == "true") {
-                return json_encode($colModel->getCollumn("name", $brandname));
-            }
 
             $image = $imageModel->getImage($id)[0];
             $collections = $colModel->getCollumn("name", $brandname);
