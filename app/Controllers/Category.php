@@ -38,6 +38,25 @@ class Category extends BaseController
             array_push($categories, $category);
         }
 
+        //filter for spesific ID
+        if ($this->request->getGet("id") != null) {
+            $catId = $this->request->getGet("id", FILTER_SANITIZE_NUMBER_INT);
+            $ids = $catModel->getCollumn("id", $session->get("brand_id"));
+            foreach ($ids as $id) {
+                if ($id == $catId) {
+                    $category = $catModel->getCategory($id, assoc: true);
+                    
+                    try {
+                        $category["collectionName"] = $colModel->getCollection($id, ["name"], "category_id");
+                    } catch (\Throwable $th) {
+                        $category["collectionName"] = "None";
+                    }
+
+                    $categories[0] = $category;
+                }
+            }
+        }
+
 
         $data = [
             "categories" => $categories,
