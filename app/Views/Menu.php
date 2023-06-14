@@ -28,7 +28,7 @@
 
                             </div>
                             <div class="col-6">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -74,6 +74,9 @@
 
     <div class="col-sm-8 mt-3">
         <div class="card m-2 p-2">
+            <div class="col d-flex justify-content-center">
+                <h2 id="data-title" class="mr-4">Add Menu Item</h2>
+            </div>
             <form id="menuData">
                 <div class="form-group">
                     <label for="title">Menu Title</label>
@@ -117,8 +120,8 @@
             </form>
             <div class="float-right">
                 <p id="updated" class="mr-2"></p>
-                <button class="btn btn-primary m-2" onclick="$('#menuData').submit();">Save</button>
-                <button class="btn btn-danger m-2" id="remove">Remove</button>
+                <button class="btn btn-primary m-2" onclick="$('#menuData').submit();" id="save">Add New Menu Item</button>
+                <button class="btn btn-danger m-2" id="remove" style="display: none;">Remove</button>
             </div>
             <div class="alert alert-success" role="alert" style="display: none;">
                 Success
