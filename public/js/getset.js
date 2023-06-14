@@ -28,6 +28,8 @@ function getImg(e){
     $("#save").html("Save");
     $("#data-title").html("Edit Image");
 
+    $(".flex-row-reverse").html('<i style="font-size: 1.75rem; cursor: pointer;" id="wipe-image" class="bi bi-x-circle"></i>');
+
     if (lastElement != ""){
         lastElement.css("background-color", "white");
     }
@@ -49,7 +51,6 @@ function getImg(e){
         
         nameTextBox.val(image.name);
         descTextBox.val(image.description);
-        showData("/images", false);
 
         if (image.externalPath == "1"){
             linkTextBox.val(image.imagePath);
@@ -136,6 +137,10 @@ function updateImage(){
 $("#imageFile").on("change", function(e){
     imageName = $("#imageFile")[0].files[0].name;
     $("#imageFileText").html(imageName);
+})
+
+$("#wipe-image").on("click", function(){
+    $("")
 })
 
 //COLLECTIONS
