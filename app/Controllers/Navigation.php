@@ -3,6 +3,10 @@
 namespace App\Controllers;
 
 use App\Models\BrandModel;
+use App\Models\CategoryModel;
+use App\Models\CollectionModel;
+use App\Models\ImageModel;
+use App\Models\NotificationModel;
 use App\Models\UserModel;
 
 class Navigation extends BaseController
@@ -39,7 +43,7 @@ class Navigation extends BaseController
         ];
 
 
-        return view('Navigation', $data);
+        return view('Navigation/Navigation', $data);
     }
 
     public static function renderFooter(){
@@ -49,5 +53,39 @@ class Navigation extends BaseController
         <script src="/js/getset.js"></script>
         <script src="/js/actions.js"></script>
         <script src="https://accounts.google.com/gsi/client" async defer></script>';
+    }
+
+    public function search(){
+        $session = session();
+        if (!$session->get("logIn")){
+            return redirect()->to("");
+        }
+
+        $imageModel = new ImageModel();
+        $notModel = new NotificationModel();
+        $colModel = new CollectionModel();
+        $catModel = new CategoryModel();
+        $query = $this->request->getGet("query", FILTER_SANITIZE_SPECIAL_CHARS);
+
+        $images = $imageModel->like("name", $query);
+        $images = array_merge($images, $imageModel->like("description", $query));
+
+        $notifications = $notModel->like("title", $query);
+        $notifications = array_merge($notifications, $notModel->like("description", $query));
+
+        $collections = $colModel->like("name", $query);
+        $collections = array_merge($collections, $colModel->like("description", $query));
+
+        $categories = $catModel->like("name", $query);
+        $categories = array_merge($categories, $catModel->like("description", $query));
+
+        $data = [
+            "images" => $images,
+            "collections" => $collections,
+            "categories" => $categories,
+            "notifications" => $notifications
+        ];
+
+        return $this->renderNavBar("Search") . view("Navigation/Search", $data) . $this->renderFooter();
     }
 }

@@ -69,4 +69,10 @@ class NotificationModel extends Model
             return $notification;
         }
     }
+
+    public function like(string $column, array|string $query)
+    {
+        $builder = $this->db->table('notifications');
+        return $builder->orLike($column, $query, insensitiveSearch: true)->get()->getResultArray();
+    }
 }

@@ -46,6 +46,7 @@ $routes->get('/brand/branding/(:num)','Brand::branding/$1', ["filter" => "view:b
 $routes->get('/brand/users/(:num)','Brand::users/$1', ["filter" => "view:admin"]);
 $routes->get('/billing',"Account::billing", ["filter" => "view:nocheck"]); //TODO move this to account view
 $routes->get('/reset/(:any)', 'Reset::index/$1');
+$routes->get('/search', 'Navigation::search');
 
 //Asset URLS
 $routes->get('/assets/images/thumbnail/(:any)', 'Assets::imageThumbnail/$1');

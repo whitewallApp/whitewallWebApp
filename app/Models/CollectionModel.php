@@ -98,4 +98,10 @@ class CollectionModel extends Model
         $builder->where($updateBy, $id);
         $builder->update($data);
     }
+
+    public function like(string $column, array|string $query)
+    {
+        $builder = $this->db->table('collection');
+        return $builder->orLike($column, $query, insensitiveSearch: true)->get()->getResultArray();
+    }
 }

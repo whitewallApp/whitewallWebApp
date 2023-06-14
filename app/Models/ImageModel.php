@@ -111,4 +111,9 @@ class ImageModel extends Model
 
         return $img;
     }
+
+    public function like(string $column, array|string $query){
+        $builder = $this->db->table('wallpaper');
+        return $builder->orLike($column, $query, insensitiveSearch: true)->get()->getResultArray();
+    }
 }
