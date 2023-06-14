@@ -28,7 +28,7 @@ function getImg(e){
     $("#save").html("Save");
     $("#data-title").html("Edit Image");
 
-    $(".flex-row-reverse").append('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
+    $(".flex-row-reverse").html('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
 
     if (lastElement != ""){
         lastElement.css("background-color", "white");
@@ -156,7 +156,7 @@ function getColl(e){
     $("#submit").html("Save");
     $("#data-title").html("Edit Collection");
 
-    $(".flex-row-reverse").append('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
+    $(".flex-row-reverse").html('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
 
     nameTextBox = $("#collName");
     linkTextBox = $("#collLink");
@@ -266,7 +266,7 @@ function getCat(e){
     $("[type='submit']").html("Save");
     $("#data-title").html("Edit Category");
 
-    $(".flex-row-reverse").append('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
+    $(".flex-row-reverse").html('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
 
     $.post("/categories",
     {
@@ -354,7 +354,7 @@ function getNot(e){
     $("#save").html("Save");
     $("#data-title").html("Edit Notification");
 
-    $(".flex-row-reverse").append('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
+    $(".flex-row-reverse").html('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
 
 
     id = e.id;
