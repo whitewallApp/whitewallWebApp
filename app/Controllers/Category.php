@@ -51,7 +51,8 @@ class Category extends BaseController
                     } catch (\Throwable $th) {
                         $category["collectionName"] = "None";
                     }
-
+                    //empty the array
+                    $categories = [];
                     $categories[0] = $category;
                 }
             }
