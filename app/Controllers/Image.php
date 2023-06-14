@@ -41,6 +41,16 @@ class Image extends BaseController
             }
         }
 
+        if ($this->request->getGet("id") != null){
+            $imageID = $this->request->getGet("id", FILTER_SANITIZE_NUMBER_INT);
+            $ids = $imageModel->getAllIds($brandId);
+            foreach ($ids as $id) {
+                if ($id == $imageID){
+                    $dbImages = $imageModel->getImage($id, assoc: true);
+                }
+            }
+        }
+
         $collections = [];
 
         $dbcollections = $collModel->getAllIds($brandId);

@@ -38,6 +38,20 @@ class Collection extends BaseController
             array_push($collections, $collection);
         };
 
+        //filter for spesific ID
+        if ($this->request->getGet("id") != null) {
+            $colId = $this->request->getGet("id", FILTER_SANITIZE_NUMBER_INT);
+            $ids = $collModel->getAllIds($session->get("brand_id"));
+            foreach ($ids as $id) {
+                if ($id == $colId) {
+                    $collection = $collModel->getCollection($id, assoc: true);
+                    $collection["category"] = $catModel->getCategory($collection["category_id"], filter: ["name"]);
+
+                    $collections[0] = $collection;
+                }
+            }
+        }
+
         $data = [
             "collections" => $collections,
             "categories" => $catModel->getCollumn("name", $session->get("brand_id"))

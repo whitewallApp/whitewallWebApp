@@ -16,7 +16,7 @@
                             <tr>
                                 <td><?= $image["name"] ?></td>
                                 <td><?= $image["description"] ?></td>
-                                <td><a href="#">Edit</a></td>
+                                <td><a href="/images?id=<?= $image["id"] ?>">Edit</a></td>
                             </tr>
                         <?php endforeach ?>
                     </tbody>
@@ -41,7 +41,7 @@
                             <tr>
                                 <td><?= $collection["name"] ?></td>
                                 <td><?= $collection["description"] ?></td>
-                                <td><a href="#">Edit</a></td>
+                                <td><a href="/collections?id=<?= $collection["id"] ?>">Edit</a></td>
                             </tr>
                         <?php endforeach ?>
                     </tbody>
@@ -66,7 +66,7 @@
                             <tr>
                                 <td><?= $category["name"] ?></td>
                                 <td><?= $category["description"] ?></td>
-                                <td><a href="#">Edit</a></td>
+                                <td><a href="/categories?id=<?= $category["id"] ?>">Edit</a></td>
                             </tr>
                         <?php endforeach ?>
                     </tbody>
@@ -91,7 +91,7 @@
                             <tr>
                                 <td><?= $notification["title"] ?></td>
                                 <td><?= $notification["description"] ?></td>
-                                <td><a href="#">Edit</a></td>
+                                <td><a href="/notifications?id=<?= $notification["id"] ?>">Edit</a></td>
                             </tr>
                         <?php endforeach ?>
                     </tbody>
