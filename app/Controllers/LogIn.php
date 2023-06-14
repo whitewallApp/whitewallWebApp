@@ -83,7 +83,6 @@ class LogIn extends BaseController
 
     public static function login($userId){
         $session = session();
-        $brandModel = new BrandModel();
         $userModel = new UserModel();
 
         $session->set("logIn", true);
