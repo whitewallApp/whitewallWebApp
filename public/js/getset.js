@@ -28,7 +28,7 @@ function getImg(e){
     $("#save").html("Save");
     $("#data-title").html("Edit Image");
 
-    $(".flex-row-reverse").html('<i style="font-size: 1.75rem; cursor: pointer;" id="wipe-image" class="bi bi-x-circle"></i>');
+    $(".flex-row-reverse").append('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
 
     if (lastElement != ""){
         lastElement.css("background-color", "white");
@@ -139,10 +139,6 @@ $("#imageFile").on("change", function(e){
     $("#imageFileText").html(imageName);
 })
 
-$("#wipe-image").on("click", function(){
-    $("")
-})
-
 //COLLECTIONS
 function getColl(e){
     tableRow = $(e);
@@ -159,6 +155,8 @@ function getColl(e){
     $("#form-div").show();
     $("#submit").html("Save");
     $("#data-title").html("Edit Collection");
+
+    $(".flex-row-reverse").append('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
 
     nameTextBox = $("#collName");
     linkTextBox = $("#collLink");
@@ -268,6 +266,8 @@ function getCat(e){
     $("[type='submit']").html("Save");
     $("#data-title").html("Edit Category");
 
+    $(".flex-row-reverse").append('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
+
     $.post("/categories",
     {
         "id": id
@@ -352,6 +352,9 @@ function getNot(e){
     $("#remove").show();
     $("#notData").show();
     $("#save").html("Save");
+    $("#data-title").html("Edit Notification");
+
+    $(".flex-row-reverse").append('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
 
 
     id = e.id;
@@ -361,7 +364,6 @@ function getNot(e){
     },
     function(data, status){
         notifcation = JSON.parse(data);
-        $($("#notData").children().get(0)).html("<h2>Edit Notification</h2>")
         
         $("#notData").attr("not-id", notifcation.id);
         $("#remove").attr("remove-id", notifcation.id)

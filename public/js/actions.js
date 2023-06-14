@@ -156,6 +156,10 @@ $("#delete").on("click", function(){
     }
 })
 
+$("#wipe").on("click", function () {
+    console.log("hello");
+})
+
 $("#remove").on("click", function(){
     if (confirm("Are you sure you want to delete")) {
         $.ajax({

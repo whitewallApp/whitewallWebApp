@@ -24,7 +24,7 @@
 
                             </div>
                             <div class="col-6">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -70,10 +70,18 @@
 
     <div class="col-sm-4 mt-3">
         <div class="card m-2 p-2">
-            <form id="notData">
-                <div class="text-center">
-                    <h2>Add Notification</h2>
+            <div class="row">
+                <div class="col-1">
+
                 </div>
+                <div class="col d-flex justify-content-center">
+                    <h2 id="data-title" class="mr-4">Add Notification</h2>
+                </div>
+                <div class="col d-flex flex-row-reverse">
+
+                </div>
+            </div>
+            <form id="notData">
                 <div class="form-group">
                     <label for="title">Notification Title</label>
                     <input type="text" class="form-control" id="title" placeholder="Check out this new thing!">

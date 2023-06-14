@@ -3,8 +3,14 @@
 <?= $this->section('Detail') ?>
 <div class="row">
   <?php if ($view[$pageName]["add"]) : ?>
+    <div class="col-2">
+
+    </div>
     <div class="col d-flex justify-content-center">
       <h2 id="data-title" class="mr-4">Add Collection</h2>
+    </div>
+    <div class="col d-flex flex-row-reverse">
+
     </div>
   <?php endif ?>
 </div>
@@ -25,7 +31,7 @@
     <div class="form-group">
       <label for="select">Add to Category</label>
       <select class="form-control" id="select">
-        <?php foreach($categories as $category) : ?>
+        <?php foreach ($categories as $category) : ?>
           <option value="<?= $category ?>"><?= $category ?></option>
         <?php endforeach ?>
       </select>
