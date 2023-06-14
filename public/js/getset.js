@@ -249,8 +249,6 @@ function getCat(e){
     id = e.id
     tableRow = $(e);
 
-    showData("/categories");
-
     if (lastElement != ""){
         lastElement.css("background-color", "white");
     }
@@ -260,6 +258,10 @@ function getCat(e){
 
     $(".alert-success").hide();
     $(".alert-danger").hide();
+    $("#remove").show();
+    $("#form-div").show();
+    $("[type='submit']").html("Save");
+    $("#data-title").html("Edit Category");
 
     $.post("/categories",
     {

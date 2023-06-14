@@ -4,12 +4,11 @@
 <div class="row">
   <?php if ($view[$pageName]["add"]) : ?>
     <div class="col d-flex justify-content-center">
-      <h2 id="data-title" class="mr-4"></h2>
-      <button id="add-button" class="btn btn-primary" onclick="showData('/categories');">Add</button>
+      <h2 id="data-title" class="mr-4">Add Category</h2>
     </div>
   <?php endif ?>
 </div>
-<div id="form-div" style="display: none">
+<div id="form-div">
   <form id="categoryData" class="mr-4">
     <div class="form-group">
       <label for="name">Name</label>
@@ -28,18 +27,14 @@
         <input type="file" class="custom-file-input" id="file">
         <label class="custom-file-label" for="file">Icon Image</label>
       </div>
-      <div id="img-icon" class="row m-2">
-        <img id="icon" class="img-sm rounded mr-3">
-        <button class="btn btn-primary">Change</button>
-      </div>
     </div>
   </form>
   <div class="float-right">
     <?php if ($view[$pageName]["edit"]) : ?>
-      <button type="submit" class="btn btn-primary" onclick="$('#categoryData').submit();">Save</button>
+      <button type="submit" class="btn btn-primary" onclick="$('#categoryData').submit();">Add New Category</button>
     <?php endif ?>
     <?php if ($view[$pageName]["remove"]) : ?>
-      <button class="btn btn-danger" id="remove">Remove</button>
+      <button class="btn btn-danger" id="remove" style="display: none;">Remove</button>
     <?php endif ?>
   </div>
   <div class="alert alert-success" role="alert" style="display: none;">

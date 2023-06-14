@@ -88,7 +88,7 @@ class Category extends BaseController
                     "name" => $post["name"],
                     "description" => $post["description"],
                     "link" => $post["link"],
-                    "brand_id" => $brandModel->getBrand($session->get("brand_id"), "name", ["id"])
+                    "brand_id" => $session->get("brand_id")
                 ];
 
                 if (count($this->request->getFiles()) > 0){

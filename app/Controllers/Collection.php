@@ -50,11 +50,6 @@ class Collection extends BaseController
             $brandname = $session->get("brand_id");
 
             $id = $request->getVar("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $req = $request->getVar("UpperReq", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-            if ($req == "true"){
-                return json_encode($catModel->getCollumn("name", $brandname));
-            }
 
             $id = $colModel->getIdByName($id);
             $exp = "/\/.*\/(.*)/";
