@@ -46,6 +46,11 @@ class Brand extends BaseController
         $categories = [];
         foreach ($categoryIds as $id) {
             $category = $catModel->getCategory($id, filter:["name", "iconPath"], assoc: true);
+            
+            if ($category["name"] == "Default Category") {
+                continue;
+            }
+
             array_push($categories, $category);
         }
 
@@ -53,6 +58,11 @@ class Brand extends BaseController
         $collections = [];
         foreach($collectionIds as $id){
             $collection = $colModel->getCollection($id, ["name", "iconPath"], assoc: true);
+
+            if ($collection["name"] == "Default Collection"){
+                continue;
+            }
+
             array_push($collections, $collection);
         }
 
@@ -70,8 +80,8 @@ class Brand extends BaseController
             "collections" => array_slice($collections, 0, 6),
             "images" => array_slice($images, 0, 6),
             "menu"=> $menu,
-            "branding" => $brandModel->getBrand($session->get("brand_id"), "name", ["branding"]),
-            "brandimages" => $brandModel->getBrand($session->get("brand_id"), "name", ["appIcon", "appLoading", "appHeading", "appBanner"], true),
+            "branding" => $brandModel->getBrand($session->get("brand_id"), filter: ["branding"]),
+            "brandimages" => $brandModel->getBrand($session->get("brand_id"), filter: ["appIcon", "appLoading", "appHeading", "appBanner"], assoc: true),
         ];
 
         return Navigation::renderNavBar("Branding","branding", [true, "Brands"]) . view("brand/Branding", $data) . Navigation::renderFooter();
