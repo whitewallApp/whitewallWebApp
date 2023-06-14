@@ -90,7 +90,7 @@ class LogIn extends BaseController
         $session->set("brand_id", $userModel->getUser($userId, filter: ["default_brand"]));
         $session->set("user_id", $userId);
 
-        echo var_dump($session->get("brand_id"));
+        echo var_dump($userModel->getUser($userId, filter: ["default_brand"]));
 
         $session->set("is_admin", $userModel->getAdmin($userId, $session->get("brand_id")));
     }
