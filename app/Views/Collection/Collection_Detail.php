@@ -4,12 +4,11 @@
 <div class="row">
   <?php if ($view[$pageName]["add"]) : ?>
     <div class="col d-flex justify-content-center">
-      <h2 id="data-title" class="mr-4"></h2>
-      <button id="add-button" class="btn btn-primary" onclick="showData('/collections');">Add</button>
+      <h2 id="data-title" class="mr-4">Add Collection</h2>
     </div>
   <?php endif ?>
 </div>
-<div id="form-div" style="display: none">
+<div id="form-div">
   <form class="mr-4" id="collectionData">
     <div class="form-group">
       <label for="collName">Name</label>
@@ -26,7 +25,9 @@
     <div class="form-group">
       <label for="select">Add to Category</label>
       <select class="form-control" id="select">
-
+        <?php foreach($categories as $category) : ?>
+          <option value="<?= $category ?>"><?= $category ?></option>
+        <?php endforeach ?>
       </select>
     </div>
     <div class="form-group">
@@ -35,20 +36,14 @@
         <label class="custom-file-label" for="collfile" id="collfileText">Icon Image</label>
       </div>
     </div>
-    <div class="form-group">
-      <div id="img-icon" class="row m-2">
-        <img id="icon" class="img-sm rounded mr-3">
-        <button class="btn btn-primary">Change</button>
-      </div>
-    </div>
   </form>
   <div class="float-right">
     <p id="updated" class="mr-2"></p>
     <?php if ($view[$pageName]["edit"]) : ?>
-      <button id="submit" class="btn btn-primary mr-2" onclick="$('#collectionData').submit();">Save</button>
+      <button id="submit" class="btn btn-primary mr-2" onclick="$('#collectionData').submit();">Add New Collection</button>
     <?php endif ?>
     <?php if ($view[$pageName]["remove"]) : ?>
-      <button id="remove" class="btn btn-danger mr-2">Remove</button>
+      <button id="remove" class="btn btn-danger mr-2" style="display: none">Remove</button>
     <?php endif ?>
   </div>
   <div class="alert alert-success" role="alert" style="display: none;">

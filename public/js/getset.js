@@ -148,10 +148,12 @@ function getColl(e){
 
     id = e.id
 
-    showData("/collections", false);
-
     $(".alert-success").hide();
     $(".alert-danger").hide();
+    $("#remove").show();
+    $("#form-div").show();
+    $("#submit").html("Save");
+    $("#data-title").html("Edit Collection");
 
     nameTextBox = $("#collName");
     linkTextBox = $("#collLink");

@@ -35,6 +35,7 @@ class Collection extends BaseController
 
         $data = [
             "collections" => $collections,
+            "categories" => $catModel->getCollumn("name", $session->get("brand_id"))
         ];
 
         return Navigation::renderNavBar("Collections", "collections") . view('Collection/Collection_Detail', $data) . Navigation::renderFooter();
@@ -103,7 +104,7 @@ class Collection extends BaseController
                     "description" => $post["description"],
                     "link" => $post["link"],
                     "category_id" => $categoryId,
-                    "brand_id" => $brandModel->getBrand($session->get("brand_id"), "name", ["id"])
+                    "brand_id" => $session->get("brand_id")
                 ];
 
                 if (count($this->request->getFiles()) > 0){
