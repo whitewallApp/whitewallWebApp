@@ -21,9 +21,7 @@ class Notification extends BaseController
         $imageModel = new ImageModel;
         $catModel = new CategoryModel;
         $colModel = new CollectionModel;
-        $brandname = $session->get("brand_id");
-
-        $brandID = $brandModel->getBrand($brandname, filter: ["id"], fetchBy: "name");
+        $brandID = $session->get("brand_id");
 
         //add time to notifications
         $notifications = $notModel->getNotification($brandID, fetchBy: "brand_id");
@@ -33,7 +31,7 @@ class Notification extends BaseController
         }
 
         //set up the images
-        $ids = $imageModel->getAllIds($brandname);
+        $ids = $imageModel->getAllIds($brandID);
         $images = [];
 
         foreach($ids as $id){
@@ -41,17 +39,17 @@ class Notification extends BaseController
         }
 
         //get collection category images array
-        $catNames = $catModel->getCollumn("name", $brandname);
+        $catNames = $catModel->getCollumn("name", $brandID);
         $categories = [];
 
         foreach ($catNames as $category) {
             $catID = $catModel->getCategory($category, "name", ["id"]);
-            $colIDs = $colModel->getCollumn("id", $brandname, ["category_id" => $catID]); //gets an ID but will later be removed to be an array of images
+            $colIDs = $colModel->getCollumn("id", $brandID, ["category_id" => $catID]); //gets an ID but will later be removed to be an array of images
 
             $collections = [];
 
             foreach($colIDs as $colID){
-                $collections[$colModel->getCollection($colID, ["name"])] = $imageModel->getCollumn("name", $brandname, ["collection_id" => $colID]);
+                $collections[$colModel->getCollection($colID, ["name"])] = $imageModel->getCollumn("name", $brandID, ["collection_id" => $colID]);
             }
 
 
@@ -62,7 +60,7 @@ class Notification extends BaseController
             "notifications" => $notifications,
             "images" => $images,
             "categories" => $categories,
-            "menuItems" => $menuModel->getCollumn("title", $brandname),
+            "menuItems" => $menuModel->getCollumn("title", $brandID),
         ];
 
         return Navigation::renderNavBar("Notifications", "notifications", [true, "Notifications"]) . view('Notifications', $data) . Navigation::renderFooter();
@@ -139,7 +137,7 @@ class Notification extends BaseController
             $brandModel = new BrandModel();
             $session = session();
 
-            $data["brand_id"] = $brandModel->getBrand($session->get("brand_id"), "name", ["id"]);
+            $data["brand_id"] = $session->get("brand_id");
             $notModel->save($data);
         }else{
             $notModel->update($post["id"], $data);
