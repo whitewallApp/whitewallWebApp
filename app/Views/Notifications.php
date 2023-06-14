@@ -183,9 +183,9 @@
             <div class="float-right">
                 <p id="updated" class="mr-2"></p>
                 <?php if ($view[$pageName]["edit"]) : ?>
-                    <button class="btn btn-primary m-2" onclick="$('#notData').submit();">Save</button>
+                    <button class="btn btn-primary m-2" onclick="$('#notData').submit();" id="save">Add Notification</button>
                 <?php endif ?>
-                <button class="btn btn-danger m-2" id="remove">Remove</button>
+                <button class="btn btn-danger m-2" id="remove" style="display: none;">Remove</button>
             </div>
             <div class="alert alert-success" role="alert" style="display: none;">
                 Success

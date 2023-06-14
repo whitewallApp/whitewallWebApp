@@ -344,6 +344,10 @@ function getNot(e){
     tableRow.css("background-color", "#c8cbcf");
     lastElement = tableRow;
 
+    $("#remove").show();
+    $("#notData").show();
+    $("#save").html("Save");
+
 
     id = e.id;
     $.post("/notifications", 
