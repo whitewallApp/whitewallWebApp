@@ -24,6 +24,11 @@ class Category extends BaseController
 
         foreach ($ids as $id){
             $category = $catModel->getCategory($id, assoc: true);
+
+            if ($category["name"] == "Default Category"){
+                continue;
+            }
+
             try {
                 $category["collectionName"] = $colModel->getCollection($id, ["name"], "category_id");
             } catch (\Throwable $th) {

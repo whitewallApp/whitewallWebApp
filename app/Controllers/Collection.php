@@ -24,6 +24,11 @@ class Collection extends BaseController
 
         foreach($ids as $id){
             $catID = $collModel->getCollection($id, filter: ["category_id"]);
+
+            if ($collModel->getCollection($id, filter: ["name"]) == "Default Collection"){
+                continue;
+            }
+
             $collection = [
                 "name" => $collModel->getCollection($id, filter: ["name"]),
                 "iconPath" => $collModel->getCollection($id, filter: ["iconPath"]),

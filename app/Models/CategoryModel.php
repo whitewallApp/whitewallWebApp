@@ -45,11 +45,7 @@ class CategoryModel extends Model
             array_push($returnArray, $thing[$column]);
         }
 
-        if ($column == "name" || $column == "id"){
-            return array_slice($returnArray, 1, count($returnArray));
-        }else{
-            return $returnArray;
-        }
+        return $returnArray;
     }
     
     /**
