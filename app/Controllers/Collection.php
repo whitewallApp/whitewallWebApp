@@ -47,6 +47,8 @@ class Collection extends BaseController
                     $collection = $collModel->getCollection($id, assoc: true);
                     $collection["category"] = $catModel->getCategory($collection["category_id"], filter: ["name"]);
 
+                    //empty the array
+                    $collections = [];
                     $collections[0] = $collection;
                 }
             }
