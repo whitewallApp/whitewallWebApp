@@ -81,8 +81,6 @@ class UserModel extends Model
 
         $builder->select("admin")->where("brand_id", $brandId)->where("user_id", $userId);
 
-        echo var_dump($brandId);
-
         return $builder->get()->getResultArray()[0]["admin"];
     }
 
