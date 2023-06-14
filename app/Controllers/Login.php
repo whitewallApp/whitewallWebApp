@@ -86,14 +86,14 @@ class LogIn extends BaseController
         $brandModel = new BrandModel();
         $userModel = new UserModel();
 
-        echo var_dump($userModel->getUser($userId, filter: ["default_brand"]));
+        // echo var_dump($userModel->getUser($userId, filter: ["default_brand"]));
 
         $session->set("logIn", true);
         $session->set("brand_id", $userModel->getUser($userId, filter: ["default_brand"]));
         $session->set("user_id", $userId);
 
 
-        $session->set("is_admin", $userModel->getAdmin($userId, $session->get("brand_id")));
+        // $session->set("is_admin", $userModel->getAdmin($userId, $session->get("brand_id")));
     }
 }
 
