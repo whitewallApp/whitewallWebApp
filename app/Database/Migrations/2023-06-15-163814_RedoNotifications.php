@@ -8,7 +8,7 @@ class RedoNotifications extends Migration
 {
     public function up()
     {
-        // $this->db->disableForeignKeyChecks();
+        $this->db->disableForeignKeyChecks();
 
         $this->forge->dropColumn("notifications", ["clickAction", "data", "forceWall", "forceId"]);
 
@@ -20,7 +20,7 @@ class RedoNotifications extends Migration
 
         $this->forge->addColumn('notifications', $fields);
 
-        // $this->db->enableForeignKeyChecks();
+        $this->db->enableForeignKeyChecks();
     }
 
     public function down()
