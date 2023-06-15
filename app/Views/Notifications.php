@@ -3,7 +3,7 @@
 </script>
 
 <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-7">
         <div class="row m-2">
             <div class="col-sm-8">
                 <div id="actions" class="row" style="display: none">
@@ -68,7 +68,7 @@
         </div>
     </div>
 
-    <div class="col-sm-4 mt-3">
+    <div class="col-sm-5 mt-3">
         <div class="card m-2 p-2">
             <div class="row">
                 <div class="col-1">
@@ -117,7 +117,7 @@
                             <div id="force-select-div" class="col-sm-11" style="display: none;">
                                 <select id="force-select" class="custom-select">
                                     <?php foreach ($images as $image) : ?>
-                                        <option value="<?= $image["name"] ?>"><?= $image["name"] ?></option>
+                                        <option value="<?= $image["id"] ?>"><?= $image["name"] ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -164,7 +164,9 @@
                         <div class="form-group row">
                             <label for="cat-select" class="col-sm-4 col-form-label">Category</label>
                             <select id="cat-select" class="custom-select col-sm-7">
-                                <option value="none">None</option>
+                                <?php foreach (array_keys($categories) as $categoryName) : ?>
+                                    <option value="<?= $categoryName ?>"><?= $categoryName ?></option>
+                                <?php endforeach ?>
                             </select>
                         </div>
 
@@ -175,7 +177,7 @@
                             </select>
                         </div>
 
-                        <div id="img-select-group" class=" form-group row">
+                        <div id="img-select-group" class=" form-group row" style="display: none;">
                             <label for="img-select" class="col-sm-4 col-form-label">Image</label>
                             <select id="img-select" class="custom-select col-sm-7">
                                 <option value="link">Link to Parent Collection</option>

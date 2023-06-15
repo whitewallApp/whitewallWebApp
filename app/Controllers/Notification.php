@@ -66,85 +66,99 @@ class Notification extends BaseController
         return Navigation::renderNavBar("Notifications", "notifications", [true, "Notifications"]) . view('Notifications', $data) . Navigation::renderFooter();
     }
 
+    //get the data
     public function post(){
         $session = session();
-        if ($session->get("logIn")){
-            $request = \Config\Services::request();
-            $notModel = new NotificationModel;
-            $imgModel = new ImageModel();
-            $colModel = new CollectionModel;
-            $catModel = new CategoryModel;
+        $request = \Config\Services::request();
+        $notModel = new NotificationModel;
+        $imgModel = new ImageModel();
+        $colModel = new CollectionModel;
+        $catModel = new CategoryModel;
 
-            $id = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $postid = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            $notification = $notModel->getNotification($id, assoc: true)[0];
+        $ids = $notModel->getCollumn("id", $session->get("brand_id"));
+        $notification = [];
+        foreach ($ids as $id) {
+            if ($postid == $id) {
+                $notification = $notModel->getNotification($id, assoc: true)[0];
 
-            if ($notification["clickAction"] == "Wallpaper"){
-                $notification["data"] = $imgModel->getImage($notification["data"], filter: ["name"]);
+                $data = (array)json_decode($notification["data"]);
+                $data["clickAction"] = (array)$data["clickAction"];
+                $data["forceAction"] = (array)$data["forceAction"];
+
+                if ($data["clickAction"]["type"] == "App") {
+                    if ($data["clickAction"]["idType"] == "category") {
+                        $data["clickAction"]["data"] = $catModel->getCategory($data["clickAction"]["data"], filter: ["name"]);
+                    }
+                    if ($data["clickAction"]["idType"] == "collection") {
+                        $data["clickAction"]["data"] = $colModel->getCollection($data["clickAction"]["data"], ["name"]);
+                    }
+                    if ($data["clickAction"]["idType"] == "image") {
+                        $data["clickAction"]["data"] = $imgModel->getImage($data["clickAction"]["data"], filter: ["name"]);
+                    }
+                }
+
+                $notification["data"] = $data;
             }
-
-            if ($notification["forceWall"]){
-                $notification["forceId"] = $imgModel->getImage($notification["forceId"], filter: ["name"]);
-            }
-
-            return json_encode($notification);
-        }else{
-            return json_encode(["success" => false]);
         }
 
+        return json_encode($notification);
     }
 
     public function update(){
         $notModel = new NotificationModel();
         $imgModel = new ImageModel();
         $menuModel = new MenuModel();
-        $post = $this->request->getPost(["id", "title", "description", "sendtime", "selection", "forceSwitch", "data"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $catModel = new CategoryModel();
+        $colModel = new CollectionModel();
+        $post = $this->request->getPost(["id", "title", "description", "sendtime"], FILTER_SANITIZE_SPECIAL_CHARS);
+        $session = session();
 
-        $data = [
+        //sanitize JSON
+        $data = (string)$this->request->getPost("data");
+        $data = (array)json_decode($data);
+        $data["clickAction"] = filter_var_array((array)$data["clickAction"], FILTER_SANITIZE_SPECIAL_CHARS);
+
+        $data["forceAction"] = filter_var_array((array)$data["forceAction"], 
+            ["activated" => ["filter" => FILTER_VALIDATE_BOOL],
+            "imageId" => ["filter" => FILTER_VALIDATE_INT]
+            ]
+        );
+        
+        if ($data["clickAction"]["type"] == "App"){
+            if ($data["clickAction"]["idType"] == "category"){
+                $data["clickAction"]["data"] = $catModel->getCategory($data["clickAction"]["data"], "name", ["id"]);
+            }
+            if ($data["clickAction"]["idType"] == "collection") {
+                $data["clickAction"]["data"] = $colModel->getCollection($data["clickAction"]["data"], ["id"], "name");
+            }
+            if ($data["clickAction"]["idType"] == "image") {
+                $data["clickAction"]["data"] = $imgModel->getImage($data["clickAction"]["data"], "name", ["id"]);
+            }
+        }
+
+        $row = [
             "title" => $post["title"],
             "description" => $post["description"],
-            "clickAction" => $post["selection"],
             "sendTime" => $post["sendtime"],
+            "data" => json_encode($data)
         ];
 
-        if ($post["selection"] == "Wallpaper"){
-            $data["data"] = $imgModel->getImage($post["data"], "name", ["id"]);
-        }
-
-        if ($post["selection"] == "App"){
-            $appSelection = $this->request->getPost("appSelection", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            if ($appSelection == "app"){
-                $data["data"] = $imgModel->getImage($post["data"], "name", ["id"]);
-            }
-            if ($appSelection == "menu"){
-                $data["data"] = $menuModel->getMenuItem($post["data"], ["id"], "title");
-            }
-        }
-
-        if ($post["selection"] == "Link") {
-            $data["data"] = $post["data"];
-        }
-
-        if ($post["forceSwitch"] == "true"){
-            $wallpaperName = $this->request->getPost("forceWallpaper", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $data["forceId"] = $imgModel->getImage($wallpaperName, "name", ["id"]);
-            $data["forceWall"] = true;
-        }else{
-            $data["forceWall"] = false;
-        }
 
         if ($post["id"] == "undefined"){
-            $brandModel = new BrandModel();
-            $session = session();
-
-            $data["brand_id"] = $session->get("brand_id");
-            $notModel->save($data);
+            $row["brand_id"] = $session->get("brand_id");
+            $notModel->insert($row);
         }else{
-            $notModel->update($post["id"], $data);
+            $ids = $notModel->getCollumn("id", $session->get("brand_id"));
+            foreach($ids as $id){
+                if ($post["id"] == $id){
+                    $notModel->update($id, $row);
+                }
+            }
         }
 
         return json_encode(["success" => true]);
-        // return json_encode($data);
     }
 
     public function delete(){
