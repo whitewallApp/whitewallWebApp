@@ -15,7 +15,7 @@ class LogIn extends BaseController
         try {
             $migrate->latest();
         } catch (\Throwable $e) {
-            // echo var_dump($e->getMessage());
+            echo var_dump($e->getMessage());
         }
 
         return view('Login') . Navigation::renderFooter();
