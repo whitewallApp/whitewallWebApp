@@ -11,6 +11,9 @@ $("#selections").on("change", function(){
         $("#link-input").hide();
         $("#app-input").show();
         $("#app").hide();
+
+        $("#col-select").parent().hide();
+        $("#img-select").parent().hide();
     }
 
     if (selected == "Wallpaper"){
@@ -18,13 +21,8 @@ $("#selections").on("change", function(){
         $("#app-input").hide();
         $("#app").show();
 
-        //load in defaults
-        categoryNames = Object.keys(categories);
-        categoryNames.forEach(name => {
-            $("#cat-select").append(`<option value="${name}">${name}</option>`);
-        });
-
         $("#col-select").parent().hide();
+        $("#img-select").parent().hide();
     }
 
     if (selected == "None"){
@@ -39,24 +37,6 @@ $("#appRadio").on('click', function(){
     $("#menuRadio").prop("checked", false);
     $("#menu").hide();
     $("#app").show();
-
-    //clear the select box
-    $("#img-select").empty();
-    $("#img-select").append(`<option value="parent">Link to Parent Collection</option>`);
-
-    //clear the select box
-    $("#col-select").parent().hide();
-    $("#col-select").append(`<option value="parent">Link to Parent Category</option>`);
-
-    //load in defaults
-    $("#cat-select").empty();
-    $("#cat-select").append(`<option value="none">None</option>`);
-
-    categoryNames = Object.keys(categories);
-    categoryNames.forEach(name => {
-        $("#cat-select").append(`<option value="${name}">${name}</option>`);
-    });
-
 });
 
 $("#menuRadio").on('click', function(){
@@ -67,6 +47,15 @@ $("#menuRadio").on('click', function(){
 
 $("#cat-select").on("change", function(){
     category = $("#cat-select").val();
+
+    if (category == "none") {
+        $("#col-select").parent().hide();
+        $("#img-select").parent().hide();
+    } else {
+        $("#col-select").parent().show();
+        $("#img-select").parent().show();
+    }
+
     collections = Object.keys(categories[category]);
 
     //clear the select box
@@ -75,6 +64,7 @@ $("#cat-select").on("change", function(){
 
     //clear the select box
     $("#img-select").empty();
+    $("#img-select").parent().hide();
     $("#img-select").append(`<option value="parent" selected>Link to Parent Collection</option>`);
 
     //load in defaults
@@ -89,10 +79,11 @@ $("#col-select").on("change", function(){
     collection = $("#col-select").val();
     category = $("#cat-select").val();
 
-    if ($("#col-select").val() != "parent"){
-        $("#img-select").parent().show();
-    }else{
+
+    if (collection === "parent"){
         $("#img-select").parent().hide();
+    }else{
+        $("#img-select").parent().show();
     }
 
     images = categories[category][collection];

@@ -78,15 +78,32 @@ class Notification extends BaseController
         $postid = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $ids = $notModel->getCollumn("id", $session->get("brand_id"));
+        $notification = [];
         foreach ($ids as $id) {
             if ($postid == $id) {
                 $notification = $notModel->getNotification($id, assoc: true)[0];
 
-                $data = json_decode($notification["data"]);
+                $data = (array)json_decode($notification["data"]);
+                $data["clickAction"] = (array)$data["clickAction"];
+                $data["forceAction"] = (array)$data["forceAction"];
 
-                return var_dump($data);
+                if ($data["clickAction"]["type"] == "App") {
+                    if ($data["clickAction"]["idType"] == "category") {
+                        $data["clickAction"]["data"] = $catModel->getCategory($data["clickAction"]["data"], filter: ["name"]);
+                    }
+                    if ($data["clickAction"]["idType"] == "collection") {
+                        $data["clickAction"]["data"] = $colModel->getCollection($data["clickAction"]["data"], ["name"]);
+                    }
+                    if ($data["clickAction"]["idType"] == "image") {
+                        $data["clickAction"]["data"] = $imgModel->getImage($data["clickAction"]["data"], filter: ["name"]);
+                    }
+                }
+
+                $notification["data"] = $data;
             }
         }
+
+        return json_encode($notification);
     }
 
     public function update(){
@@ -136,7 +153,7 @@ class Notification extends BaseController
             $ids = $notModel->getCollumn("id", $session->get("brand_id"));
             foreach($ids as $id){
                 if ($post["id"] == $id){
-                    $notModel->update($row);
+                    $notModel->update($id, $row);
                 }
             }
         }
