@@ -23,6 +23,8 @@ $("#selections").on("change", function(){
         categoryNames.forEach(name => {
             $("#cat-select").append(`<option value="${name}">${name}</option>`);
         });
+
+        $("#col-select").parent().hide();
     }
 
     if (selected == "None"){
@@ -43,10 +45,13 @@ $("#appRadio").on('click', function(){
     $("#img-select").append(`<option value="parent">Link to Parent Collection</option>`);
 
     //clear the select box
-    $("#col-select").empty();
+    $("#col-select").parent().hide();
     $("#col-select").append(`<option value="parent">Link to Parent Category</option>`);
 
     //load in defaults
+    $("#cat-select").empty();
+    $("#cat-select").append(`<option value="none">None</option>`);
+
     categoryNames = Object.keys(categories);
     categoryNames.forEach(name => {
         $("#cat-select").append(`<option value="${name}">${name}</option>`);
@@ -76,11 +81,19 @@ $("#cat-select").on("change", function(){
     collections.forEach(name => {
         $("#col-select").append(`<option value="${name}">${name}</option>`);
     });
+
+    $("#col-select").parent().show();
 })
 
 $("#col-select").on("change", function(){
     collection = $("#col-select").val();
     category = $("#cat-select").val();
+
+    if ($("#col-select").val() != "parent"){
+        $("#img-select").parent().show();
+    }else{
+        $("#img-select").parent().hide();
+    }
 
     images = categories[category][collection];
 

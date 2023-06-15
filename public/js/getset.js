@@ -376,57 +376,7 @@ function getNot(e){
 
         $("#sendtime").val(notifcation.sendTime);
 
-        if(notifcation.forceWall == "1"){
-            $("#force-switch").prop("checked", true);
-            $("#force-select-div").show();
-            $(`#force-select>option[value="${notifcation.forceId}"]`).prop("selected", true);
-        }else{
-            $("#force-switch").prop("checked", false);
-            $("#force-select-div").hide();
-        }
-
-        $(`#selections>option[value=${notifcation.clickAction}]`).prop("selected", true);
-
-        if (notifcation.clickAction == "Link"){
-            $("#link-input").show();
-            $("#link").val(notifcation.data);
-        }
-
-        if (notifcation.clickAction == "Wallpaper"){
-            $("#app").show();
-
-            imageCategory = "";
-            imageCollection = "";
-
-            
-            // get where the image is from
-            Object.keys(categories).forEach(category => {
-                $("#cat-select").append(`<option value="${category}">${category}</option>`);
-                Object.keys(categories[category]).forEach(collection => {
-                    categories[category][collection].forEach(image => {
-                        if (image == notifcation.data){
-                            imageCollection = collection;
-                            imageCategory = category
-                        }
-                    })
-                })
-            })
-
-            Object.keys(categories[imageCategory]).forEach(collection => {
-                $("#col-select").append(`<option value="${collection}">${collection}</option>`);
-                categories[imageCategory][collection].forEach(image => {
-                    $("#img-select").append(`<option value="${image}" >${image}</option>`);
-                })
-            })
-
-            $(`#cat-select>option[value="${imageCategory}"]`).prop("selected", true);
-            $(`#col-select>option[value="${imageCollection}"]`).prop("selected", true);
-            $(`#img-select>option[value="${notifcation.data}"]`).prop("selected", true);
-        }
-
-        if (notifcation.clickAction == ""){
-
-        }
+        
     });
 }
 
@@ -441,33 +391,63 @@ $("#notData").submit(function(e){
     formData.append("forceSwitch", $("#force-switch").prop("checked"));
     formData.append("sendtime", $("#sendtime").val());
 
+    data = {
+        clickAction: {},
+        forceAction: {}
+    };
+
     if ($("#force-switch").prop("checked")){
-        formData.append("forceWallpaper", $("#force-select").val());
+        data.forceAction.activated = true;
+        data.forceAction.imageId = $("#force-select").val();
+    }else{
+        data.forceAction.activated = false;
     }
 
     selection = $("#selections").val();
-
-    formData.append("selection", selection);
+    data.clickAction.type = selection;
 
     if (selection == "Link"){
-        formData.append("data", $("#link").val());
+        data.clickAction.type = selection;
+        data.clickAction.data = $("#link").val();
     }
 
     if (selection == "Wallpaper"){
-        formData.append("data", $("#img-select").val());
+
+        if ($("#col-select").val() == "parent") {
+            data.clickAction.idType = "category"
+            data.clickAction.data = $("#cat-select").val();
+        } else if ($("#img-select").val() == "parent") {
+            data.clickAction.idType = "collection"
+            data.clickAction.data = $("#col-select").val();
+        } else {
+            data.clickAction.idType = "image"
+            data.clickAction.data = $("#img-select").val();
+        }
     }
 
     if (selection == "App"){
         if ($("#menuRadio").prop("checked")){
-            formData.append("appSelection", "menu");
-            formData.append("data", $("#menu-select").val());
+            data.clickAction.type = "Menu";
+            data.clickAction.data = $("#menu-select").val();
         }
 
         if ($("#appRadio").prop("checked")) {
-            formData.append("appSelection", "app");
-            formData.append("data", $("#img-select").val());
+            data.clickAction.type = "App";
+
+            if ($("#col-select").val() == "parent"){
+                data.clickAction.idType = "category"
+                data.clickAction.data = $("#cat-select").val();
+            } else if ($("#img-select").val() == "parent"){
+                data.clickAction.idType = "collection"
+                data.clickAction.data = $("#col-select").val();
+            }else{
+                data.clickAction.idType = "image"
+                data.clickAction.data = $("#img-select").val();
+            }
         }
     }
+
+    formData.append("data", JSON.stringify(data));
 
     $.ajax({
         url: "/notifications/update",
