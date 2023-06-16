@@ -3,13 +3,18 @@
 <?= $this->section('Detail') ?>
 <div class="row">
   <?php if ($view[$pageName]["add"]) : ?>
+    <div class="col">
+
+    </div>
     <div class="col d-flex justify-content-center">
-      <h2 id="data-title" class="mr-4"></h2>
-      <button id="add-button" class="btn btn-primary" onclick="showData('/images');">Add</button>
+      <h2 id="data-title" class="mr-4">Add Image</h2>
+    </div>
+    <div class="col d-flex flex-row-reverse">
+      
     </div>
   <?php endif ?>
 </div>
-<div id="form-div" style="display: none">
+<div id="form-div">
   <form class="mr-4" id="data" action="/images/update" method="post">
     <div class="form-group">
       <label for="imageName">Name</label>
@@ -53,17 +58,19 @@
     <div class="form-group">
       <label for="select">Add to Collection</label>
       <select class="form-control" id="select" aria-describedby="imageName" placeholder="Image Name" data-mdb-toggle="tooltip" data-mdb-placement="top" title="Tooltip on top">
-
+        <?php foreach ($collections as $collection) : ?>
+          <option value="<?= $collection["name"] ?>"><?= $collection["name"] ?></option>
+        <?php endforeach ?>
       </select>
     </div>
   </form>
   <div class="float-right">
     <p id="updated" class="mr-2"></p>
     <?php if ($view[$pageName]["edit"]) : ?>
-      <button class="btn btn-primary mr-2" onclick="updateImage();">Save</button>
+      <button class="btn btn-primary mr-2" onclick="updateImage();" id="save">Add New Image</button>
     <?php endif ?>
     <?php if ($view[$pageName]["remove"]) : ?>
-      <button class="btn btn-danger mr-2" id="remove">Remove</button>
+      <button class="btn btn-danger mr-2" id="remove" style="display: none;">Remove</button>
     <?php endif ?>
   </div>
   <div class="alert alert-success" role="alert" style="display: none;">

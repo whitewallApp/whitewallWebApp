@@ -19,14 +19,13 @@ class Image extends BaseController
         $collModel = new CollectionModel;
         $catModel = new CategoryModel;
         $brandModel = new BrandModel;
-        $brandname = $session->get("brand_name");
+        $brandId = $session->get("brand_id");
         $paginate = 10;
 
         if ($this->request->getGet("items") != null){
             $paginate = $this->request->getGet("items", FILTER_SANITIZE_NUMBER_INT);
         }
 
-        $brandId = $brandModel->getBrand($brandname, "name", ["id"]);
         $dbImages = $imageModel->where("brand_id", $brandId)->paginate($paginate);
 
         $images = [];
@@ -42,9 +41,19 @@ class Image extends BaseController
             }
         }
 
+        if ($this->request->getGet("id") != null){
+            $imageID = $this->request->getGet("id", FILTER_SANITIZE_NUMBER_INT);
+            $ids = $imageModel->getAllIds($brandId);
+            foreach ($ids as $id) {
+                if ($id == $imageID){
+                    $dbImages = $imageModel->getImage($id, assoc: true);
+                }
+            }
+        }
+
         $collections = [];
 
-        $dbcollections = $collModel->getAllIds($brandname);
+        $dbcollections = $collModel->getAllIds($brandId);
 
         foreach ($dbcollections as $dbcollectionid) {
             $dbcollection = $collModel->getCollection($dbcollectionid);
@@ -91,14 +100,9 @@ class Image extends BaseController
             $request = \Config\Services::request();
             $imageModel = new ImageModel;
             $colModel = new CollectionModel;
-            $brandname = $session->get("brand_name");
+            $brandname = $session->get("brand_id");
 
             $id = $request->getPost("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $req = $request->getVar("UpperReq", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-            if ($req == "true") {
-                return json_encode($colModel->getCollumn("name", $brandname));
-            }
 
             $image = $imageModel->getImage($id)[0];
             $collections = $colModel->getCollumn("name", $brandname);
@@ -150,7 +154,7 @@ class Image extends BaseController
                     $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                     $collectionId = $collectionModel->getCollection($post["collection"], ["id"], "name");
-                    $brandId = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
+                    $brandId = $brandModel->getBrand($session->get("brand_id"), "name", ["id"]);
 
                     $data = [
                         "name" => $post["name"],
@@ -265,7 +269,7 @@ class Image extends BaseController
         //bulk image or single
         if ($this->request->getPost("ids") != null){
             $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_NUMBER_INT);
-            $dbids = $imageModel->getAllIds($session->get("brand_name"));
+            $dbids = $imageModel->getAllIds($session->get("brand_id"));
 
             $vallidIds = array_intersect($dbids, $ids);
 
@@ -279,7 +283,7 @@ class Image extends BaseController
             }
         }else{
             $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
-            $dbids = $imageModel->getAllIds($session->get("brand_name"));
+            $dbids = $imageModel->getAllIds($session->get("brand_id"));
 
             foreach ($dbids as $dbid) {
                 if ($dbid == $id){
@@ -353,7 +357,7 @@ class Image extends BaseController
             // if its an image save the image to the server and database
             if ($type == "image") {
                 //check for duplicates
-                $imageDescription = $imageModel->getCollumn("description", $session->get("brand_name"));
+                $imageDescription = $imageModel->getCollumn("description", $session->get("brand_id"));
                 
                 foreach($imageDescription as $description){
                     if (preg_match("/" . $file->getName() . "/", $description) == 1){
@@ -366,11 +370,11 @@ class Image extends BaseController
 
                 //add image to database with their uploaded name add .validate to so we can grab it later if need be
                 $tempName = htmlspecialchars($file->getName()) . ".validate";
-                $colIds = $colModel->getAllIds($session->get("brand_name"));
+                $colIds = $colModel->getAllIds($session->get("brand_id"));
 
                 $data = [
                     "description" => $tempName,
-                    "brand_id" => $brandModel->getBrand($session->get("brand_name"), "name", ["id"]),
+                    "brand_id" => $session->get("brand_id"),
                     "collection_id" => $colIds[0],
                     "externalPath" => 0,
                     "imagePath" => "/assets/images/" . $imagePath,
@@ -391,7 +395,7 @@ class Image extends BaseController
                 $row = 1;
                 if (($handle = fopen($this->request->getFile("file")->getTempName(), "r")) !== FALSE) {
                     $columns = [];
-                    $ids = $imageModel->getAllIds($session->get("brand_name"));
+                    $ids = $imageModel->getAllIds($session->get("brand_id"));
                     $structure = [];
                     //read from csv while there is lines
                     while (($data = fgetcsv($handle, 1000)) !== FALSE) {
@@ -445,7 +449,7 @@ class Image extends BaseController
 
                                 //check if category exists
                                 $catfound = false;
-                                $categoryNames = $catModel->getCollumn("name", $session->get("brand_name"));
+                                $categoryNames = $catModel->getCollumn("name", $session->get("brand_id"));
                                 foreach ($categoryNames as $categoryName) {
                                     if ($categoryName == $data[$columns["category_name"]]) {
                                         $catfound = true;
@@ -454,7 +458,7 @@ class Image extends BaseController
 
                                 //check if collection exists
                                 $colfound = false;
-                                $columnNames = $colModel->getCollumn("name", $session->get("brand_name"));
+                                $columnNames = $colModel->getCollumn("name", $session->get("brand_id"));
                                 foreach ($columnNames as $columnName) {
                                     if ($columnName == $data[$columns["collection_name"]]) {
                                         $colfound = true;
@@ -462,7 +466,7 @@ class Image extends BaseController
                                 }
 
 
-                                $brandid = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
+                                $brandid = $session->get("brand_id");
 
                                 // echo var_dump(["row" => $row, "collectionFound" => $colfound, "categoryFound" => $catfound]);
 
@@ -605,7 +609,7 @@ class Image extends BaseController
         $session = session();
         $assets = new Assets();
 
-        $ids = $imageModel->getAllIds($session->get("brand_name"));
+        $ids = $imageModel->getAllIds($session->get("brand_id"));
 
 
         if ($group == "detail") {

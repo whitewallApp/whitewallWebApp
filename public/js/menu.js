@@ -12,6 +12,10 @@ $("#customRadio").on("click", function () {
 
 function getMenu(e){
 
+    $("#remove").show();
+    $("#save").html("Save");
+    $("#data-title").html("Edit Menu Item");
+
     $.post("/menu", {
         id: e.id
     }, function(data, status){

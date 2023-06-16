@@ -25,13 +25,10 @@ class CategoryModel extends Model
      * @param  array $getBy An array of key value pairs for further filtering. EX: ["category_used" => 1]
      * @return array
      */
-    public function getCollumn(array|string $column, string $brandName, array $getBy=[]): mixed{
-        $builder = $this->db->table('brand');
-        $builder->select("id")->where("name", $brandName);
-        $brandID = $builder->get()->getResultArray()[0];
+    public function getCollumn(array|string $column, string $brandId, array $getBy=[]): mixed{
 
         $builder = $this->db->table('category');
-        $builder->select($column)->where("brand_id", $brandID);
+        $builder->select($column)->where("brand_id", $brandId);
 
         if (count($getBy) > 0){
             $keys = array_keys($getBy);
@@ -101,5 +98,11 @@ class CategoryModel extends Model
         $builder = $this->db->table("category");
         $builder->where($updateBy, $id);
         $builder->update($data);
+    }
+
+    public function like(string $column, array|string $query)
+    {
+        $builder = $this->db->table('category');
+        return $builder->orLike($column, $query, insensitiveSearch: true)->get()->getResultArray();
     }
 }

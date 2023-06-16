@@ -16,11 +16,7 @@ class MenuModel extends Model
     protected $updatedField  = 'updatedDate';
     protected $allowedFields = ["title", "target", "sequence", "externalLink", "internalContext", "brand_id"];
 
-    public function getCollumn($column, $brandName, $getBy=[]){
-        $builder = $this->db->table('brand');
-        $builder->select("id")->where("name", $brandName);
-        $brandID = $builder->get()->getResultArray()[0];
-
+    public function getCollumn($column, $brandID, $getBy=[]){
         $builder = $this->db->table('menu');
         $builder->select($column)->where("brand_id", $brandID);
 

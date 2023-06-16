@@ -28,7 +28,7 @@ class Remove implements FilterInterface
 
         $userModel = new UserModel();
 
-        $canEdit = $userModel->getPermissions($session->get("user_id"), $session->get("brand_name"), permissions: ["p_remove"]);
+        $canEdit = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), permissions: ["p_remove"]);
 
         if (!$canEdit[$page]["p_remove"]) {
             http_response_code(403);

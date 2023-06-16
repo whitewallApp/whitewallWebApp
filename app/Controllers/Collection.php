@@ -16,7 +16,7 @@ class Collection extends BaseController
         $collModel = new CollectionModel;
         $catModel = new CategoryModel;
         $brandModel = new BrandModel;
-        $brandname = $session->get("brand_name");
+        $brandname = $session->get("brand_id");
 
         $ids = $collModel->getAllIds($brandname);
         $collections = [];
@@ -24,6 +24,11 @@ class Collection extends BaseController
 
         foreach($ids as $id){
             $catID = $collModel->getCollection($id, filter: ["category_id"]);
+
+            if ($collModel->getCollection($id, filter: ["name"]) == "Default Collection"){
+                continue;
+            }
+
             $collection = [
                 "name" => $collModel->getCollection($id, filter: ["name"]),
                 "iconPath" => $collModel->getCollection($id, filter: ["iconPath"]),
@@ -33,8 +38,25 @@ class Collection extends BaseController
             array_push($collections, $collection);
         };
 
+        //filter for spesific ID
+        if ($this->request->getGet("id") != null) {
+            $colId = $this->request->getGet("id", FILTER_SANITIZE_NUMBER_INT);
+            $ids = $collModel->getAllIds($session->get("brand_id"));
+            foreach ($ids as $id) {
+                if ($id == $colId) {
+                    $collection = $collModel->getCollection($id, assoc: true);
+                    $collection["category"] = $catModel->getCategory($collection["category_id"], filter: ["name"]);
+
+                    //empty the array
+                    $collections = [];
+                    $collections[0] = $collection;
+                }
+            }
+        }
+
         $data = [
             "collections" => $collections,
+            "categories" => $catModel->getCollumn("name", $session->get("brand_id"))
         ];
 
         return Navigation::renderNavBar("Collections", "collections") . view('Collection/Collection_Detail', $data) . Navigation::renderFooter();
@@ -46,14 +68,9 @@ class Collection extends BaseController
             $request = \Config\Services::request();
             $colModel = new CollectionModel;
             $catModel = new CategoryModel;
-            $brandname = $session->get("brand_name");
+            $brandname = $session->get("brand_id");
 
             $id = $request->getVar("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $req = $request->getVar("UpperReq", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-            if ($req == "true"){
-                return json_encode($catModel->getCollumn("name", $brandname));
-            }
 
             $id = $colModel->getIdByName($id);
             $exp = "/\/.*\/(.*)/";
@@ -103,7 +120,7 @@ class Collection extends BaseController
                     "description" => $post["description"],
                     "link" => $post["link"],
                     "category_id" => $categoryId,
-                    "brand_id" => $brandModel->getBrand($session->get("brand_name"), "name", ["id"])
+                    "brand_id" => $session->get("brand_id")
                 ];
 
                 if (count($this->request->getFiles()) > 0){
@@ -165,7 +182,7 @@ class Collection extends BaseController
             //bulk image or single
             if ($this->request->getPost("ids") != null) {
                 $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_SPECIAL_CHARS);
-                $dbids = $collModel->getCollumn("name", $session->get("brand_name"));
+                $dbids = $collModel->getCollumn("name", $session->get("brand_id"));
 
                 $vallidIds = array_intersect($dbids, $ids);
 
@@ -173,7 +190,7 @@ class Collection extends BaseController
                     array_shift($vallidIds);
                 }
 
-                $imageIds = $imageModel->getAllIds($session->get("brand_name"));
+                $imageIds = $imageModel->getAllIds($session->get("brand_id"));
 
                 foreach ($vallidIds as $id) {
                     $path = $collModel->getCollection($id, ["iconPath", "id"], "name", true);
@@ -197,12 +214,12 @@ class Collection extends BaseController
 
                 if ($id != null) {
                     $collection = $collModel->getCollection($id, assoc: true);
-                    $dbids = $collModel->getCollumn("id", $session->get("brand_name"));
+                    $dbids = $collModel->getCollumn("id", $session->get("brand_id"));
 
                     $validId = array_intersect($dbids, [$id]);
 
                     //foreign key check
-                    $imgIds = $imageModel->getAllIds($session->get("brand_name"));
+                    $imgIds = $imageModel->getAllIds($session->get("brand_id"));
                     foreach ($imgIds as $imgid) {
                         $image = $imageModel->getImage($imgid, assoc: true)[0];
                         if ($collection["id"] == $image["collection_id"]) {

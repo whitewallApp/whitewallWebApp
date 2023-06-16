@@ -10,6 +10,14 @@ class LogIn extends BaseController
 {
     public function index()
     {
+        $migrate = \Config\Services::migrations();
+
+        try {
+            $migrate->latest();
+        } catch (\Throwable $e) {
+            echo var_dump($e->getMessage());
+        }
+
         return view('Login') . Navigation::renderFooter();
     }
 
@@ -83,13 +91,11 @@ class LogIn extends BaseController
 
     public static function login($userId){
         $session = session();
-        $brandModel = new BrandModel();
         $userModel = new UserModel();
-
         $session->set("logIn", true);
-        $session->set("brand_name", $brandModel->getBrand($userModel->getUser($userId, filter: ["default_brand"]), filter: ["name"]));
+        $session->set("brand_id", $userModel->getUser($userId, filter: ["default_brand"]));
         $session->set("user_id", $userId);
-        $session->set("is_admin", $userModel->getAdmin($userId, $session->get("brand_name")));
+        $session->set("is_admin", $userModel->getAdmin($userId, $session->get("brand_id")));
     }
 }
 

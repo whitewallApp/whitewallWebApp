@@ -3,7 +3,7 @@
 </script>
 
 <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-7">
         <div class="row m-2">
             <div class="col-sm-8">
                 <div id="actions" class="row" style="display: none">
@@ -24,7 +24,7 @@
 
                             </div>
                             <div class="col-6">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -68,12 +68,20 @@
         </div>
     </div>
 
-    <div class="col-sm-4 mt-3">
+    <div class="col-sm-5 mt-3">
         <div class="card m-2 p-2">
-            <form id="notData">
-                <div class="text-center">
-                    <h2>Add Notification</h2>
+            <div class="row">
+                <div class="col-1">
+
                 </div>
+                <div class="col d-flex justify-content-center">
+                    <h2 id="data-title" class="mr-4">Add Notification</h2>
+                </div>
+                <div class="col d-flex flex-row-reverse">
+
+                </div>
+            </div>
+            <form id="notData">
                 <div class="form-group">
                     <label for="title">Notification Title</label>
                     <input type="text" class="form-control" id="title" placeholder="Check out this new thing!">
@@ -109,7 +117,7 @@
                             <div id="force-select-div" class="col-sm-11" style="display: none;">
                                 <select id="force-select" class="custom-select">
                                     <?php foreach ($images as $image) : ?>
-                                        <option value="<?= $image["name"] ?>"><?= $image["name"] ?></option>
+                                        <option value="<?= $image["id"] ?>"><?= $image["name"] ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -156,7 +164,9 @@
                         <div class="form-group row">
                             <label for="cat-select" class="col-sm-4 col-form-label">Category</label>
                             <select id="cat-select" class="custom-select col-sm-7">
-                                <option value="none">None</option>
+                                <?php foreach (array_keys($categories) as $categoryName) : ?>
+                                    <option value="<?= $categoryName ?>"><?= $categoryName ?></option>
+                                <?php endforeach ?>
                             </select>
                         </div>
 
@@ -167,7 +177,7 @@
                             </select>
                         </div>
 
-                        <div id="img-select-group" class=" form-group row">
+                        <div id="img-select-group" class=" form-group row" style="display: none;">
                             <label for="img-select" class="col-sm-4 col-form-label">Image</label>
                             <select id="img-select" class="custom-select col-sm-7">
                                 <option value="link">Link to Parent Collection</option>
@@ -183,9 +193,9 @@
             <div class="float-right">
                 <p id="updated" class="mr-2"></p>
                 <?php if ($view[$pageName]["edit"]) : ?>
-                    <button class="btn btn-primary m-2" onclick="$('#notData').submit();">Save</button>
+                    <button class="btn btn-primary m-2" onclick="$('#notData').submit();" id="save">Add Notification</button>
                 <?php endif ?>
-                <button class="btn btn-danger m-2" id="remove">Remove</button>
+                <button class="btn btn-danger m-2" id="remove" style="display: none;">Remove</button>
             </div>
             <div class="alert alert-success" role="alert" style="display: none;">
                 Success

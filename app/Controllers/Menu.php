@@ -16,7 +16,7 @@ class Menu extends BaseController
         $menuModel = new MenuModel;
         $brandModel = new BrandModel;
 
-        $ids = $menuModel->getCollumn("id", $session->get("brand_name"));
+        $ids = $menuModel->getCollumn("id", $session->get("brand_id"));
 
         $menuItems = [];
 
@@ -69,7 +69,7 @@ class Menu extends BaseController
             if ($post["id"] == "undefined"){
                 $brandModel = new BrandModel();
                 $session = session();
-                $data["brand_id"] = $brandModel->getBrand($session->get("brand_name"), "name", ["id"]);
+                $data["brand_id"] = $brandModel->getBrand($session->get("brand_id"), "name", ["id"]);
 
                 $menuModel->save($data);
             }else{
@@ -108,7 +108,7 @@ class Menu extends BaseController
 
             if ($this->request->getPost("ids") != null) {
                 $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_SPECIAL_CHARS);
-                $dbids = $menuModel->getCollumn("id", $session->get("brand_name"));
+                $dbids = $menuModel->getCollumn("id", $session->get("brand_id"));
 
                 $numIds = [];
                 foreach($ids as $id){
@@ -120,7 +120,7 @@ class Menu extends BaseController
                 $menuModel->delete($vallidIds);
             } else {
                 $id = $this->request->getPost("id", FILTER_SANITIZE_SPECIAL_CHARS);
-                $dbids = $menuModel->getCollumn("id", $session->get("brand_name"));
+                $dbids = $menuModel->getCollumn("id", $session->get("brand_id"));
 
                 foreach ($dbids as $dbid) {
                     if ($dbid == $id) {

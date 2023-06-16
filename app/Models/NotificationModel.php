@@ -12,12 +12,8 @@ class NotificationModel extends Model
     protected $table = "notifications";
     protected $allowedFields = ["title", "description", "clickAction", "data", "forceWall", "forceId", "sendTime", "status", "brand_id"];
 
-    public function getCollumn($column, $brandName, $getBy = [])
+    public function getCollumn($column, $brandID, $getBy = [])
     {
-        $builder = $this->db->table('brand');
-        $builder->select("id")->where("name", $brandName);
-        $brandID = $builder->get()->getResultArray()[0];
-
         $builder = $this->db->table('notifications');
         $builder->select($column);
         $builder->where("brand_id", $brandID);
@@ -72,5 +68,11 @@ class NotificationModel extends Model
             $notification = $builder->get()->getResultArray();
             return $notification;
         }
+    }
+
+    public function like(string $column, array|string $query)
+    {
+        $builder = $this->db->table('notifications');
+        return $builder->orLike($column, $query, insensitiveSearch: true)->get()->getResultArray();
     }
 }
