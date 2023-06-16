@@ -495,6 +495,21 @@ class Assets extends BaseController {
         return $this->saveBrandImg($tmpPath, $type, $name);
     }
 
+    /**
+     * Remove's all of a brand's assoiated files
+     *
+     * @param int $brandID
+     * @return void
+     */
+    public function removeBrand($brandID){
+        $userModel = new UserModel();
+        $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
+        $path = getenv("BASE_PATH") . $accountId . "/" . $brandID;
+        
+        helper('filesystem');
+        return delete_files($path, true);
+    }
+
     //image upload csv
     public function makeCSV($columns) {
         $session = session();
