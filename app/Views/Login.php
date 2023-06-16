@@ -3,7 +3,7 @@
 <?= $this->section('Body') ?>
 <div class="container w-50">
     <div class="card p-4 m-3">
-        <img class="img" src="Icons\Whitewall-LOGO-pos.png">
+        <img id="login_logo" class="img" src="Icons\Whitewall-LOGO-pos.png">
         <form>
             <div class="form-group">
                 <label for="InputEmail">Email address</label>
