@@ -236,3 +236,19 @@ $("#updateBrand").on("click", function(){
         }
     })
 })
+
+brandName = "";
+//Removing brands
+$(".remove-brand").on("click", function(){
+    brandName = $(".remove-brand").parent().parent().siblings().attr("id");
+})
+
+$("#removeBrand").on("click", function(){
+    if (brandName == $("#removebrandName").val()){
+        $.post("/brand/delete", {
+            id: brandName
+        }, function(data, status){
+            window.location.reload();
+        })
+    }
+})

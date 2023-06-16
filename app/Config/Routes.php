@@ -75,6 +75,7 @@ $routes->post('/collections/delete', 'Collection::delete', ["filter" => "remove:
 $routes->post('/categories/delete', 'Category::delete', ["filter" => "remove:categories"]);
 $routes->post('/notifications/delete', 'Notification::delete', ["filter" => "remove:notifications"]);
 $routes->post('/menu/delete', 'Menu::delete', ["filter" => "remove:menu"]);
+$routes->post('/brand/delete', 'Brand::removeBrand', ["filter" => "remove:branding,admin"]);
 
 //image upload
 $routes->get("/images/upload","Image::uploadView", ["filter" => "add:images"]);
@@ -88,7 +89,7 @@ $routes->post('/collections/update','Collection::update', ["filter" => "edit:col
 $routes->post('/categories/update','Category::update', ["filter" => "edit:categories"]);
 $routes->post('/notifications/update','Notification::update', ["filter" => "edit:notifications"]);
 $routes->post('/menu/update','Menu::update', ["filter" => "edit:menu"]);
-$routes->post('/brand/users/update', 'Brand::updateUsers', ["filter" => "edit:admin"]);
+$routes->post('/brand/users/update', 'Brand::updateUsers', ["filter" => "edit:brand,admin"]);
 $routes->post('/brand/branding/update', 'Brand::updateBrand', ["filter" => "edit:branding"]);
 
 /*

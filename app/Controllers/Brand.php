@@ -93,15 +93,20 @@ class Brand extends BaseController
         $session = session();
         $userModel = new UserModel();
         $brandModel = new BrandModel();
-        $brandname = $brandModel->getBrand($brandId, filter: ["name"]);
-
-        $userIds = $userModel->getCollumn("id", $brandname);
-
         $users = [];
 
-        foreach($userIds as $id){
-            $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status"]);
-            array_push($users, $user);
+        $brandIds = $brandModel->getCollumn("id", $session->get("user_id"));
+
+        foreach($brandIds as $dbId){
+
+            if ($dbId["id"] == $brandId){
+                $userIds = $userModel->getCollumn("id", $brandId);
+
+                foreach($userIds as $id){
+                    $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status"]);
+                    array_push($users, $user);
+                }
+            }
         }
 
         $data = [
@@ -283,6 +288,17 @@ class Brand extends BaseController
             echo json_encode($e->getMessage());
             exit;
         }
+    }
+
+    public function removeBrand(){
+        $brandModel = new BrandModel();
+        $assets = new Assets();
+
+        $brandName = $this->request->getPost("id", FILTER_SANITIZE_SPECIAL_CHARS);
+        $brandId = $brandModel->getBrand($brandName, "name", ["id"]);
+
+        $assets->removeBrand($brandId);
+        $brandModel->delete($brandId);
     }
 
     public function setBrand() //Post
