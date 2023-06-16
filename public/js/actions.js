@@ -248,7 +248,7 @@ $("#removeBrand").on("click", function(){
         $.post("/brand/delete", {
             id: brandName
         }, function(data, status){
-            
+            window.location.reload();
         })
     }
 })
