@@ -285,6 +285,10 @@ class Brand extends BaseController
         }
     }
 
+    public function removeBrand(){
+        return var_dump($this->request->getPost("id"));
+    }
+
     public function setBrand() //Post
     {
         $session = session();
