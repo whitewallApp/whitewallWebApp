@@ -76,6 +76,7 @@ $routes->post('/categories/delete', 'Category::delete', ["filter" => "remove:cat
 $routes->post('/notifications/delete', 'Notification::delete', ["filter" => "remove:notifications"]);
 $routes->post('/menu/delete', 'Menu::delete', ["filter" => "remove:menu"]);
 $routes->post('/brand/delete', 'Brand::removeBrand', ["filter" => "remove:branding,admin"]);
+$routes->post('/brand/users/delete', 'Brand::removeUser', ["filter" => "remove:branding,admin"]);
 
 //image upload
 $routes->get("/images/upload","Image::uploadView", ["filter" => "add:images"]);

@@ -11,6 +11,7 @@ function getUser(e) {
     lastElement = tableRow;
 
     $("#save").html("Save")
+    $("#removeUser").show();
     $("#data-title").html("Edit User")
     $(".flex-row-reverse").html('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
 
@@ -119,6 +120,10 @@ $("#permissionsForm").submit(function(e){
     });
 })
 
+$("#save").on("click", function(){
+    $("#permissionsForm").submit();
+})
+
 $("[name='permissions[all][view][]']").on("click", function(e){
     $("[name$='[view][]']").prop("checked", $(e.target).prop("checked"))
 })
@@ -130,4 +135,14 @@ $("[name='permissions[all][edit][]']").on("click", function (e) {
 })
 $("[name='permissions[all][remove][]']").on("click", function (e) {
     $("[name$='[remove][]']").prop("checked", $(e.target).prop("checked"))
+})
+
+$("#removeUser").on("click", function(){
+    if (confirm("Are you sure you want to delete user")){
+        $.post("/brand/users/delete",{
+            id: $("#permissionsForm").prop("user-id")
+        }, function(data, status){
+
+        })
+    }
 })

@@ -8,6 +8,7 @@ use App\Models\CollectionModel;
 use App\Models\ImageModel;
 use App\Models\MenuModel;
 use App\Models\UserModel;
+use Google\Service\CloudAsset\Asset;
 
 class Brand extends BaseController
 {
@@ -310,6 +311,22 @@ class Brand extends BaseController
 
         $assets->removeBrand($brandId);
         $brandModel->delete($brandId);
+    }
+
+    public function removeUser(){
+        $userModel = new UserModel();
+        $userID = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
+        $assets = new Assets();
+
+        try {
+            $assets->removeUser($userID);
+
+            $userModel->delete($userID);
+        } catch (\Throwable $e) {
+            http_response_code(403);
+            return json_encode($e->getMessage());
+            exit;
+        }
     }
 
     public function setBrand() //Post

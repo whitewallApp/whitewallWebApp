@@ -510,6 +510,18 @@ class Assets extends BaseController {
         return delete_files($path, true);
     }
 
+    public function removeUser($userID){
+        $userModel = new UserModel();
+        $accountId = $userModel->getUser($userID, filter: ["account_id", "icon"]);
+
+        //delete if not a url
+        if (preg_match("/^http/", $accountId["icon"]) == "0" && $accountId["icon"] != ""){
+            $icon = explode("/", $accountId["icon"])[3];
+            $path = getenv("BASE_PATH") . $accountId["account_id"] . "/users/" . $icon;
+            unlink($path);
+        }
+    }
+
     //image upload csv
     public function makeCSV($columns) {
         $session = session();

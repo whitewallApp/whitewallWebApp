@@ -353,8 +353,11 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary" id="save">Add User</button>
         </form>
+        <div class="float-right">
+            <button class="btn btn-primary" id="save">Add User</button>
+            <button class="btn btn-danger" id="removeUser" style="display: none;">Remove User</button>
+        </div>
         <div class="alert alert-success" role="alert" style="display: none;">
             Success
         </div>
