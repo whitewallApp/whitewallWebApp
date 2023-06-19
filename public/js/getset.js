@@ -103,16 +103,9 @@ $("#data").submit(function (e) {
     }
 
     formData.append("collection", $("#select").val())
-    
-    url = "";
-    if ($("#data").attr("image-id") == null){
-        url = "/images/add"
-    }else{
-        url = "/images/update"
-    }
 
     $.ajax({
-        url: url,
+        url: "/images/update",
         type: 'POST',
         data: formData,
         processData: false,
@@ -229,15 +222,8 @@ $("#collectionData").submit(function (e) {
 
     formData.append("category", $("#select").val())
 
-    url = "";
-    if ($("#collectionData").attr("image-id") == null) {
-        url = "/collections/add"
-    } else {
-        url = "/collections/update"
-    }
-
     $.ajax({
-        url: url,
+        url: "/collections/update",
         type: 'POST',
         data: formData,
         processData: false,
@@ -326,15 +312,8 @@ $("#categoryData").submit(function (e) {
         formData.append("type", file.type)
     }
 
-    url = "";
-    if ($("#categoryData").attr("image-id") == null) {
-        url = "/categories/add"
-    } else {
-        url = "/categories/update"
-    }
-
     $.ajax({
-        url: url,
+        url: "/categories/update",
         type: 'POST',
         data: formData,
         processData: false,
@@ -602,15 +581,8 @@ $("#notData").submit(function (e) {
 
     formData.append("data", JSON.stringify(data));
 
-    url = "";
-    if ($("#notData").attr("image-id") == null) {
-        url = "/notifications/add"
-    } else {
-        url = "/notifications/update"
-    }
-
     $.ajax({
-        url: url,
+        url: "/notifications/update",
         type: 'POST',
         data: formData,
         processData: false,

@@ -65,7 +65,7 @@
   </form>
   <div class="float-right">
     <p id="updated" class="mr-2"></p>
-    <?php if ($view[$pageName]["edit"]) : ?>
+    <?php if ($view[$pageName]["edit"] || $view[$pageName]["add"]) : ?>
       <button class="btn btn-primary mr-2" onclick="updateImage();" id="save">Add New Image</button>
     <?php endif ?>
     <?php if ($view[$pageName]["remove"]) : ?>

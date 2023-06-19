@@ -66,15 +66,8 @@ $("#menuData").submit(function(e){
         formData.append("internalContext", $(".note-editable").html());
     }
 
-    url = "";
-    if ($("#menuData").attr("image-id") == null) {
-        url = "/menu/add"
-    } else {
-        url = "/menu/update"
-    }
-
     $.ajax({
-        url: url,
+        url: "/menu/update",
         type: 'POST',
         data: formData,
         processData: false,

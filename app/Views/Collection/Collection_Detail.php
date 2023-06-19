@@ -44,7 +44,7 @@
   </form>
   <div class="float-right">
     <p id="updated" class="mr-2"></p>
-    <?php if ($view[$pageName]["edit"]) : ?>
+    <?php if ($view[$pageName]["edit"] || $view[$pageName]["add"]) : ?>
       <button id="submit" class="btn btn-primary mr-2" onclick="$('#collectionData').submit();">Add New Collection</button>
     <?php endif ?>
     <?php if ($view[$pageName]["remove"]) : ?>

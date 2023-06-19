@@ -35,7 +35,7 @@
     </div>
   </form>
   <div class="float-right">
-    <?php if ($view[$pageName]["edit"]) : ?>
+    <?php if ($view[$pageName]["edit"] || $view[$pageName]["add"]) : ?>
       <button type="submit" class="btn btn-primary" onclick="$('#categoryData').submit();">Add New Category</button>
     <?php endif ?>
     <?php if ($view[$pageName]["remove"]) : ?>

@@ -192,7 +192,7 @@
             </form>
             <div class="float-right">
                 <p id="updated" class="mr-2"></p>
-                <?php if ($view[$pageName]["edit"]) : ?>
+                <?php if ($view[$pageName]["edit"] || $view[$pageName]["add"]) : ?>
                     <button class="btn btn-primary m-2" onclick="$('#notData').submit();" id="save">Add Notification</button>
                 <?php endif ?>
                 <button class="btn btn-danger m-2" id="remove" style="display: none;">Remove</button>
