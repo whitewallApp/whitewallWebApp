@@ -168,11 +168,15 @@ class Brand extends BaseController
 
                 return json_encode(["success" => true]);
             }else{
+                //TODO: send email with temp password
+                $password = password_hash("test", PASSWORD_DEFAULT);
+
                 $userData = [
                     "name" => $data["name"],
                     "email" => $data["email"],
                     "phone" => $data["phone"],
                     "status" => isset($data["active"]),
+                    "password" => $password
                 ];
                 $userModel->addUser($userData, $session->get("brand_id"), $permissions, isset($data["admin"]));
             }

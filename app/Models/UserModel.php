@@ -86,18 +86,10 @@ class UserModel extends Model
         //update user table
         $brandModel = new BrandModel();
         $accountID = $brandModel->getBrand($brandID, filter: ["account_id"]);
-        
+        $userData["default_brand"] = $brandID;
+        $userData["account_id"] = $accountID;
 
-        $data = [
-            "name" => $userData["name"],
-            "email" => $userData["email"],
-            "phone" => $userData["phone"],
-            "status" => $userData["status"],
-            "default_brand" => $brandID,
-            "account_id" => $accountID,
-        ];
-
-        $userID = $this->insert($data);
+        $userID = $this->insert($userData);
 
         //update branduser table
         $data = [
