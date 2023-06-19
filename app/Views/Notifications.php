@@ -69,7 +69,7 @@
     </div>
 
     <div class="col-sm-5 mt-3">
-        <div class="card m-2 p-2">
+        <div class="card m-2 p-2" id="form-div" <?php if (!$view[$pageName]["add"]) echo 'style="display: none;"' ?>>
             <div class="row">
                 <div class="col-1">
 

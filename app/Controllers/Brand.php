@@ -173,7 +173,7 @@ class Brand extends BaseController
 
                 $userData = [
                     "name" => $data["name"],
-                    "email" => $data["email"],
+                    "email" => $email,
                     "phone" => $data["phone"],
                     "status" => isset($data["active"]),
                     "password" => $password

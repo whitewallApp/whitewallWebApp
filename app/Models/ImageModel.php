@@ -93,8 +93,10 @@ class ImageModel extends Model
         $data["dateUpdated"] = new RawSql('CURRENT_TIMESTAMP');
         $brandModel = new BrandModel();
         $session = session();
+        $userModel = new UserModel();
+        $permission = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), ["images"], ["p_add"]);
 
-        if ($id != ""){
+        if ($id != "" && $permission){
             $data["id"] = $id;
             $data["dateCreated"] = new RawSql('CURRENT_TIMESTAMP');
             $data["brand_id"] = $session->get("brand_id");

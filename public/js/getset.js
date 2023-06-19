@@ -103,9 +103,16 @@ $("#data").submit(function (e) {
     }
 
     formData.append("collection", $("#select").val())
+    
+    url = "";
+    if ($("#data").attr("image-id") == null){
+        url = "/images/add"
+    }else{
+        url = "/images/update"
+    }
 
     $.ajax({
-        url: "/images/update",
+        url: url,
         type: 'POST',
         data: formData,
         processData: false,
@@ -222,8 +229,15 @@ $("#collectionData").submit(function (e) {
 
     formData.append("category", $("#select").val())
 
+    url = "";
+    if ($("#collectionData").attr("image-id") == null) {
+        url = "/collections/add"
+    } else {
+        url = "/collections/update"
+    }
+
     $.ajax({
-        url: "/collections/update",
+        url: url,
         type: 'POST',
         data: formData,
         processData: false,
@@ -312,8 +326,15 @@ $("#categoryData").submit(function (e) {
         formData.append("type", file.type)
     }
 
+    url = "";
+    if ($("#categoryData").attr("image-id") == null) {
+        url = "/categories/add"
+    } else {
+        url = "/categories/update"
+    }
+
     $.ajax({
-        url: "/categories/update",
+        url: url,
         type: 'POST',
         data: formData,
         processData: false,
@@ -353,7 +374,7 @@ function getNot(e) {
     $("#notData").show();
     $("#save").html("Save");
     $("#data-title").html("Edit Notification");
-
+    $("#form-div").show();
     $(".flex-row-reverse").html('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
 
 
@@ -581,8 +602,15 @@ $("#notData").submit(function (e) {
 
     formData.append("data", JSON.stringify(data));
 
+    url = "";
+    if ($("#notData").attr("image-id") == null) {
+        url = "/notifications/add"
+    } else {
+        url = "/notifications/update"
+    }
+
     $.ajax({
-        url: "/notifications/update",
+        url: url,
         type: 'POST',
         data: formData,
         processData: false,

@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\MenuModel;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
+use App\Models\UserModel;
 use Google\Service\CloudAsset\Asset;
 use \HTMLPurifier_Config;
 use \HTMLPurifier;
@@ -43,8 +44,11 @@ class Menu extends BaseController
     public function update(){
         //TODO: handle file Uploads
         $menuModel = new MenuModel();
+        $userModel = new UserModel();
+        $session = session();
         try {
             $post = $this->request->getPost(["id", "title", "sequence", "target"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $permission = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), ["images"], ["p_add"]);
 
             $data = [
                 "title" => $post["title"],
@@ -66,7 +70,7 @@ class Menu extends BaseController
                 $data["internalContext"] = $cleanHtml;
             }
 
-            if ($post["id"] == "undefined"){
+            if ($post["id"] == "undefined" && $permission){
                 $brandModel = new BrandModel();
                 $session = session();
                 $data["brand_id"] = $brandModel->getBrand($session->get("brand_id"), "name", ["id"]);

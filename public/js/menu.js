@@ -15,6 +15,7 @@ function getMenu(e){
     $("#remove").show();
     $("#save").html("Save");
     $("#data-title").html("Edit Menu Item");
+    $("#form-div").show();
 
     $.post("/menu", {
         id: e.id
@@ -65,8 +66,15 @@ $("#menuData").submit(function(e){
         formData.append("internalContext", $(".note-editable").html());
     }
 
+    url = "";
+    if ($("#menuData").attr("image-id") == null) {
+        url = "/menu/add"
+    } else {
+        url = "/menu/update"
+    }
+
     $.ajax({
-        url: "/menu/update",
+        url: url,
         type: 'POST',
         data: formData,
         processData: false,
