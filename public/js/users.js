@@ -6,11 +6,13 @@ function getUser(e) {
         lastElement.css("background-color", "white");
     }
 
+
     tableRow.css("background-color", "#c8cbcf");
     lastElement = tableRow;
 
-    $("#userPrompt").hide();
-    $("#userForm").show();
+    $("#save").html("Save")
+    $("#data-title").html("Edit User")
+    $(".flex-row-reverse").html('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
 
     $("#permissionsForm").prop("user-id", id);
 
@@ -22,6 +24,7 @@ function getUser(e) {
             permissions = JSON.parse(data).permissions
 
             $("#name").val(user.name);
+            $("#phone").val(user.phone);
             $("#email").val(user.email);
             $("#admin").prop("checked", Boolean(Number(permissions.admin)));
             $("#active").prop("checked", Boolean(Number(user.status)));
@@ -75,7 +78,10 @@ function getUser(e) {
 }
 
 $("#admin").on("click", function(){
-    $("[name^='permissions[']").prop("checked", $("#admin").prop("checked"));
+
+    if ($("#admin").prop("checked")){
+        $("[name^='permissions[']").prop("checked",true);
+    }
 
     if ($("#admin").prop("checked")){
         $("[name^='permissions[']").prop("disabled", true);
@@ -90,7 +96,6 @@ $("#permissionsForm").submit(function(e){
     $("[name^='permissions[']").prop("disabled", false);
 
     formData = new FormData(document.getElementById("permissionsForm"));
-
     formData.append("userId", $("#permissionsForm").prop("user-id"));
 
     $("[name^='permissions[']").prop("disabled", disabled);
