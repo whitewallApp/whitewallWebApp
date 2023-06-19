@@ -93,13 +93,6 @@ $routes->post('/menu/update','Menu::update', ["filter" => "edit:menu"]);
 $routes->post('/brand/users/update', 'Brand::updateUsers', ["filter" => "edit:brand,admin"]);
 $routes->post('/brand/branding/update', 'Brand::updateBrand', ["filter" => "edit:branding"]);
 
-//add URLs
-$routes->post('/images/add', 'Image::update', ["filter" => "add:images"]);
-$routes->post('/collections/add', 'Collection::update', ["filter" => "add:collections"]);
-$routes->post('/categories/add', 'Category::update', ["filter" => "add:categories"]);
-$routes->post('/notifications/add', 'Notification::update', ["filter" => "add:notifications"]);
-$routes->post('/menu/add', 'Menu::update', ["filter" => "add:menu"]);
-
 /*
  * --------------------------------------------------------------------
  * Additional Routing
