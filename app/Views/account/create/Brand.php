@@ -10,6 +10,9 @@
                 <label for="name">New Brand Name</label>
                 <input type="text" class="form-control" id="name" aria-describedby="name" name="brandName">
             </div>
+            <?php if (isset($credential)) : ?>
+                <input type="text" class="form-control" name="credential" value="<?= $credential ?>" style="display: none;">
+            <?php endif ?>
             <button class="btn btn-primary" id="submit">Submit</button>
         </form>
     </div>

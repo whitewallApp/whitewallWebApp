@@ -97,8 +97,69 @@ class Account extends BaseController
         $session = session();
         //if they sign in with google
         if ($this->request->getPost("credential") != null){
-            $client = new Google\Client(["client_id" => getenv("GOOGLE_CLIENT_ID")]);
-            $payload = $client->verifyIdToken($this->request->getPost("credential"));
+
+            if ($this->request->getPost("credential") != "google"){
+                $client = new Google\Client(["client_id" => getenv("GOOGLE_CLIENT_ID")]);
+                $payload = $client->verifyIdToken($this->request->getPost("credential"));
+
+                $name = $payload["name"];
+                $email = $payload["email"];
+                $profilePic = $payload["picture"];
+                $googleID = $payload["sub"];
+
+                $session->setFlashdata("name", $name);
+                $session->setFlashdata("email", $email);
+                $session->setFlashdata("googleID", $googleID);
+                $session->setFlashdata("profile", $profilePic);
+
+                $data = [
+                    "credential" => "google"
+                ];
+
+                return view("account/create/Brand", $data);
+            }else{
+                //make stuff now that we have brandName
+                $brandName = $this->request->getPost("brandName", FILTER_SANITIZE_SPECIAL_CHARS);
+                $name = $session->getFlashdata("name");
+                $email = $session->getFlashdata("email");
+                $profilePic = $session->getFlashdata("profile");
+                $googleID = $session->getFlashdata("googleID");
+
+                $accountModel = new AccountModel();
+                $subModel = new SubscriptionModel();
+                $brandModel = new BrandModel();
+                $userModel = new UserModel();
+                $colModel = new CollectionModel();
+                $catModel = new CategoryModel();
+
+                //make the account
+                $accountID = $accountModel->insert(["id" => null]);
+
+                //make a subscription
+                $subModel->insert(["account_id" => $accountID]);
+
+                //make the brand
+                $brandID = $brandModel->insert(["name" => $brandName, "account_id" => $accountID]);
+
+                //create default category and collections
+                $catID = $catModel->insert(["name" => "Default Category", "brand_id" => $brandID]);
+                $colModel->insert(["name" => "Default Collection", "category_id" => $catID, "brand_id" => $brandID]);
+
+                $userData = [
+                    "name" => $name,
+                    "email" => $email,
+                    "google_id" => $googleID,
+                    "icon" => $profilePic,
+                    "status" => true
+                ];
+                $userModel->addUser($userData, $brandID, admin: true);
+
+                $userId = $userModel->getUser($email, "email", ["id"]);
+
+                LogIn::login($userId);
+                return redirect()->to("/dashboard");
+            }
+
         }else{
             //user information form
             if ($this->request->getPost("name") != null){
@@ -177,6 +238,11 @@ class Account extends BaseController
                     "status" => true
                 ];
                 $userModel->addUser($userData, $brandID, admin: true);
+
+                $userId = $userModel->getUser($email, "email", ["id"]);
+
+                LogIn::login($userId);
+                return redirect()->to("/dashboard");
             }
         }
     }
