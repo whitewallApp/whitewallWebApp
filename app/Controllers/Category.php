@@ -5,6 +5,7 @@ use App\Models\CategoryModel;
 use App\Models\CollectionModel;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
+use App\Models\UserModel;
 use RuntimeException;
 
 class Category extends BaseController
@@ -100,10 +101,12 @@ class Category extends BaseController
 
         try {
             $brandModel = new BrandModel();
+            $userModel = new UserModel();
             $session = session();
             $post = $this->request->getPost(["id", "name", "description", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $permission = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), ["categories"], ["p_add"]);
 
-            if ($post["id"] == "undefined"){
+            if ($post["id"] == "undefined" && $permission){
                 $data = [
                     "name" => $post["name"],
                     "description" => $post["description"],

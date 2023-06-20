@@ -9,6 +9,7 @@ use App\Models\CategoryModel;
 use App\Models\CollectionModel;
 use App\Models\MenuModel;
 use App\Controllers\Navigation;
+use App\Models\UserModel;
 
 class Notification extends BaseController
 {
@@ -63,7 +64,7 @@ class Notification extends BaseController
             "menuItems" => $menuModel->getCollumn("title", $brandID),
         ];
 
-        return Navigation::renderNavBar("Notifications", "notifications", [true, "Notifications"]) . view('Notifications', $data) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Notifications", "notifications") . view('Notifications', $data) . Navigation::renderFooter();
     }
 
     //get the data
@@ -112,7 +113,10 @@ class Notification extends BaseController
         $menuModel = new MenuModel();
         $catModel = new CategoryModel();
         $colModel = new CollectionModel();
+        $userModel = new UserModel();
+        $session = session();
         $post = $this->request->getPost(["id", "title", "description", "sendtime"], FILTER_SANITIZE_SPECIAL_CHARS);
+        $permission = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), ["images"], ["p_add"]);
         $session = session();
 
         //sanitize JSON
@@ -146,7 +150,7 @@ class Notification extends BaseController
         ];
 
 
-        if ($post["id"] == "undefined"){
+        if ($post["id"] == "undefined" && $permission){
             $row["brand_id"] = $session->get("brand_id");
             $notModel->insert($row);
         }else{

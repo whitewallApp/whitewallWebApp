@@ -153,7 +153,7 @@ function getColl(e) {
     $(".alert-danger").hide();
     $("#remove").show();
     $("#form-div").show();
-    $("#submit").html("Save");
+    $("#save").html("Save");
     $("#data-title").html("Edit Collection");
 
     $(".flex-row-reverse").html('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
@@ -353,7 +353,7 @@ function getNot(e) {
     $("#notData").show();
     $("#save").html("Save");
     $("#data-title").html("Edit Notification");
-
+    $("#form-div").show();
     $(".flex-row-reverse").html('<i style="font-size: 1.75rem; cursor: pointer;" onclick="window.location.reload()" class="bi bi-x-circle"></i>');
 
 
@@ -580,6 +580,7 @@ $("#notData").submit(function (e) {
     }
 
     formData.append("data", JSON.stringify(data));
+
 
     $.ajax({
         url: "/notifications/update",

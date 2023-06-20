@@ -73,7 +73,7 @@
     </div>
 
     <div class="col-sm-8 mt-3">
-        <div class="card m-2 p-2">
+        <div class="card m-2 p-2" id="form-div" <?php if (!$view[$pageName]["add"]) echo 'style="display: none;"' ?>>
             <div class="col d-flex justify-content-center">
                 <h2 id="data-title" class="mr-4">Add Menu Item</h2>
             </div>
@@ -132,7 +132,7 @@
     </div>
 </div>
 
-<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+<!-- <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script> -->
 <script>
     // new FroalaEditor('#editor', {
 

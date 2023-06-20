@@ -14,7 +14,7 @@
                             <p class="mr-2 ml-2"> | </p>
                         </div>
                         <div class="col-2">
-                           
+
                         </div>
                     </div>
                 </div>
@@ -60,20 +60,30 @@
             </table>
         </div>
     </div>
-    <div class="col-6" id="userPrompt">
-
-    </div>
-    <div class="col-6" id="userForm" style="display: none;">
+    <div class="col-6" id="userForm">
         <form id="permissionsForm" method="post">
             <!-- User Info -->
             <div class="card p-2 mb-5">
+                <div class="col">
+
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <h2 id="data-title" class="mr-4">Add User</h2>
+                </div>
+                <div class="col d-flex flex-row-reverse">
+
+                </div>
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Example input placeholder">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="text" class="form-control" id="email" name="email" placeholder="Another input placeholder">
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number">
                 </div>
                 <div class="form-group row">
                     <div class="col-3">
@@ -343,8 +353,11 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary">Save Permissions</button>
         </form>
+        <div class="float-right">
+            <button class="btn btn-primary" id="save">Add User</button>
+            <button class="btn btn-danger" id="removeUser" style="display: none;">Remove User</button>
+        </div>
         <div class="alert alert-success" role="alert" style="display: none;">
             Success
         </div>

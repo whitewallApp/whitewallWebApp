@@ -8,6 +8,7 @@ use App\Models\CollectionModel;
 use App\Models\ImageModel;
 use App\Models\MenuModel;
 use App\Models\UserModel;
+use Google\Service\CloudAsset\Asset;
 
 class Brand extends BaseController
 {
@@ -125,7 +126,7 @@ class Brand extends BaseController
 
             $id = esc($request->getGet("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-            $user = $userModel->getUser($id, filter: ["name", "email", "status"]);
+            $user = $userModel->getUser($id, filter: ["name", "email", "status", "phone"]);
             $permissions = $userModel->getPermissions($id, $session->get("brand_id"));
 
             $permissions["admin"] = $userModel->getAdmin($id, $session->get("brand_id"));
@@ -144,7 +145,7 @@ class Brand extends BaseController
 
     public function updateUsers(){
         try {
-            $data = $this->request->getPost(["name", "active", "admin", "email", "name", "permissions", FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
+            $data = $this->request->getPost(["name", "active", "admin", "email", "name", "permissions","phone", FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
             $email = $this->request->getPost("email", FILTER_SANITIZE_EMAIL);
             $id = $this->request->getPost("userId", FILTER_SANITIZE_NUMBER_INT);
             $permissions = $data["permissions"];
@@ -152,18 +153,33 @@ class Brand extends BaseController
 
             $userModel = new UserModel();
 
-            $userModel->updatePermissions($id, $permissions);
-            $userModel->updateAdmin((int)$id, isset($data["admin"]));
+            if ($id != ""){
+                $userModel->updatePermissions($id, $permissions);
+                $userModel->updateAdmin((int)$id, isset($data["admin"]));
 
-            $user = [
-                "name" => $data["name"],
-                "email" => $email,
-                "status" => isset($data["active"])
-            ];
+                $user = [
+                    "name" => $data["name"],
+                    "email" => $email,
+                    "status" => isset($data["active"]),
+                    "phone" => $data["phone"]
+                ];
 
-            $userModel->update($id, $user);
+                $userModel->update($id, $user);
 
-            return json_encode(["success" => true]);
+                return json_encode(["success" => true]);
+            }else{
+                //TODO: send email with temp password
+                $password = password_hash("test", PASSWORD_DEFAULT);
+
+                $userData = [
+                    "name" => $data["name"],
+                    "email" => $email,
+                    "phone" => $data["phone"],
+                    "status" => isset($data["active"]),
+                    "password" => $password
+                ];
+                $userModel->addUser($userData, $session->get("brand_id"), $permissions, isset($data["admin"]));
+            }
         } catch (\Exception $e) {
             http_response_code(400);
             echo json_encode(["success" => false, "message" => $e->getMessage()]);
@@ -299,6 +315,22 @@ class Brand extends BaseController
 
         $assets->removeBrand($brandId);
         $brandModel->delete($brandId);
+    }
+
+    public function removeUser(){
+        $userModel = new UserModel();
+        $userID = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
+        $assets = new Assets();
+
+        try {
+            $assets->removeUser($userID);
+
+            $userModel->delete($userID);
+        } catch (\Throwable $e) {
+            http_response_code(403);
+            return json_encode($e->getMessage());
+            exit;
+        }
     }
 
     public function setBrand() //Post

@@ -15,6 +15,7 @@ function getMenu(e){
     $("#remove").show();
     $("#save").html("Save");
     $("#data-title").html("Edit Menu Item");
+    $("#form-div").show();
 
     $.post("/menu", {
         id: e.id

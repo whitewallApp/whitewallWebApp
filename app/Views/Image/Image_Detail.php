@@ -1,20 +1,19 @@
 <?= $this->extend('Image/Image_List') ?>
 
 <?= $this->section('Detail') ?>
-<div class="row">
-  <?php if ($view[$pageName]["add"]) : ?>
-    <div class="col">
 
-    </div>
-    <div class="col d-flex justify-content-center">
-      <h2 id="data-title" class="mr-4">Add Image</h2>
-    </div>
-    <div class="col d-flex flex-row-reverse">
-      
-    </div>
-  <?php endif ?>
-</div>
-<div id="form-div">
+<div id="form-div" <?php if (!$view[$pageName]["add"]) echo 'style="display: none;"' ?>>
+  <div class="row">
+      <div class="col">
+
+      </div>
+      <div class="col d-flex justify-content-center">
+        <h2 id="data-title" class="mr-4">Add Image</h2>
+      </div>
+      <div class="col d-flex flex-row-reverse">
+
+      </div>
+  </div>
   <form class="mr-4" id="data" action="/images/update" method="post">
     <div class="form-group">
       <label for="imageName">Name</label>
@@ -66,7 +65,7 @@
   </form>
   <div class="float-right">
     <p id="updated" class="mr-2"></p>
-    <?php if ($view[$pageName]["edit"]) : ?>
+    <?php if ($view[$pageName]["edit"] || $view[$pageName]["add"]) : ?>
       <button class="btn btn-primary mr-2" onclick="updateImage();" id="save">Add New Image</button>
     <?php endif ?>
     <?php if ($view[$pageName]["remove"]) : ?>

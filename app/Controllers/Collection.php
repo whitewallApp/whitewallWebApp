@@ -6,6 +6,7 @@ use App\Models\CategoryModel;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
 use App\Models\ImageModel;
+use App\Models\UserModel;
 use RuntimeException;
 
 class Collection extends BaseController
@@ -100,6 +101,7 @@ class Collection extends BaseController
         try {
             $catModel = new CategoryModel();
             $colModel = new CollectionModel();
+            $userModel = new UserModel();
             $assets = new Assets();
 
             //delete caches
@@ -110,9 +112,10 @@ class Collection extends BaseController
 
             $post = $this->request->getPost(["id", "name", "description", "link", "category"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $categoryId = $catModel->getCategory($post["category"], "name", ["id"]);
+            $permission = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), ["collections"], ["p_add"]);
 
             //create the collection
-            if ($post["id"] == "undefined"){
+            if ($post["id"] == "undefined" && $permission){
                 $brandModel = new BrandModel();
 
                 $data = [

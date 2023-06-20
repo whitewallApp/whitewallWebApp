@@ -1,8 +1,9 @@
 <?= $this->extend('Category/Category_List') ?>
 
 <?= $this->section('Detail') ?>
-<div class="row">
-  <?php if ($view[$pageName]["add"]) : ?>
+
+<div id="form-div" <?php if (!$view[$pageName]["add"]) echo 'style="display: none;"' ?>>
+  <div class="row">
     <div class="col-2">
 
     </div>
@@ -12,9 +13,7 @@
     <div class="col d-flex flex-row-reverse">
 
     </div>
-  <?php endif ?>
-</div>
-<div id="form-div">
+  </div>
   <form id="categoryData" class="mr-4">
     <div class="form-group">
       <label for="name">Name</label>
@@ -36,7 +35,7 @@
     </div>
   </form>
   <div class="float-right">
-    <?php if ($view[$pageName]["edit"]) : ?>
+    <?php if ($view[$pageName]["edit"] || $view[$pageName]["add"]) : ?>
       <button type="submit" class="btn btn-primary" onclick="$('#categoryData').submit();">Add New Category</button>
     <?php endif ?>
     <?php if ($view[$pageName]["remove"]) : ?>
