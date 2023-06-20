@@ -9,7 +9,7 @@ class BrandModel extends Model
     protected $primaryKey = 'id';
     protected $returnType = 'array';
     protected $table = "brand";
-    protected $allowedFields = ["name", "logo", "appIcon", "appLoading", "appHeading", "appBanner", "branding"];
+    protected $allowedFields = ["name", "logo", "appIcon", "appLoading", "appHeading", "appBanner", "branding", "account_id"];
     
     /**
      * Gets a column of the table based on an account ID. Use $getBy to do additional filtering
@@ -81,5 +81,18 @@ class BrandModel extends Model
             $brand = $builder->get()->getResultArray()[0];
             return $brand;
         }
+    }
+    
+    /**
+     * Connect a user to a brand and spesifify if admin or not
+     *
+     * @param int $brandID
+     * @param int $userID
+     * @param boolean $admin
+     * @return void
+     */
+    public function joinUser($brandID, $userID, $admin = false){
+        $builder = $this->db->table("branduser");
+        $builder->insert(["brand_id" => $brandID, "user_id" => $userID, "admin" => $admin]);
     }
 }

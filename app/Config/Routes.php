@@ -33,6 +33,7 @@ $routes->set404Override();
 //Base URLs
 $routes->get('/', 'LogIn::index');
 $routes->get('/account/create', 'Account::create');
+$routes->post('/account/create', 'Account::addFirst');
 $routes->get('/dashboard', 'Dashboard::index', ["filter" => "view:nocheck"]);
 $routes->get('/collections', 'Collection::index', ["filter" => "view:collections"]);
 $routes->get('/categories','Category::index', ["filter" => "view:categories"]);
