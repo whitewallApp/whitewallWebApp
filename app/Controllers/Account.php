@@ -8,6 +8,7 @@ use App\Models\CategoryModel;
 use App\Models\CollectionModel;
 use App\Models\SubscriptionModel;
 use App\Models\UserModel;
+use Config\Logger;
 use Google;
 
 class Account extends BaseController
@@ -39,7 +40,27 @@ class Account extends BaseController
     }
 
     public function billing(){
-        return Navigation::renderNavBar("Billing") . view("Billing") . Navigation::renderFooter();
+        return Navigation::renderNavBar("Billing") . view("account/Billing") . Navigation::renderFooter();
+    }
+
+    public function updateBilling(){
+        $payload = @file_get_contents('php://input');
+        $event = null;
+        try {
+            $event = \Stripe\Event::constructFrom(
+                    json_decode($payload, true)
+                );
+        } catch (\UnexpectedValueException $e) {
+            // Invalid payload
+            echo '⚠️  Webhook error while parsing basic request.';
+            http_response_code(400);
+            exit();
+        }
+
+        $myfile = fopen("newfile.html", "w") or die("Unable to open file!");
+        $txt = print_r($event, true);
+        fwrite($myfile, $txt);
+        fclose($myfile);
     }
 
     public function post(){

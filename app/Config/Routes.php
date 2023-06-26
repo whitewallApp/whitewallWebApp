@@ -49,6 +49,7 @@ $routes->get('/billing',"Account::billing", ["filter" => "view:nocheck"]); //TOD
 $routes->get('/reset/(:any)', 'Reset::index/$1');
 $routes->get('/search', 'Navigation::search');
 
+
 //Asset URLS
 $routes->get('/assets/images/thumbnail/(:any)', 'Assets::imageThumbnail/$1');
 $routes->get('/assets/images/(:any)', 'Assets::images/$1'); //TODO: add filters
@@ -93,6 +94,7 @@ $routes->post('/notifications/update','Notification::update', ["filter" => "edit
 $routes->post('/menu/update','Menu::update', ["filter" => "edit:menu"]);
 $routes->post('/brand/users/update', 'Brand::updateUsers', ["filter" => "edit:brand,admin"]);
 $routes->post('/brand/branding/update', 'Brand::updateBrand', ["filter" => "edit:branding"]);
+$routes->post('/stripe', "Account::updateBilling");
 
 /*
  * --------------------------------------------------------------------
