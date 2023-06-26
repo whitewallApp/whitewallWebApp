@@ -40,27 +40,87 @@ class Account extends BaseController
     }
 
     public function billing(){
-        return Navigation::renderNavBar("Billing") . view("account/Billing") . Navigation::renderFooter();
+        $subModel = new SubscriptionModel();
+        $userModel = new UserModel();
+        $session = session();
+
+        $accountID = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+
+        $type = $subModel->getSubscription($accountID, "account_id", ["productID"]);
+
+        if ($type == null){
+            return Navigation::renderNavBar("Billing") . view("account/Billing") . Navigation::renderFooter();
+        }else{
+            header('Location: https://billing.stripe.com/p/login/test_fZebJsbmfgR13xC4gg');
+            exit;
+        }
     }
 
     public function updateBilling(){
+        // See your keys here: https://dashboard.stripe.com/apikeys
+        \Stripe\Stripe::setApiKey(getenv("STRIPE_API_KEY"));
+
+        // If you are testing your webhook locally with the Stripe CLI you
+        // can find the endpoint's secret by running `stripe listen`
+        // Otherwise, find your endpoint's secret in your webhook settings in the Developer Dashboard
+        $endpoint_secret = getenv("STRIPE_WEBHOOK_SECRET");
+
         $payload = @file_get_contents('php://input');
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
         $event = null;
+
         try {
-            $event = \Stripe\Event::constructFrom(
-                    json_decode($payload, true)
-                );
+            $event = \Stripe\Webhook::constructEvent(
+                $payload,
+                $sig_header,
+                $endpoint_secret
+            );
         } catch (\UnexpectedValueException $e) {
             // Invalid payload
-            echo '⚠️  Webhook error while parsing basic request.';
+            http_response_code(400);
+            exit();
+        } catch (\Stripe\Exception\SignatureVerificationException $e) {
+            // Invalid signature
             http_response_code(400);
             exit();
         }
 
-        $myfile = fopen("newfile.html", "w") or die("Unable to open file!");
-        $txt = print_r($event, true);
-        fwrite($myfile, $txt);
-        fclose($myfile);
+        // $myfile = fopen("newfile.html", "w") or die("Unable to open file!");
+        // $txt = print_r($event, true);
+        // fwrite($myfile, $txt);
+        // fclose($myfile);
+
+        $userModel = new UserModel();
+        $subModel = new SubscriptionModel();
+        $session = session();
+        $accountID = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+        $subID = $subModel->getSubscription($accountID, "account_id", ["id"]);
+
+        switch($event->type){
+            case 'customer.subscription.updated':
+                $myfile = fopen("newfile.html", "w") or die("Unable to open file!");
+                $txt = print_r($event, true);
+                fwrite($myfile, $txt);
+                fclose($myfile);
+                $subModel->update($subID, ["productID", "prod_ajdhiobnd"]);
+                break;
+            case 'customer.subscription.deleted':
+                $myfile = fopen("newfile.html", "w") or die("Unable to open file!");
+                $txt = print_r($event, true);
+                fwrite($myfile, $txt);
+                fclose($myfile);
+                break;
+            case 'customer.subscription.created':
+                $myfile = fopen("newfile.html", "w") or die("Unable to open file!");
+                $txt = print_r($event, true);
+                fwrite($myfile, $txt);
+                fclose($myfile);
+
+                $subModel->update($subID, ["subscriptionID", $event]);
+                break;
+            default:
+            // error_log('Received unknown event type of: ' . $event->type);
+        }
     }
 
     public function post(){
