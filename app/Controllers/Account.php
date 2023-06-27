@@ -85,42 +85,17 @@ class Account extends BaseController
             exit();
         }
 
-        // $myfile = fopen("newfile.html", "w") or die("Unable to open file!");
-        // $txt = print_r($event, true);
-        // fwrite($myfile, $txt);
-        // fclose($myfile);
-
-        $userModel = new UserModel();
-        $subModel = new SubscriptionModel();
-        $session = session();
-        $accountID = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
-        $subID = $subModel->getSubscription($accountID, "account_id", ["id"]);
-
-        switch($event->type){
-            case 'customer.subscription.updated':
-                $myfile = fopen("newfile.html", "w") or die("Unable to open file!");
-                $txt = print_r($event, true);
-                fwrite($myfile, $txt);
-                fclose($myfile);
-                $subModel->update($subID, ["productID", "prod_ajdhiobnd"]);
-                break;
-            case 'customer.subscription.deleted':
-                $myfile = fopen("newfile.html", "w") or die("Unable to open file!");
-                $txt = print_r($event, true);
-                fwrite($myfile, $txt);
-                fclose($myfile);
-                break;
-            case 'customer.subscription.created':
-                $myfile = fopen("newfile.html", "w") or die("Unable to open file!");
-                $txt = print_r($event, true);
-                fwrite($myfile, $txt);
-                fclose($myfile);
-
-                $subModel->update($subID, ["subscriptionID", $event]);
-                break;
-            default:
-            // error_log('Received unknown event type of: ' . $event->type);
-        }
+        // switch($event->type){
+        //     case 'customer.subscription.updated':
+        //         $subModel->update($subID, ["productID", "prod_ajdhiobnd"]);
+        //         break;
+        //     case 'customer.subscription.deleted':
+        //         break;
+        //     case 'customer.subscription.created':
+        //         break;
+        //     default:
+        //     // error_log('Received unknown event type of: ' . $event->type);
+        // }
     }
 
     public function post(){
@@ -188,23 +163,37 @@ class Account extends BaseController
                 $profilePic = $payload["picture"];
                 $googleID = $payload["sub"];
 
-                $session->setFlashdata("name", $name);
-                $session->setFlashdata("email", $email);
-                $session->setFlashdata("googleID", $googleID);
-                $session->setFlashdata("profile", $profilePic);
+                $session->set("name", $name);
+                $session->set("email", $email);
+                $session->set("googleID", $googleID);
+                $session->set("profile", $profilePic);
+
+                $data = [
+                    "credential" => "google"
+                ];
+
+                return view("account/create/Subscription", $data);
+            }
+
+            if ($this->request->getPost("page") == "subscription"){
+                $id = $this->request->getPost("id", FILTER_SANITIZE_SPECIAL_CHARS);
+                $session->set("productID", $id);
 
                 $data = [
                     "credential" => "google"
                 ];
 
                 return view("account/create/Brand", $data);
-            }else{
+            }
+
+            if ($this->request->getPost("page") == "brand"){
                 //make stuff now that we have brandName
                 $brandName = $this->request->getPost("brandName", FILTER_SANITIZE_SPECIAL_CHARS);
-                $name = $session->getFlashdata("name");
-                $email = $session->getFlashdata("email");
-                $profilePic = $session->getFlashdata("profile");
-                $googleID = $session->getFlashdata("googleID");
+                $productID = $session->get("productID");
+                $name = $session->get("name");
+                $email = $session->get("email");
+                $profilePic = $session->get("profile");
+                $googleID = $session->get("googleID");
 
                 $accountModel = new AccountModel();
                 $subModel = new SubscriptionModel();
@@ -217,7 +206,7 @@ class Account extends BaseController
                 $accountID = $accountModel->insert(["id" => null]);
 
                 //make a subscription
-                $subModel->insert(["account_id" => $accountID]);
+                $subModel->insert(["account_id" => $accountID, "productID" => $productID]);
 
                 //make the brand
                 $brandID = $brandModel->insert(["name" => $brandName, "account_id" => $accountID]);
@@ -279,16 +268,26 @@ class Account extends BaseController
                 }
 
                 //save to session
-                $session->setFlashdata("name", $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS));
-                $session->setFlashdata("email", $this->request->getPost("email", FILTER_SANITIZE_EMAIL));
-                $session->setFlashdata("password", $this->request->getPost("password"));
+                $session->set("name", $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS));
+                $session->set("email", $this->request->getPost("email", FILTER_SANITIZE_EMAIL));
+                $session->set("password", $this->request->getPost("password"));
+
+                return view("account/create/Subscription");
+            }
+
+            if ($this->request->getPost("page") == "subscription"){
+                $id = $this->request->getPost("id", FILTER_SANITIZE_SPECIAL_CHARS);
+                $session->set("productID", $id);
 
                 return view("account/create/Brand");
-            }else{
+            }
+
+            if ($this->request->getPost("page") == "brand"){
                 $brandName = $this->request->getPost("brandName", FILTER_SANITIZE_SPECIAL_CHARS);
-                $name = $session->getFlashdata("name");
-                $email = $session->getFlashdata("email");
-                $password = (string)$session->getFlashdata("password");
+                $name = $session->get("name");
+                $email = $session->get("email");
+                $password = (string)$session->get("password");
+                $productID = $session->get("productID");
 
                 $accountModel = new AccountModel();
                 $subModel = new SubscriptionModel();
@@ -301,7 +300,7 @@ class Account extends BaseController
                 $accountID = $accountModel->insert(["id" => null]);
 
                 //make a subscription
-                $subModel->insert(["account_id" => $accountID]);
+                $subModel->insert(["account_id" => $accountID, "productID" => $productID]);
 
                 //make the brand
                 $brandID = $brandModel->insert(["name" => $brandName, "account_id" => $accountID]);

@@ -9,7 +9,7 @@ class SubscriptionModel extends Model
     protected $primaryKey = 'id';
     protected $returnType = 'array';
     protected $table = "subscription";
-    protected $allowedFields = ["subscriptionType", "nextPaymentDate", "expirationDate", "paymentMethod", "status", "account_id"];
+    protected $allowedFields = ["subscriptionID", "productID", "status", "account_id"];
 
 
     /**

@@ -13,6 +13,7 @@
             <?php if (isset($credential)) : ?>
                 <input type="text" class="form-control" name="credential" value="<?= $credential ?>" style="display: none;">
             <?php endif ?>
+            <input type="text" class="form-control" name="page" value="brand" style="display: none;">
             <button class="btn btn-primary" id="submit">Submit</button>
         </form>
     </div>
