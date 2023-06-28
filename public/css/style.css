@@ -63,12 +63,13 @@ body {
 }
 
 .background-phone-image {
-    border-radius: 20px;
+    padding-top: 40px;
+    border-radius: 40px;
     position: relative;
-    top: -500px;
-    left: 10px;
-    width: 230px;
-    height: 460px;
+    top: -530px;
+    left: 5px;
+    width: 238px;
+    height: 500px;
     overflow-y: scroll;
     overflow-x: hidden;
     -ms-overflow-style: none;
@@ -107,7 +108,7 @@ body {
     display: none;
 }
 
-.row.bottom-nav {
+.bottom-nav {
     background-color: lightslategray;
     position:absolute;
     height: 65px;

@@ -418,7 +418,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="dropdownFont">Font Size</label>
+                                    <label class="form-label" for="dropdownFontsize">Font Size</label>
                                     <div class="range">
                                         <input type="range" class="form-range" min="0" max="60" id="dropdownFontsize" />
                                     </div>
