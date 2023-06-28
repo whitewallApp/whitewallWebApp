@@ -37,31 +37,35 @@ class Assets extends BaseController {
         $this->userPath = getenv("BASE_PATH") . $accountId . "/users/";
         $this->collPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/collections/";
         $this->menuPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/menu/";
-        $this->brandPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/branding/";  
+        $this->brandPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/branding/";
 
-        if (!file_exists(getenv("BASE_PATH") . $accountId . "/" . $brandId)){
-            mkdir(getenv("BASE_PATH") . $accountId . "/" . $brandId, 0777, true);
-        }
-        if (!file_exists($this->imgPath)){
-            mkdir($this->imgPath);
-        }
-        if (!file_exists($this->imgTmbPath)) {
-            mkdir($this->imgTmbPath);
-        }
-        if (!file_exists($this->catPath)) {
-            mkdir($this->catPath);
-        }
-        if (!file_exists($this->userPath)) {
-            mkdir($this->userPath);
-        }
-        if (!file_exists($this->collPath)) {
-            mkdir($this->collPath);
-        }
-        if (!file_exists($this->menuPath)) {
-            mkdir($this->menuPath);
-        }
-        if (!file_exists($this->brandPath)) {
-            mkdir($this->brandPath);
+        // echo var_dump("hello");
+
+        if (getenv("BASE_PATH")){
+            if (!file_exists(getenv("BASE_PATH") . $accountId . "/" . $brandId)){
+                mkdir(getenv("BASE_PATH") . $accountId . "/" . $brandId, 0777, true);
+            }
+            if (!file_exists($this->imgPath)){
+                mkdir($this->imgPath);
+            }
+            if (!file_exists($this->imgTmbPath)) {
+                mkdir($this->imgTmbPath);
+            }
+            if (!file_exists($this->catPath)) {
+                mkdir($this->catPath);
+            }
+            if (!file_exists($this->userPath)) {
+                mkdir($this->userPath);
+            }
+            if (!file_exists($this->collPath)) {
+                mkdir($this->collPath);
+            }
+            if (!file_exists($this->menuPath)) {
+                mkdir($this->menuPath);
+            }
+            if (!file_exists($this->brandPath)) {
+                mkdir($this->brandPath);
+            }
         }
     }
     /**

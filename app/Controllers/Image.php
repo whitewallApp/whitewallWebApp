@@ -128,7 +128,7 @@ class Image extends BaseController
     //update the image
     public function update()
     {
-        try {
+        // try {
             $assets = new Assets();
             $imageModel = new ImageModel();
             $collectionModel = new CollectionModel();
@@ -154,7 +154,7 @@ class Image extends BaseController
                     $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                     $collectionId = $collectionModel->getCollection($post["collection"], ["id"], "name");
-                    $brandId = $brandModel->getBrand($session->get("brand_id"), "name", ["id"]);
+                    $brandId = $session->get("brand_id");
 
                     $data = [
                         "name" => $post["name"],
@@ -253,11 +253,11 @@ class Image extends BaseController
             }
 
             return json_encode(["success" => true]);
-        }catch (\Exception $e){
-            http_response_code(403);
-            return json_encode($e->getMessage());
-            exit;
-        }
+        // }catch (\Exception $e){
+        //     http_response_code(403);
+        //     return json_encode($e->getMessage());
+        //     exit;
+        // }
     }
 
     //delete images
