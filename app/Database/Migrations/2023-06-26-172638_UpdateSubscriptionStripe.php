@@ -18,6 +18,14 @@ class UpdateSubscriptionStripe extends Migration
                 "type" => "VARCHAR",
                 "constraint" => 510,
             ],
+            "customerID" => [
+                "type" => "VARCHAR",
+                "constraint" => 255,
+            ],
+            "status" => [
+                "type" => "VARCHAR",
+                "constraint" => 255,
+            ],
         ];
         $this->forge->addColumn('subscription', $fields);
         // $this->forge->addUniqueKey("subscriptionID", "subscription_stripe_unique");
