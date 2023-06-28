@@ -8,7 +8,9 @@ use App\Models\CategoryModel;
 use App\Models\CollectionModel;
 use App\Models\SubscriptionModel;
 use App\Models\UserModel;
+use Config\Logger;
 use Google;
+use Google\Service\AndroidPublisher\Subscription;
 
 class Account extends BaseController
 {
@@ -39,7 +41,80 @@ class Account extends BaseController
     }
 
     public function billing(){
-        return Navigation::renderNavBar("Billing") . view("Billing") . Navigation::renderFooter();
+        $subModel = new SubscriptionModel();
+        $userModel = new UserModel();
+        $session = session();
+
+        $accountID = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+
+        $type = $subModel->getSubscription($accountID, "account_id", ["subscriptionID"]);
+
+
+        if ($type == null){
+            return Navigation::renderNavBar("Billing") . view("account/Billing", ["accountID" => $accountID]) . Navigation::renderFooter();
+        }else{
+            header('Location: https://billing.stripe.com/p/login/test_00gaFo3TNcAL5FK001');
+            exit;
+        }
+    }
+
+    public function updateBilling(){
+        // See your keys here: https://dashboard.stripe.com/apikeys
+        \Stripe\Stripe::setApiKey(getenv("STRIPE_API_KEY"));
+
+        // If you are testing your webhook locally with the Stripe CLI you
+        // can find the endpoint's secret by running `stripe listen`
+        // Otherwise, find your endpoint's secret in your webhook settings in the Developer Dashboard
+        $endpoint_secret = getenv("STRIPE_WEBHOOK_SECRET");
+
+        $payload = @file_get_contents('php://input');
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+        $event = null;
+
+        try {
+            $event = \Stripe\Webhook::constructEvent(
+                $payload,
+                $sig_header,
+                $endpoint_secret
+            );
+        } catch (\UnexpectedValueException $e) {
+            // Invalid payload
+            log_message("warning", "Invalid Stripe Payload, Event ID:" . $event->id);
+            http_response_code(400);
+            exit();
+        } catch (\Stripe\Exception\SignatureVerificationException $e) {
+            // Invalid signature
+            log_message("warning", "Invalid Stripe Signature, Event ID:" . $event->id);
+            http_response_code(400);
+            exit();
+        }
+
+        // $myfile = fopen("newfile.json", "w") or die("Unable to open file!");
+        // fwrite($myfile, json_encode($subid["id"]));
+        // fclose($myfile);
+
+        $subModel = new SubscriptionModel();
+        switch($event->type){
+            case 'customer.subscription.updated':
+                $stripeSubId = $event->data->object->id;
+                $status = $event->data->object->status;
+                $productId = (string)$event->data->object->items->data[0]->plan->product;
+                $subid = $subModel->where("subscriptionID", $stripeSubId)->first();
+                $subModel->update($subid["id"], ["productID" => $productId, "status" => $status]);
+                break;
+            case 'customer.subscription.deleted':
+                $stripeSubId = $event->data->object->id;
+                $productId = (string)$event->data->object->items->data[0]->plan->product;
+                $subid = $subModel->where("subscriptionID", $stripeSubId)->first();
+                $subModel->update($subid["id"], ["productID" => $productId, "status" => "ended"]);
+                break;
+            case 'checkout.session.completed':
+                $subid = $subModel->where("account_id", $event->data->object->client_reference_id)->first();
+                $subModel->update($subid["id"], ["subscriptionID" => $event->data->object->subscription, "customerID" => $event->data->object->customer]);
+                break;
+            default:
+            // error_log('Received unknown event type of: ' . $event->type);
+        }
     }
 
     public function post(){
@@ -107,23 +182,37 @@ class Account extends BaseController
                 $profilePic = $payload["picture"];
                 $googleID = $payload["sub"];
 
-                $session->setFlashdata("name", $name);
-                $session->setFlashdata("email", $email);
-                $session->setFlashdata("googleID", $googleID);
-                $session->setFlashdata("profile", $profilePic);
+                $session->set("name", $name);
+                $session->set("email", $email);
+                $session->set("googleID", $googleID);
+                $session->set("profile", $profilePic);
+
+                $data = [
+                    "credential" => "google"
+                ];
+
+                return view("account/create/Subscription", $data);
+            }
+
+            if ($this->request->getPost("page") == "subscription"){
+                $id = $this->request->getPost("id", FILTER_SANITIZE_SPECIAL_CHARS);
+                $session->set("productID", $id);
 
                 $data = [
                     "credential" => "google"
                 ];
 
                 return view("account/create/Brand", $data);
-            }else{
+            }
+
+            if ($this->request->getPost("page") == "brand"){
                 //make stuff now that we have brandName
                 $brandName = $this->request->getPost("brandName", FILTER_SANITIZE_SPECIAL_CHARS);
-                $name = $session->getFlashdata("name");
-                $email = $session->getFlashdata("email");
-                $profilePic = $session->getFlashdata("profile");
-                $googleID = $session->getFlashdata("googleID");
+                $productID = $session->get("productID");
+                $name = $session->get("name");
+                $email = $session->get("email");
+                $profilePic = $session->get("profile");
+                $googleID = $session->get("googleID");
 
                 $accountModel = new AccountModel();
                 $subModel = new SubscriptionModel();
@@ -136,7 +225,7 @@ class Account extends BaseController
                 $accountID = $accountModel->insert(["id" => null]);
 
                 //make a subscription
-                $subModel->insert(["account_id" => $accountID]);
+                $subModel->insert(["account_id" => $accountID, "productID" => $productID]);
 
                 //make the brand
                 $brandID = $brandModel->insert(["name" => $brandName, "account_id" => $accountID]);
@@ -198,16 +287,26 @@ class Account extends BaseController
                 }
 
                 //save to session
-                $session->setFlashdata("name", $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS));
-                $session->setFlashdata("email", $this->request->getPost("email", FILTER_SANITIZE_EMAIL));
-                $session->setFlashdata("password", $this->request->getPost("password"));
+                $session->set("name", $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS));
+                $session->set("email", $this->request->getPost("email", FILTER_SANITIZE_EMAIL));
+                $session->set("password", $this->request->getPost("password"));
+
+                return view("account/create/Subscription");
+            }
+
+            if ($this->request->getPost("page") == "subscription"){
+                $id = $this->request->getPost("id", FILTER_SANITIZE_SPECIAL_CHARS);
+                $session->set("productID", $id);
 
                 return view("account/create/Brand");
-            }else{
+            }
+
+            if ($this->request->getPost("page") == "brand"){
                 $brandName = $this->request->getPost("brandName", FILTER_SANITIZE_SPECIAL_CHARS);
-                $name = $session->getFlashdata("name");
-                $email = $session->getFlashdata("email");
-                $password = (string)$session->getFlashdata("password");
+                $name = $session->get("name");
+                $email = $session->get("email");
+                $password = (string)$session->get("password");
+                $productID = $session->get("productID");
 
                 $accountModel = new AccountModel();
                 $subModel = new SubscriptionModel();
@@ -220,7 +319,7 @@ class Account extends BaseController
                 $accountID = $accountModel->insert(["id" => null]);
 
                 //make a subscription
-                $subModel->insert(["account_id" => $accountID]);
+                $subModel->insert(["account_id" => $accountID, "productID" => $productID]);
 
                 //make the brand
                 $brandID = $brandModel->insert(["name" => $brandName, "account_id" => $accountID]);
