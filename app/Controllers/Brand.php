@@ -85,7 +85,7 @@ class Brand extends BaseController
             "brandimages" => $brandModel->getBrand($session->get("brand_id"), filter: ["appIcon", "appLoading", "appHeading", "appBanner"], assoc: true),
         ];
 
-        return Navigation::renderNavBar("Branding","branding", [true, "Brands"]) . view("brand/Branding", $data) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Branding","branding") . view("brand/Branding", $data) . Navigation::renderFooter();
     }
 
     public function users($brandId){

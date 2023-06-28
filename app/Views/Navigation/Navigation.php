@@ -1,7 +1,7 @@
 <?= $this->extend('Base') ?>
 
 <?= $this->section('Body') ?>
-
+<title><?= $pageTitle ?></title>
 <nav class="navbar navbar-expand-lg">
     <div class="col-sm-2">
         <a class="navbar-brand" href="/dashboard">

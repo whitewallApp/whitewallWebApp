@@ -14,7 +14,6 @@
     <!-- MDB -->
     <link rel="stylesheet" href="/css/mdb.min.css" />
     <link rel="icon" href="/favicon.png" type="image/png">
-    <title><?= $pageTitle ?></title>
 </head>
 
 <body>
