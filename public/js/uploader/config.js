@@ -35,6 +35,7 @@ $(function () {
             ui_add_log('Starting the upload of #' + id);
             ui_multi_update_file_status(id, 'uploading', 'Uploading...');
             ui_multi_update_file_progress(id, 0, '', true);
+            animateTitle("...");
         },
         onUploadCanceled: function (id) {
             // Happens when a file is directly canceled by the user.
@@ -66,6 +67,13 @@ $(function () {
         onFileSizeError: function (file) {
             ui_add_log('File \'' + file.name + '\' cannot be added: size excess limit', 'danger');
             errorAdd(file.name + " size limit reached");
+        },
+        onComplete: function(){
+            if ($("#errors").children().length == 0){
+                document.querySelector('title').innerHTML = "Success";
+            }else{
+                document.querySelector('title').innerHTML = $("#errors").children().length + " Errors";
+            }
         }
     });
 

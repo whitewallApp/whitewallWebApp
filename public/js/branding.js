@@ -328,3 +328,8 @@ $("#save").on("click", function(){
     });
 })
 
+//load in branding on page load
+
+$(function(){
+    console.log(branding);
+})

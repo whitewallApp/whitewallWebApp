@@ -45,10 +45,10 @@
 
                 <?php if ($admin) : ?>
                     <a class="dropdown-item" href="/brand/users/<?= $brandId ?>">Manage Users</a>
+                    <a class="dropdown-item" href="/billing">Billing</a>
                 <?php endif ?>
                 <a class="dropdown-item" href="/account">Account</a>
                 <a class="dropdown-item" href="/account?logout=true">Logout</a>
-                <a class="dropdown-item" href="/billing">Billing</a>
             </div>
         </div>
     </div>
@@ -115,20 +115,20 @@
     <div class="col-md-4">
         <div class="row ml-4 mt-4">
             <div class="col-sm-6" style="border-right-style: solid;">
-                <?php if ($pageTitle != "Account Settings" && $pageTitle != "Billing" && $pageTitle != "Brands"&& $pageTitle != "Brand Users") : ?>
-                        <?php if (count($brands) > 1) : ?>
-                            <select id="brandSelect" style="max-width: fit-content; font-size: 1.5rem;" class="custom-select">
-                                <?php foreach ($brands as $brand) : ?>
-                                    <?php if ($brand["name"] == $brandName) : ?>
-                                        <option selected><?= $brand["name"] ?></option>
-                                    <?php else : ?>
-                                        <option><?= $brand["name"] ?></option>
-                                    <?php endif ?>
-                                <?php endforeach ?>
-                            </select>
-                        <?php else : ?>
-                            <h2><?= $brands[0]["name"] ?></h2>
-                        <?php endif ?>
+                <?php if ($pageTitle != "Account Settings" && $pageTitle != "Billing" && $pageTitle != "Brands" && $pageTitle != "Brand Users") : ?>
+                    <?php if (count($brands) > 1) : ?>
+                        <select id="brandSelect" style="max-width: fit-content; font-size: 1.5rem;" class="custom-select">
+                            <?php foreach ($brands as $brand) : ?>
+                                <?php if ($brand["name"] == $brandName) : ?>
+                                    <option selected><?= $brand["name"] ?></option>
+                                <?php else : ?>
+                                    <option><?= $brand["name"] ?></option>
+                                <?php endif ?>
+                            <?php endforeach ?>
+                        </select>
+                    <?php else : ?>
+                        <h2><?= $brands[0]["name"] ?></h2>
+                    <?php endif ?>
                 <?php endif ?>
             </div>
             <div class="col-sm-6">
