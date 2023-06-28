@@ -9,7 +9,7 @@ class SubscriptionModel extends Model
     protected $primaryKey = 'id';
     protected $returnType = 'array';
     protected $table = "subscription";
-    protected $allowedFields = ["subscriptionID", "productID", "status", "account_id"];
+    protected $allowedFields = ["subscriptionID", "productID", "status", "account_id", "customerID"];
 
 
     /**
@@ -24,34 +24,33 @@ class SubscriptionModel extends Model
     public function getSubscription($id, $fetchBy = "id", $filter = [], $assoc = false): mixed
     {
         $builder = $this->db->table('subscription');
-
         if (count($filter) > 0) {
             $builder->select($filter)->where($fetchBy, $id);
-            $collection = $builder->get()->getResultArray()[0];
+            $image = $builder->get()->getResultArray()[0];
 
             if (!$assoc) {
                 if (count($filter) > 1) {
                     $array = [];
 
                     foreach ($filter as $thing) {
-                        array_push($array, $collection[$thing]);
+                        array_push($array, $image[$thing]);
                     }
 
                     return $array;
                 } else {
                     if (count($filter) == 1) {
-                        return $collection[$filter[0]];
+                        return $image[$filter[0]];
                     } else {
-                        return $collection;
+                        return $image;
                     }
                 }
             } else {
-                return $collection;
+                return $image;
             }
         } else {
             $builder->select("*")->where($fetchBy, $id);
-            $collection = $builder->get()->getResultArray()[0];
-            return $collection;
+            $imgID = $builder->get()->getResultArray();
+            return $imgID;
         }
     }
 }

@@ -10,6 +10,7 @@ use App\Models\SubscriptionModel;
 use App\Models\UserModel;
 use Config\Logger;
 use Google;
+use Google\Service\AndroidPublisher\Subscription;
 
 class Account extends BaseController
 {
@@ -46,12 +47,13 @@ class Account extends BaseController
 
         $accountID = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
 
-        $type = $subModel->getSubscription($accountID, "account_id", ["productID"]);
+        $type = $subModel->getSubscription($accountID, "account_id", ["subscriptionID"]);
+
 
         if ($type == null){
-            return Navigation::renderNavBar("Billing") . view("account/Billing") . Navigation::renderFooter();
+            return Navigation::renderNavBar("Billing") . view("account/Billing", ["accountID" => $accountID]) . Navigation::renderFooter();
         }else{
-            header('Location: https://billing.stripe.com/p/login/test_fZebJsbmfgR13xC4gg');
+            header('Location: https://billing.stripe.com/p/login/test_00gaFo3TNcAL5FK001');
             exit;
         }
     }
@@ -77,25 +79,42 @@ class Account extends BaseController
             );
         } catch (\UnexpectedValueException $e) {
             // Invalid payload
+            log_message("warning", "Invalid Stripe Payload, Event ID:" . $event->id);
             http_response_code(400);
             exit();
         } catch (\Stripe\Exception\SignatureVerificationException $e) {
             // Invalid signature
+            log_message("warning", "Invalid Stripe Signature, Event ID:" . $event->id);
             http_response_code(400);
             exit();
         }
 
-        // switch($event->type){
-        //     case 'customer.subscription.updated':
-        //         $subModel->update($subID, ["productID", "prod_ajdhiobnd"]);
-        //         break;
-        //     case 'customer.subscription.deleted':
-        //         break;
-        //     case 'customer.subscription.created':
-        //         break;
-        //     default:
-        //     // error_log('Received unknown event type of: ' . $event->type);
-        // }
+        // $myfile = fopen("newfile.json", "w") or die("Unable to open file!");
+        // fwrite($myfile, json_encode($subid["id"]));
+        // fclose($myfile);
+
+        $subModel = new SubscriptionModel();
+        switch($event->type){
+            case 'customer.subscription.updated':
+                $stripeSubId = $event->data->object->id;
+                $status = $event->data->object->status;
+                $productId = (string)$event->data->object->items->data[0]->plan->product;
+                $subid = $subModel->where("subscriptionID", $stripeSubId)->first();
+                $subModel->update($subid["id"], ["productID" => $productId, "status" => $status]);
+                break;
+            case 'customer.subscription.deleted':
+                $stripeSubId = $event->data->object->id;
+                $productId = (string)$event->data->object->items->data[0]->plan->product;
+                $subid = $subModel->where("subscriptionID", $stripeSubId)->first();
+                $subModel->update($subid["id"], ["productID" => $productId, "status" => "ended"]);
+                break;
+            case 'checkout.session.completed':
+                $subid = $subModel->where("account_id", $event->data->object->client_reference_id)->first();
+                $subModel->update($subid["id"], ["subscriptionID" => $event->data->object->subscription, "customerID" => $event->data->object->customer]);
+                break;
+            default:
+            // error_log('Received unknown event type of: ' . $event->type);
+        }
     }
 
     public function post(){
