@@ -93,6 +93,7 @@ class Account extends BaseController
         // fwrite($myfile, json_encode($subid["id"]));
         // fclose($myfile);
 
+        //STRIPE DOCS: https://stripe.com/docs/api
         $subModel = new SubscriptionModel();
         switch($event->type){
             case 'customer.subscription.updated':

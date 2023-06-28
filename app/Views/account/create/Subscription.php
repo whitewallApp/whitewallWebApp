@@ -3,6 +3,11 @@
 <?= $this->section('Body') ?>
 
 <div class="container p-3">
+    <div class="container mt-2 text-center">
+        <div class="alert alert-info" role="alert">
+            You do not need a Card to start
+        </div>
+    </div>
     <div class="row">
         <!-- <div class="col">
             <div class="card  ">

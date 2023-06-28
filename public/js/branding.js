@@ -1,5 +1,6 @@
 $("#categoryColor").on("input", function(e){
     color = $(this).val();
+    $(".row.bottom-nav").css("background-color", color);
     branding.categories.backgroundcolor = $(this).val();
 })
 
@@ -33,10 +34,10 @@ $("#catFont").on("input", function (e) {
     branding.categories.font = $(this).val();
 })
 
-background = {};
 $("#backgroundColor").on("input", function(e){
     color = $(this).val();
     $(".background-phone-collection").css("background-color", color);
+    $(".background-phone-image").css("background-color", color);
     branding.background.color = $(this).val();
 })
 
@@ -328,3 +329,96 @@ $("#save").on("click", function(){
     });
 })
 
+//load in branding on page load
+
+$(function(){
+    console.log(branding);
+    //background
+    $("#backgroundColor").val(branding.background.color);
+    $("#backgroundColor").trigger("input");
+
+    //buttons
+    $("#buttonFontColor").val(branding.buttons.fontcolor);
+    $("#buttonFontColor").trigger("input");
+
+    $("#buttonFontSize").attr("value", branding.buttons.fontsize);
+    $("#buttonFontSize").trigger("input");
+
+    $("#buttonColor").val(branding.buttons.borderColor);
+    $("#buttonColor").trigger("input");
+
+    $("#buttonBorderRadius").attr("value", branding.buttons.borderRadius);
+    $("#buttonBorderRadius").trigger("input");
+
+    $(`#buttonFont>option[value='${branding.buttons.font}']`).attr("selected", true);
+    $("#buttonFont").trigger("input");
+
+    //Images & Collections Frame
+    $("#collBackgroundColor").val(branding.cards.backgroundcolor);
+    $("#collBackgroundColor").trigger("input");
+
+    $("#frameRadius").attr("value", branding.cards.frames.borderRadius);
+    $("#frameRadius").trigger("input");
+
+    $("#frameBorderWidth").attr("value", branding.cards.frames.borderWidth);
+    $("#frameBorderWidth").trigger("input");
+
+    $("#collBorderColor").val(branding.cards.frames.borderColor);
+    $("#collBorderColor").trigger("input");
+
+    //Images & Collections
+    $("#imgBorderRadius").attr("value", branding.cards.images.borderRadius);
+    $("#imgBorderRadius").trigger("input");
+
+    $("#imgBorderWidth").attr("value", branding.cards.images.borderWidth);
+    $("#imgBorderWidth").trigger("input");
+
+    $("#borderColor").val(branding.cards.images.borderColor);
+    $("#borderColor").trigger("input");
+
+    //Dropdowns
+    $("#dropdownColor").val(branding.dropdowns.backgroundcolor);
+    $("#dropdownColor").trigger("input");
+
+    $("#dropdownFontColor").val(branding.dropdowns.fontcolor);
+    $("#dropdownFontColor").trigger("input");
+
+    $(`#dropdownFont>option[value='${branding.dropdowns.font}']`).attr("selected", true);
+    $("#dropdownFont").trigger("input");
+
+    $(`#dropdownFontStyle>option[value='${branding.dropdowns.fontstyle}']`).attr("selected", true);
+    $("#dropdownFontStyle").trigger("input");
+
+    $("#dropdownFontsize").attr("value", branding.dropdowns.fontsize);
+    $("#dropdownFontsize").trigger("input");
+
+    //Image & Collection Labels
+    $(`#imgCollabelFont>option[value='${branding.cards.font}']`).attr("selected", true);
+    $("imgCollabelFont").trigger("input");
+
+    $("#collImgLabelFontColor").val(branding.cards.fontcolor);
+    $("#collImgLabelFontColor").trigger("input");
+
+    $(`#imgCollabelFontStyle>option[value='${branding.cards.fontType}']`).attr("selected", true);
+    $("#imgCollabelFontStyle").trigger("input");
+
+    $("#imgCollabelFontsize").attr("value", branding.cards.fontsize);
+    $("#imgCollabelFontsize").trigger("input");
+
+    //category Labels
+    $("#categoryColor").val(branding.categories.backgroundcolor);
+    $("#categoryColor").trigger("input");
+
+    $("#categoryFontColor").val(branding.categories.fontcolor);
+    $("#categoryFontColor").trigger("input");
+
+    $(`#catFont>option[value='${branding.categories.font}']`).attr("selected", true);
+    $("#catFont").trigger("input");
+
+    $(`#catFontStyle>option[value='${branding.categories.fontstyle}']`).attr("selected", true);
+    $("#catFontStyle").trigger("input");
+
+    $("#catFontSize").attr("value", branding.categories.fontsize);
+    $("#catFontSize").trigger("input");
+
+})
