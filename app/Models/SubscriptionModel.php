@@ -65,11 +65,11 @@ class SubscriptionModel extends Model
     public function getLimit(int $userID, string $limitName): int {
         $userModel = new UserModel();
         $accountID = $userModel->getUser($userID, filter: ["account_id"]);
-        $productID = $this->getSubscription($accountID, "account_id", "productID");
+        $productID = $this->getSubscription($accountID, "account_id", ["productID"]);
 
         $builder = $this->db->table("products");
         $builder->select($limitName)->where("productID", $productID);
-        $limit = $builder->get()->getResultArray()[0];
+        $limit = $builder->get()->getResultArray()[0][$limitName];
 
         return (int)$limit;
     }

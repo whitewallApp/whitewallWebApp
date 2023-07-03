@@ -252,3 +252,37 @@ $("#removeBrand").on("click", function(){
         })
     }
 })
+
+$("#addBrand").on("click", function(){
+    formData = new FormData();
+
+    if ($("#addbrandName").val() != ""){
+        $("#error").remove();
+        $("#addbrandName").removeClass("is-invalid");
+
+        if ($("#addbrandIcon")[0].files.length > 0) {
+            formData.append("logo", $("#addbrandIcon")[0].files[0]);
+        }
+
+        formData.append("name", $("#addbrandName").val());
+        formData.append("import", $("#importUsers").prop("checked"));
+
+        $.ajax({
+            url: "/brand/add",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                window.location.reload();
+            },
+            error: function (xhr, status, error) {
+                $(".alert-danger").show();
+                $(".alert-danger").html(JSON.parse(xhr.responseText).message);
+            }
+        })
+    }else{
+        $("#addbrandName").addClass("is-invalid");
+        $("#addbrandName").parent().parent().append(`<small id="error" class="form-text text-muted">You Must Provide a Brand Name</small>`);
+    }
+})

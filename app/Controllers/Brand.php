@@ -7,6 +7,7 @@ use App\Models\CategoryModel;
 use App\Models\CollectionModel;
 use App\Models\ImageModel;
 use App\Models\MenuModel;
+use App\Models\SubscriptionModel;
 use App\Models\UserModel;
 use Google\Service\CloudAsset\Asset;
 
@@ -168,6 +169,14 @@ class Brand extends BaseController
 
                 return json_encode(["success" => true]);
             }else{
+                //check if they have reached the limit
+
+                $subModel = new SubscriptionModel();
+                $userLimit = $subModel->getLimit($session->get("user_id"), "userLimit");
+                if ($subModel->checkUserLimit($session->get("user_id"), $userLimit)) {
+                    throw new \RuntimeException("User Limit Reached");
+                }
+
                 //TODO: send email with temp password
                 $password = password_hash("test", PASSWORD_DEFAULT);
 
@@ -186,6 +195,56 @@ class Brand extends BaseController
             exit;
         }
 
+    }
+
+    public function addBrand(){
+        try {
+            $brandModel = new BrandModel();
+            $userModel = new UserModel();
+            $session = session();
+
+            $name = $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS);
+            $import = $this->request->getPost("import", FILTER_VALIDATE_BOOL);
+
+            $filePath = "";
+            if (count($this->request->getFiles()) > 0) {
+                $file = $this->request->getFile("logo");
+                //preform checks
+                if (!$file->isValid()) {
+                    throw new \RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
+                }
+
+                $assets = new Assets();
+                $name = $assets->saveBrandImg($file->getTempName(), $file->guessExtension(), "logo");
+
+                $filePath = "/assets/branding/" . $name;
+            }
+
+            $accountID = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+
+            $brand = [
+                "name" => $name,
+                "logo" => $filePath,
+                "account_id" => $accountID
+            ];
+
+            $brandID = $brandModel->insert($brand);
+            $brandModel->joinUser($brandID, $session->get("user_id"), true);
+
+            if ($import){
+                $userIds = $userModel->getCollumn("id", $session->get("brand_id"));
+                foreach ($userIds as $userId) {
+                    $userId = $userId["id"];
+                    if ($userId != $session->get("user_id")){
+                        $brandModel->joinUser($brandID, $userId, $userModel->getAdmin($userId, $session->get("brand_id")));
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            http_response_code(400);
+            echo json_encode(["success" => false, "message" => $e->getMessage()]);
+            exit;
+        }
     }
 
     public function updateBrand(){

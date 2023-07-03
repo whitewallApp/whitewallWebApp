@@ -93,6 +93,7 @@ $routes->post('/categories/update','Category::update', ["filter" => "edit:catego
 $routes->post('/notifications/update','Notification::update', ["filter" => "edit:notifications"]);
 $routes->post('/menu/update','Menu::update', ["filter" => "edit:menu"]);
 $routes->post('/brand/users/update', 'Brand::updateUsers', ["filter" => "edit:brand,admin"]);
+$routes->post('/brand/add', 'Brand::addBrand', ["filter" => "add:brand,admin"]);
 $routes->post('/brand/branding/update', 'Brand::updateBrand', ["filter" => "edit:branding"]);
 $routes->post('/stripe', "Account::updateBilling");
 

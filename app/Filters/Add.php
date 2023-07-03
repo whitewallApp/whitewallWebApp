@@ -26,13 +26,15 @@ class Add implements FilterInterface
             }
         }
 
-        $userModel = new UserModel();
+        if (!$session->get("is_admin")) {
+            $userModel = new UserModel();
 
-        $canEdit = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), permissions: ["p_add"]);
+            $canEdit = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), permissions: ["p_edit"]);
 
-        if (!$canEdit[$page]["p_add"]) {
-            http_response_code(403);
-            die(json_encode(["success" => false, "message" => "You don't have permissions"]));
+            if (!$canEdit[$page]["p_add"]) {
+                http_response_code(403);
+                die(json_encode(["success" => false, "message" => "You don't have permissions to add"]));
+            }
         }
     }
 
