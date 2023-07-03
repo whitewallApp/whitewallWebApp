@@ -53,7 +53,7 @@ class Account extends BaseController
         if ($type == null){
             return Navigation::renderNavBar("Billing") . view("account/Billing", ["accountID" => $accountID]) . Navigation::renderFooter();
         }else{
-            header('Location: https://billing.stripe.com/p/login/test_00gaFo3TNcAL5FK001');
+            header('Location: ' . getenv("STRIPE_CLIENT_PORTAL"));
             exit;
         }
     }
