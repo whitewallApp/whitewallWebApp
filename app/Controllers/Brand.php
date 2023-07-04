@@ -231,10 +231,27 @@ class Brand extends BaseController
             $brandID = $brandModel->insert($brand);
             $brandModel->joinUser($brandID, $session->get("user_id"), true);
 
+            //create default category & collections
+            $colModel = new CollectionModel();
+            $catModel = new CategoryModel();
+            $category = [
+                "name" => "Default Category",
+                "brand_id" => $brandID
+            ];
+            $categoryID = $catModel->insert($category);
+
+            $collection = [
+                "name" => "Default Collection",
+                "brand_id" => $brandID,
+                "category_id" => $categoryID
+            ];
+            $colModel->insert($collection);
+
             if ($import){
                 $userIds = $userModel->getCollumn("id", $session->get("brand_id"));
                 foreach ($userIds as $userId) {
                     $userId = $userId["id"];
+                    $userModel->setPermissions($userId, $brandID, $userModel->getPermissions($userId, $session->get("brand_id")));
                     if ($userId != $session->get("user_id")){
                         $brandModel->joinUser($brandID, $userId, $userModel->getAdmin($userId, $session->get("brand_id")));
                     }
@@ -414,7 +431,8 @@ class Brand extends BaseController
                 }
 
                 if ($success) {
-                    $session->set("brand_id", $name);
+                    $id = $brandModel->getBrand($name, "name", ["id"]);
+                    $session->set("brand_id", $id);
                     $session->set('is_admin', $userModel->getAdmin($session->get("user_id"), $session->get("brand_id")));
                     return json_encode(["success" => true]);
                 }

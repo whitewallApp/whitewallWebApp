@@ -29,9 +29,9 @@ class Add implements FilterInterface
         if (!$session->get("is_admin")) {
             $userModel = new UserModel();
 
-            $canEdit = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), permissions: ["p_edit"]);
+            $canAdd = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), permissions: ["p_add"]);
 
-            if (!$canEdit[$page]["p_add"]) {
+            if (!$canAdd[$page]["p_add"]) {
                 http_response_code(403);
                 die(json_encode(["success" => false, "message" => "You don't have permissions to add"]));
             }

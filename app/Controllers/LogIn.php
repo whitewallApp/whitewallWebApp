@@ -10,6 +10,7 @@ class LogIn extends BaseController
 {
     public function index()
     {
+
         $migrate = \Config\Services::migrations();
 
         try {
@@ -17,6 +18,11 @@ class LogIn extends BaseController
         } catch (\Throwable $e) {
             echo var_dump($e->getMessage());
         }
+
+        // $session = session();
+        // if ($session->get("logIn")){
+        //     return redirect()->to("/dashboard");
+        // }
 
         return view('Login') . Navigation::renderFooter();
     }

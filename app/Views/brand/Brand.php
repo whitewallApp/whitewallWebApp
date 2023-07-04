@@ -19,10 +19,12 @@
             </ul>
         </div>
     <?php endforeach ?>
-    <div class="card text-center" style="cursor: pointer;" data-mdb-toggle="modal" data-mdb-target="#addbrandModel">
-        <div class="new-brand"><i style="font-size: 250px; color: white;" width="16" height="16" class="bi bi-plus"></i></div>
-        <h1>New Brand</h1>
-    </div>
+    <?php if ($admin) : ?>
+        <div class="card text-center" style="cursor: pointer;" data-mdb-toggle="modal" data-mdb-target="#addbrandModel">
+            <div class="new-brand"><i style="font-size: 250px; color: white;" width="16" height="16" class="bi bi-plus"></i></div>
+            <h1>New Brand</h1>
+        </div>
+    <?php endif ?>
 </div>
 
 <!-- Edit Brand Modal -->
