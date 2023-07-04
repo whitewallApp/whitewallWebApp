@@ -79,6 +79,7 @@ $routes->post('/notifications/delete', 'Notification::delete', ["filter" => "rem
 $routes->post('/menu/delete', 'Menu::delete', ["filter" => "remove:menu"]);
 $routes->post('/brand/delete', 'Brand::removeBrand', ["filter" => "remove:branding,admin"]);
 $routes->post('/brand/users/delete', 'Brand::removeUser', ["filter" => "remove:branding,admin"]);
+$routes->post('/brand/users/unlink', 'Brand::unlinkUser', ["filter" => "remove:branding,admin"]);
 
 //image upload
 $routes->get("/images/upload","Image::uploadView", ["filter" => "add:images"]);
@@ -96,6 +97,7 @@ $routes->post('/brand/users/update', 'Brand::updateUsers', ["filter" => "edit:br
 $routes->post('/brand/add', 'Brand::addBrand', ["filter" => "add:brand,admin"]);
 $routes->post('/brand/branding/update', 'Brand::updateBrand', ["filter" => "edit:branding"]);
 $routes->post('/stripe', "Account::updateBilling");
+$routes->post('/brand/users/link', 'Brand::linkUser', ["filter" => "add:branding,admin"]);
 
 /*
  * --------------------------------------------------------------------

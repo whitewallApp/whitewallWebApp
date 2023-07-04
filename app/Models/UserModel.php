@@ -12,16 +12,16 @@ class UserModel extends Model
     protected $table = "user";
     protected $allowedFields = ["name", "password", "email", "phone", "icon", "status", "default_brand", "google_id", "account_id"];
 
-    public function getCollumn($column, $brandId, $getBy = []): mixed
+    public function getCollumn($column, $brandId, $filterBy = [], $getBy="brand_id"): mixed
     {
         $builder = $this->db->table('user');
         $builder->join("branduser", "branduser.user_id = user.id", "inner");
-        $builder->select($column)->where("brand_id", $brandId);
+        $builder->select($column)->where($getBy, $brandId);
 
-        if (count($getBy) > 0) {
-            $keys = array_keys($getBy);
+        if (count($filterBy) > 0) {
+            $keys = array_keys($filterBy);
             foreach ($keys as $key) {
-                $builder->where($key, $getBy[$key]);
+                $builder->where($key, $filterBy[$key]);
             }
         }
 

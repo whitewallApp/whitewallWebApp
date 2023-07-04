@@ -96,6 +96,7 @@ class Brand extends BaseController
         $userModel = new UserModel();
         $brandModel = new BrandModel();
         $users = [];
+        $accountUsers = [];
 
         $brandIds = $brandModel->getCollumn("id", $session->get("user_id"));
 
@@ -105,14 +106,25 @@ class Brand extends BaseController
                 $userIds = $userModel->getCollumn("id", $brandId);
 
                 foreach($userIds as $id){
-                    $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status"]);
+                    $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status", "icon"]);
                     array_push($users, $user);
                 }
+
+                //get the account users
+                $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+                $accountUserIds = $userModel->getCollumn("id", $accountId, getBy: "account_id");
+                foreach($accountUserIds as $dbuserId){
+                    if ($dbuserId["id"] != $session->get("user_id")){
+                        array_push($accountUsers, $userModel->getUser($dbuserId["id"], filter: ["id", "name", "icon"]));
+                    }
+                }
             }
+
         }
 
         $data = [
-            "users" => $users
+            "users" => $users,
+            "accountUsers" => $accountUsers
         ];
 
         return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
@@ -124,6 +136,7 @@ class Brand extends BaseController
         if ($session->get("logIn") && $session->get("is_admin")){
             $request = \Config\Services::request();
             $userModel = new UserModel();
+            $brandModel = new BrandModel();
 
             $id = esc($request->getGet("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
@@ -134,6 +147,7 @@ class Brand extends BaseController
 
             $data = [
                 "user" => $user,
+                "numBrands" => count($brandModel->getCollumn("id", $id)),
                 "permissions" => $permissions
             ];
 
@@ -407,6 +421,58 @@ class Brand extends BaseController
             return json_encode($e->getMessage());
             exit;
         }
+    }
+
+    public function unlinkUser(){
+        $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
+        
+        if ($id != null){
+            $userModel = new UserModel();
+            $brandModel = new BrandModel();
+            $session = session();
+
+            $brandId = $session->get("brand_id");
+            $userIds = $userModel->getCollumn("id", $brandId);
+
+            if (count($brandModel->getCollumn("id", $id)) > 1){
+                foreach($userIds as $userID){
+                    $userID = $userID["id"];
+
+                    if ($userID == $id){
+                        $brandModel->unlinkUser($userID, $brandId);
+                    }
+                }
+            }
+        }
+
+        return json_encode(["success" => true]);
+    }
+
+    public function linkUser(){
+        $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
+
+        if ($id != null) {
+            $userModel = new UserModel();
+            $brandModel = new BrandModel();
+            $session = session();
+
+            $brandId = $session->get("brand_id");
+
+            //get the account users
+            $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+            $userIds = $userModel->getCollumn("id", $accountId, getBy: "account_id");
+
+            foreach ($userIds as $userID) {
+                $userID = $userID["id"];
+
+                if ($userID == $id) {
+                    $brandModel->joinUser($brandId, $userID);
+                    $userModel->setPermissions($userID, $brandId);
+                }
+            }
+        }
+
+        return json_encode(["success" => true]);
     }
 
     public function setBrand() //Post
