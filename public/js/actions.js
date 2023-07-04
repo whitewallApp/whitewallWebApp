@@ -67,6 +67,13 @@ function changeBrnd(e){
     })
 }
 
+$("#InputPassword").on('keyup', function (e) {
+    key = e.originalEvent.key;
+    if (key == "Enter"){
+        login();
+    }
+});
+
 function login(e) {
     $.post("/", {
         email: $("#InputEmail").val(),
