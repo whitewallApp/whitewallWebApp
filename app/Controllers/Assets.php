@@ -99,9 +99,13 @@ class Assets extends BaseController {
      * @access    public
      * @param    string    file path
      */
-    function branding($file)
+    function branding($brandID, $file)
     {
-        if (file_exists($this->brandPath . $file)) {
+        $userModel = new UserModel();
+        $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
+        $path = getenv("BASE_PATH") . $accountId . "/" . $brandID . "/branding/";
+
+        if (file_exists($path . $file)) {
 
             $matches = [];
             preg_match("/\.(.*)/", $file, $matches);
@@ -111,7 +115,7 @@ class Assets extends BaseController {
             // echo $type;
 
             header("Content-Type: " . "image/" . $type);
-            readfile($this->brandPath . $file);
+            readfile($path . $file);
             exit;
         } else {
             return view("errors/html/error_404", ["message" => "sorry we can't find that image"]);
@@ -473,9 +477,16 @@ class Assets extends BaseController {
      * @param string $type | the type of image (png, jpg, bmp, webp)
      * @return string | the unique file name to save in database
      */
-    public function saveBrandImg($tmpPath, $type, $name)
-    {
-        $file = $this->brandPath . $name . "." . $type;
+    public function saveBrandImg($tmpPath, $type, $name, $brandID=-1)
+    {   
+        $file=null;
+        if ($brandID == -1){
+            $file = $this->brandPath . $name . "." . $type;
+        }else{
+            $userModel = new UserModel();
+            $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
+            $file = getenv("BASE_PATH") . $accountId . "/" . $brandID . "/branding/" . $name . "." . $type;
+        }
 
         if (move_uploaded_file($tmpPath, $file)) {
             return $name . "." . $type;
@@ -492,11 +503,18 @@ class Assets extends BaseController {
      * @param string $oldPath | the old name/path of the image
      * @return string name of the new file
      */
-    public function updateBrandImg($tmpPath, $type, $name)
-    {
-        unlink($this->brandPath . $name);
+    public function updateBrandImg($tmpPath, $type, $name, $brandID=-1)
+    {   
+        if ($brandID == -1){
+            unlink($this->brandPath . $name);
+        }else{
+            $userModel = new UserModel();
+            $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
+            $file = getenv("BASE_PATH") . $accountId . "/" . $brandID . "/branding/" . $name;
+            unlink($file);
+        }
         $name = explode(".", $name)[0];
-        return $this->saveBrandImg($tmpPath, $type, $name);
+        return $this->saveBrandImg($tmpPath, $type, $name, $brandID);
     }
 
     /**

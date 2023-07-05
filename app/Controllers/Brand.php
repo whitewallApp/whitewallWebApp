@@ -9,7 +9,6 @@ use App\Models\ImageModel;
 use App\Models\MenuModel;
 use App\Models\SubscriptionModel;
 use App\Models\UserModel;
-use Google\Service\CloudAsset\Asset;
 
 class Brand extends BaseController
 {
@@ -221,6 +220,17 @@ class Brand extends BaseController
             $name = $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS);
             $import = $this->request->getPost("import", FILTER_VALIDATE_BOOL);
 
+
+            $accountID = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+
+            $brand = [
+                "name" => $name,
+                "account_id" => $accountID,
+                "apikey" => bin2hex(random_bytes(32))
+            ];
+
+            $brandID = $brandModel->insert($brand);
+
             $filePath = "";
             if (count($this->request->getFiles()) > 0) {
                 $file = $this->request->getFile("logo");
@@ -230,21 +240,12 @@ class Brand extends BaseController
                 }
 
                 $assets = new Assets();
-                $name = $assets->saveBrandImg($file->getTempName(), $file->guessExtension(), "logo");
+                $name = $assets->saveBrandImg($file->getTempName(), $file->guessExtension(), "logo", $brandID);
 
-                $filePath = "/assets/branding/" . $name;
+                $filePath = "/assets/branding/" . $brandID . "/" . $name;
+                $brandModel->update($brandID, ["logo" => $filePath]);
             }
 
-            $accountID = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
-
-            $brand = [
-                "name" => $name,
-                "logo" => $filePath,
-                "account_id" => $accountID,
-                "apikey" => bin2hex(random_bytes(32))
-            ];
-
-            $brandID = $brandModel->insert($brand);
             $brandModel->joinUser($brandID, $session->get("user_id"), true);
 
             //create default category & collections
@@ -331,15 +332,15 @@ class Brand extends BaseController
 
                 //if we seting it for the first time else delete old file
                 if ($brand[$imageType] == "" || preg_match("/^http/", $brand[$imageType]) == "1"){
-                    $name = $assets->saveBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], $imageType);
+                    $name = $assets->saveBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], $imageType, $getbrandID);
                     $updatedBrand = [
-                        $imageType => "/assets/branding/" . $name
+                        $imageType => "/assets/branding/" . $getbrandID . "/" . $name
                     ];
                     $brandModel->update($brand["id"], $updatedBrand);
                 }else{
-                    $name = $assets->updateBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], explode("/", $brand[$imageType])[3]);
+                    $name = $assets->updateBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], explode("/", $brand[$imageType])[3], $getbrandID);
                     $updatedBrand = [
-                        $imageType => "/assets/branding/" . $name
+                        $imageType => "/assets/branding/" . $getbrandID . "/" . $name
                     ];
                     $brandModel->update($brand["id"], $updatedBrand);
                 }

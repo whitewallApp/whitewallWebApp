@@ -57,7 +57,7 @@ $routes->get('/assets/collection/(:any)', 'Assets::colImages/$1');
 $routes->get('/assets/category/(:any)', 'Assets::catImages/$1');
 $routes->get('/assets/user/(:any)', 'Assets::user/$1');
 $routes->get('/assets/menu/(:any)', 'Assets::menu/$1');
-$routes->get('/assets/branding/(:any)', 'Assets::branding/$1');
+$routes->get('/assets/branding/(:num)/(:any)', 'Assets::branding/$1/$2');
 
 //Get URLs
 $routes->post('/images','Image::post', ["filter" => "view:images"]);
