@@ -23,6 +23,10 @@
       <label for="desc">Description</label>
       <input type="text" class="form-control" id="desc" placeholder="This is a cool group of Collections">
     </div>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="active" />
+      <label class="form-check-label" for="active">Active</label>
+    </div>
     <div class="form-group">
       <label for="link">Link to Category</label>
       <input type="text" class="form-control" id="link" placeholder="https://yoursite.com/category">
