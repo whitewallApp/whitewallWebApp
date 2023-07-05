@@ -99,6 +99,9 @@ $routes->post('/brand/branding/update', 'Brand::updateBrand', ["filter" => "edit
 $routes->post('/stripe', "Account::updateBilling");
 $routes->post('/brand/users/link', 'Brand::linkUser', ["filter" => "add:branding,admin"]);
 
+//API routes
+$routes->match(['get', 'post'], '/requests/v1/data', 'Request::data');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
