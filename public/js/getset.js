@@ -180,6 +180,7 @@ function getColl(e) {
             nameTextBox.val(collection.name);
             descTextBox.val(collection.description);
             linkTextBox.val(collection.link);
+            $("#active").prop("checked", collection.active);
 
             $("#collectionData").attr("collection-id", collection.id);
             $("#remove").attr("remove-id", collection.id)
@@ -212,6 +213,7 @@ $("#collectionData").submit(function (e) {
     formData.append("name", $("#collName").val())
     formData.append("description", $("#collDesc").val());
     formData.append("link", $("#collLink").val())
+    formData.append("active", $("#active").prop("checked"));
 
 
     if ($("#collfile")[0].files.length > 0) {
