@@ -8,7 +8,7 @@
             <ul class="list-group list-group-flush">
                 <?php if ($admin) : ?>
                     <li class="list-group-item"><a href="/brand/users/<?= $brand["id"] ?>" class="badge badge-primary">Manage Users<i class="bi bi-people ml-1"></i></a></li>
-                    <li class="list-group-item"><a href="" class="badge badge-info" data-mdb-toggle="modal" data-mdb-target="#brandModel">Edit Brand</a></li>
+                    <li class="list-group-item"><a href="" class="badge badge-info" brand-edit-id="<?= $brand["id"] ?>" data-mdb-toggle="modal" data-mdb-target="#brandModel">Edit Brand</a></li>
                 <?php endif ?>
                 <?php if ($brand["id"] != $default) : ?>
                     <?php if ($admin) : ?>

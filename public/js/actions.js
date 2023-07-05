@@ -220,6 +220,10 @@ $("[set-brand]").on("click", function(e){
     })
 })
 
+$("[brand-edit-id]").on("click", function(e){
+    $("#updateBrand").attr("brand-id", $(e.target).attr("brand-edit-id"));
+})
+
 $("#updateBrand").on("click", function(){
     formData = new FormData();
 
@@ -228,6 +232,7 @@ $("#updateBrand").on("click", function(){
     }
 
     formData.append("name", $("#brandName").val());
+    formData.append("id", $("#updateBrand").attr("brand-id"));
 
     $.ajax({
         url: "/brand/branding/update",

@@ -240,7 +240,8 @@ class Brand extends BaseController
             $brand = [
                 "name" => $name,
                 "logo" => $filePath,
-                "account_id" => $accountID
+                "account_id" => $accountID,
+                "apikey" => bin2hex(random_bytes(32))
             ];
 
             $brandID = $brandModel->insert($brand);
@@ -306,7 +307,22 @@ class Brand extends BaseController
                     throw new \RuntimeException("File Name Error");
                 }
 
-                $brand = $brandModel->getBrand($session->get("brand_id"), filter: ["id", "appIcon", "appLoading", "appHeading", "appBanner", "logo"], assoc: true);
+                $getbrandID = $session->get("brand_id");
+
+                if (!is_null($this->request->getPost("id"))){
+                    $id = $this->request->getPost("id", FILTER_VALIDATE_INT);
+
+                    $dbids = $brandModel->getCollumn("id", $session->get("user_id"));
+                    //if they can edit that brand
+                    foreach ($dbids as $dbid) {
+                        $dbid = $dbid["id"];
+                        if ($dbid == $id) {
+                            $getbrandID = $dbid;
+                        }
+                    }
+                }
+
+                $brand = $brandModel->getBrand($getbrandID, filter: ["id", "appIcon", "appLoading", "appHeading", "appBanner", "logo"], assoc: true);
 
                 if ($this->request->getPost("name") != null) {
                     $name = $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -341,7 +357,15 @@ class Brand extends BaseController
                 //update brandname if it comes in
                 if ($this->request->getPost("name") != null) {
                     $name = $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS);
-                    $brandModel->update($brandId, ["name" => $name]);
+                    $id = $this->request->getPost("id", FILTER_VALIDATE_INT);
+                    $dbids = $brandModel->getCollumn("id", $session->get("user_id"));
+                    //if they can edit that brand
+                    foreach ($dbids as $dbid) {
+                        $dbid = $dbid["id"];
+                        if ($dbid == $id){
+                            $brandModel->update($dbid, ["name" => $name]);
+                        }
+                    }
                 }
 
                 if ($post["collectionLink"] != ""){
