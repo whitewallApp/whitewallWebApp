@@ -398,5 +398,5 @@
         </div>
     </div>
 </div>
-
+<script>currentUser = <?= $session->get("user_id") ?></script>
 <script src="/js/users.js"></script>

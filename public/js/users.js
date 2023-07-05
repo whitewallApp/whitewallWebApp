@@ -26,8 +26,14 @@ function getUser(e) {
 
             numBrands = JSON.parse(data).numBrands;
 
-            if (numBrands > 1){
-                $("#unlinkUser").show();
+            if (currentUser == user.id){
+                $("#unlinkUser").hide();
+                $("#removeUser").hide();
+            }else{
+                if (numBrands > 1){
+                    $("#unlinkUser").show();
+                }
+                $("#removeUser").show();
             }
 
             $("#name").val(user.name);

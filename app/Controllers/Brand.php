@@ -124,7 +124,8 @@ class Brand extends BaseController
 
         $data = [
             "users" => $users,
-            "accountUsers" => $accountUsers
+            "accountUsers" => $accountUsers,
+            "session" => $session
         ];
 
         return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
@@ -140,7 +141,7 @@ class Brand extends BaseController
 
             $id = esc($request->getGet("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-            $user = $userModel->getUser($id, filter: ["name", "email", "status", "phone"]);
+            $user = $userModel->getUser($id, filter: ["name", "email", "status", "phone", "id"]);
             $permissions = $userModel->getPermissions($id, $session->get("brand_id"));
 
             $permissions["admin"] = $userModel->getAdmin($id, $session->get("brand_id"));
@@ -413,9 +414,11 @@ class Brand extends BaseController
         $assets = new Assets();
 
         try {
-            $assets->removeUser($userID);
-
-            $userModel->delete($userID);
+            $session = session();
+            if ($userID != $session->get("user_id")) {
+                $assets->removeUser($userID);
+                $userModel->delete($userID);
+            }
         } catch (\Throwable $e) {
             http_response_code(403);
             return json_encode($e->getMessage());
@@ -434,12 +437,14 @@ class Brand extends BaseController
             $brandId = $session->get("brand_id");
             $userIds = $userModel->getCollumn("id", $brandId);
 
-            if (count($brandModel->getCollumn("id", $id)) > 1){
-                foreach($userIds as $userID){
-                    $userID = $userID["id"];
+            if ($id != $session->get("user_id")){
+                if (count($brandModel->getCollumn("id", $id)) > 1){
+                    foreach($userIds as $userID){
+                        $userID = $userID["id"];
 
-                    if ($userID == $id){
-                        $brandModel->unlinkUser($userID, $brandId);
+                        if ($userID == $id){
+                            $brandModel->unlinkUser($userID, $brandId);
+                        }
                     }
                 }
             }
