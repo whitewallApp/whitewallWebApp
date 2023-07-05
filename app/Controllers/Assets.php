@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 use App\Models\BrandModel;
 use App\Models\UserModel;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 class Assets extends BaseController {
@@ -22,14 +25,38 @@ class Assets extends BaseController {
      private $session;
      private $imgTmbPath;
     private $brandPath;
-    
-    public function __construct(){
+
+    public function initController(
+        RequestInterface $request,
+        ResponseInterface $response,
+        LoggerInterface $logger
+    ) {
+        parent::initController($request, $response, $logger);
         $this->session = session();
 
         $userModel = new UserModel();
         $brandModel = new BrandModel();
-        $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
-        $brandId = $this->session->get("brand_id");
+        
+        if ($this->session->get("logIn")){
+            $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
+            $brandId = $this->session->get("brand_id");
+        }else{
+            $apikey = $this->request->getGetPost("apikey");
+
+            if (is_null($apikey) && array_key_exists("x-api-key", getallheaders())) {
+                $apikey = getallheaders()["x-api-key"];
+            }
+
+            if (!is_null($apikey)) {
+                $brand = $brandModel->getBrand($apikey, "apikey", ["id", "account_id"], true);
+                $accountId = $brand["account_id"];
+                $brandId = $brand["id"];
+            }else{
+                http_response_code(400);
+                echo json_encode(["success" => false, "message" => "No valid API key found"]);
+                exit;
+            }
+        }
 
         $this->imgPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/";
         $this->imgTmbPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/thumbnails/";
@@ -38,8 +65,6 @@ class Assets extends BaseController {
         $this->collPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/collections/";
         $this->menuPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/menu/";
         $this->brandPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/branding/";
-
-        // echo var_dump("hello");
 
         if (getenv("BASE_PATH")){
             if (!file_exists(getenv("BASE_PATH") . $accountId . "/" . $brandId)){

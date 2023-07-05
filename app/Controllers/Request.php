@@ -59,17 +59,9 @@ class Request extends BaseController
         foreach ($catIds as $catId){
             $category = $this->categoryModel->getCategory($catId);
             if ($category["active"]){
-                $icon = $category["iconPath"];
-                if (!is_null($icon)){
-                    if (preg_match("/^http/", $icon) == "0"){
-                        $icon = "/requests/v1/category/" . explode("/", $category["iconPath"])[3];
-                    }
-                }else{
-                    $icon = "";
-                }
 
                 $data[$category["name"]] = [
-                    "image" => $icon,
+                    "image" => $category["iconPath"],
                     "link" => $category["link"],
                     "collections" => []
                 ];
@@ -80,17 +72,8 @@ class Request extends BaseController
                     $colId = $colId["id"];
                     $collection = $this->collectionModel->getCollection($colId);
                     if ($collection["active"]){
-                        $icon = $collection["iconPath"];
-                        if (!is_null($icon)) {
-                            if (preg_match("/^http/", $icon) == "0") {
-                                $icon = "/requests/v1/collection/" . explode("/", $collection["iconPath"])[3];
-                            }
-                        } else {
-                            $icon = "";
-                        }
-
                         $data[$category["name"]]["collections"][$collection["name"]] = [
-                            "image" => $icon,
+                            "image" => $collection["iconPath"],
                             "link" => $collection["link"],
                             "images" => []
                         ];
@@ -100,29 +83,9 @@ class Request extends BaseController
                             $imageid = $imageid["id"];
                             $image = $this->imageModel->getImage($imageid)[0];
 
-                            $thumbnail = $image["thumbnail"];
-                            $icon = $image["imagePath"];
-
-                            if (!is_null($thumbnail)) {
-                                if (preg_match("/^http/", $thumbnail) == "0") {
-                                    $thumbnail = "/requests/v1/image/thumbnail/" . explode("/", $image["thumbnail"])[3];
-                                }
-                            } else {
-                                $thumbnail = "";
-                            }
-
-                            if (!is_null($icon)) {
-                                if (preg_match("/^http/", $icon) == "0") {
-                                    $icon = "/requests/v1/image/" . explode("/", $image["imagePath"])[3];
-                                }
-                            } else {
-                                $icon = "";
-                            }
-
-
                             $data[$category["name"]]["collections"][$collection["name"]]["images"][$image["name"]]= [
-                                "thumbnail" => $thumbnail,
-                                "imagePath" => $icon,
+                                "thumbnail" => $image["thumbnail"],
+                                "imagePath" => $image["imagePath"],
                                 "link" => $image["link"]
                             ];
                         }
@@ -132,27 +95,5 @@ class Request extends BaseController
         }
 
         echo json_encode($data);
-    }
-
-    //branding
-    public function brandingImages($type){
-
-    }
-
-    public function branding(){
-
-    }
-
-    //images
-    public function images($image, $thumbnail){
-
-    }
-
-    public function collections($image, $thumbnail){
-
-    }
-
-    public function categories($image, $thumbnail){
-
     }
 }
