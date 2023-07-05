@@ -32,7 +32,7 @@
                 </a>
             </div>
             <div class="col-3">
-                <p style="cursor: pointer;" data-mdb-toggle="modal" data-mdb-target="#resetModal"><span class="badge badge-primary">Forgot Username or Password</span></p>
+                <p style="cursor: pointer;" data-mdb-toggle="modal" data-mdb-target="#resetModal"><span class="badge badge-primary">Forgot Password</span></p>
             </div>
         </div>
     </div>
