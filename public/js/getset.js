@@ -71,7 +71,7 @@ function getImg(e) {
             collectionSelectBox.empty();
 
             image.collectionNames.forEach(element => {
-                collectionSelectBox.append('<option value="' + element + '">' + element + "</option>")
+                collectionSelectBox.append('<option value="' + element.name + '">' + element.name + "</option>")
             });
 
             $('#select>option[value="' + image.collection_id + '"]').prop("selected", true);
