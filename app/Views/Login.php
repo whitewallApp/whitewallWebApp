@@ -16,6 +16,9 @@
             </div>
         </form>
         <button class="btn btn-primary" onclick="login();">Submit</button>
+        <div class="alert alert-danger mt-3" role="alert" style="display: none;">
+            Your Email or Password was Incorrect
+        </div>
         <div class="row p-2">
             <div class="col-3">
                 <div id="g_id_onload" data-client_id="437362021062-fserfra8i9g6kicf00jvefvhbpbf845l.apps.googleusercontent.com" data-context="signin" data-ux_mode="popup" data-callback="login" data-auto_prompt="false">
@@ -24,7 +27,9 @@
                 </div>
             </div>
             <div class="col-6 text-center">
-                <a href="/account/create"><p style="cursor: pointer;"><span class="badge badge-primary">Create Account</span></p></a>
+                <a href="/account/create">
+                    <p style="cursor: pointer;"><span class="badge badge-primary">Create Account</span></p>
+                </a>
             </div>
             <div class="col-3">
                 <p style="cursor: pointer;" data-mdb-toggle="modal" data-mdb-target="#resetModal"><span class="badge badge-primary">Forgot Username or Password</span></p>

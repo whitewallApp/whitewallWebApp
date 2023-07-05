@@ -19,10 +19,10 @@ class LogIn extends BaseController
             echo var_dump($e->getMessage());
         }
 
-        // $session = session();
-        // if ($session->get("logIn")){
-        //     return redirect()->to("/dashboard");
-        // }
+        $session = session();
+        if ($session->get("logIn")){
+            return redirect()->to("/dashboard");
+        }
 
         return view('Login') . Navigation::renderFooter();
     }

@@ -91,6 +91,7 @@ function login(e) {
                 $(location).attr('href', url);
             }
         }else{
+            $(".alert-danger").show();
         }
     })
 }
