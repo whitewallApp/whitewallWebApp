@@ -32,14 +32,15 @@ class CollectionModel extends Model
         return $ids;
     }
 
-    public function getCollumn($column, $brandID, $getBy=[]){
+    public function getCollumn($column, $brandId, $filterBy = [], $getBy = "brand_id"): mixed
+    {
         $builder = $this->db->table('collection');
-        $builder->select($column)->where("brand_id", $brandID);
+        $builder->select($column)->where($getBy, $brandId);
 
-        if (count($getBy) > 0){
-            $keys = array_keys($getBy);
+        if (count($filterBy) > 0) {
+            $keys = array_keys($filterBy);
             foreach ($keys as $key) {
-                $builder->where($key, $getBy[$key]);
+                $builder->where($key, $filterBy[$key]);
             }
         }
 
@@ -47,8 +48,8 @@ class CollectionModel extends Model
 
         $returnArray = [];
 
-        foreach($return as $thing){
-            array_push($returnArray, $thing[$column]);
+        foreach ($return as $thing) {
+            array_push($returnArray, $thing);
         }
 
         return $returnArray;

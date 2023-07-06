@@ -71,7 +71,7 @@ function getImg(e) {
             collectionSelectBox.empty();
 
             image.collectionNames.forEach(element => {
-                collectionSelectBox.append('<option value="' + element + '">' + element + "</option>")
+                collectionSelectBox.append('<option value="' + element.name + '">' + element.name + "</option>")
             });
 
             $('#select>option[value="' + image.collection_id + '"]').prop("selected", true);
@@ -180,6 +180,7 @@ function getColl(e) {
             nameTextBox.val(collection.name);
             descTextBox.val(collection.description);
             linkTextBox.val(collection.link);
+            $("#active").prop("checked", Boolean(Number(collection.active)));
 
             $("#collectionData").attr("collection-id", collection.id);
             $("#remove").attr("remove-id", collection.id)
@@ -212,6 +213,7 @@ $("#collectionData").submit(function (e) {
     formData.append("name", $("#collName").val())
     formData.append("description", $("#collDesc").val());
     formData.append("link", $("#collLink").val())
+    formData.append("active", $("#active").prop("checked"));
 
 
     if ($("#collfile")[0].files.length > 0) {
@@ -280,6 +282,7 @@ function getCat(e) {
             $("#link").val(category.link);
             $("#name").val(category.name);
             $("#desc").val(category.description);
+            $("#active").prop("checked", Boolean(Number(category.active)));
 
             catname = category.iconPath.split("category/")[1];
             if (catname == null) {
@@ -304,6 +307,7 @@ $("#categoryData").submit(function (e) {
     formData.append("name", $("#name").val())
     formData.append("description", $("#desc").val());
     formData.append("link", $("#link").val())
+    formData.append("active", $("#active").prop("checked"));
 
 
     if ($("#file")[0].files.length > 0) {

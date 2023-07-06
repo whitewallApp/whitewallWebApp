@@ -24,15 +24,24 @@ function getUser(e) {
             user = JSON.parse(data).user
             permissions = JSON.parse(data).permissions
 
+            numBrands = JSON.parse(data).numBrands;
+
+            if (currentUser == user.id){
+                $("#unlinkUser").hide();
+                $("#removeUser").hide();
+            }else{
+                if (numBrands > 1){
+                    $("#unlinkUser").show();
+                }
+                $("#removeUser").show();
+            }
+
             $("#name").val(user.name);
             $("#phone").val(user.phone);
             $("#email").val(user.email);
             $("#admin").prop("checked", Boolean(Number(permissions.admin)));
             $("#active").prop("checked", Boolean(Number(user.status)));
-
-            if (Boolean(Number(permissions.admin))){
-                $("[name$='[]']").prop("disabled", true);
-            }
+            $("[name$='[]']").prop("disabled", Boolean(Number(permissions.admin)));
 
             //set permissons
             let viewamount = 0;
@@ -71,9 +80,33 @@ function getUser(e) {
                 $("[name='permissions[all][remove][]']").prop("checked", true);
             }
 
-            console.log(viewamount);
         } else {
             alert(JSON.parse(data).msg)
+        }
+    })
+}
+
+$("#unlinkUser").on("click", function(){
+    if (confirm("Are you sure you want to unlink the user from the Brand")) {
+        $.post("/brand/users/unlink", {
+            id: $("#permissionsForm").prop("user-id")
+        }, function (data, status) {
+            response = JSON.parse(data);
+            if (response.success){
+                window.location.reload();
+            }
+        })
+    }
+})
+
+function linkUser(e){
+    userID = $(e).attr("user-id");
+    $.post("/brand/users/link", {
+        id: userID
+    }, function (data, status) {
+        response = JSON.parse(data);
+        if (response.success) {
+            window.location.reload();
         }
     })
 }

@@ -12,16 +12,16 @@ class UserModel extends Model
     protected $table = "user";
     protected $allowedFields = ["name", "password", "email", "phone", "icon", "status", "default_brand", "google_id", "account_id"];
 
-    public function getCollumn($column, $brandId, $getBy = []): mixed
+    public function getCollumn($column, $brandId, $filterBy = [], $getBy="brand_id"): mixed
     {
         $builder = $this->db->table('user');
         $builder->join("branduser", "branduser.user_id = user.id", "inner");
-        $builder->select($column)->where("brand_id", $brandId);
+        $builder->select($column)->where($getBy, $brandId);
 
-        if (count($getBy) > 0) {
-            $keys = array_keys($getBy);
+        if (count($filterBy) > 0) {
+            $keys = array_keys($filterBy);
             foreach ($keys as $key) {
-                $builder->where($key, $getBy[$key]);
+                $builder->where($key, $filterBy[$key]);
             }
         }
 
@@ -258,6 +258,171 @@ class UserModel extends Model
         }
         $builder = $this->db->table('permissions');
         $builder->insertBatch($data);
+    }
+    /**
+     * Set Batch permissions for a user
+     *
+     * @param int $userID
+     * @param int $brandID
+     * @param array $permissions
+     * @return void
+     */
+    public function setPermissions($userID, $brandID, $permissions = []){
+        $data = [];
+        //update permissions table
+        if (count($permissions) > 0) {
+            $data = [
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "categories",
+                    "p_view" => isset($permissions["categories"]["view"]),
+                    "p_add" => isset($permissions["categories"]["add"]),
+                    "p_edit" => isset($permissions["categories"]["edit"]),
+                    "p_remove" => isset($permissions["categories"]["remove"]),
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "collections",
+                    "p_view" => isset($permissions["collections"]["view"]),
+                    "p_add" => isset($permissions["collections"]["add"]),
+                    "p_edit" => isset($permissions["collections"]["edit"]),
+                    "p_remove" => isset($permissions["collections"]["remove"]),
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "images",
+                    "p_view" => isset($permissions["images"]["view"]),
+                    "p_add" => isset($permissions["images"]["add"]),
+                    "p_edit" => isset($permissions["images"]["edit"]),
+                    "p_remove" => isset($permissions["images"]["remove"]),
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "notifications",
+                    "p_view" => isset($permissions["notifications"]["view"]),
+                    "p_add" => isset($permissions["notifications"]["add"]),
+                    "p_edit" => isset($permissions["notifications"]["edit"]),
+                    "p_remove" => isset($permissions["notifications"]["remove"]),
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "menu",
+                    "p_view" => isset($permissions["menu"]["view"]),
+                    "p_add" => isset($permissions["menu"]["add"]),
+                    "p_edit" => isset($permissions["menu"]["edit"]),
+                    "p_remove" => isset($permissions["menu"]["remove"]),
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "branding",
+                    "p_view" => isset($permissions["branding"]["view"]),
+                    "p_add" => isset($permissions["branding"]["add"]),
+                    "p_edit" => isset($permissions["branding"]["edit"]),
+                    "p_remove" => isset($permissions["branding"]["remove"]),
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "brands",
+                    "p_view" => isset($permissions["brands"]["view"]),
+                    "p_add" => isset($permissions["brands"]["add"]),
+                    "p_edit" => isset($permissions["brands"]["edit"]),
+                    "p_remove" => isset($permissions["brands"]["remove"]),
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "builds",
+                    "p_view" => isset($permissions["builds"]["view"]),
+                    "p_add" => isset($permissions["builds"]["add"]),
+                    "p_edit" => isset($permissions["builds"]["edit"]),
+                    "p_remove" => isset($permissions["builds"]["remove"]),
+                ]
+            ];
+        } else {
+            $data = [
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "categories",
+                    "p_view" =>  true,
+                    "p_add" => true,
+                    "p_edit" =>  true,
+                    "p_remove" => true,
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "collections",
+                    "p_view" => true,
+                    "p_add" =>  true,
+                    "p_edit" => true,
+                    "p_remove" => true,
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "images",
+                    "p_view" => true,
+                    "p_add" => true,
+                    "p_edit" => true,
+                    "p_remove" => true,
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "notifications",
+                    "p_view" => true,
+                    "p_add" => true,
+                    "p_edit" => true,
+                    "p_remove" => true,
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "menu",
+                    "p_view" => true,
+                    "p_add" => true,
+                    "p_edit" => true,
+                    "p_remove" => true,
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "branding",
+                    "p_view" => true,
+                    "p_add" => true,
+                    "p_edit" => true,
+                    "p_remove" => true,
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "brands",
+                    "p_view" => true,
+                    "p_add" => true,
+                    "p_edit" => true,
+                    "p_remove" => true,
+                ],
+                [
+                    "user_id" => $userID,
+                    "brand_id" => $brandID,
+                    "area" => "builds",
+                    "p_view" => true,
+                    "p_add" => true,
+                    "p_edit" => true,
+                    "p_remove" => true,
+                ]
+            ];
+        }
+        $builder = $this->db->table('permissions');
+        $builder->upsertBatch($data);
     }
 
     public function getAdmin($userId, $brandId){

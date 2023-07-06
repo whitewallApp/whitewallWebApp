@@ -7,6 +7,8 @@ use App\Models\CollectionModel;
 use App\Models\CategoryModel;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
+use App\Models\SubscriptionModel;
+use App\Models\UserModel;
 use RuntimeException;
 
 class Image extends BaseController
@@ -144,6 +146,14 @@ class Image extends BaseController
 
             if (isset($_POST["type"])) {
                 //file -> file
+
+                //check if they have reached the limit
+                $subModel = new SubscriptionModel();
+                $imageLimit = $subModel->getLimit($session->get("user_id"), "imageLimit");
+                if ($subModel->checkImageLimit($session->get("user_id"), $imageLimit)) {
+                    throw new RuntimeException("Image Limit Reached");
+                }
+
                 $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
                 $imageID = htmlspecialchars((string)$this->request->getPost("id"));
                 $type = explode("/", (string)$this->request->getPost("type"))[1];
@@ -205,6 +215,14 @@ class Image extends BaseController
                     }
                 } else {
                     //link -> file
+
+                    //check if they have reached the limit
+                    $subModel = new SubscriptionModel();
+                    $imageLimit = $subModel->getLimit($session->get("user_id"), "imageLimit");
+                    if ($subModel->checkImageLimit($session->get("user_id"), $imageLimit)){
+                        throw new RuntimeException("Image Limit Reached");
+                    }
+
                     $name = $assets->saveImage($tmpPath, $type);
 
                     $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -356,6 +374,13 @@ class Image extends BaseController
 
             // if its an image save the image to the server and database
             if ($type == "image") {
+                //check if they have reached the limit
+                $subModel = new SubscriptionModel();
+                $imageLimit = $subModel->getLimit($session->get("user_id"), "imageLimit");
+                if ($subModel->checkImageLimit($session->get("user_id"), $imageLimit)) {
+                    throw new RuntimeException("Image Limit Reached");
+                }
+                
                 //check for duplicates
                 $imageDescription = $imageModel->getCollumn("description", $session->get("brand_id"));
                 

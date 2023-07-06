@@ -57,7 +57,7 @@ $routes->get('/assets/collection/(:any)', 'Assets::colImages/$1');
 $routes->get('/assets/category/(:any)', 'Assets::catImages/$1');
 $routes->get('/assets/user/(:any)', 'Assets::user/$1');
 $routes->get('/assets/menu/(:any)', 'Assets::menu/$1');
-$routes->get('/assets/branding/(:any)', 'Assets::branding/$1');
+$routes->get('/assets/branding/(:num)/(:segment)', 'Assets::branding/$1/$2');
 
 //Get URLs
 $routes->post('/images','Image::post', ["filter" => "view:images"]);
@@ -79,6 +79,7 @@ $routes->post('/notifications/delete', 'Notification::delete', ["filter" => "rem
 $routes->post('/menu/delete', 'Menu::delete', ["filter" => "remove:menu"]);
 $routes->post('/brand/delete', 'Brand::removeBrand', ["filter" => "remove:branding,admin"]);
 $routes->post('/brand/users/delete', 'Brand::removeUser', ["filter" => "remove:branding,admin"]);
+$routes->post('/brand/users/unlink', 'Brand::unlinkUser', ["filter" => "remove:branding,admin"]);
 
 //image upload
 $routes->get("/images/upload","Image::uploadView", ["filter" => "add:images"]);
@@ -93,8 +94,13 @@ $routes->post('/categories/update','Category::update', ["filter" => "edit:catego
 $routes->post('/notifications/update','Notification::update', ["filter" => "edit:notifications"]);
 $routes->post('/menu/update','Menu::update', ["filter" => "edit:menu"]);
 $routes->post('/brand/users/update', 'Brand::updateUsers', ["filter" => "edit:brand,admin"]);
+$routes->post('/brand/add', 'Brand::addBrand', ["filter" => "add:brand,admin"]);
 $routes->post('/brand/branding/update', 'Brand::updateBrand', ["filter" => "edit:branding"]);
 $routes->post('/stripe', "Account::updateBilling");
+$routes->post('/brand/users/link', 'Brand::linkUser', ["filter" => "add:branding,admin"]);
+
+//API routes
+$routes->match(['get', 'post'], '/requests/v1/data', 'Request::data');
 
 /*
  * --------------------------------------------------------------------

@@ -355,8 +355,17 @@
             </div>
         </form>
         <div class="float-right">
-            <button class="btn btn-primary" id="save">Add User</button>
-            <button class="btn btn-danger" id="removeUser" style="display: none;">Remove User</button>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
+                    Add User
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="" id="save">Create New User</a></li>
+                    <li><a class="dropdown-item" href="" data-mdb-toggle="modal" data-mdb-target="#usersModal">Add Existing User</a></li>
+                </ul>
+            </div>
+            <button class="btn btn-warning" id="unlinkUser" style="display: none;">Unlink User</button>
+            <button class="btn btn-danger" id="removeUser" style="display: none;">Delete User</button>
         </div>
         <div class="alert alert-success" role="alert" style="display: none;">
             Success
@@ -366,4 +375,28 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="usersModal" tabindex="-1" aria-labelledby="usersModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="usersModalLabel">Existing Users</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="list-group list-group-light">
+                    <?php foreach ($accountUsers as $user) : ?>
+                        <button type="button" class="list-group-item list-group-item-action px-3 border-0" user-id="<?= $user["id"] ?>" onclick="linkUser(this);">
+                            <?= $user["name"] ?>
+                        </button>
+                    <?php endforeach ?>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>currentUser = <?= $session->get("user_id") ?></script>
 <script src="/js/users.js"></script>

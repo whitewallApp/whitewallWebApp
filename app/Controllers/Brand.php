@@ -7,8 +7,8 @@ use App\Models\CategoryModel;
 use App\Models\CollectionModel;
 use App\Models\ImageModel;
 use App\Models\MenuModel;
+use App\Models\SubscriptionModel;
 use App\Models\UserModel;
-use Google\Service\CloudAsset\Asset;
 
 class Brand extends BaseController
 {
@@ -95,6 +95,7 @@ class Brand extends BaseController
         $userModel = new UserModel();
         $brandModel = new BrandModel();
         $users = [];
+        $accountUsers = [];
 
         $brandIds = $brandModel->getCollumn("id", $session->get("user_id"));
 
@@ -104,14 +105,26 @@ class Brand extends BaseController
                 $userIds = $userModel->getCollumn("id", $brandId);
 
                 foreach($userIds as $id){
-                    $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status"]);
+                    $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status", "icon"]);
                     array_push($users, $user);
                 }
+
+                //get the account users
+                $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+                $accountUserIds = $userModel->getCollumn("id", $accountId, getBy: "account_id");
+                foreach($accountUserIds as $dbuserId){
+                    if ($dbuserId["id"] != $session->get("user_id")){
+                        array_push($accountUsers, $userModel->getUser($dbuserId["id"], filter: ["id", "name", "icon"]));
+                    }
+                }
             }
+
         }
 
         $data = [
-            "users" => $users
+            "users" => $users,
+            "accountUsers" => $accountUsers,
+            "session" => $session
         ];
 
         return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
@@ -123,16 +136,18 @@ class Brand extends BaseController
         if ($session->get("logIn") && $session->get("is_admin")){
             $request = \Config\Services::request();
             $userModel = new UserModel();
+            $brandModel = new BrandModel();
 
             $id = esc($request->getGet("id", FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-            $user = $userModel->getUser($id, filter: ["name", "email", "status", "phone"]);
+            $user = $userModel->getUser($id, filter: ["name", "email", "status", "phone", "id"]);
             $permissions = $userModel->getPermissions($id, $session->get("brand_id"));
 
             $permissions["admin"] = $userModel->getAdmin($id, $session->get("brand_id"));
 
             $data = [
                 "user" => $user,
+                "numBrands" => count($brandModel->getCollumn("id", $id)),
                 "permissions" => $permissions
             ];
 
@@ -168,6 +183,14 @@ class Brand extends BaseController
 
                 return json_encode(["success" => true]);
             }else{
+                //check if they have reached the limit
+
+                $subModel = new SubscriptionModel();
+                $userLimit = $subModel->getLimit($session->get("user_id"), "userLimit");
+                if ($subModel->checkUserLimit($session->get("user_id"), $userLimit)) {
+                    throw new \RuntimeException("User Limit Reached");
+                }
+
                 //TODO: send email with temp password
                 $password = password_hash("test", PASSWORD_DEFAULT);
 
@@ -186,6 +209,76 @@ class Brand extends BaseController
             exit;
         }
 
+    }
+
+    public function addBrand(){
+        try {
+            $brandModel = new BrandModel();
+            $userModel = new UserModel();
+            $session = session();
+
+            $name = $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS);
+            $import = $this->request->getPost("import", FILTER_VALIDATE_BOOL);
+
+
+            $accountID = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+
+            $brand = [
+                "name" => $name,
+                "account_id" => $accountID,
+                "apikey" => bin2hex(random_bytes(32))
+            ];
+
+            $brandID = $brandModel->insert($brand);
+
+            $filePath = "";
+            if (count($this->request->getFiles()) > 0) {
+                $file = $this->request->getFile("logo");
+                //preform checks
+                if (!$file->isValid()) {
+                    throw new \RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
+                }
+
+                $assets = new Assets();
+                $name = $assets->saveBrandImg($file->getTempName(), $file->guessExtension(), "logo", $brandID);
+
+                $filePath = "/assets/branding/" . $brandID . "/" . $name;
+                $brandModel->update($brandID, ["logo" => $filePath]);
+            }
+
+            $brandModel->joinUser($brandID, $session->get("user_id"), true);
+
+            //create default category & collections
+            $colModel = new CollectionModel();
+            $catModel = new CategoryModel();
+            $category = [
+                "name" => "Default Category",
+                "brand_id" => $brandID
+            ];
+            $categoryID = $catModel->insert($category);
+
+            $collection = [
+                "name" => "Default Collection",
+                "brand_id" => $brandID,
+                "category_id" => $categoryID
+            ];
+            $colModel->insert($collection);
+
+            if ($import){
+                $userIds = $userModel->getCollumn("id", $session->get("brand_id"));
+                foreach ($userIds as $userId) {
+                    $userId = $userId["id"];
+                    $userModel->setPermissions($userId, $brandID, $userModel->getPermissions($userId, $session->get("brand_id")));
+                    if ($userId != $session->get("user_id")){
+                        $brandModel->joinUser($brandID, $userId, $userModel->getAdmin($userId, $session->get("brand_id")));
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            http_response_code(400);
+            echo json_encode(["success" => false, "message" => $e->getMessage()]);
+            exit;
+        }
     }
 
     public function updateBrand(){
@@ -215,7 +308,22 @@ class Brand extends BaseController
                     throw new \RuntimeException("File Name Error");
                 }
 
-                $brand = $brandModel->getBrand($session->get("brand_id"), filter: ["id", "appIcon", "appLoading", "appHeading", "appBanner", "logo"], assoc: true);
+                $getbrandID = $session->get("brand_id");
+
+                if (!is_null($this->request->getPost("id"))){
+                    $id = $this->request->getPost("id", FILTER_VALIDATE_INT);
+
+                    $dbids = $brandModel->getCollumn("id", $session->get("user_id"));
+                    //if they can edit that brand
+                    foreach ($dbids as $dbid) {
+                        $dbid = $dbid["id"];
+                        if ($dbid == $id) {
+                            $getbrandID = $dbid;
+                        }
+                    }
+                }
+
+                $brand = $brandModel->getBrand($getbrandID, filter: ["id", "appIcon", "appLoading", "appHeading", "appBanner", "logo"], assoc: true);
 
                 if ($this->request->getPost("name") != null) {
                     $name = $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -224,15 +332,15 @@ class Brand extends BaseController
 
                 //if we seting it for the first time else delete old file
                 if ($brand[$imageType] == "" || preg_match("/^http/", $brand[$imageType]) == "1"){
-                    $name = $assets->saveBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], $imageType);
+                    $name = $assets->saveBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], $imageType, $getbrandID);
                     $updatedBrand = [
-                        $imageType => "/assets/branding/" . $name
+                        $imageType => "/assets/branding/" . $getbrandID . "/" . $name
                     ];
                     $brandModel->update($brand["id"], $updatedBrand);
                 }else{
-                    $name = $assets->updateBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], explode("/", $brand[$imageType])[3]);
+                    $name = $assets->updateBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], explode("/", $brand[$imageType])[3], $getbrandID);
                     $updatedBrand = [
-                        $imageType => "/assets/branding/" . $name
+                        $imageType => "/assets/branding/" . $getbrandID . "/" . $name
                     ];
                     $brandModel->update($brand["id"], $updatedBrand);
                 }
@@ -250,7 +358,15 @@ class Brand extends BaseController
                 //update brandname if it comes in
                 if ($this->request->getPost("name") != null) {
                     $name = $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS);
-                    $brandModel->update($brandId, ["name" => $name]);
+                    $id = $this->request->getPost("id", FILTER_VALIDATE_INT);
+                    $dbids = $brandModel->getCollumn("id", $session->get("user_id"));
+                    //if they can edit that brand
+                    foreach ($dbids as $dbid) {
+                        $dbid = $dbid["id"];
+                        if ($dbid == $id){
+                            $brandModel->update($dbid, ["name" => $name]);
+                        }
+                    }
                 }
 
                 if ($post["collectionLink"] != ""){
@@ -323,14 +439,70 @@ class Brand extends BaseController
         $assets = new Assets();
 
         try {
-            $assets->removeUser($userID);
-
-            $userModel->delete($userID);
+            $session = session();
+            if ($userID != $session->get("user_id")) {
+                $assets->removeUser($userID);
+                $userModel->delete($userID);
+            }
         } catch (\Throwable $e) {
             http_response_code(403);
             return json_encode($e->getMessage());
             exit;
         }
+    }
+
+    public function unlinkUser(){
+        $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
+        
+        if ($id != null){
+            $userModel = new UserModel();
+            $brandModel = new BrandModel();
+            $session = session();
+
+            $brandId = $session->get("brand_id");
+            $userIds = $userModel->getCollumn("id", $brandId);
+
+            if ($id != $session->get("user_id")){
+                if (count($brandModel->getCollumn("id", $id)) > 1){
+                    foreach($userIds as $userID){
+                        $userID = $userID["id"];
+
+                        if ($userID == $id){
+                            $brandModel->unlinkUser($userID, $brandId);
+                        }
+                    }
+                }
+            }
+        }
+
+        return json_encode(["success" => true]);
+    }
+
+    public function linkUser(){
+        $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
+
+        if ($id != null) {
+            $userModel = new UserModel();
+            $brandModel = new BrandModel();
+            $session = session();
+
+            $brandId = $session->get("brand_id");
+
+            //get the account users
+            $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+            $userIds = $userModel->getCollumn("id", $accountId, getBy: "account_id");
+
+            foreach ($userIds as $userID) {
+                $userID = $userID["id"];
+
+                if ($userID == $id) {
+                    $brandModel->joinUser($brandId, $userID);
+                    $userModel->setPermissions($userID, $brandId);
+                }
+            }
+        }
+
+        return json_encode(["success" => true]);
     }
 
     public function setBrand() //Post
@@ -355,7 +527,8 @@ class Brand extends BaseController
                 }
 
                 if ($success) {
-                    $session->set("brand_id", $name);
+                    $id = $brandModel->getBrand($name, "name", ["id"]);
+                    $session->set("brand_id", $id);
                     $session->set('is_admin', $userModel->getAdmin($session->get("user_id"), $session->get("brand_id")));
                     return json_encode(["success" => true]);
                 }

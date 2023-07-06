@@ -23,6 +23,10 @@
       <label for="collDesc">Description</label>
       <input type="text" class="form-control" id="collDesc" placeholder="This is a cool group of Images">
     </div>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="active" />
+      <label class="form-check-label" for="active">Active</label>
+    </div>
     <div class="form-group">
       <label for="collLink">Link to Collection</label>
       <input type="text" class="form-control" id="collLink" placeholder="https://yoursite.com/Collection">

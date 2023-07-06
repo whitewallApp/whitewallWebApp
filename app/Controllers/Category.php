@@ -104,6 +104,7 @@ class Category extends BaseController
             $userModel = new UserModel();
             $session = session();
             $post = $this->request->getPost(["id", "name", "description", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $active = $this->request->getPost("active", FILTER_VALIDATE_BOOL);
             $permission = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), ["categories"], ["p_add"]);
 
             if ($post["id"] == "undefined" && $permission){
@@ -111,7 +112,8 @@ class Category extends BaseController
                     "name" => $post["name"],
                     "description" => $post["description"],
                     "link" => $post["link"],
-                    "brand_id" => $session->get("brand_id")
+                    "brand_id" => $session->get("brand_id"),
+                    "active" => $active
                 ];
 
                 if (count($this->request->getFiles()) > 0){
@@ -159,7 +161,8 @@ class Category extends BaseController
                     "name" => $post["name"],
                     "description" => $post["description"],
                     "iconPath" => "/assets/category/" . $newName,
-                    "link" => $post["link"]
+                    "link" => $post["link"],
+                    "active" => $active
                 ];
 
                 $categoryModel->updateCategory($post["id"], $data);
@@ -167,7 +170,8 @@ class Category extends BaseController
                 $data = [
                     "name" => $post["name"],
                     "description" => $post["description"],
-                    "link" => $post["link"]
+                    "link" => $post["link"],
+                    "active" => $active
                 ];
 
                 $categoryModel->updateCategory($post["id"], $data);

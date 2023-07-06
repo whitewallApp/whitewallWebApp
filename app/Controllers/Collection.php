@@ -63,6 +63,7 @@ class Collection extends BaseController
         return Navigation::renderNavBar("Collections", "collections") . view('Collection/Collection_Detail', $data) . Navigation::renderFooter();
     }
 
+    //get the data
     public function post(){
         $session = session();
         if ($session->get("logIn")){
@@ -76,7 +77,7 @@ class Collection extends BaseController
             $id = $colModel->getIdByName($id);
             $exp = "/\/.*\/(.*)/";
 
-            $collection = $colModel->getCollection($id, filter: ["id", "name", "dateUpdated", "description", "link", "iconPath", "category_id"], assoc: true);
+            $collection = $colModel->getCollection($id, filter: ["id", "name", "dateUpdated", "description", "link", "iconPath", "category_id", "active"], assoc: true);
             $collection["category_id"] = $catModel->getCategory($collection["category_id"], filter: ["name"]);
 
             //gets rid of the assets/collection
@@ -113,6 +114,7 @@ class Collection extends BaseController
             $post = $this->request->getPost(["id", "name", "description", "link", "category"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $categoryId = $catModel->getCategory($post["category"], "name", ["id"]);
             $permission = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), ["collections"], ["p_add"]);
+            $active = $this->request->getPost("active", FILTER_VALIDATE_BOOL);
 
             //create the collection
             if ($post["id"] == "undefined" && $permission){
@@ -123,7 +125,8 @@ class Collection extends BaseController
                     "description" => $post["description"],
                     "link" => $post["link"],
                     "category_id" => $categoryId,
-                    "brand_id" => $session->get("brand_id")
+                    "brand_id" => $session->get("brand_id"),
+                    "active" => $active
                 ];
 
                 if (count($this->request->getFiles()) > 0){
@@ -146,7 +149,8 @@ class Collection extends BaseController
                 "name" => $post["name"],
                 "description" => $post["description"],
                 "link" => $post["link"],
-                "category_id" => $categoryId
+                "category_id" => $categoryId,
+                "active" => $active
             ];
 
             if (count($_FILES) > 0){

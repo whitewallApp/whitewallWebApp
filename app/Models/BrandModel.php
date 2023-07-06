@@ -84,7 +84,7 @@ class BrandModel extends Model
     }
     
     /**
-     * Connect a user to a brand and spesifify if admin or not
+     * Connect a user to a brand and spesifiy if admin or not
      *
      * @param int $brandID
      * @param int $userID
@@ -92,7 +92,29 @@ class BrandModel extends Model
      * @return void
      */
     public function joinUser($brandID, $userID, $admin = false){
+        $data = [
+            "brand_id" => $brandID,
+            "user_id" => $userID,
+            "admin" => $admin
+        ];
+        $builder = $this->db->table('branduser');
+        $builder->insert($data);
+    }
+
+    /**
+     * Unlink a user from a brand
+     *
+     * @param int $userID
+     * @param int $brandID
+     * @return void
+     */
+    public function unlinkUser($userID, $brandID){
         $builder = $this->db->table("branduser");
-        $builder->insert(["brand_id" => $brandID, "user_id" => $userID, "admin" => $admin]);
+        $builder->where("brand_id", $brandID)->where("user_id", $userID);
+        $builder->delete();
+
+        $builder = $this->db->table("permissions");
+        $builder->where("brand_id", $brandID)->where("user_id", $userID);
+        $builder->delete();
     }
 }

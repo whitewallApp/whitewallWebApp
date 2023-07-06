@@ -67,6 +67,13 @@ function changeBrnd(e){
     })
 }
 
+$("#InputPassword").on('keyup', function (e) {
+    key = e.originalEvent.key;
+    if (key == "Enter"){
+        login();
+    }
+});
+
 function login(e) {
     $.post("/", {
         email: $("#InputEmail").val(),
@@ -84,6 +91,7 @@ function login(e) {
                 $(location).attr('href', url);
             }
         }else{
+            $(".alert-danger").show();
         }
     })
 }
@@ -212,6 +220,10 @@ $("[set-brand]").on("click", function(e){
     })
 })
 
+$("[brand-edit-id]").on("click", function(e){
+    $("#updateBrand").attr("brand-id", $(e.target).attr("brand-edit-id"));
+})
+
 $("#updateBrand").on("click", function(){
     formData = new FormData();
 
@@ -220,6 +232,7 @@ $("#updateBrand").on("click", function(){
     }
 
     formData.append("name", $("#brandName").val());
+    formData.append("id", $("#updateBrand").attr("brand-id"));
 
     $.ajax({
         url: "/brand/branding/update",
@@ -250,5 +263,39 @@ $("#removeBrand").on("click", function(){
         }, function(data, status){
             window.location.reload();
         })
+    }
+})
+
+$("#addBrand").on("click", function(){
+    formData = new FormData();
+
+    if ($("#addbrandName").val() != ""){
+        $("#error").remove();
+        $("#addbrandName").removeClass("is-invalid");
+
+        if ($("#addbrandIcon")[0].files.length > 0) {
+            formData.append("logo", $("#addbrandIcon")[0].files[0]);
+        }
+
+        formData.append("name", $("#addbrandName").val());
+        formData.append("import", $("#importUsers").prop("checked"));
+
+        $.ajax({
+            url: "/brand/add",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                window.location.reload();
+            },
+            error: function (xhr, status, error) {
+                $(".alert-danger").show();
+                $(".alert-danger").html(JSON.parse(xhr.responseText).message);
+            }
+        })
+    }else{
+        $("#addbrandName").addClass("is-invalid");
+        $("#addbrandName").parent().parent().append(`<small id="error" class="form-text text-muted">You Must Provide a Brand Name</small>`);
     }
 })
