@@ -85,6 +85,10 @@ class SubscriptionModel extends Model
         $brandModel = new BrandModel();
         $imageModel = new ImageModel();
 
+        if ($imageLimit == 0){
+            return false;
+        }
+
         $brandids = $brandModel->getCollumn("id", $userID);
 
         $imageCount = 0;
@@ -106,6 +110,10 @@ class SubscriptionModel extends Model
         $brandModel = new BrandModel();
         $userModel = new UserModel();
 
+        if ($userLimit == 0){
+            return false;
+        }
+
         $brandids = $brandModel->getCollumn("id", $userID);
 
         $userCount = 0;
@@ -125,6 +133,10 @@ class SubscriptionModel extends Model
     public function checkBrandLimit(int $userID, int $brandLimit): bool
     {
         $brandModel = new BrandModel();
+
+        if ($brandLimit == 0){
+            return false;
+        }
 
         $brandids = $brandModel->getCollumn("id", $userID);
         return $brandids >= $brandLimit;
