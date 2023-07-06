@@ -79,12 +79,12 @@ class Account extends BaseController
             );
         } catch (\UnexpectedValueException $e) {
             // Invalid payload
-            log_message("warning", "Invalid Stripe Payload, Event ID:" . $event->id);
+            log_message("warning", "Invalid Stripe Payload, Event ID:");
             http_response_code(400);
             exit();
         } catch (\Stripe\Exception\SignatureVerificationException $e) {
             // Invalid signature
-            log_message("warning", "Invalid Stripe Signature, Event ID:" . $event->id);
+            log_message("warning", "Invalid Stripe Signature, Event ID:");
             http_response_code(400);
             exit();
         }

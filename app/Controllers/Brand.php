@@ -21,8 +21,14 @@ class Brand extends BaseController
 
         $brands = [];
 
+        $subModel = new SubscriptionModel();
+        $amount = 0;
+        $limit = $subModel->getLimit($session->get("user_id"), "brandLimit");
         foreach($ids as $id){
-            array_push($brands, $brandModel->getBrand($id, assoc: true));
+            if ($amount < $limit && $limit != 0) {
+                array_push($brands, $brandModel->getBrand($id, assoc: true));
+            }
+            $amount++;
         }
 
         $data = [
@@ -94,31 +100,36 @@ class Brand extends BaseController
         $session = session();
         $userModel = new UserModel();
         $brandModel = new BrandModel();
+        $subModel = new SubscriptionModel();
         $users = [];
         $accountUsers = [];
 
         $brandIds = $brandModel->getCollumn("id", $session->get("user_id"));
 
+        $amount = 0;
+        $limit = $subModel->getLimit($session->get("user_id"), "userLimit");
         foreach($brandIds as $dbId){
+                if ($dbId["id"] == $brandId){
+                    echo var_dump($amount);
+                    $userIds = $userModel->getCollumn("id", $brandId);
 
-            if ($dbId["id"] == $brandId){
-                $userIds = $userModel->getCollumn("id", $brandId);
+                    foreach($userIds as $id){
+                        if ($amount < $limit && $limit != 0) {
+                            $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status", "icon"]);
+                            array_push($users, $user);
+                        }
+                        $amount++;
+                    }
 
-                foreach($userIds as $id){
-                    $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status", "icon"]);
-                    array_push($users, $user);
-                }
-
-                //get the account users
-                $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
-                $accountUserIds = $userModel->getCollumn("id", $accountId, getBy: "account_id");
-                foreach($accountUserIds as $dbuserId){
-                    if ($dbuserId["id"] != $session->get("user_id")){
-                        array_push($accountUsers, $userModel->getUser($dbuserId["id"], filter: ["id", "name", "icon"]));
+                    //get the account users for adding
+                    $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+                    $accountUserIds = $userModel->getCollumn("id", $accountId, getBy: "account_id");
+                    foreach($accountUserIds as $dbuserId){
+                        if ($dbuserId["id"] != $session->get("user_id")){
+                            array_push($accountUsers, $userModel->getUser($dbuserId["id"], filter: ["id", "name", "icon"]));
+                        }
                     }
                 }
-            }
-
         }
 
         $data = [
@@ -553,5 +564,3 @@ class Brand extends BaseController
         }
     }
 }
-
-?>
