@@ -504,12 +504,13 @@ class Assets extends BaseController {
      */
     public function saveBrandImg($tmpPath, $type, $name, $brandID=-1)
     {   
+        $session = session();
         $file=null;
         if ($brandID == -1){
             $file = $this->brandPath . $name . "." . $type;
         }else{
             $userModel = new UserModel();
-            $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
+            $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
             $file = getenv("BASE_PATH") . $accountId . "/" . $brandID . "/branding/" . $name . "." . $type;
         }
 

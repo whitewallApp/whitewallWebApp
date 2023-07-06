@@ -96,4 +96,8 @@ class Request extends BaseController
 
         echo json_encode($data);
     }
+
+    public function branding(){
+        echo json_encode($this->brandModel->getBrand($this->brandId, filter: ["appIcon", "appLoading", "appHeading", "appBanner", "branding"], assoc: true));
+    }
 }

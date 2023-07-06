@@ -101,6 +101,7 @@ $routes->post('/brand/users/link', 'Brand::linkUser', ["filter" => "add:branding
 
 //API routes
 $routes->match(['get', 'post'], '/requests/v1/data', 'Request::data');
+$routes->match(['get', 'post'], '/requests/v1/branding', 'Request::branding');
 
 /*
  * --------------------------------------------------------------------
