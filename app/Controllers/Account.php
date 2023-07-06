@@ -114,7 +114,7 @@ class Account extends BaseController
                 $subModel->update($subid["id"], ["subscriptionID" => $event->data->object->subscription, "customerID" => $event->data->object->customer]);
                 break;
             default:
-            // error_log('Received unknown event type of: ' . $event->type);
+                $this->logger->error("Recived and UnownEvent of type: " . $event->type);
         }
     }
 
