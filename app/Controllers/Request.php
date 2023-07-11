@@ -93,7 +93,7 @@ class Request extends BaseController
                 }
             }
         }
-        header("Content-Type: " . "application/json");
+        // header("Content-Type: " . "application/json");
         return json_encode($data);
     }
 

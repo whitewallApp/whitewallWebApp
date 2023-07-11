@@ -98,6 +98,19 @@ class SubscriptionModel extends Model
         return $imageCount >= $imageLimit;
     }
 
+    public function getCurrentImageCount($userID){
+        $brandModel = new BrandModel();
+        $imageModel = new ImageModel();
+        $brandids = $brandModel->getCollumn("id", $userID);
+
+        $imageCount = 0;
+        foreach ($brandids as $brandid) {
+            $imageCount += count($imageModel->getAllIds($brandid));
+        }
+
+        return $imageCount;
+    }
+
     /**
      * Checks if the account has used up all of its users
      *
@@ -123,6 +136,20 @@ class SubscriptionModel extends Model
         return $userCount >= $userLimit;
     }
 
+    public function getCurrentUserCount($userID){
+        $brandModel = new BrandModel();
+        $userModel = new UserModel();
+
+        $brandids = $brandModel->getCollumn("id", $userID);
+
+        $userCount = 0;
+        foreach ($brandids as $brandid) {
+            $userCount += count($userModel->getCollumn("id", $brandid));
+        }
+
+        return $userCount;
+    }
+
     /**
      * Checks if the account has used up all of its brands
      *
@@ -139,7 +166,15 @@ class SubscriptionModel extends Model
         }
 
         $brandids = $brandModel->getCollumn("id", $userID);
-        return $brandids >= $brandLimit;
+        
+        
+        return count($brandids) >= $brandLimit;
+    }
+
+    public function getCurrrentBrandCount($userID){
+        $brandModel = new BrandModel();
+        $brandids = $brandModel->getCollumn("id", $userID);
+        return count($brandids);
     }
 
     /**
