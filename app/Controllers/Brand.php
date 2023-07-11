@@ -26,7 +26,7 @@ class Brand extends BaseController
         $limit = $subModel->getLimit($session->get("user_id"), "brandLimit");
         foreach($ids as $id){
             $run = true;
-            if ($amount < $limit && $limit != 0) {
+            if ($amount > $limit && $limit != 0) {
                 $run = false;
             }
 
@@ -119,7 +119,7 @@ class Brand extends BaseController
 
                     foreach($userIds as $id){
                         $run = true;
-                        if ($amount < $limit && $limit != 0) {
+                        if ($amount > $limit && $limit != 0) {
                             $run = false;
                         }
 
