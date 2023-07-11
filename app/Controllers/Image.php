@@ -76,7 +76,7 @@ class Image extends BaseController
             $catID = $collModel->getCollection($colID, filter: ["category_id"]);
 
             $run = true;
-            if ($amount < $limit && $limit != 0){
+            if ($amount > $limit && $limit != 0){
                 $run = false;
             }
 
