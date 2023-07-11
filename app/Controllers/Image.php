@@ -75,7 +75,12 @@ class Image extends BaseController
             $colID = $imageModel->getImage($image["id"], filter: ["collection_id"]);
             $catID = $collModel->getCollection($colID, filter: ["category_id"]);
 
-            if ($amount < $limit && $limit != 0) {
+            $run = true;
+            if ($amount < $limit && $limit != 0){
+                $run = false;
+            }
+
+            if ($run) {
                 $image = [
                     "id" => $image["id"],
                     "path" => $image["thumbnail"],

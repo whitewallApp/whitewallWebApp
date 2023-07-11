@@ -25,7 +25,12 @@ class Brand extends BaseController
         $amount = 0;
         $limit = $subModel->getLimit($session->get("user_id"), "brandLimit");
         foreach($ids as $id){
+            $run = true;
             if ($amount < $limit && $limit != 0) {
+                $run = false;
+            }
+
+            if ($run) {
                 array_push($brands, $brandModel->getBrand($id, assoc: true));
             }
             $amount++;
@@ -110,11 +115,15 @@ class Brand extends BaseController
         $limit = $subModel->getLimit($session->get("user_id"), "userLimit");
         foreach($brandIds as $dbId){
                 if ($dbId["id"] == $brandId){
-                    echo var_dump($amount);
                     $userIds = $userModel->getCollumn("id", $brandId);
 
                     foreach($userIds as $id){
+                        $run = true;
                         if ($amount < $limit && $limit != 0) {
+                            $run = false;
+                        }
+
+                        if ($run) {
                             $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status", "icon"]);
                             array_push($users, $user);
                         }
