@@ -26,13 +26,10 @@ class Assets extends BaseController {
      private $imgTmbPath;
     private $brandPath;
 
-    public function initController(
-        RequestInterface $request,
-        ResponseInterface $response,
-        LoggerInterface $logger
-    ) {
-        parent::initController($request, $response, $logger);
+    public function __construct()
+    {
         $this->session = session();
+        $request = \Config\Services::request();
 
         $userModel = new UserModel();
         $brandModel = new BrandModel();
@@ -41,7 +38,7 @@ class Assets extends BaseController {
             $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
             $brandId = $this->session->get("brand_id");
         }else{
-            $apikey = $this->request->getGetPost("apikey");
+            $apikey = $request->getGetPost("apikey");
 
             if (is_null($apikey) && array_key_exists("x-api-key", getallheaders())) {
                 $apikey = getallheaders()["x-api-key"];
@@ -504,12 +501,13 @@ class Assets extends BaseController {
      */
     public function saveBrandImg($tmpPath, $type, $name, $brandID=-1)
     {   
+        $session = session();
         $file=null;
         if ($brandID == -1){
             $file = $this->brandPath . $name . "." . $type;
         }else{
             $userModel = new UserModel();
-            $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
+            $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
             $file = getenv("BASE_PATH") . $accountId . "/" . $brandID . "/branding/" . $name . "." . $type;
         }
 

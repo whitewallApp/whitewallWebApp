@@ -9,6 +9,7 @@ use App\Models\BrandModel;
 use App\Controllers\Navigation;
 use App\Models\SubscriptionModel;
 use App\Models\UserModel;
+use Google\Service\AndroidPublisher\Subscription;
 use RuntimeException;
 
 class Image extends BaseController
@@ -67,18 +68,24 @@ class Image extends BaseController
             array_push($collections, $collection);
         }
 
+        $subModel = new SubscriptionModel();
+        $amount = 0;
+        $limit = $subModel->getLimit($session->get("user_id"), "imageLimit");
         foreach ($dbImages as $image) {
             $colID = $imageModel->getImage($image["id"], filter: ["collection_id"]);
             $catID = $collModel->getCollection($colID, filter: ["category_id"]);
 
-            $image = [
-                "id" => $image["id"],
-                "path" => $image["thumbnail"],
-                "name" => $image["name"],
-                "collection" => $collModel->getCollection($colID, filter: ["name"]),
-                "category" => $catModel->getCategory($catID, filter: ["name"])
-            ];
-            array_push($images, $image);
+            if ($amount < $limit && $limit != 0) {
+                $image = [
+                    "id" => $image["id"],
+                    "path" => $image["thumbnail"],
+                    "name" => $image["name"],
+                    "collection" => $collModel->getCollection($colID, filter: ["name"]),
+                    "category" => $catModel->getCategory($catID, filter: ["name"])
+                ];
+                array_push($images, $image);
+            }
+            $amount++;
         }
 
 

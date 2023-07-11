@@ -99,7 +99,7 @@ class Category extends BaseController
             unlink("../writable/cache/CategoryCategory_List");
         }
 
-        try {
+        // try {
             $brandModel = new BrandModel();
             $userModel = new UserModel();
             $session = session();
@@ -145,7 +145,7 @@ class Category extends BaseController
                     $type = "svg";
                 }
 
-                if ($oldName == ""){
+                if ($oldName == "" || is_null($oldName)){
                     $newName = $assets->saveCategory($tmpPath, $type);
                 }else{
                     $oldName = explode("category/", $oldName)[1];
@@ -178,11 +178,11 @@ class Category extends BaseController
             }
 
             return json_encode(["success" => true]);
-        }catch (\Exception $e){
-            http_response_code(400);
-            return json_encode($e->getMessage());
-            die;
-        }
+        // }catch (\Exception $e){
+        //     http_response_code(400);
+        //     return json_encode($e->getMessage());
+        //     die;
+        // }
     }
 
     //delete collections

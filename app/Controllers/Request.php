@@ -93,7 +93,11 @@ class Request extends BaseController
                 }
             }
         }
+        header("Content-Type: " . "application/json");
+        return json_encode($data);
+    }
 
-        echo json_encode($data);
+    public function branding(){
+        echo json_encode($this->brandModel->getBrand($this->brandId, filter: ["appIcon", "appLoading", "appHeading", "appBanner", "branding"], assoc: true));
     }
 }
