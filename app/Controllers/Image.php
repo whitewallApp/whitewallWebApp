@@ -397,6 +397,7 @@ class Image extends BaseController
                 $imageDescription = $imageModel->getCollumn("description", $session->get("brand_id"));
                 
                 foreach($imageDescription as $description){
+                    $description = $description["description"];
                     if (preg_match("/" . $file->getName() . "/", $description) == 1){
                         throw new RuntimeException("Dupicate Image Found");
                     }
