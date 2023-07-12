@@ -249,7 +249,7 @@ $("#appLoading").on("input", function(){
 
 $("#appHeader").on("input", function(){
     formData = new FormData();
-    formData.append("appHeader", this.files[0]);
+    formData.append("appHeading", this.files[0]);
 
     $.ajax({
         url: "/brand/branding/update",
