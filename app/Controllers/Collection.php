@@ -180,7 +180,7 @@ class Collection extends BaseController
     //delete
     public function delete()
     {
-        try {
+        // try {
             $collModel = new CollectionModel();
             $imageModel = new ImageModel();
             $session = session();
@@ -223,6 +223,10 @@ class Collection extends BaseController
                     $collection = $collModel->getCollection($id, assoc: true);
                     $dbids = $collModel->getCollumn("id", $session->get("brand_id"));
 
+                    foreach ($dbids as &$value) {
+                        $value = $value["id"];
+                    }
+
                     $validId = array_intersect($dbids, [$id]);
 
                     //foreign key check
@@ -243,10 +247,10 @@ class Collection extends BaseController
                     $collModel->delete($validId);
                 }
             }
-        }catch (\Exception $e){
-            http_response_code(400);
-            echo json_encode(["message" => $e->getMessage()]);
-            exit;
-        }
+        // }catch (\Exception $e){
+        //     http_response_code(400);
+        //     echo json_encode(["message" => $e->getMessage()]);
+        //     exit;
+        // }
     }
 }

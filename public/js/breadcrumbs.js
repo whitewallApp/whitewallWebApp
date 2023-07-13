@@ -1,8 +1,6 @@
 $("document").ready(function(){
     // setImageStart();
 
-    loadingBars();
-
     selectBrand();
 
     //saveAccount();
@@ -39,44 +37,6 @@ function selectBrand(){
                 location.reload()
             }
         })
-    })
-}
-
-function loadingBars(){
-    $("#ioscompileButton").on("click", function(){
-        $("#iosInput").hide();
-
-        console.log();
-
-        var bar = $("#iosLoading");
-        bar.parent().show()
-
-        for(i = 0; i <= 100; i++){
-            bar.attr("aria-valuenow", i);
-            bar.html(i + "%")
-            bar.css("width", i + "%")
-        }
-
-        $("#iosButtons").show();
-        $("#iosModelButton").hide();
-        $("#ioscompileButton").hide();
-    })
-    $("#androidcompileButton").on("click", function () {
-        console.log("hello");
-        $("#androidInput").hide();
-
-        var bar = $("#androidLoading");
-        bar.parent().show()
-
-        for (i = 0; i <= 100; i++) {
-            bar.attr("aria-valuenow", i);
-            bar.html(i + "%")
-            bar.css("width", i + "%")
-        }
-
-        $("#androidButtons").show();
-        $("#androidModelButton").hide();
-        $("#androidcompileButton").hide();
     })
 }
 
