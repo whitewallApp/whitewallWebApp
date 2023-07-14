@@ -463,7 +463,7 @@
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#imgColCollapse" aria-expanded="false" aria-controls="collapseTwo">
                                 <div class="row">
                                     <div class="col-sm-11">
-                                        Images & Collections
+                                        Image Frames
                                     </div>
                                     <div class="col-sm-1">
                                         <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>

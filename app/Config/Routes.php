@@ -49,6 +49,14 @@ $routes->get('/billing',"Account::billing", ["filter" => "view:nocheck"]); //TOD
 $routes->get('/reset/(:any)', 'Reset::index/$1');
 $routes->get('/search', 'Navigation::search');
 
+//App URLS
+$routes->post('/app/(:segment)/compile', 'App::compile/$1', ["filter" => "add:builds"]);
+$routes->get('/app/(:segment)/compile', 'App::compile/$1', ["filter" => "add:builds"]);
+
+$routes->post('/app/(:segment)/progress', 'App::progress/$1', ["filter" => "add:builds"]);
+$routes->get('/app/(:segment)/progress', 'App::progress/$1', ["filter" => "add:builds"]);
+
+
 
 //Asset URLS
 $routes->get('/assets/images/thumbnail/(:any)', 'Assets::imageThumbnail/$1');

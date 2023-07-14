@@ -95,12 +95,21 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="form-outline" id="androidInput">
-                    <input type="text" id="androidVersionName" class="form-control" />
-                    <label class="form-label" for="androidVersionName">Version Name</label>
+                <div id="androidInput">
+                    <div class="form-outline">
+                        <input type="text" id="androidVersionName" class="form-control" />
+                        <label class="form-label" for="androidVersionName">Version Name</label>
+                    </div>
+                    <div class="form-outline">
+                        <input type="text" id="androidAppName" class="form-control" />
+                        <label class="form-label" for="androidAppName">App Name</label>
+                    </div>
                 </div>
-                <div class="progress" style="height: 20px; display: none;">
-                    <div id="androidLoading" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                <div class="col" style="display: none;">
+                    <p id="androidStatus"></p>
+                    <div class="progress" style="height: 20px;">
+                        <div id="androidLoading" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -122,12 +131,21 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="form-outline" id="iosInput">
-                    <input type="text" id="iosVersionName" class="form-control" />
-                    <label class="form-label" for="iosVersionName">Version Name</label>
+                <div id="iosInput">
+                    <div class="form-outline">
+                        <input type="text" id="iosVersionName" class="form-control" />
+                        <label class="form-label" for="iosVersionName">Version Name</label>
+                    </div>
+                    <div class="form-outline">
+                        <input type="text" id="iosAppName" class="form-control" />
+                        <label class="form-label" for="iosAppName">App Name</label>
+                    </div>
                 </div>
-                <div class="progress" style="height: 20px; display: none;">
-                    <div id="iosLoading" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                <div class="col" style="display: none;">
+                    <p id="iosStatus"></p>
+                    <div class="progress" style="height: 20px">
+                        <div id="iosLoading" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -139,3 +157,5 @@
         </div>
     </div>
 </div>
+
+<script src="js/app.js"></script>

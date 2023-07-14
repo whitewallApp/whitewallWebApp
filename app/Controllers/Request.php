@@ -86,6 +86,7 @@ class Request extends BaseController
                             $data[$category["name"]]["collections"][$collection["name"]]["images"][$image["name"]]= [
                                 "thumbnail" => $image["thumbnail"],
                                 "imagePath" => $image["imagePath"],
+                                "description" => $image["description"],
                                 "link" => $image["link"]
                             ];
                         }
