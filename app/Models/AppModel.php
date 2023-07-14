@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Model;
 
 class AppModel extends Model
@@ -9,7 +10,12 @@ class AppModel extends Model
     protected $primaryKey = 'id';
     protected $returnType = 'array';
     protected $table = "app";
-    protected $allowedFields = ["brand_id", "appName", "versionName", "os", "state", "progress"];
+    protected $allowedFields = ["brand_id", "appName", "versionName", "os", "state", "progress", "current", "signingKey", "password"];
+
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'publishedDate';
+    protected $updatedField  = 'dateUpdated';
 
 
     public function updateBy($id, $data, $updateBy = "id")

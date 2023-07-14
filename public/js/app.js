@@ -6,7 +6,7 @@ $("#ioscompileButton").on("click", function () {
         type: "POST",
         url: "app/ios/compile",
         data: { version: $("#iosVersionName").val(), name: $("#iosAppName").val() },
-        timeout: 250,
+        timeout: 100,
         error: function (jqXHR, textStatus, errorThrown) {
             if (textStatus === "timeout") {
                 console.log("timeout");
@@ -19,13 +19,12 @@ $("#ioscompileButton").on("click", function () {
 $("#androidcompileButton").on("click", function () {
 
     $("#androidInput").hide();
-
     //start compile progress
     $.ajax({
         type: "POST",
         url: "app/android/compile",
         data: { version: $("#androidVersionName").val(), name: $("#androidAppName").val() },
-        timeout: 250,
+        timeout: 100,
         error: function (jqXHR, textStatus, errorThrown) {
             if (textStatus === "timeout") {
                 console.log("timeout");
@@ -35,8 +34,8 @@ $("#androidcompileButton").on("click", function () {
 
     pollProgress("android");
 })
-
 function pollProgress(os){
+    $("#" + os + "compileButton").hide();
     setTimeout(function() {
         $.ajax({
             type: "POST",
@@ -64,7 +63,6 @@ function pollProgress(os){
                 }else{
                     $("#"+ os +"Buttons").show();
                     $("#"+ os +"ModelButton").hide();
-                    $("#"+ os +"compileButton").hide();
                 }
             }
         });
