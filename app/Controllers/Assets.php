@@ -252,7 +252,7 @@ class Assets extends BaseController {
 
         if(move_uploaded_file($tmpPath, $file)){
 
-            $tmbsizey = 80;
+            $tmbsizey = 300;
             $tmbsizex = (int)$tmbsizey / 1.778;
 
             $src = $this->correctImageOrientation($file, $type);

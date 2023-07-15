@@ -8,8 +8,8 @@ use App\Models\AppModel;
 class App extends BaseController
 
 {
-    private $appPath = "D:\whitewallApp - Copy";
-    private $appSize = 2611189419;
+    private $appPath = "/home/thomas/whitewallApp";
+    private $appSize = 4113762682;
 
     public function index()
     {
@@ -28,11 +28,16 @@ class App extends BaseController
 
             //set up app paths
             $brandingPath = getenv("BASE_PATH") . $accountID . "/" . $brand_id . "/branding/";
-            $copyAppPath = $brandingPath . $brand_id . "App";//set up app paths
+            $copyAppPath = $brandingPath . $brand_id . "App"; //set up app paths
+
+            //make it so I dont' get session locked
+            session_write_close();
+            set_time_limit(0);
 
             //set the last used app to not be the current version
             $appModel->updateByMultipule(["brand_id" => $brand_id, "current" => 1], ["current" => 0]);
             if (!is_dir($copyAppPath)){
+                helper("filesystem");
                 $rowID = $appModel->insert(["brand_id" => $brand_id, "os" => $os, "state" => "Copying Files...", "progress" => 0, "current" => true]);
 
                 //copy the app
@@ -40,11 +45,6 @@ class App extends BaseController
             }else{
                 $rowID = $appModel->insert(["brand_id" => $brand_id, "os" => $os, "state" => "Styling App...", "progress" => 80, "current" => true]);
             }
-
-            //make it so I dont' get session locked
-            session_write_close();
-            set_time_limit(0);
-            helper("filesystem");
 
             //add the branding
             $appModel->update($rowID, ["progress" => 80, "state" => "Styling App..."]);
@@ -64,12 +64,40 @@ class App extends BaseController
 
             //put in teh styles
             $style = view("brand/Style", ["branding" => json_decode($branding, true)]);
-            file_put_contents($copyAppPath . "Style.tsx", $style);
+            file_put_contents($copyAppPath . "/Style.tsx", $style);
 
             $appModel->update($rowID, ["progress" => 90, "state" => "Compiling App..."]);
-                
-            // $output = shell_exec("adb -s ZY22DH4JQW reverse tcp:8081 tcp:8081");
-            // proc_open($copyAppPath . " npx react-native build-android --mode=release ");
+
+            $descriptorspec = array(
+                0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
+                1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+                2 => array("file", "/tmp/error-output.txt", "w") // stderr is a file to write to
+             );
+
+            $output = null;
+            $retVal = null;
+             
+            $cwd = $copyAppPath;
+            //  $process = proc_open("npx react-native build-android --mode=release --no-packager", $descriptorspec, $pipes, $cwd, $_ENV);
+            $process = proc_open("npx react-native build-android --mode=release --no-packager --verbose --stacktrace --info, --scan", $descriptorspec, $pipes, $cwd, $_ENV, $options=["create_new_console" => true]);
+             
+             if (is_resource($process)) {
+                // $pipes now looks like this:
+                // 0 => writeable handle connected to child stdin
+                // 1 => readable handle connected to child stdout
+                // Any error output will be appended to /tmp/error-output.txt
+
+                // fwrite($pipes[0], "pwd");
+                // fclose($pipes[0]);
+             
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                // echo var_dump(stream_get_contents($pipes[1]));
+                fclose($pipes[1]);
+            
+                // It is important that you close any pipes before calling
+                // proc_close in order to avoid a deadlock
+                $return_value = proc_close($process);
+             }
         }else{
             throw new \RuntimeException("Not a compatable OS");
         }
