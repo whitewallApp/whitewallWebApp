@@ -32,7 +32,7 @@ class Collection extends BaseController
 
             $collection = [
                 "name" => $collModel->getCollection($id, filter: ["name"]),
-                "iconPath" => $collModel->getCollection($id, filter: ["iconPath"]),
+                "iconPath" => $collModel->getCollection($id, filter: ["thumbnail"]),
                 "category" => $catModel->getCategory($catID, filter: ["name"])
             ];
 
@@ -138,6 +138,7 @@ class Collection extends BaseController
 
                     $name = $assets->saveCollection($file->getTempName(), $file->guessExtension());
                     $data["iconPath"] = "/assets/collection/" . $name;
+                    $data["thumbnail"] = "/assets/collection/thumbnail/" . $name;
                 }
 
                 $colModel->save($data);
