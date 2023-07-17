@@ -19,6 +19,7 @@ class Assets extends BaseController {
 
      private $imgPath;
      private $collPath;
+    private $collTmbPath;
      private $catPath;
      private $userPath;
      private $menuPath;
@@ -60,6 +61,7 @@ class Assets extends BaseController {
         $this->catPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/categories/";
         $this->userPath = getenv("BASE_PATH") . $accountId . "/users/";
         $this->collPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/collections/";
+        $this->collTmbPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/collections/thumbnails/";
         $this->menuPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/menu/";
         $this->brandPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/branding/";
 
@@ -68,25 +70,28 @@ class Assets extends BaseController {
                 mkdir(getenv("BASE_PATH") . $accountId . "/" . $brandId, 0777, true);
             }
             if (!file_exists($this->imgPath)){
-                mkdir($this->imgPath);
+                mkdir($this->imgPath, recursive: true);
             }
             if (!file_exists($this->imgTmbPath)) {
-                mkdir($this->imgTmbPath);
+                mkdir($this->imgTmbPath, recursive: true);
             }
             if (!file_exists($this->catPath)) {
-                mkdir($this->catPath);
+                mkdir($this->catPath, recursive: true);
             }
             if (!file_exists($this->userPath)) {
-                mkdir($this->userPath);
+                mkdir($this->userPath, recursive: true);
             }
             if (!file_exists($this->collPath)) {
-                mkdir($this->collPath);
+                mkdir($this->collPath, recursive: true);
             }
             if (!file_exists($this->menuPath)) {
-                mkdir($this->menuPath);
+                mkdir($this->menuPath, recursive: true);
             }
             if (!file_exists($this->brandPath)) {
-                mkdir($this->brandPath);
+                mkdir($this->brandPath, recursive: true);
+            }
+            if (!file_exists($this->collTmbPath)) {
+                mkdir($this->collTmbPath, recursive: true);
             }
         }
     }
@@ -196,6 +201,23 @@ class Assets extends BaseController {
         }
     }
 
+    function collectionThumbnail($file)
+    {
+        if (file_exists($this->collTmbPath . $file)) {
+
+            $matches = [];
+            preg_match("/\.(.*)/", $file, $matches);
+
+            $type = $this->mapType($matches[1]);
+
+            header("Content-Type: " . "image/" . $type);
+            readfile($this->collTmbPath . $file);
+            exit;
+        } else {
+            return view("errors/html/error_404", ["message" => "sorry we can't find that file"]);
+        }
+    }
+
     function user($file){
         if (file_exists($this->userPath . $file)) {
 
@@ -252,18 +274,7 @@ class Assets extends BaseController {
 
         if(move_uploaded_file($tmpPath, $file)){
 
-            $tmbsizey = 300;
-            $tmbsizex = (int)$tmbsizey / 1.778;
-
-            $src = $this->correctImageOrientation($file, $type);
-
-            $srcheight = imagesy($src);
-            $srcwidth = (int)$srcheight / 1.778;
-
-            $src = imagecrop($src, ["x" => ((imagesx($src) / 2) - ($srcwidth / 2)), "y" => 0, "width" => $srcwidth, "height" => $srcheight]);
-
-            $dst = imagecreatetruecolor($tmbsizex, $tmbsizey);
-            imagecopyresampled($dst, $src, 0, 0, 0, 0, $tmbsizex, $tmbsizey, $srcwidth, $srcheight);
+            $dst = $this->generateThumbnail($file, $type);
 
             if (PHP_OS == "Linux"){
                 $name = explode("images/", $file)[1];
@@ -278,6 +289,23 @@ class Assets extends BaseController {
             return false;
         }
         
+    }
+
+    public function generateThumbnail($file, $type){
+        $tmbsizey = 300;
+        $tmbsizex = (int)$tmbsizey / 1.778;
+
+        $src = $this->correctImageOrientation($file, $type);
+
+        $srcheight = imagesy($src);
+        $srcwidth = (int)$srcheight / 1.778;
+
+        $src = imagecrop($src, ["x" => ((imagesx($src) / 2) - ($srcwidth / 2)), "y" => 0, "width" => $srcwidth, "height" => $srcheight]);
+
+        $dst = imagecreatetruecolor($tmbsizex, $tmbsizey);
+        imagecopyresampled($dst, $src, 0, 0, 0, 0, $tmbsizex, $tmbsizey, $srcwidth, $srcheight);
+
+        return $dst;
     }
 
     private function correctImageOrientation($filename, $type){
@@ -357,11 +385,12 @@ class Assets extends BaseController {
      *
      * @param string $tmpPath | the temporary path of the new image
      * @param string $type | the type of the image (png, jpg, bmp, webp)
-     * @param string $oldPath | the old name/path of the image
+     * @param string $oldPath | the old name of the image
      * @return string name of the new file
      */
     public function updateImage($tmpPath, $type, $oldPath)
     {
+        unlink($this->imgTmbPath . $oldPath);
         unlink($this->imgPath . $oldPath);
         return $this->saveImage($tmpPath, $type);
     }
@@ -380,6 +409,9 @@ class Assets extends BaseController {
      * @return string name of the new file
      */
     public function updateCollection($tmpPath, $type, $oldPath){
+        if (is_file($this->collTmbPath . $oldPath)){
+            unlink($this->collTmbPath . $oldPath);
+        }
         unlink($this->collPath . $oldPath);
         return $this->saveCollection($tmpPath, $type);
     }
@@ -401,10 +433,16 @@ class Assets extends BaseController {
         $file = $file . "." . $type;
 
         if (move_uploaded_file($tmpPath, $file)) {
+            $dst = $this->generateThumbnail($file, $type);
+
             if (PHP_OS == "Linux") {
-                return explode("collections/", $file)[1];
+                $name = explode("collections/", $file)[1];
+                imagejpeg($dst, $this->collTmbPath . $name);
+                return $name;
             } else {
-                return explode("collections\\", $file)[1];
+                $name = explode("collections\\", $file)[1];
+                imagejpeg($dst, $this->collTmbPath . $name);
+                return $name;
             }
         } else {
             return false;
@@ -414,6 +452,9 @@ class Assets extends BaseController {
     public function removeCollection($name){
         if (file_exists($this->collPath . $name)){
             unlink($this->collPath . $name);
+        }
+        if (file_exists($this->collTmbPath . $name)){
+            unlink($this->collTmbPath . $name);
         }
     }
 
@@ -609,5 +650,3 @@ class Assets extends BaseController {
         };
     }
 }
-
-?>

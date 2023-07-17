@@ -59,7 +59,9 @@ $routes->get('/app/(:segment)/progress', 'App::progress/$1', ["filter" => "add:b
 
 
 //Asset URLS
+$routes->get('/assets/thumbnails/regenerate', 'Dashboard::regenerateThumbnails', ["filter" => "add:images"]);
 $routes->get('/assets/images/thumbnail/(:any)', 'Assets::imageThumbnail/$1');
+$routes->get('/assets/collection/thumbnail/(:any)', 'Assets::collectionThumbnail/$1');
 $routes->get('/assets/images/(:any)', 'Assets::images/$1'); //TODO: add filters
 $routes->get('/assets/collection/(:any)', 'Assets::colImages/$1');
 $routes->get('/assets/category/(:any)', 'Assets::catImages/$1');

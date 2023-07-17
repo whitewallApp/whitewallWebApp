@@ -33,11 +33,13 @@ class MakeAppTable extends Migration
                 "default" => false,
             ]
         ];
+        $attributes = ['ENGINE' => 'InnoDB'];
+
 
         $this->forge->addField($fields);
         $this->forge->addPrimaryKey("id", "app_primary");
         $this->forge->addForeignKey("brand_id", "brand", "id");
-        $this->forge->createTable("app");
+        $this->forge->createTable("app", true, $attributes);
     }
 
     public function down()
