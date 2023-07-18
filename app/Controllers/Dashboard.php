@@ -42,6 +42,8 @@ class Dashboard extends BaseController
         $collModel = new CollectionModel();
         $assets = new Assets();
 
+        set_time_limit(0);
+
         //regenerate image thumbnails
         $brand_id = $session->get("brand_id");
         $accountId = $brandModel->getBrand($brand_id, filter: ["account_id"]);
