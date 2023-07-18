@@ -69,7 +69,7 @@ class Request extends BaseController
                 //get the collections
                 $collectionIds = $this->collectionModel->getCollumn("id", $category["id"], getBy: "category_id");
                 foreach($collectionIds as $colId){
-                    $colId = $colId["id"];
+                    $colId = $colId;
                     $collection = $this->collectionModel->getCollection($colId);
                     if ($collection["active"]){
                         $data[$category["name"]]["collections"][$collection["name"]] = [
