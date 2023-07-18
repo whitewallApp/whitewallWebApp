@@ -224,10 +224,6 @@ class Collection extends BaseController
                     $collection = $collModel->getCollection($id, assoc: true);
                     $dbids = $collModel->getCollumn("id", $session->get("brand_id"));
 
-                    foreach ($dbids as &$value) {
-                        $value = $value["id"];
-                    }
-
                     $validId = array_intersect($dbids, [$id]);
 
                     //foreign key check
