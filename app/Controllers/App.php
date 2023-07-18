@@ -58,9 +58,9 @@ class App extends BaseController
                 // echo var_dump(stream_get_contents($pipes[1]));
                 fclose($pipes[1]);
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                //echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
                 // echo var_dump(stream_get_contents($pipes[1]));
-                fclose($pipes[2]);
+                //fclose($pipes[2]);
             
                 // It is important that you close any pipes before calling
                 // proc_close in order to avoid a deadlock
