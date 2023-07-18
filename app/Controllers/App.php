@@ -70,21 +70,21 @@ class App extends BaseController
 
             //compile the app
 
-            $process = proc_open('gradlew assemble', $descriptorspec, $pipes, $copyAppPath . "/android", $_ENV);
+            // $process = proc_open('gradlew assemble', $descriptorspec, $pipes, $copyAppPath . "/android", $_ENV);
 
-            if (is_resource($process)) {
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
-                fclose($pipes[1]);
+            // if (is_resource($process)) {
+            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+            //     // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
+            //     fclose($pipes[1]);
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-                // echo var_dump(stream_get_contents($pipes[1]));
-                fclose($pipes[2]);
+            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+            //     // echo var_dump(stream_get_contents($pipes[1]));
+            //     fclose($pipes[2]);
 
-                // It is important that you close any pipes before calling
-                // proc_close in order to avoid a deadlock
-                $return_value = proc_close($process);
-            }
+            //     // It is important that you close any pipes before calling
+            //     // proc_close in order to avoid a deadlock
+            //     $return_value = proc_close($process);
+            // }
         }else{
             throw new \RuntimeException("Not a compatable OS");
         }
