@@ -39,34 +39,21 @@ class App extends BaseController
             $descriptorspec = array(
                 0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
                 1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
-                2 => array("pipe", "w") // stderr is a file to write to
+                2 => array("file", "/tmp/error-output.txt", "a") // stderr is a file to write to
              );
 
             $output = null;
             $retVal = null;
-            
+
+            $process = null;
             //style the app
-            // $process = proc_open('appStyle.bat ' . $copyAppPath . " " . $brandingPath, $descriptorspec, $pipes, "C:/wamp64/www/whitewall/app/Controllers/App", $_ENV);
+            if (PHP_OS == "Linux") {
+                $process = proc_open('appStyle.bat ' . $copyAppPath . " " . $brandingPath, $descriptorspec, $pipes, "C:/wamp64/www/whitewall/app/Controllers/App", $_ENV);
+            }else{
+                $process = proc_open('appStyle.bat ' . $copyAppPath . " " . $brandingPath, $descriptorspec, $pipes, "C:/wamp64/www/whitewall/app/Controllers/App", $_ENV);
+            }
              
-            //  if (is_resource($process)) {
-            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-            //     // echo var_dump(stream_get_contents($pipes[1]));
-            //     fclose($pipes[1]);
-
-            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-            //     // echo var_dump(stream_get_contents($pipes[1]));
-            //     fclose($pipes[2]);
-            
-            //     // It is important that you close any pipes before calling
-            //     // proc_close in order to avoid a deadlock
-            //     $return_value = proc_close($process);
-            //  }
-
-
-            //compile the app
-            $process = proc_open('appCompile.bat ' . $copyAppPath, $descriptorspec, $pipes, "C:/wamp64/www/whitewall/app/Controllers/App", $_ENV);
-
-            if (is_resource($process)) {
+             if (is_resource($process)) {
                 echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
                 // echo var_dump(stream_get_contents($pipes[1]));
                 fclose($pipes[1]);
@@ -74,11 +61,30 @@ class App extends BaseController
                 echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
                 // echo var_dump(stream_get_contents($pipes[1]));
                 fclose($pipes[2]);
-
+            
                 // It is important that you close any pipes before calling
                 // proc_close in order to avoid a deadlock
                 $return_value = proc_close($process);
-            }
+             }
+
+
+            //compile the app
+
+            // $process = proc_open('gradlew assemble', $descriptorspec, $pipes, $copyAppPath . "/android", $_ENV);
+
+            // if (is_resource($process)) {
+            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+            //     // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
+            //     fclose($pipes[1]);
+
+            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+            //     // echo var_dump(stream_get_contents($pipes[1]));
+            //     fclose($pipes[2]);
+
+            //     // It is important that you close any pipes before calling
+            //     // proc_close in order to avoid a deadlock
+            //     $return_value = proc_close($process);
+            // }
         }else{
             throw new \RuntimeException("Not a compatable OS");
         }
