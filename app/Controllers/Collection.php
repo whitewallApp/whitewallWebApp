@@ -17,6 +17,7 @@ class Collection extends BaseController
         $collModel = new CollectionModel;
         $catModel = new CategoryModel;
         $brandModel = new BrandModel;
+        $imageModel = new ImageModel();
         $brandname = $session->get("brand_id");
 
         $ids = $collModel->getAllIds($brandname);
@@ -33,7 +34,8 @@ class Collection extends BaseController
             $collection = [
                 "name" => $collModel->getCollection($id, filter: ["name"]),
                 "iconPath" => $collModel->getCollection($id, filter: ["thumbnail"]),
-                "category" => $catModel->getCategory($catID, filter: ["name"])
+                "category" => $catModel->getCategory($catID, filter: ["name"]),
+                "imageCount" => count($imageModel->getCollumn("id", $id, getBy: "collection_id"))
             ];
 
             array_push($collections, $collection);
