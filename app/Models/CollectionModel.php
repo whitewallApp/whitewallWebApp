@@ -49,7 +49,7 @@ class CollectionModel extends Model
         $returnArray = [];
 
         foreach ($return as $thing) {
-            array_push($returnArray, $thing);
+            array_push($returnArray, $thing[$column]);
         }
 
         return $returnArray;
