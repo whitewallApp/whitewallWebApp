@@ -26,6 +26,8 @@ class Assets extends BaseController {
      private $session;
      private $imgTmbPath;
     private $brandPath;
+    private $accountId;
+    private $brand_id;
 
     public function __construct()
     {
@@ -49,6 +51,8 @@ class Assets extends BaseController {
                 $brand = $brandModel->getBrand($apikey, "apikey", ["id", "account_id"], true);
                 $accountId = $brand["account_id"];
                 $brandId = $brand["id"];
+                $this->brand_id = $brandId;
+                $this->accountId = $accountId;
             }else{
                 http_response_code(400);
                 echo json_encode(["success" => false, "message" => "No valid API key found"]);
@@ -128,9 +132,7 @@ class Assets extends BaseController {
      */
     function branding($brandID, $file)
     {
-        $userModel = new UserModel();
-        $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
-        $path = getenv("BASE_PATH") . $accountId . "/" . $brandID . "/branding/";
+        $path = getenv("BASE_PATH") . $this->accountId . "/" . $this->brand_id . "/branding/";
 
         if (file_exists($path . $file)) {
 
