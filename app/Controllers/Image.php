@@ -572,6 +572,7 @@ class Image extends BaseController
                                                 $image["link"] = $data[$columns["link"]];
                                             }
                                         }else{
+                                            //if we need to create the image
                                             $image = [
                                                 "name" => $data[$columns["name"]],
                                                 "description" => $data[$columns["description"]],
