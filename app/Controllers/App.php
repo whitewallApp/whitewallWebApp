@@ -49,6 +49,7 @@ class App extends BaseController
             //style the app
             if (PHP_OS == "Linux") {
                 $process = proc_open('appStyle.sh ' . $copyAppPath . " " . $brandingPath, $descriptorspec, $pipes, "/srv/htp/whitewallWebApp/app/Controllers/App", $_ENV);
+                echo "linux";
             }else{
                 $process = proc_open('appStyle.bat ' . $copyAppPath . " " . $brandingPath, $descriptorspec, $pipes, "C:/wamp64/www/whitewall/app/Controllers/App", $_ENV);
             }
