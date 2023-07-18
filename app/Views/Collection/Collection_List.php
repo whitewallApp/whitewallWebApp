@@ -65,7 +65,7 @@
                             </td>
                             <td><?= $collection['name'] ?></td>
                             <td class="w-25"><a href="#"><?= $collection["category"] ?></a></td>
-                            <td><a href="#">Link</a></td>
+                            <td><?= $collection["imageCount"] ?></td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
