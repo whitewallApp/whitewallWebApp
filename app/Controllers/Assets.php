@@ -40,6 +40,9 @@ class Assets extends BaseController {
         if ($this->session->get("logIn")){
             $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
             $brandId = $this->session->get("brand_id");
+
+            $this->brand_id = $brandId;
+            $this->accountId = $accountId;
         }else{
             $apikey = $request->getGetPost("apikey");
 

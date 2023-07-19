@@ -16,9 +16,9 @@
                     <div class="phone">
                         <img class="phone-img" src="/Icons/phone.png">
                         <div class="background-phone-collection">
-                            <div class="col top-nav">
-                                <img class="menu-img" src="/Icons/SMALL-Whitewall-LOGO-pos.png">
-                                <div class="row">
+                            <div class="col my-auto text-center top-nav">
+                                <img class="menu-img" src="<?= ($brandimages["appHeading"] == "") ? ("/Icons/SMALL-Whitewall-LOGO-pos.png") : ($brandimages["appHeading"]) ?>">
+                                <!-- <div class="row">
                                     <div class="col-9">
                                         <select class="custom-select custom-select-sm" style="font-size: x-small;">
                                             <option selected>Change: Never</option>
@@ -30,7 +30,7 @@
                                     <div class="col-3">
                                         <i class="bi bi-list menu-icon" style="top: -5px;"></i>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <?php for ($i = 0; $i < floor(count($collections) / 2); $i += 2) : ?>
                                 <div class="row m-2">
@@ -65,7 +65,7 @@
                                 </div>
                             <?php endif ?>
                             <div class="">
-                                <div class="row <?= ($brandimages["appBanner"] == "") ? ("bottom-nav"):("bottom-nav-banner") ?>">
+                                <div class="row <?= ($brandimages["appBanner"] == "") ? ("bottom-nav") : ("bottom-nav-banner") ?>">
                                     <?php foreach ($categories as $category) : ?>
                                         <div class="col text-center">
                                             <!-- <i class="bi bi-palette-fill"></i> -->
@@ -193,6 +193,11 @@
                                 <div class="form-group">
                                     <label class="form-label" for="appHeader">App Header</label>
                                     <input type="file" class="form-control" id="appHeader" />
+
+                                    <label class="form-label" for="headerSize">Header Size</label>
+                                    <div class="range">
+                                        <input type="range" class="form-range" min="0" max="100" id="headerSize" value="100" />
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="appBanner">App Banner</label>
@@ -676,7 +681,8 @@
                 },
                 dropdowns: {},
                 checkmarks: {},
-                buttons: {}
+                buttons: {},
+                loading: {}
             };
         })
     <?php else : ?>

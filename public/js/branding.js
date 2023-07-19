@@ -267,6 +267,14 @@ $("#appHeader").on("input", function(){
     });
 })
 
+$("#headerSize").on("input", function() {
+    var size = $("#headerSize").val();
+    branding.headerSize = size;
+
+    $(".menu-img").css("height", size + "px");
+    $(".menu-img").css("width", "auto");
+})
+
 $("#appBanner").on("input", function(){
     formData = new FormData();
     formData.append("appBanner", this.files[0]);
