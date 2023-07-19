@@ -73,7 +73,7 @@ class Request extends BaseController
                     $collection = $this->collectionModel->getCollection($colId);
                     if ($collection["active"]){
                         $data[$category["name"]]["collections"][$collection["name"]] = [
-                            "image" => $collection["iconPath"],
+                            "image" => $collection["thumbnail"],
                             "link" => $collection["link"],
                             "images" => []
                         ];
