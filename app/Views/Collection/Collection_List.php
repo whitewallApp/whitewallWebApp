@@ -74,7 +74,7 @@
     </div>
 
     <div class="col-sm-4">
-        <div class="card p-2">
+        <div class="card p-2 header">
             <?= $this->renderSection('Detail') ?>
         </div>
     </div>

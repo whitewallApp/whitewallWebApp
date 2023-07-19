@@ -25,7 +25,7 @@ class Image extends BaseController
         $brandId = $session->get("brand_id");
         $paginate = 10;
 
-        if ($this->request->getGet("items") != null){
+        if ($this->request->getGet("items") != null) {
             $paginate = $this->request->getGet("items", FILTER_SANITIZE_NUMBER_INT);
         }
 
@@ -33,22 +33,22 @@ class Image extends BaseController
 
         $images = [];
 
-        if ($this->request->getGet("collection") != null){
+        if ($this->request->getGet("collection") != null) {
             $collectionID = $this->request->getGet("collection", FILTER_SANITIZE_NUMBER_INT);
 
             if ($this->request->getGet("orderby") != null) {
                 $column = $this->request->getGet("orderby", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $dbImages = $imageModel->where("brand_id", $brandId)->where("collection_id", $collectionID)->orderBy($column, "ASC")->paginate($paginate);
-            }else{
+            } else {
                 $dbImages = $imageModel->where("brand_id", $brandId)->where("collection_id", $collectionID)->paginate($paginate);
             }
         }
 
-        if ($this->request->getGet("id") != null){
+        if ($this->request->getGet("id") != null) {
             $imageID = $this->request->getGet("id", FILTER_SANITIZE_NUMBER_INT);
             $ids = $imageModel->getAllIds($brandId);
             foreach ($ids as $id) {
-                if ($id == $imageID){
+                if ($id == $imageID) {
                     $dbImages = $imageModel->getImage($id, assoc: true);
                 }
             }
@@ -60,7 +60,7 @@ class Image extends BaseController
 
         foreach ($dbcollections as $dbcollectionid) {
             $dbcollection = $collModel->getCollection($dbcollectionid);
-            
+
             $collection = [
                 "id" => $dbcollection["id"],
                 "name" => $dbcollection["name"]
@@ -76,7 +76,7 @@ class Image extends BaseController
             $catID = $collModel->getCollection($colID, filter: ["category_id"]);
 
             $run = true;
-            if ($amount > $limit && $limit != 0){
+            if ($amount > $limit && $limit != 0) {
                 $run = false;
             }
 
@@ -143,21 +143,102 @@ class Image extends BaseController
     public function update()
     {
         // try {
-            $assets = new Assets();
-            $imageModel = new ImageModel();
-            $collectionModel = new CollectionModel();
-            $brandModel = new BrandModel();
-            $catModel = new CategoryModel();
-            $session = session();
+        $assets = new Assets();
+        $imageModel = new ImageModel();
+        $collectionModel = new CollectionModel();
+        $brandModel = new BrandModel();
+        $catModel = new CategoryModel();
+        $session = session();
 
-            //delete caches
-            if (file_exists("../writable/cache/ImageImage_Detail")) {
-                unlink("../writable/cache/ImageImage_Detail");
-                unlink("../writable/cache/ImageImage_List");
+        //delete caches
+        if (file_exists("../writable/cache/ImageImage_Detail")) {
+            unlink("../writable/cache/ImageImage_Detail");
+            unlink("../writable/cache/ImageImage_List");
+        }
+
+        if (isset($_POST["type"])) {
+            //file -> file
+
+            //check if they have reached the limit
+            $subModel = new SubscriptionModel();
+            $imageLimit = $subModel->getLimit($session->get("user_id"), "imageLimit");
+            if ($subModel->checkImageLimit($session->get("user_id"), $imageLimit)) {
+                throw new RuntimeException("Image Limit Reached");
             }
 
-            if (isset($_POST["type"])) {
-                //file -> file
+            $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
+            $imageID = htmlspecialchars((string)$this->request->getPost("id"));
+            $type = explode("/", (string)$this->request->getPost("type"))[1];
+
+
+            //create image
+            if ($imageID == "undefined") {
+                $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link", "actionText", "actionLink"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                $collectionId = $collectionModel->getCollection($post["collection"], ["id"], "name");
+                $brandId = $session->get("brand_id");
+
+                $action = [
+                    "name" => $post["actionText"],
+                    "link" => $post["actionLink"]
+                ];
+
+                $data = [
+                    "name" => $post["name"],
+                    "description" => $post["description"],
+                    "externalPath" => $post["externalPath"],
+                    "collection_id" => $collectionId,
+                    "brand_id" => $brandId,
+                    "callToAction" => json_encode($action)
+                ];
+
+                if ($post["externalPath"] == "0") {
+                    $file = $this->request->getFile("file");
+                    if (!$file->isValid()) {
+                        throw new RuntimeException("Invalid File");
+                    }
+
+                    $name = $assets->saveImage($file->getTempName(), $file->guessExtension());
+                    $data["imagePath"] = "/assets/images/" . $name;
+                    $data["thumbnail"] = "/assets/images/thumbnail/" . $name;
+                } else {
+                    $data["imagePath"] = $post["link"];
+                    $data["thumbnail"] = $post["link"];
+                }
+
+                $imageModel->updateImage($data, "");
+                return json_encode(["success" => true]);
+                die;
+            }
+
+            $name = $imageModel->getImage($imageID, filter: ["imagePath", "externalPath"], assoc: true);
+            if ($name["externalPath"] == "0") {
+                //get rid of the assets/images
+                $name = explode("assets/images/", $name["imagePath"])[1];
+
+                $newPath = $assets->updateImage($tmpPath, $type, $name);
+
+                if ($newPath) { //if no error
+                    $post = $this->request->getPost(["name", "description", "collection", "externalPath", "actionText", "actionLink"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+                    $action = [
+                        "name" => $post["actionText"],
+                        "link" => $post["actionLink"]
+                    ];
+
+                    $data = [
+                        "imagePath" => "/assets/images/" . $newPath,
+                        "thumbnail" => "/assets/images/thumbnail/" . $newPath,
+                        "name" => $post["name"],
+                        "description" => $post["description"],
+                        "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
+                        "externalPath" => $post["externalPath"],
+                        "callToAction" => json_encode($action)
+                    ];
+                    $imageModel->updateImage($data, $imageID);
+                }
+            } else {
+                //link -> file
 
                 //check if they have reached the limit
                 $subModel = new SubscriptionModel();
@@ -166,123 +247,72 @@ class Image extends BaseController
                     throw new RuntimeException("Image Limit Reached");
                 }
 
-                $tmpPath = htmlspecialchars($_FILES["file"]["tmp_name"]);
-                $imageID = htmlspecialchars((string)$this->request->getPost("id"));
-                $type = explode("/", (string)$this->request->getPost("type"))[1];
+                $name = $assets->saveImage($tmpPath, $type);
 
+                $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link", "actionText", "actionLink"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-                //create image
-                if ($imageID == "undefined"){
-                    $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-                    $collectionId = $collectionModel->getCollection($post["collection"], ["id"], "name");
-                    $brandId = $session->get("brand_id");
-
-                    $data = [
-                        "name" => $post["name"],
-                        "description" => $post["description"],
-                        "externalPath" => $post["externalPath"],
-                        "collection_id" => $collectionId,
-                        "brand_id" => $brandId
-                    ];
-                    
-                    if ($post["externalPath"] == "0"){
-                        $file = $this->request->getFile("file");
-                        if (!$file->isValid()){
-                            throw new RuntimeException("Invalid File");
-                        }
-
-                        $name = $assets->saveImage($file->getTempName(), $file->guessExtension());
-                        $data["imagePath"] = "/assets/images/" . $name;
-                        $data["thumbnail"] = "/assets/images/thumbnail/" . $name;
-                    }else{
-                        $data["imagePath"] = $post["link"];
-                        $data["thumbnail"] = $post["link"];
-                    }
-
-                    $imageModel->updateImage($data, "");
-                    return json_encode(["success" => true]);
-                    die;
-                }
-
-                $name = $imageModel->getImage($imageID, filter: ["imagePath", "externalPath"], assoc: true);
-                if ($name["externalPath"] == "0") {
-                    //get rid of the assets/images
-                    $name = explode("assets/images/", $name["imagePath"])[1];
-
-                    $newPath = $assets->updateImage($tmpPath, $type, $name);
-
-                    if ($newPath) { //if no error
-                        $post = $this->request->getPost(["name", "description", "collection", "externalPath"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-                        $data = [
-                            "imagePath" => "/assets/images/" . $newPath,
-                            "thumbnail" => "/assets/images/thumbnail/" . $newPath,
-                            "name" => $post["name"],
-                            "description" => $post["description"],
-                            "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
-                            "externalPath" => $post["externalPath"]
-                        ];
-                        $imageModel->updateImage($data, $imageID);
-                    }
-                } else {
-                    //link -> file
-
-                    //check if they have reached the limit
-                    $subModel = new SubscriptionModel();
-                    $imageLimit = $subModel->getLimit($session->get("user_id"), "imageLimit");
-                    if ($subModel->checkImageLimit($session->get("user_id"), $imageLimit)){
-                        throw new RuntimeException("Image Limit Reached");
-                    }
-
-                    $name = $assets->saveImage($tmpPath, $type);
-
-                    $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-                    $data = [
-                        "imagePath" => "/assets/images/" . $name,
-                        "thumbnail" => "/assets/images/thumbnail/" . $name,
-                        "name" => $post["name"],
-                        "description" => $post["description"],
-                        "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
-                        "externalPath" => $post["externalPath"]
-                    ];
-                    $imageModel->updateImage($data, $imageID);
-                }
-            } else if (isset($_POST["link"])) {
-                //link -> link or file -> link
-                $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $imageID = htmlspecialchars((string)$this->request->getPost("id"));
-
-                //remove old file if there is one
-                if ($imageModel->getImage($imageID, filter: ["externalPath"]) == "0") {
-                    $name = explode("assets/images/", $imageModel->getImage($imageID, filter: ["imagePath"]))[1];
-                    $assets->removeImage($name);
-                }
-
-                $data = [
-                    "imagePath" => $post["link"],
-                    "thumbnail" => "none",
-                    "name" => $post["name"],
-                    "description" => $post["description"],
-                    "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
-                    "externalPath" => $post["externalPath"]
+                $action = [
+                    "name" => $post["actionText"],
+                    "link" => $post["actionLink"]
                 ];
-                $imageModel->updateImage($data, $imageID);
-            } else {
-                //update just the data
-                $post = $this->request->getPost(["name", "description", "collection"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $imageID = htmlspecialchars((string)$this->request->getPost("id"));
 
                 $data = [
+                    "imagePath" => "/assets/images/" . $name,
+                    "thumbnail" => "/assets/images/thumbnail/" . $name,
                     "name" => $post["name"],
                     "description" => $post["description"],
                     "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
+                    "externalPath" => $post["externalPath"],
+                    "callToAction" => json_encode($action)
                 ];
                 $imageModel->updateImage($data, $imageID);
             }
+        } else if (isset($_POST["link"])) {
+            //link -> link or file -> link
+            $post = $this->request->getPost(["name", "description", "collection", "externalPath", "link", "actionText", "actionLink"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $imageID = htmlspecialchars((string)$this->request->getPost("id"));
 
-            return json_encode(["success" => true]);
+            $action = [
+                "name" => $post["actionText"],
+                "link" => $post["actionLink"]
+            ];
+
+            //remove old file if there is one
+            if ($imageModel->getImage($imageID, filter: ["externalPath"]) == "0") {
+                $name = explode("assets/images/", $imageModel->getImage($imageID, filter: ["imagePath"]))[1];
+                $assets->removeImage($name);
+            }
+
+            $data = [
+                "imagePath" => $post["link"],
+                "thumbnail" => "none",
+                "name" => $post["name"],
+                "description" => $post["description"],
+                "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
+                "externalPath" => $post["externalPath"],
+                "callToAction" => json_encode($action)
+            ];
+            $imageModel->updateImage($data, $imageID);
+        } else {
+            //update just the data
+            $post = $this->request->getPost(["name", "description","collection", "actionText", "actionLink"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $imageID = htmlspecialchars((string)$this->request->getPost("id"));
+
+            $action = [
+                "name" => $post["actionText"],
+                "link" => $post["actionLink"]
+            ];
+
+            $data = [
+                "name" => $post["name"],
+                "description" => $post["description"],
+                "collection_id" => $collectionModel->getCollection($post["collection"], ["id"], "name"),
+                "callToAction" => json_encode($action)
+            ];
+            $imageModel->updateImage($data, $imageID);
+        }
+
+        return json_encode(["success" => true]);
         // }catch (\Exception $e){
         //     http_response_code(403);
         //     return json_encode($e->getMessage());
@@ -291,32 +321,33 @@ class Image extends BaseController
     }
 
     //delete images
-    public function delete(){
+    public function delete()
+    {
         $imageModel = new ImageModel();
         $session = session();
         $assets = new Assets();
 
         //bulk image or single
-        if ($this->request->getPost("ids") != null){
+        if ($this->request->getPost("ids") != null) {
             $ids = filter_var_array(json_decode((string)$this->request->getPost("ids")), FILTER_SANITIZE_NUMBER_INT);
             $dbids = $imageModel->getAllIds($session->get("brand_id"));
 
             $vallidIds = array_intersect($dbids, $ids);
 
-            foreach($vallidIds as $id){
+            foreach ($vallidIds as $id) {
                 $path = $imageModel->getImage($id, filter: ["imagePath"]);
-                if (preg_match("/assets/", $path) == 1){
+                if (preg_match("/assets/", $path) == 1) {
                     $name = explode("/", $path)[3];
                     $assets->removeImage($name);
                 }
                 $imageModel->delete($id);
             }
-        }else{
+        } else {
             $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
             $dbids = $imageModel->getAllIds($session->get("brand_id"));
 
             foreach ($dbids as $dbid) {
-                if ($dbid == $id){
+                if ($dbid == $id) {
                     $path = $imageModel->getImage($id, filter: ["imagePath"]);
                     if (preg_match("/assets/", $path) == 1) {
                         $name = explode("/", $path)[3];
@@ -345,11 +376,11 @@ class Image extends BaseController
         $session = session();
 
         try {
-            if ($file != null){
+            if ($file != null) {
                 if (!$file->isValid()) {
                     throw new RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
                 }
-            }else{
+            } else {
                 throw new RuntimeException("Error uploading, clear cache, reload and try again");
             }
 
@@ -392,13 +423,13 @@ class Image extends BaseController
                 if ($subModel->checkImageLimit($session->get("user_id"), $imageLimit)) {
                     throw new RuntimeException("Image Limit Reached");
                 }
-                
+
                 //check for duplicates
                 $imageDescription = $imageModel->getCollumn("description", $session->get("brand_id"));
-                
-                foreach($imageDescription as $description){
+
+                foreach ($imageDescription as $description) {
                     $description = $description["description"];
-                    if (preg_match("/" . $file->getName() . "/", $description) == 1){
+                    if (preg_match("/" . $file->getName() . "/", $description) == 1) {
                         throw new RuntimeException("Dupicate Image Found");
                     }
                 }
@@ -457,18 +488,18 @@ class Image extends BaseController
                             }
 
                             if ($imgfound || $data[$columns["id"]] == "") {
-                                
+
                                 //check if a collection is in multipule categories
-                                if (array_key_exists($data[$columns["collection_name"]], $structure)){
-                                    if ($structure[$data[$columns["collection_name"]]] != $data[$columns["category_name"]]){
+                                if (array_key_exists($data[$columns["collection_name"]], $structure)) {
+                                    if ($structure[$data[$columns["collection_name"]]] != $data[$columns["category_name"]]) {
                                         array_push($errors, ["image" => $data[$columns["name"]], "message" => "A collection can't be in mulitpule categories"]);
                                         continue;
                                     }
-                                }else{
+                                } else {
                                     $structure[$data[$columns["collection_name"]]] = $data[$columns["category_name"]];
                                 }
 
-                                if (strlen($data[$columns["description"]]) > (255 - 10)){
+                                if (strlen($data[$columns["description"]]) > (255 - 10)) {
                                     array_push($errors, ["image" => $data[$columns["name"]], "message" => "Description must be under 245 characters"]);
                                 }
                                 if (strlen($data[$columns["name"]]) > (255)) {
@@ -476,7 +507,7 @@ class Image extends BaseController
                                 }
 
                                 //check if collection and category is blank
-                                if ($data[$columns["collection_name"]] == ""){
+                                if ($data[$columns["collection_name"]] == "") {
                                     array_push($errors, ["image" => $data[$columns["name"]], "message" => "Image must have a collection"]);
                                     continue;
                                 }
@@ -509,14 +540,14 @@ class Image extends BaseController
                                 // echo var_dump(["row" => $row, "collectionFound" => $colfound, "categoryFound" => $catfound]);
 
                                 //don't do database stuff if dry run
-                                if (!$dryrun){
+                                if (!$dryrun) {
                                     //if cateogory doesn't exist make it (needs to be done before collection)
                                     if (!$catfound) {
                                         $category = [
                                             "name" => $data[$columns["category_name"]],
                                             "brand_id" => $brandid
                                         ];
-                                        
+
                                         $catModel->insert($category);
                                     }
 
@@ -532,7 +563,7 @@ class Image extends BaseController
                                     }
 
                                     //finally update the image
-                                    if ($overwrite){
+                                    if ($overwrite) {
                                         $image = [
                                             "name" => $data[$columns["name"]],
                                             "description" => $data[$columns["description"]],
@@ -544,34 +575,34 @@ class Image extends BaseController
                                         ];
 
                                         //delete the file if going file -> link
-                                        if ($data[$columns["id"]] != ""){
+                                        if ($data[$columns["id"]] != "") {
                                             $imageDatabase = $imageModel->getImage($data[$columns["id"]], assoc: true)[0];
-                                            if (preg_match("/^http/", $imageDatabase["imagePath"]) == 0 && preg_match("/^http/", $data[$columns["path"]]) == 1){
+                                            if (preg_match("/^http/", $imageDatabase["imagePath"]) == 0 && preg_match("/^http/", $data[$columns["path"]]) == 1) {
                                                 $assets->removeImage(explode("/images/", $imageDatabase["imagePath"])[1]);
                                                 $image["thumbnail"] = $data[$columns["path"]];
                                             }
                                         }
 
                                         $imageModel->updateImage($image, $data[$columns["id"]]);
-                                    }else{
+                                    } else {
                                         $imageDatabase = $imageModel->getImage($data[$columns["id"]], assoc: true);
 
                                         $image = [];
-                                        if (count($imageDatabase) > 0 ){
+                                        if (count($imageDatabase) > 0) {
                                             $imageDatabase = $imageDatabase[0];
 
-                                            if ($imageDatabase["name"] == ""){
+                                            if ($imageDatabase["name"] == "") {
                                                 $image["name"] = $data[$columns["name"]];
                                             }
 
-                                            if ($imageDatabase["description"] == "" || preg_match("/\.validate$/", $imageDatabase["description"]) == 1){
+                                            if ($imageDatabase["description"] == "" || preg_match("/\.validate$/", $imageDatabase["description"]) == 1) {
                                                 $image["description"] = $data[$columns["description"]];
                                             }
 
-                                            if ($imageDatabase["link"] == ""){
+                                            if ($imageDatabase["link"] == "") {
                                                 $image["link"] = $data[$columns["link"]];
                                             }
-                                        }else{
+                                        } else {
                                             //if we need to create the image
                                             $image = [
                                                 "name" => $data[$columns["name"]],
@@ -580,25 +611,23 @@ class Image extends BaseController
                                                 "thumbnail" => $data[$columns["path"]],
                                                 "imagePath" => $data[$columns["path"]],
                                                 "collection_id" => $colModel->getCollection($data[$columns["collection_name"]], ["id"], "name"),
-                                                "brand_id"=> $brandid
+                                                "brand_id" => $brandid
                                             ];
                                         }
 
                                         $image["externalPath"] = preg_match("/^https/", $data[$columns["path"]]);
 
-                                        $imageModel->updateImage($image,$data[$columns["id"]]);
+                                        $imageModel->updateImage($image, $data[$columns["id"]]);
                                     }
-
                                 }
-
-                            }else{
+                            } else {
                                 //add error to error array
                                 array_push($errors, ["image" => $data[$columns["name"]], "message" => "you don't have permission to edit this ID"]);
                             }
                             $row++;
                         }
                     }
-                }else{
+                } else {
                     //add error to error array
                     array_push($errors, ["row" => 0, "message" => "File Could not be read"]);
                 }
@@ -622,17 +651,16 @@ class Image extends BaseController
                 unlink("../../writable/cache/CollectionCollection_Detail");
                 unlink("../../writable/cache/CollectionCollection_List");
             }
-            
+
 
             //if there were errors say so
             if (count($errors) > 0) {
                 throw new RuntimeException(json_encode($errors));
             } else {
-                if ($dryrun){
+                if ($dryrun) {
                     $this->upload(false);
                 }
             }
-
         } catch (\Exception $e) {
             http_response_code(400);
             echo json_encode($e->getMessage());
@@ -671,7 +699,7 @@ class Image extends BaseController
                 }
             }
         } else {
-            $assets->makeCSV(["id","path", "name", "description", "link", "collection_name", "category_name"]);
+            $assets->makeCSV(["id", "path", "name", "description", "link", "collection_name", "category_name"]);
             foreach ($ids as $id) {
                 //append to csv
                 $image = $imageModel->getImage($id, assoc: true)[0];

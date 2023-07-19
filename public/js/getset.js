@@ -45,9 +45,13 @@ function getImg(e) {
         },
         function (data, status) {
             image = JSON.parse(data);
+            action = JSON.parse(image.callToAction);
 
             $("#data").attr("image-id", image.id);
             $("#remove").attr("remove-id", image.id)
+
+            $("#actionText").val(action.name)
+            $("#actionLink").val(action.link)
 
             nameTextBox.val(image.name);
             descTextBox.val(image.description);
@@ -89,6 +93,8 @@ $("#data").submit(function (e) {
     formData.append("id", $("#data").attr("image-id"))
     formData.append("name", $("#imageName").val())
     formData.append("description", $("#imageDesc").val());
+    formData.append("actionText", $("#actionText").val());
+    formData.append("actionLink", $("#actionLink").val());
 
     if ($("#imageLink").val() != "") {
         formData.append("link", $("#imageLink").val())

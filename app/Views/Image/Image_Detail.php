@@ -4,15 +4,15 @@
 
 <div id="form-div" <?php if (!$view[$pageName]["add"]) echo 'style="display: none;"' ?>>
   <div class="row">
-      <div class="col">
+    <div class="col">
 
-      </div>
-      <div class="col d-flex justify-content-center">
-        <h2 id="data-title" class="mr-4">Add Image</h2>
-      </div>
-      <div class="col d-flex flex-row-reverse">
+    </div>
+    <div class="col d-flex justify-content-center">
+      <h2 id="data-title" class="mr-4">Add Image</h2>
+    </div>
+    <div class="col d-flex flex-row-reverse">
 
-      </div>
+    </div>
   </div>
   <form class="mr-4" id="data" action="/images/update" method="post">
     <div class="form-group">
@@ -48,12 +48,25 @@
     <div class="form-group" id="linkDiv" style="display: none">
       <input type="text" class="form-control" id="imageLink" placeholder="https://yoursite.com/Image">
     </div>
+
     <div class="form-group" id="fileDiv" style="display: none">
       <div class="custom-file">
         <input type="file" class="custom-file-input" id="imageFile">
         <label id="imageFileText" class="custom-file-label" for="imageFile">File Upload</label>
       </div>
     </div>
+
+    <div class="card p-3 mt-3 mb-3">
+      <h5>Call to Action</h5>
+      <div class="form-group">
+        <label for="actionText">Call To Action Text</label>
+        <input type="text" class="form-control" id="actionText" value="Click here for Details ">
+
+        <label for="actionLink">Call To Action Link</label>
+        <input type="text" class="form-control" id="actionLink" placeholder="https://yoursite.com/image">
+      </div>
+    </div>
+
     <div class="form-group">
       <label for="select">Add to Collection</label>
       <select class="form-control" id="select" aria-describedby="imageName" placeholder="Image Name" data-mdb-toggle="tooltip" data-mdb-placement="top" title="Tooltip on top">
