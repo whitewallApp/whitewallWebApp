@@ -12,7 +12,7 @@ class CallToAction extends Migration
             'callToAction' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 510,
-                "default" => '{"name": "\"Click here for Details\"", "link": ""}'
+                "default" => '{"name": "Click here for Details", "link": ""}'
             ],
         ];
 
