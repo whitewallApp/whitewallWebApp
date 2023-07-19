@@ -48,13 +48,13 @@ class App extends BaseController
             $process = null;
             //style the app
             if (PHP_OS == "Linux") {
-                $process = proc_open('appStyle.sh ' . $copyAppPath, $descriptorspec, $pipes, "/srv/http/whitewallWebApp/app/Controllers/App", $_ENV);
+                $process = proc_open('sh appStyle.sh ' . $copyAppPath . " " . $brandingPath, $descriptorspec, $pipes, "/srv/http/whitewallWebApp/app/Controllers/App", $_ENV);
             }else{
                 $process = proc_open('appStyle.bat ' . $copyAppPath . " " . $brandingPath, $descriptorspec, $pipes, "C:/wamp64/www/whitewall/app/Controllers/App", $_ENV);
             }
              
              if (is_resource($process)) {
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                echo var_dump(stream_get_contents($pipes[1]));
                 // echo var_dump(stream_get_contents($pipes[1]));
                 fclose($pipes[1]);
 
