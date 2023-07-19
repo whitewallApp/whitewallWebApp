@@ -564,6 +564,11 @@ class Image extends BaseController
 
                                     //finally update the image
                                     if ($overwrite) {
+                                        $action = [
+                                            "name" => $data[$columns["action_text"]],
+                                            "link" => $data[$columns["action_link"]]
+                                        ];
+
                                         $image = [
                                             "name" => $data[$columns["name"]],
                                             "description" => $data[$columns["description"]],
@@ -571,7 +576,8 @@ class Image extends BaseController
                                             "imagePath" => $data[$columns["path"]],
                                             "collection_id" => $colModel->getCollection($data[$columns["collection_name"]], ["id"], "name"),
                                             "externalPath" => preg_match("/^http/", $data[$columns["path"]]),
-                                            "brand_id" => $brandid
+                                            "brand_id" => $brandid,
+                                            "callToAction" => json_encode($action)
                                         ];
 
                                         //delete the file if going file -> link
@@ -585,8 +591,13 @@ class Image extends BaseController
 
                                         $imageModel->updateImage($image, $data[$columns["id"]]);
                                     } else {
+                                        //grab the image if it exists in the db, if they want to update the image
                                         $imageDatabase = $imageModel->getImage($data[$columns["id"]], assoc: true);
 
+                                        $action = [
+                                            "name" => "Click here for Details",
+                                            "link" => ""
+                                        ];
                                         $image = [];
                                         if (count($imageDatabase) > 0) {
                                             $imageDatabase = $imageDatabase[0];
@@ -602,6 +613,16 @@ class Image extends BaseController
                                             if ($imageDatabase["link"] == "") {
                                                 $image["link"] = $data[$columns["link"]];
                                             }
+
+                                            if (((array)json_decode($imageDatabase["callToAction"]))["name"] == "Click here for Details" && $data[$columns["action_text"]] != "Click here for Details"){
+                                                $action["name"] = $data[$columns["action_text"]];
+                                            }
+
+                                            if (((array)json_decode($imageDatabase["callToAction"]))["link"] == "" && $data[$columns["action_link"]] != "") {
+                                                $action["link"] = $data[$columns["action_link"]];
+                                            }
+
+                                            $image["callToAction"] = json_encode($action);
                                         } else {
                                             //if we need to create the image
                                             $image = [
@@ -680,7 +701,7 @@ class Image extends BaseController
 
 
         if ($group == "detail") {
-            $assets->makeCSV(["id", "path", "name", "description", "link", "collection_name", "category_name"]);
+            $assets->makeCSV(["id", "path", "name", "description", "link", "collection_name", "category_name", "action_text", "action_link"]);
             foreach ($ids as $id) {
                 $image = $imageModel->getImage($id, assoc: true)[0];
                 if (preg_match("/\.validate$/", $image["description"]) == 1) {
@@ -693,13 +714,15 @@ class Image extends BaseController
                         $description,
                         "",
                         "",
+                        "",
+                        ((array)json_decode($image["callToAction"]))["name"],
                         ""
                     ];
                     $assets->writeLineCSV($csvData);
                 }
             }
         } else {
-            $assets->makeCSV(["id", "path", "name", "description", "link", "collection_name", "category_name"]);
+            $assets->makeCSV(["id", "path", "name", "description", "link", "collection_name", "category_name", "action_text", "action_link"]);
             foreach ($ids as $id) {
                 //append to csv
                 $image = $imageModel->getImage($id, assoc: true)[0];
@@ -718,7 +741,9 @@ class Image extends BaseController
                     $image["description"],
                     $image["link"],
                     $collection["name"],
-                    $catname
+                    $catname,
+                    ((array)json_decode($image["callToAction"]))["name"],
+                    ((array)json_decode($image["callToAction"]))["link"]
                 ];
                 $assets->writeLineCSV($csvData);
             }

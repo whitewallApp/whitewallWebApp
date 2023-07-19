@@ -621,7 +621,7 @@ class Assets extends BaseController {
 
         $time = time();
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="' . preg_replace('/\s+/', '', $brandName) . date("Ymdgis", $time) . '.csv"');
+        header('Content-Disposition: attachment; filename="' . preg_replace('/\s+/', '', $brandName) . date("Ymd", $time) . '.csv"');
         $fp = fopen($this->imgPath . "../images.csv", 'wb');
         fputcsv($fp, $columns);
         fclose($fp);
