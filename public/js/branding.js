@@ -271,8 +271,7 @@ $("#headerSize").on("input", function() {
     var size = $("#headerSize").val();
     branding.headerSize = size;
 
-    $(".menu-img").css("height", size + "px");
-    $(".menu-img").css("width", "auto");
+    $(".menu-img").css("width", size + "%");
 })
 
 $("#appBanner").on("input", function(){

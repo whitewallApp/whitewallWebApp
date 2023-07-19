@@ -16,7 +16,7 @@
                     <div class="phone">
                         <img class="phone-img" src="/Icons/phone.png">
                         <div class="background-phone-collection">
-                            <div class="col my-auto text-center top-nav">
+                            <div class="top-nav col my-auto text-center">
                                 <img class="menu-img" src="<?= ($brandimages["appHeading"] == "") ? ("/Icons/SMALL-Whitewall-LOGO-pos.png") : ($brandimages["appHeading"]) ?>">
                                 <!-- <div class="row">
                                     <div class="col-9">
