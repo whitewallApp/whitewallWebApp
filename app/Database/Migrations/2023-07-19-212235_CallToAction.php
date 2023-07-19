@@ -17,6 +17,7 @@ class CallToAction extends Migration
         ];
 
         $this->forge->addColumn("wallpaper", $fields);
+        $this->forge->dropColumn("wallpaper", "link");
     }
 
     public function down()

@@ -610,10 +610,6 @@ class Image extends BaseController
                                                 $image["description"] = $data[$columns["description"]];
                                             }
 
-                                            if ($imageDatabase["link"] == "") {
-                                                $image["link"] = $data[$columns["link"]];
-                                            }
-
                                             if (((array)json_decode($imageDatabase["callToAction"]))["name"] == "Click here for Details" && $data[$columns["action_text"]] != "Click here for Details"){
                                                 $action["name"] = $data[$columns["action_text"]];
                                             }
@@ -628,7 +624,6 @@ class Image extends BaseController
                                             $image = [
                                                 "name" => $data[$columns["name"]],
                                                 "description" => $data[$columns["description"]],
-                                                "link" => $data[$columns["link"]],
                                                 "thumbnail" => $data[$columns["path"]],
                                                 "imagePath" => $data[$columns["path"]],
                                                 "collection_id" => $colModel->getCollection($data[$columns["collection_name"]], ["id"], "name"),
@@ -701,7 +696,7 @@ class Image extends BaseController
 
 
         if ($group == "detail") {
-            $assets->makeCSV(["id", "path", "name", "description", "link", "collection_name", "category_name", "action_text", "action_link"]);
+            $assets->makeCSV(["id", "path", "name", "description", "collection_name", "category_name", "action_text", "action_link"]);
             foreach ($ids as $id) {
                 $image = $imageModel->getImage($id, assoc: true)[0];
                 if (preg_match("/\.validate$/", $image["description"]) == 1) {
@@ -714,7 +709,6 @@ class Image extends BaseController
                         $description,
                         "",
                         "",
-                        "",
                         ((array)json_decode($image["callToAction"]))["name"],
                         ""
                     ];
@@ -722,7 +716,7 @@ class Image extends BaseController
                 }
             }
         } else {
-            $assets->makeCSV(["id", "path", "name", "description", "link", "collection_name", "category_name", "action_text", "action_link"]);
+            $assets->makeCSV(["id", "path", "name", "description", "collection_name", "category_name", "action_text", "action_link"]);
             foreach ($ids as $id) {
                 //append to csv
                 $image = $imageModel->getImage($id, assoc: true)[0];
@@ -739,7 +733,6 @@ class Image extends BaseController
                     $image["imagePath"],
                     $image["name"],
                     $image["description"],
-                    $image["link"],
                     $collection["name"],
                     $catname,
                     ((array)json_decode($image["callToAction"]))["name"],
