@@ -163,10 +163,14 @@ class Collection extends BaseController
                 $oldPath = $colModel->getCollection($post["id"], ["iconPath"]);
 
                 if ($oldPath == ""){
-                    $data["iconPath"] = "/assets/collection/" . $assets->saveCollection($this->request->getFile("file")->getTempName(), $type);
+                    $name = $assets->saveCollection($this->request->getFile("file")->getTempName(), $type);
+                    $data["iconPath"] = "/assets/collection/" . $name;
+                    $data["thumbnail"] = "/assets/collection/thumbnail/" . $name;
                 }else{
                     $oldName = explode("assets/collection/", $oldPath)[1];
-                    $data["iconPath"] = "/assets/collection/" . $assets->updateCollection($this->request->getFile("file")->getTempName(), $type, $oldName);
+                    $name = $assets->updateCollection($this->request->getFile("file")->getTempName(), $type, $oldName);
+                    $data["iconPath"] = "/assets/collection/" . $name;
+                    $data["thumbnail"] = "/assets/collection/thumbnail/" . $name;
                 }
             }
 
