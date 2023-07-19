@@ -17,6 +17,18 @@ const styles = StyleSheet.create({
         activeColor: "lightgray",
         inactiveColor: "black",
     },
+
+    //header
+    header: {
+        width: "<?= array_key_exists("size", $branding["loading"]) ? ($branding["loading"]["size"]):("100") ?>%",
+        height: "auto"
+    },
+
+    //loading Image
+    loading: {
+        width: "<?= array_key_exists("headerSize", $branding) ? ($branding["headerSize"]):("100") ?>%",
+        height: "auto"
+    },
     
     //
     card: {
