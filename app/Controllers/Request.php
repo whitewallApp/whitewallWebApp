@@ -87,7 +87,8 @@ class Request extends BaseController
                                 "thumbnail" => $image["thumbnail"],
                                 "imagePath" => $image["imagePath"],
                                 "description" => $image["description"],
-                                "link" => $image["link"]
+                                "link" => $image["link"],
+                                "action" => $image["callToAction"]
                             ];
                         }
                     }
