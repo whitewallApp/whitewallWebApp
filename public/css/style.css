@@ -118,6 +118,22 @@ body {
     color: white;
 }
 
+.bottom-nav-banner {
+    background-color: lightslategray;
+    position: relative;
+    height: 65px;
+    width: 268px;
+    bottom: 50px;
+    color: white;
+}
+
+.appBanner {
+    width: 238px;
+    height: auto;
+    position: relative;
+    bottom: 50px;
+}
+
 .top-nav {
     z-index: 2;
 }

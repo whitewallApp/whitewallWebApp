@@ -64,14 +64,21 @@
                                     </div>
                                 </div>
                             <?php endif ?>
-                            <div class="row bottom-nav">
-                                <?php foreach ($categories as $category) : ?>
-                                    <div class="col text-center">
-                                        <!-- <i class="bi bi-palette-fill"></i> -->
-                                        <img class="category-img" src="<?= $category["iconPath"] ?>">
-                                        <p><?= $category["name"] ?></p>
+                            <div class="">
+                                <div class="row <?= ($brandimages["appBanner"] == "") ? ("bottom-nav"):("bottom-nav-banner") ?>">
+                                    <?php foreach ($categories as $category) : ?>
+                                        <div class="col text-center">
+                                            <!-- <i class="bi bi-palette-fill"></i> -->
+                                            <img class="category-img" src="<?= $category["iconPath"] ?>">
+                                            <p><?= $category["name"] ?></p>
+                                        </div>
+                                    <?php endforeach ?>
+                                </div>
+                                <?php if ($brandimages["appBanner"] != "") : ?>
+                                    <div>
+                                        <img class="appBanner" src="<?= $brandimages["appBanner"] ?>">
                                     </div>
-                                <?php endforeach ?>
+                                <?php endif ?>
                             </div>
                         </div>
                     </div>
@@ -190,6 +197,7 @@
                                 <div class="form-group">
                                     <label class="form-label" for="appBanner">App Banner</label>
                                     <input type="file" class="form-control" id="appBanner" />
+                                    <small class="form-text text-muted">320x50 px banner recomended</small>
                                 </div>
                             </form>
                         </div>

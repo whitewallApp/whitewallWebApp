@@ -1,6 +1,7 @@
 $("#categoryColor").on("input", function(e){
     color = $(this).val();
     $(".row.bottom-nav").css("background-color", color);
+    $(".row.bottom-nav-banner").css("background-color", color);
     branding.categories.backgroundcolor = $(this).val();
 })
 
