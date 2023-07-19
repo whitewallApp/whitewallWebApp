@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
 use App\Models\AppModel;
@@ -15,8 +16,9 @@ class App extends BaseController
         return Navigation::renderNavBar("Versions",  "builds") . view('App') . Navigation::renderFooter();
     }
 
-    public function compile($os){
-        if ($os == "android" || $os == "ios"){
+    public function compile($os)
+    {
+        if ($os == "android" || $os == "ios") {
             //get all session data before I close the session
             $appModel = new AppModel();
             $brandModel = new BrandModel();
@@ -27,20 +29,21 @@ class App extends BaseController
             //set up app paths
             $brandingPath = getenv("BASE_PATH") . $accountID . "/" . $brand_id . "/branding/";
             $copyAppPath = $brandingPath . "whitewallApp"; //set up app paths
+            $appName = "Whitewall";
 
             //make it so I dont' get session locked
             session_write_close();
             set_time_limit(0);
 
             //set the last used app to not be the current version
-            // $appModel->updateByMultipule(["brand_id" => $brand_id, "current" => 1], ["current" => 0]);
-            // $rowID = $appModel->insert(["brand_id" => $brand_id, "os" => $os, "state" => "Copying Files...", "progress" => 0, "current" => true]);
+            $appModel->updateByMultipule(["brand_id" => $brand_id, "current" => 1], ["current" => 0]);
+            $rowID = $appModel->insert(["brand_id" => $brand_id, "os" => $os, "state" => "Copying Files...", "progress" => 0, "current" => true]);
 
             $descriptorspec = array(
                 0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
                 1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
                 2 => array("file", "/tmp/error-output.txt", "a") // stderr is a file to write to
-             );
+            );
 
             $output = null;
             $retVal = null;
@@ -49,23 +52,35 @@ class App extends BaseController
             //style the app
             if (PHP_OS == "Linux") {
                 $process = proc_open('sh appStyle.sh ' . $copyAppPath . " " . $brandingPath, $descriptorspec, $pipes, "/srv/http/whitewallWebApp/app/Controllers/App", $_ENV);
-            }else{
+            } else {
                 $process = proc_open('appStyle.bat ' . $copyAppPath . " " . $brandingPath, $descriptorspec, $pipes, "C:/wamp64/www/whitewall/app/Controllers/App", $_ENV);
             }
-             
-             if (is_resource($process)) {
-                echo var_dump(stream_get_contents($pipes[1]));
-                // echo var_dump(stream_get_contents($pipes[1]));
-                fclose($pipes[1]);
 
-                //echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+            if (is_resource($process)) {
                 // echo var_dump(stream_get_contents($pipes[1]));
-                //fclose($pipes[2]);
-            
+                // // echo var_dump(stream_get_contents($pipes[1]));
+                // fclose($pipes[1]);
+
+                // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                // //echo var_dump(stream_get_contents($pipes[1]));
+                // fclose($pipes[1]);
+
+                while ($test = preg_replace("/\r\n|\r|\n/", "<br>", stream_get_line($pipes[1], 510))){
+                    $appModel->update($rowID, ["state" => $test]);
+                }
+
+                fclose($pipes[1]);
                 // It is important that you close any pipes before calling
                 // proc_close in order to avoid a deadlock
                 $return_value = proc_close($process);
-             }
+            }
+
+            //change the app name
+            $iosFile = file_get_contents($copyAppPath . "/ios/whitewallApp/Info.plist");
+            file_put_contents($copyAppPath . "/ios/whitewallApp/Info.plist", preg_replace("/whitewallApp/", $appName, $iosFile));
+
+            $androidFile = file_get_contents($copyAppPath . "/android/app/src/main/res/values/strings.xml");
+            file_put_contents($copyAppPath . "/android/app/src/main/res/values/strings.xml", preg_replace("/whitewallApp/", $appName, $androidFile));
 
 
             //compile the app
@@ -85,7 +100,7 @@ class App extends BaseController
             //     // proc_close in order to avoid a deadlock
             //     $return_value = proc_close($process);
             // }
-        }else{
+        } else {
             throw new \RuntimeException("Not a compatable OS");
         }
     }
@@ -100,8 +115,8 @@ class App extends BaseController
             $accountID = $brandModel->getBrand($brand_id, filter: ["account_id"]);
             session_write_close();
 
-            echo json_encode($appModel->where("brand_id", $brand_id)->where("current", 1)->select(["progress", "state"])->get()->getResultArray()[0]);
-        }else{
+            echo json_encode($appModel->where("brand_id", $brand_id)->where("current", 1)->where("os", $os)->select(["progress", "state"])->get()->getResultArray()[0]);
+        } else {
             throw new \RuntimeException("Not a compatable OS");
         }
     }

@@ -66,7 +66,7 @@ function pollProgress(os){
                 }
             }
         });
-    }, 2500)
+    }, 500)
 }
 
 function queryProgress(os){
