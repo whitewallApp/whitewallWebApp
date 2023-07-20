@@ -19,6 +19,13 @@ const styles = StyleSheet.create({
         inactiveColor: "black",
     },
 
+    //call to action
+    action: {
+        fontSize: 10, 
+        textAlign: 'center',
+        color: "<?= array_key_exists("actionColor", $branding) ? ($branding["actionColor"]):("white") ?>"
+    },
+
     //loading Image
     loading: {
         flex: 1,
