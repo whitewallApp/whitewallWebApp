@@ -17,7 +17,7 @@ class ImageModel extends Model
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'dateCreated';
     protected $updatedField  = 'dateUpdated';
-    protected $allowedFields = ["link", "name", "description", "thumbnail", "imagePath", "resolution", "externalPath", "brand_id", "collection_id"];
+    protected $allowedFields = ["link", "name", "description", "thumbnail", "imagePath", "resolution", "externalPath", "brand_id", "collection_id", "callToAction", "wallpaperClick", "linkClick"];
 
     public function getAllIds($brandID){
         $builder = $this->db->table('wallpaper');

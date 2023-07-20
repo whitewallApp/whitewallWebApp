@@ -101,4 +101,22 @@ class Request extends BaseController
     public function branding(){
         echo json_encode($this->brandModel->getBrand($this->brandId, filter: ["appIcon", "appLoading", "appHeading", "appBanner", "branding"], assoc: true));
     }
+
+    public function menu(){
+
+    }
+
+    public function tracking(){
+        $post = $this->request->getPost(["type", "name"], FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if ($post["type"] == "link"){
+            $image = $this->imageModel->getImage($post["name"], fetchBy: "name", filter: ["id", "linkClick"], assoc: true);
+            $this->imageModel->update($image["id"], ["linkClick" => intval($image["linkClick"]) + 1]);
+        }
+
+        if ($post["type"] == "wallpaper"){
+            $image = $this->imageModel->getImage($post["name"], fetchBy: "name", filter: ["id", "wallpaperClick"], assoc: true);
+            $this->imageModel->update($image["id"], ["wallpaperClick" => intval($image["wallpaperClick"]) + 1]);
+        }
+    }
 }
