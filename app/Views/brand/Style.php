@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     //background
     background: {
+        flex: 1,
         padding: 24,
         backgroundColor: "<?= array_key_exists("color", $branding["background"]) ? ($branding["background"]["color"]):("white") ?>",
     },
@@ -18,16 +19,28 @@ const styles = StyleSheet.create({
         inactiveColor: "black",
     },
 
-    //header
-    header: {
-        width: "<?= array_key_exists("size", $branding["loading"]) ? ($branding["loading"]["size"]):("100") ?>%",
-        height: "auto"
-    },
-
     //loading Image
     loading: {
+        flex: 1,
         width: "<?= array_key_exists("headerSize", $branding) ? ($branding["headerSize"]):("100") ?>%",
-        height: "auto"
+        alignSelf: "center"
+    },
+
+    //header
+    header: {
+        flex: 1,
+        //branding
+        width: "<?= array_key_exists("size", $branding["loading"]) ? ($branding["loading"]["size"]):("100") ?>%",
+        alignSelf: "center"
+    },
+
+    header_container: { 
+        width: "100%", 
+        height: "auto", 
+        flex: 0.2,
+        
+        //branding
+        backgroundColor: "<?= array_key_exists("color", $branding["background"]) ? ($branding["background"]["color"]):("white") ?>"
     },
     
     //
