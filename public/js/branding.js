@@ -337,6 +337,11 @@ $("#save").on("click", function(){
     });
 })
 
+//call to action
+$("#collImgLabelActionColor").on("input", function(){
+    branding.actionColor = $("#collImgLabelActionColor").val();
+})
+
 //load in branding on page load
 
 $(function(){

@@ -368,6 +368,10 @@
                                     <input type="color" class="form-control" id="collImgLabelFontColor">
                                 </div>
                                 <div class="form-group">
+                                    <label class="form-label" for="collImgLabelActionColor">Call To Action Color</label>
+                                    <input type="color" class="form-control" id="collImgLabelActionColor">
+                                </div>
+                                <div class="form-group">
                                     <select class="custom-select" id="imgCollabelFontStyle">
                                         <option selected value="normal">Normal</option>
                                         <option value="bold">Bold</option>
