@@ -48,22 +48,19 @@ class App extends BaseController
             $output = null;
             $retVal = null;
 
+            $images = $brandModel->getBrand($brand_id, filter: ["appLoading", "appHeading"], assoc: true);
+            $imageLoading = explode("/", $images["appLoading"])[4];
+            $imageHeading = explode("/", $images["appHeading"])[4];
+
             $process = null;
             //style the app
             if (PHP_OS == "Linux") {
-                $process = proc_open('sh appStyle.sh ' . $copyAppPath . " " . $brandingPath, $descriptorspec, $pipes, "/srv/http/whitewallWebApp/app/Controllers/App", $_ENV);
+                $process = proc_open('sh appStyle.sh ' . $copyAppPath . " " . $brandingPath . " " . $imageLoading . " " . $imageHeading, $descriptorspec, $pipes, "/srv/http/whitewallWebApp/app/Controllers/App", $_ENV);
             } else {
-                $process = proc_open('appStyle.bat ' . $copyAppPath . " " . $brandingPath, $descriptorspec, $pipes, "C:/wamp64/www/whitewall/app/Controllers/App", $_ENV);
+                $process = proc_open('appStyle.bat ' . $copyAppPath . " " . $brandingPath . " " . $imageLoading . " " . $imageHeading, $descriptorspec, $pipes, "C:/wamp64/www/whitewall/app/Controllers/App", $_ENV);
             }
 
             if (is_resource($process)) {
-                // echo var_dump(stream_get_contents($pipes[1]));
-                // // echo var_dump(stream_get_contents($pipes[1]));
-                // fclose($pipes[1]);
-
-                // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                // //echo var_dump(stream_get_contents($pipes[1]));
-                // fclose($pipes[1]);
 
                 while ($test = preg_replace("/\r\n|\r|\n/", "<br>", stream_get_line($pipes[1], 510))){
                     $appModel->update($rowID, ["state" => $test]);
