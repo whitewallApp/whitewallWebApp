@@ -31,7 +31,10 @@
             </div>
         </div>
         <div class="col">
-
+            <div class="card p-3 text-center">
+                <h4>Action Links Clicked</h4>
+                <div id="linkChart" style="max-width:700px; height:200px"></div>
+            </div>
         </div>
         <div class="col">
 
@@ -39,7 +42,10 @@
     </div>
     <div class="row">
         <div class="col">
-
+            <div class="card p-3 text-center">
+                <h4>Wallpapers Set</h4>
+                <div id="wallpaperChart" style="max-width:700px; height:200px"></div>
+            </div>
         </div>
         <div class="col">
 
@@ -49,3 +55,10 @@
         </div>
     </div>
 </div>
+<script src="https://www.gstatic.com/charts/loader.js">
+</script>
+<script>
+    const linkData = <?= $links ?>;
+    const wallpaperData = <?= $wallpapers ?>;
+</script>
+<script src="js/dashboard.js"></script>

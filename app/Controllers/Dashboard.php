@@ -14,6 +14,7 @@ class Dashboard extends BaseController
     public function index()
     {
         $subModel = new SubscriptionModel();
+        $imageModel = new ImageModel();
         $session = session();
 
         $imageLimit = $subModel->getLimit($session->get("user_id"), "imageLimit");
@@ -24,12 +25,40 @@ class Dashboard extends BaseController
         $currentUser = $subModel->getCurrentUserCount($session->get("user_id"));
         $currentBrand = $subModel->getCurrrentBrandCount($session->get("user_id"));
 
+        //get image and link data
+        $linkdb = array_slice($imageModel->getLinksClicked($session->get("brand_id")), 0, 5);
+        $linkData = [];
+        foreach ($linkdb as $link) {
+            $data = [
+                $link["name"],
+                intval($link["linkClick"])
+            ];
+
+            array_push($linkData, $data);
+        }
+
+        $wallpaperdb = array_slice($imageModel->getWallpaperClicked($session->get("brand_id")), 0, 5);
+        $wallpaperData = [];
+        foreach ($wallpaperdb as $link) {
+            $data = [
+                $link["name"],
+                intval($link["wallpaperClick"])
+            ];
+
+            array_push($wallpaperData, $data);
+        }
+        //add headers for google charst
+        array_unshift($linkData, ["Links clicked", "All Time"]);
+        array_unshift($wallpaperData, ["Wallpapers Set", "All Time"]);
+
         $data = [
             "limits" => [
                 "images" => ["limit" => $imageLimit, "count" => $currentImage],
                 "users" => ["limit" => $userLimit, "count" => $currentUser],
                 "brands" => ["limit" => $brandLimit, "count" => $currentBrand]
-            ]
+            ],
+            "links" => json_encode($linkData),
+            "wallpapers" => json_encode($wallpaperData)
         ];
 
         return Navigation::renderNavBar("Dashboard") . view('Dashboard', $data) . Navigation::renderFooter();

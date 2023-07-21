@@ -114,8 +114,28 @@ class ImageModel extends Model
         return $img;
     }
 
+    /**
+     * This is for searching images using the search bar
+     *
+     * @param string $column
+     * @param array|string $query
+     * @return void
+     */
     public function like(string $column, array|string $query){
         $builder = $this->db->table('wallpaper');
         return $builder->orLike($column, $query, insensitiveSearch: true)->get()->getResultArray();
+    }
+
+    public function getLinksClicked(int $brandID, string $sort="DESC"){
+        $builder = $this->db->table("wallpaper");
+
+        return $builder->select(["id", "name", "linkClick"])->orderBy("linkClick", $sort)->get()->getResultArray();
+    }
+
+    public function getWallpaperClicked(int $brandID, string $sort = "DESC")
+    {
+        $builder = $this->db->table("wallpaper");
+
+        return $builder->select(["id", "name", "wallpaperClick"])->orderBy("wallpaperClick", $sort)->get()->getResultArray();
     }
 }
