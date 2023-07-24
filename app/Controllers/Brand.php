@@ -302,7 +302,7 @@ class Brand extends BaseController
     }
 
     public function updateBrand(){
-        try {
+        // try {
             $brandModel = new BrandModel();
             $session = session();
 
@@ -358,7 +358,8 @@ class Brand extends BaseController
                     ];
                     $brandModel->update($brand["id"], $updatedBrand);
                 }else{
-                    $name = $assets->updateBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], explode("/", $brand[$imageType])[3], $getbrandID);
+                    $oldName = explode("/", $brand[$imageType])[4];
+                    $name = $assets->updateBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], $oldName, $getbrandID);
                     $updatedBrand = [
                         $imageType => "/assets/branding/" . $getbrandID . "/" . $name
                     ];
@@ -435,11 +436,11 @@ class Brand extends BaseController
 
             return json_encode(["success" => true]);
 
-        } catch (\Exception $e){
-            http_response_code(400);
-            echo json_encode($e->getMessage());
-            exit;
-        }
+        // } catch (\Exception $e){
+        //     http_response_code(400);
+        //     echo json_encode($e->getMessage());
+        //     exit;
+        // }
     }
 
     public function removeBrand(){

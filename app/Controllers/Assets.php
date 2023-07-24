@@ -579,7 +579,7 @@ class Assets extends BaseController {
         }else{
             $userModel = new UserModel();
             $accountId = $userModel->getUser($this->session->get("user_id"), filter: ["account_id"]);
-            $file = getenv("BASE_PATH") . $accountId . "/" . $brandID . "/branding/" . $name;
+            $file = getenv("BASE_PATH") . $accountId . "/" . $brandID . "/" . "branding/" . $name;
             unlink($file);
         }
         $name = explode(".", $name)[0];
