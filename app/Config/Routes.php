@@ -67,6 +67,7 @@ $routes->get('/assets/collection/(:any)', 'Assets::colImages/$1');
 $routes->get('/assets/category/(:any)', 'Assets::catImages/$1');
 $routes->get('/assets/user/(:any)', 'Assets::user/$1');
 $routes->get('/assets/menu/(:any)', 'Assets::menu/$1');
+$routes->get('/assets/app/release', 'Assets::getAPK');
 $routes->get('/assets/branding/(:num)/(:segment)', 'Assets::branding/$1/$2');
 
 //Get URLs

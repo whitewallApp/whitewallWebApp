@@ -102,6 +102,21 @@ class Assets extends BaseController {
             }
         }
     }
+
+    function getAPK(){
+        $path = getenv("BASE_PATH") . $this->accountId . "/" . $this->brand_id . "/branding/";
+        $file = "app-release.apk";
+
+        if (file_exists($path . $file)) {
+
+            header("Content-Type: " . "application/octet-stream");
+            readfile($path . $file);
+            exit;
+        } else {
+            return view("errors/html/error_404", ["message" => "sorry we can't find that image"]);
+        }
+    }
+
     /**
      * Returns image files
      *
