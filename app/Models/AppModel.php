@@ -33,4 +33,13 @@ class AppModel extends Model
         }
         $builder->update($data);
     }
+
+    public function selectByMultipule($selections, $ids)
+    {
+        $builder = $this->db->table("app");
+        foreach ($ids as $key => $value) {
+            $builder->where($key, $value);
+        }
+        return $builder->select($selections)->get()->getResultArray()[0];
+    }
 }
