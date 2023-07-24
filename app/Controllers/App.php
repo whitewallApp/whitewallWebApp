@@ -92,6 +92,7 @@ class App extends BaseController
                 $process = proc_open('keytool -genkeypair -v -storetype PKCS12 -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000', $descriptorspec, $pipes, $brandingPath, $_ENV);
 
                 if (is_resource($process)) {
+                    $appModel->update($rowID, ["password" => "129034"]);
 
                     fwrite($pipes[0], "129034\n");
                     fwrite($pipes[0], "129034\n");
