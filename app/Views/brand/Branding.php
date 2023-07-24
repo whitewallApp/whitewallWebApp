@@ -37,7 +37,7 @@
                                     <div class="col-sm-6">
                                         <div class="card card-branding">
                                             <input type="checkbox" class="form-check-input checkbox-branding" checked>
-                                            <img class="card-img-top img-branding p-2" src="<?= $collections[$i]["iconPath"] ?>">
+                                            <img class="card-img-top img-branding p-2" src="<?= $collections[$i]["thumbnail"] ?>">
                                             <div class="collection-title">
                                                 <p><?= $collections[$i]["name"] ?></p>
                                             </div>
@@ -46,7 +46,7 @@
                                     <div class="col-sm-6">
                                         <div class="card card-branding">
                                             <input type="checkbox" class="form-check-input checkbox-branding">
-                                            <img class="card-img-top p-2 img-branding" src="<?= $collections[$i + 1]["iconPath"] ?>">
+                                            <img class="card-img-top p-2 img-branding" src="<?= $collections[$i + 1]["thumbnail"] ?>">
                                             <div class="collection-title">
                                                 <p><?= $collections[$i + 1]["name"] ?></p>
                                             </div>
@@ -57,7 +57,7 @@
                             <?php if (count($collections) % 2 != 0) : ?>
                                 <div class="col-sm-6">
                                     <div class="card card-branding">
-                                        <img class="card-img-top p-2 img-branding" src="<?= $collections[count($collections) - 1]["iconPath"] ?>">
+                                        <img class="card-img-top p-2 img-branding" src="<?= $collections[count($collections) - 1]["thumbnail"] ?>">
                                         <div class="collection-title">
                                             <p><?= $collections[count($collections) - 1]["name"] ?></p>
                                         </div>
@@ -69,7 +69,7 @@
                                     <?php foreach ($categories as $category) : ?>
                                         <div class="col text-center">
                                             <!-- <i class="bi bi-palette-fill"></i> -->
-                                            <img class="category-img" src="<?= $category["iconPath"] ?>">
+                                            <img class="category-img" src="<?= $category["thumbnail"] ?>">
                                             <p><?= $category["name"] ?></p>
                                         </div>
                                     <?php endforeach ?>

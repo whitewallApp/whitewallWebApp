@@ -69,7 +69,7 @@ class Brand extends BaseController
         $collectionIds = $colModel->getCollumn("id", $brandname);
         $collections = [];
         foreach($collectionIds as $id){
-            $collection = $colModel->getCollection($id, ["name", "iconPath"], assoc: true);
+            $collection = $colModel->getCollection($id, ["name", "iconPath", "thumbnail"], assoc: true);
 
             if ($collection["name"] == "Default Collection"){
                 continue;
