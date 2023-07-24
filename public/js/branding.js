@@ -351,6 +351,8 @@ $(function(){
     $("#backgroundColor").val(branding.background.color);
     $("#backgroundColor").trigger("input");
 
+    $("#appName").val(branding.appName);
+
     //buttons
     $("#buttonFontColor").val(branding.buttons.fontcolor);
     $("#buttonFontColor").trigger("input");

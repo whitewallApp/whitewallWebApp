@@ -4,7 +4,7 @@
             <tr>
                 <th scope="col" colspan="2"></th>
                 <th scope="col" colspan="3">Android</th>
-                <th scope="col" colspan="3">IOS</th>
+                <!-- <th scope="col" colspan="3">IOS</th> -->
             </tr>
             <tr>
                 <th scope="col">Version Name</th>
@@ -12,9 +12,9 @@
                 <th scope="col">Action/Status</th>
                 <th scope="col">Compiled Date</th>
                 <th scope="col" class="border-right">Published Date</th>
-                <th scope="col">Action/Status</th>
+                <!-- <th scope="col">Action/Status</th>
                 <th scope="col">Compiled Date</th>
-                <th scope="col">Published Date</th>
+                <th scope="col">Published Date</th> -->
             </tr>
         </thead>
         <tbody class="table-group-divider table-divider-color">
@@ -41,7 +41,7 @@
                 </td>
                 <td>N/A</td>
                 <td class="border-right">N/A</td>
-                <td>
+                <!-- <td>
                     <div class="row">
                         <div class="col">
                             <p>In Progress</p>
@@ -60,27 +60,7 @@
                     </div>
                 </td>
                 <td>N/A</td>
-                <td>N/A</td>
-            </tr>
-            <tr>
-                <th scope="row">1.2.3</th>
-                <td class="border-right">May 10 2015</td>
-                <td>Active</td>
-                <td>May 25 2015</td>
-                <td class="border-right">May 26 2015</td>
-                <td>Active</td>
-                <td>May 25 2015</td>
-                <td>May 26 2015</td>
-            </tr>
-            <tr>
-                <th scope="row">1.1.3</th>
-                <td class="border-right">Jan 8 2015</td>
-                <td>Inactive</td>
-                <td>Jan 9 2015</td>
-                <td class="border-right">Jan 10 2015</td>
-                <td>Inactive</td>
-                <td>Jan 9 2015</td>
-                <td>Jan 10 2015</td>
+                <td>N/A</td> -->
             </tr>
         </tbody>
     </table>
@@ -100,10 +80,10 @@
                         <input type="text" id="androidVersionName" class="form-control" />
                         <label class="form-label" for="androidVersionName">Version Name</label>
                     </div>
-                    <div class="form-outline">
+                    <!-- <div class="form-outline">
                         <input type="text" id="androidAppName" class="form-control" />
                         <label class="form-label" for="androidAppName">App Name</label>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col" style="display: none;">
                     <p id="androidStatus"></p>
