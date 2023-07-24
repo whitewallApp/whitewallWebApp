@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
 use App\Models\AppModel;
+use App\Models\VariablesModel;
 
 class App extends BaseController
 
@@ -196,6 +197,26 @@ class App extends BaseController
             file_put_contents($copyAppPath . "/Category.tsx", preg_replace("/\?apikey=.*(?=\")/", "?apikey=" . $apikey, $catFile));
             $appFile = file_get_contents($copyAppPath . "/App.tsx");
             file_put_contents($copyAppPath . "/App.tsx", preg_replace("/\?apikey=.*(?=\")/", "?apikey=" . $apikey, $appFile));
+
+            //send the webhook
+            $varModel = new VariablesModel();
+            $url = $varModel->getVariable("compile_webhook", assoc: true)["value"];
+            $data = ['appPath' => $copyAppPath, 'iconName' => $imageIcon];
+
+            // use key 'http' even if you send the request to https://...
+            $options = [
+                    'http' => [
+                        'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                        'method' => 'POST',
+                        'content' => http_build_query($data),
+                    ],
+                ];
+
+            $context = stream_context_create($options);
+            $result = file_get_contents($url, false, $context);
+            if ($result === false) {
+                /* Handle error */
+            }
 
             // compile the app
             // $process = proc_open('gradlew assemble', $descriptorspec, $pipes, $copyAppPath . "/android", $_ENV);
