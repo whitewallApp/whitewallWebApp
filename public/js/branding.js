@@ -307,6 +307,7 @@ $("#loadingSize").on("input", function () {
 
 $("#save").on("click", function(){
     formData = new FormData();
+    branding.appName = $("#appName").val();
     formData.append("branding", JSON.stringify(branding));
     formData.append("collectionLink", $("#collectionLink").val());
     formData.append("categoryLink", $("#categoryLink").val());

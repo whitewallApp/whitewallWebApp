@@ -38,40 +38,96 @@ class App extends BaseController
             //set the last used app to not be the current version
             $appModel->updateByMultipule(["brand_id" => $brand_id, "current" => 1], ["current" => 0]);
             $rowID = $appModel->insert(["brand_id" => $brand_id, "os" => $os, "state" => "Copying Files...", "progress" => 0, "current" => true]);
+            $appName = json_decode((string)$brandModel->getBrand($brand_id, filter: ["branding"]), true)["appName"];
 
+            $output = null;
+            $retVal = null;
+
+            $images = $brandModel->getBrand($brand_id, filter: ["appLoading", "appHeading", "appIcon"], assoc: true);
+            $imageLoading = "";
+            $imageHeading = "";
+            $imageIcon = "";
+            try {
+                $imageLoading = explode("/", $images["appLoading"])[4];
+                $imageHeading = explode("/", $images["appHeading"])[4];
+                $imageIcon = explode("/", $images["appHeading"])[4];
+            }catch(\Throwable $e){
+
+            }
+
+            //variables for command line
             $descriptorspec = array(
                 0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
                 1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
                 2 => array("file", "/tmp/error-output.txt", "a") // stderr is a file to write to
             );
 
-            $output = null;
-            $retVal = null;
-
-            $images = $brandModel->getBrand($brand_id, filter: ["appLoading", "appHeading"], assoc: true);
-            $imageLoading = explode("/", $images["appLoading"])[4];
-            $imageHeading = explode("/", $images["appHeading"])[4];
-
-            $process = null;
-            //style the app
-            if (PHP_OS == "Linux") {
-                $process = proc_open('sh appStyle.sh ' . $copyAppPath . " " . $brandingPath . " " . $imageLoading . " " . $imageHeading, $descriptorspec, $pipes, "/srv/http/whitewallWebApp/app/Controllers/App", $_ENV);
-            } else {
-                $process = proc_open('appStyle.bat ' . $copyAppPath . " " . $brandingPath . " " . $imageLoading . " " . $imageHeading, $descriptorspec, $pipes, "C:/wamp64/www/whitewall/app/Controllers/App", $_ENV);
-            }
+            //clone the repo
+            $process = proc_open('git clone https://github.com/yomas000/whitewallApp.git', $descriptorspec, $pipes, $brandingPath, $_ENV);
 
             if (is_resource($process)) {
 
-                while ($test = preg_replace("/\r\n|\r|\n/", "<br>", stream_get_line($pipes[1], 510))){
-                    $appModel->update($rowID, ["state" => $test]);
-                }
-
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
                 fclose($pipes[1]);
+
                 // It is important that you close any pipes before calling
                 // proc_close in order to avoid a deadlock
                 $return_value = proc_close($process);
             }
 
+            $appModel->update($rowID, ["state" => "Installing...", "progress" => 30]);
+            // install dependancies
+            $process = proc_open('npm install', $descriptorspec, $pipes, $copyAppPath, $_ENV);
+
+            if (is_resource($process)) {
+
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
+                fclose($pipes[1]);
+
+                // It is important that you close any pipes before calling
+                // proc_close in order to avoid a deadlock
+                $return_value = proc_close($process);
+            }
+
+            $appModel->update($rowID, ["state" => "Styling...", "progress" => 40]);
+            // load in app Icon
+            if (file_exists($brandingPath . $imageIcon)){
+                $process = proc_open('yo rn-toolbox:assets --icon ' . $brandingPath . $imageIcon, $descriptorspec, $pipes, $copyAppPath, $_ENV);
+
+                if (is_resource($process)) {
+
+                    fwrite($pipes[0], '\n');
+                    fclose($pipes[0]);
+
+                    echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                    // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
+                    fclose($pipes[1]);
+
+                    // It is important that you close any pipes before calling
+                    // proc_close in order to avoid a deadlock
+                    $return_value = proc_close($process);
+                }
+            }
+
+
+            $appModel->update($rowID, ["state" => "Styling...", "progress" => 50]);
+            //add header and loading images
+            mkdir($copyAppPath . "/Icons");
+            if (file_exists($brandingPath . $imageLoading)){
+                copy($brandingPath . $imageLoading, $copyAppPath . "/Icons/" . $imageLoading);
+                $file = file_get_contents($copyAppPath . "/App.tsx");
+                file_put_contents( $copyAppPath . "/App.tsx", preg_replace("/appLoading.gif/", $imageLoading, $file));
+            }
+
+            if (file_exists($brandingPath . $imageHeading)) {
+                copy($brandingPath . $imageHeading, $copyAppPath . "/Icons/" . $imageHeading);
+                $file = file_get_contents($copyAppPath . "/Category.tsx");
+                file_put_contents($copyAppPath . "/Category.tsx", preg_replace("/appHeading.jpeg/", $imageHeading, $file));
+            }
+
+            $appModel->update($rowID, ["state" => "Styling...", "progress" => 70]);
             //change the app name
             $iosFile = file_get_contents($copyAppPath . "/ios/whitewallApp/Info.plist");
             file_put_contents($copyAppPath . "/ios/whitewallApp/Info.plist", preg_replace("/whitewallApp/", $appName, $iosFile));
@@ -79,8 +135,16 @@ class App extends BaseController
             $androidFile = file_get_contents($copyAppPath . "/android/app/src/main/res/values/strings.xml");
             file_put_contents($copyAppPath . "/android/app/src/main/res/values/strings.xml", preg_replace("/whitewallApp/", $appName, $androidFile));
 
+            $appModel->update($rowID, ["state" => "Styling...", "progress" => 70]);
+            //add the apikey
+            $apikey = $brandModel->getBrand($brand_id, filter: ["apikey"]);
+            $catFile = file_get_contents($copyAppPath . "/Category.tsx");
+            file_put_contents($copyAppPath . "/Category.tsx", preg_replace("/\?apikey=.*(?=\")/", "?apikey=" . $apikey, $catFile));
+            $appFile = file_get_contents($copyAppPath . "/App.tsx");
+            file_put_contents($copyAppPath . "/App.tsx", preg_replace("/\?apikey=.*(?=\")/", "?apikey=" . $apikey, $appFile));
 
             //compile the app
+
 
             // $process = proc_open('gradlew assemble', $descriptorspec, $pipes, $copyAppPath . "/android", $_ENV);
 
@@ -88,10 +152,6 @@ class App extends BaseController
             //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
             //     // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
             //     fclose($pipes[1]);
-
-            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-            //     // echo var_dump(stream_get_contents($pipes[1]));
-            //     fclose($pipes[2]);
 
             //     // It is important that you close any pipes before calling
             //     // proc_close in order to avoid a deadlock

@@ -6,7 +6,7 @@
                     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Collections List</a>
                     <a class="nav-item nav-link" id="nav-profile-img-pg" data-toggle="tab" href="#nav-img-pg" role="tab" aria-controls="nav-img-pg" aria-selected="false">Image List</a>
                     <a class="nav-item nav-link" id="nav-contact-img" data-toggle="tab" href="#nav-img" role="tab" aria-controls="nav-img" aria-selected="false">Wallpaper Preview</a>
-                    <a class="nav-item nav-link" id="nav-contact-menu" data-toggle="tab" href="#nav-menu" role="tab" aria-controls="nav-menu" aria-selected="false">Custom Page</a>
+                    <!-- <a class="nav-item nav-link" id="nav-contact-menu" data-toggle="tab" href="#nav-menu" role="tab" aria-controls="nav-menu" aria-selected="false">Custom Page</a> -->
                     <a class="nav-item nav-link" id="nav-contact-loading" data-toggle="tab" href="#loading-img" role="tab" aria-controls="loading-img" aria-selected="false">Loading Page</a>
                 </div>
             </nav>
@@ -173,7 +173,7 @@
                             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#logosCollapse" aria-expanded="true" aria-controls="collapseOne">
                                 <div class="row">
                                     <div class="col-sm-11">
-                                        Logos
+                                        Branding
                                     </div>
                                     <div class="col-sm-1">
                                         <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
@@ -203,6 +203,10 @@
                                     <label class="form-label" for="appBanner">App Banner</label>
                                     <input type="file" class="form-control" id="appBanner" />
                                     <small class="form-text text-muted">320x50 px banner recomended</small>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="appName">App Name</label>
+                                    <input type="text" class="form-control" id="appName" />
                                 </div>
                             </form>
                         </div>
