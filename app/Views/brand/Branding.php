@@ -69,7 +69,7 @@
                                     <?php foreach ($categories as $category) : ?>
                                         <div class="col text-center">
                                             <!-- <i class="bi bi-palette-fill"></i> -->
-                                            <img class="category-img" src="<?= $category["thumbnail"] ?>">
+                                            <img class="category-img" src="<?= $category["iconPath"] ?>">
                                             <p><?= $category["name"] ?></p>
                                         </div>
                                     <?php endforeach ?>
