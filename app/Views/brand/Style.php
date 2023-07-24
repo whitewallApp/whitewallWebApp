@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
         borderWidth: <?= array_key_exists("borderWidth", $branding["cards"]["frames"]) ? ($branding["cards"]["frames"]["borderWidth"]):(0) ?>,
         borderColor: "<?= array_key_exists("borderColor", $branding["cards"]["frames"]) ? ($branding["cards"]["frames"]["borderColor"]):("white") ?>",
         borderRadius: <?= array_key_exists("borderRadius", $branding["cards"]["frames"]) ? ($branding["cards"]["frames"]["borderRadius"]):(0) ?>,
-        backgroundColor: "<?= array_key_exists("backgroundcolor", $branding["cards"]) ? ($branding["cards"]["backgroundcolor"]):("white") ?>"
+        backgroundColor: "<?= array_key_exists("backgroundcolor", $branding["cards"]) ? ($branding["cards"]["backgroundcolor"]):("white") ?>",
+        shadowColor: "black"
     },
 
     card_label: {
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
 
         //branding
-        fontSize: <?= array_key_exists("fontsize", $branding["cards"]) ? ($branding["cards"]["fontsize"]):(15) ?>,
+        fontSize: <?= array_key_exists("fontsize", $branding["cards"]) ? ($branding["cards"]["fontsize"] * 2):(15) ?>,
         fontFamily: "<?= array_key_exists("font", $branding["cards"]) ? ($branding["cards"]["font"]):("normal") ?>",
         fontWeight: "normal",
         fontStyle: "normal",
@@ -116,11 +117,11 @@ const styles = StyleSheet.create({
     },
 
     wallpaper_image: {
-        width: "100%",
-        height: "100%",
+        width: 300,
+        height: 700,
         flex: 1,
-        alignItems: "center",
-        justifyContent: 'center',
+        alignSelf: "center",
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
     },
 
     dropdown1BtnStyle: {
