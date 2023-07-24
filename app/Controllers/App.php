@@ -162,7 +162,9 @@ class App extends BaseController
             //         $return_value = proc_close($process);
             //     }
             // }
-
+            
+            $file = file_get_contents($copyAppPath . "/Style.tsx");
+            file_put_contents($copyAppPath . "/Style.tsx", view("brand/Style", ["branding" => json_decode((string)$brandModel->getBrand($brand_id, filter: ["branding"]), true)]));
 
             $appModel->update($rowID, ["state" => "Styling...", "progress" => 50]);
             //add header and loading images
