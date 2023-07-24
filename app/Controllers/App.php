@@ -124,44 +124,44 @@ class App extends BaseController
                 }
             }
 
-            $appModel->update($rowID, ["state" => "Installing...", "progress" => 30]);
-            // install dependancies
-            $process = proc_open('npm install', $descriptorspec, $pipes, $copyAppPath, $_ENV);
+            // $appModel->update($rowID, ["state" => "Installing...", "progress" => 30]);
+            // // install dependancies
+            // $process = proc_open('npm install', $descriptorspec, $pipes, $copyAppPath, $_ENV);
 
-            if (is_resource($process)) {
+            // if (is_resource($process)) {
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                fclose($pipes[1]);
+            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+            //     fclose($pipes[1]);
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-                fclose($pipes[2]);
+            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+            //     fclose($pipes[2]);
 
-                // It is important that you close any pipes before calling
-                // proc_close in order to avoid a deadlock
-                $return_value = proc_close($process);
-            }
+            //     // It is important that you close any pipes before calling
+            //     // proc_close in order to avoid a deadlock
+            //     $return_value = proc_close($process);
+            // }
 
-            $appModel->update($rowID, ["state" => "Styling...", "progress" => 40]);
-            // load in app Icon
-            if (file_exists($brandingPath . $imageIcon)){
-                $process = proc_open('npx react-native set-icon --path  ../' . $imageIcon, $descriptorspec, $pipes, $copyAppPath, $_ENV);
+            // $appModel->update($rowID, ["state" => "Styling...", "progress" => 40]);
+            // // load in app Icon
+            // if (file_exists($brandingPath . $imageIcon)){
+            //     $process = proc_open('npx react-native set-icon --path  ../' . $imageIcon, $descriptorspec, $pipes, $copyAppPath, $_ENV);
 
-                if (is_resource($process)) {
+            //     if (is_resource($process)) {
 
-                    fwrite($pipes[0], '\n');
-                    fclose($pipes[0]);
+            //         fwrite($pipes[0], '\n');
+            //         fclose($pipes[0]);
 
-                    echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                    fclose($pipes[1]);
+            //         echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+            //         fclose($pipes[1]);
 
-                    echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-                    fclose($pipes[2]);
+            //         echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+            //         fclose($pipes[2]);
 
-                    // It is important that you close any pipes before calling
-                    // proc_close in order to avoid a deadlock
-                    $return_value = proc_close($process);
-                }
-            }
+            //         // It is important that you close any pipes before calling
+            //         // proc_close in order to avoid a deadlock
+            //         $return_value = proc_close($process);
+            //     }
+            // }
 
 
             $appModel->update($rowID, ["state" => "Styling...", "progress" => 50]);
