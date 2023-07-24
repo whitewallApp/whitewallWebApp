@@ -699,5 +699,7 @@
             branding = <?= $branding ?>;
         })
     <?php endif ?>
+
+    brandingImages = <?= json_encode($brandimages) ?>
 </script>
 <script src="/js/branding.js"></script>

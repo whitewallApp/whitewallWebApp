@@ -201,21 +201,23 @@ class App extends BaseController
             //send the webhook
             $varModel = new VariablesModel();
             $url = $varModel->getVariable("compile_webhook", assoc: true)["value"];
-            $data = ['appPath' => $copyAppPath, 'iconName' => $imageIcon];
+            if ($url != ""){
+                $data = ['appPath' => $copyAppPath, 'iconName' => $imageIcon];
 
-            // use key 'http' even if you send the request to https://...
-            $options = [
-                    'http' => [
-                        'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-                        'method' => 'POST',
-                        'content' => http_build_query($data),
-                    ],
-                ];
+                // use key 'http' even if you send the request to https://...
+                $options = [
+                        'http' => [
+                            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                            'method' => 'POST',
+                            'content' => http_build_query($data),
+                        ],
+                    ];
 
-            $context = stream_context_create($options);
-            $result = file_get_contents($url, false, $context);
-            if ($result === false) {
-                /* Handle error */
+                $context = stream_context_create($options);
+                $result = file_get_contents($url, false, $context);
+                if ($result === false) {
+                    /* Handle error */
+                }
             }
 
             // compile the app
