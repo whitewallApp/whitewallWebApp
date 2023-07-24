@@ -65,7 +65,7 @@ class App extends BaseController
             $descriptorspec = array(
                 0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
                 1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
-                2 => array("file", "/tmp/" . $brand_id . "-error.txt", "a") // stderr is a file to write to
+                2 => array("pipe", "w") // stderr is a file to write to
             );
 
             //clone the repo
@@ -74,8 +74,10 @@ class App extends BaseController
             if (is_resource($process)) {
 
                 echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
                 fclose($pipes[1]);
+
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                fclose($pipes[2]);
 
                 // It is important that you close any pipes before calling
                 // proc_close in order to avoid a deadlock
@@ -109,6 +111,10 @@ class App extends BaseController
                     // proc_close in order to avoid a deadlock
                     //fclose($pipes[1]);
                     fclose($pipes[0]);
+
+                    echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                    fclose($pipes[2]);
+
                     $return_value = proc_close($process);
 
                     copy($brandingPath . "my-upload-key.keystore", $copyAppPath . "/android/app/my-upload-key.keystore");
@@ -120,18 +126,20 @@ class App extends BaseController
 
             $appModel->update($rowID, ["state" => "Installing...", "progress" => 30]);
             // install dependancies
-            // $process = proc_open('npm install', $descriptorspec, $pipes, $copyAppPath, $_ENV);
+            $process = proc_open('npm install', $descriptorspec, $pipes, $copyAppPath, $_ENV);
 
-            // if (is_resource($process)) {
+            if (is_resource($process)) {
 
-            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-            //     // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
-            //     fclose($pipes[1]);
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                fclose($pipes[1]);
 
-            //     // It is important that you close any pipes before calling
-            //     // proc_close in order to avoid a deadlock
-            //     $return_value = proc_close($process);
-            // }
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                fclose($pipes[2]);
+
+                // It is important that you close any pipes before calling
+                // proc_close in order to avoid a deadlock
+                $return_value = proc_close($process);
+            }
 
             $appModel->update($rowID, ["state" => "Styling...", "progress" => 40]);
             // load in app Icon
@@ -144,8 +152,10 @@ class App extends BaseController
                     fclose($pipes[0]);
 
                     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                    // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
                     fclose($pipes[1]);
+
+                    echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                    fclose($pipes[2]);
 
                     // It is important that you close any pipes before calling
                     // proc_close in order to avoid a deadlock
