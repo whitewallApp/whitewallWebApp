@@ -189,6 +189,7 @@
                                 <div class="form-group">
                                     <label class="form-label" for="appIcon">App Icon</label>
                                     <input type="file" class="form-control" id="appIcon" />
+                                    <small class="form-text text-danger">This has to be a square larger than 300x300</small>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="appHeader">App Header</label>
