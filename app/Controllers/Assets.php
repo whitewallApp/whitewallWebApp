@@ -666,7 +666,9 @@ class Assets extends BaseController {
             "ico", "cur" => "x-icon",
             "bmp" => "bmp",
             "tiff", "tif" => "tiff",
-            "gif", "giff" => "gif"
+            "gif", "giff" => "gif",
+            "vnd.adobe.photoshop" => "vnd.adobe.photoshop",
+            default => "octet-stream"
         };
     }
 }
