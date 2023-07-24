@@ -17,6 +17,9 @@ const styles = StyleSheet.create({
         backgroundColor: "<?= array_key_exists("backgroundcolor", $branding["categories"]) ? ($branding["categories"]["backgroundcolor"]):("white") ?>",
         activeColor: "lightgray",
         inactiveColor: "black",
+        paddingTop: 10,
+        height: 70,
+        fontSize: <?= array_key_exists("fontsize", $branding["categories"]) ? ($branding["categories"]["fontsize"]):(15) ?>
     },
 
     //call to action
