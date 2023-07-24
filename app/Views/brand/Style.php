@@ -96,11 +96,11 @@ const styles = StyleSheet.create({
 
     button: {
         width: "95%",
-        height: 40,
-        flex: 1,
+        height: 50,
         margin: 5,
         alignItems: "center", 
         justifyContent: 'center',
+        alignSelf: 'center',
 
         //branding
         backgroundColor: "<?= array_key_exists("borderColor", $branding["buttons"]) ? ($branding["buttons"]["borderColor"]):("#03a5fc") ?>",
