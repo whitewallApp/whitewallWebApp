@@ -110,12 +110,12 @@ class App extends BaseController
                     //fclose($pipes[1]);
                     fclose($pipes[0]);
                     $return_value = proc_close($process);
+
+                    copy($brandingPath . "my-upload-key.keystore", $copyAppPath . "/android/app/my-upload-key.keystore");
+
+                    $file = file_get_contents($copyAppPath . "/android/gradle.properties");
+                    file_put_contents($copyAppPath . "/android/gradle.properties", preg_replace("/\*\*\*\*\*/", "129034", $file));
                 }
-
-                copy($brandingPath . "my-upload-key.keystore", $copyAppPath . "/android/app/my-upload-key.keystore");
-
-                $file = file_get_contents($copyAppPath . "/android/gradle.properties");
-                file_put_contents($copyAppPath . "/android/gradle.properties", preg_replace("/\*\*\*\*\*/", "129034", $file));
             }
 
             $appModel->update($rowID, ["state" => "Installing...", "progress" => 30]);
