@@ -62,25 +62,25 @@ class App extends BaseController
                 2 => array("file", "/tmp/" . $brand_id . "-error.txt", "a") // stderr is a file to write to
             );
 
-            // //clone the repo
-            // $process = proc_open('git clone https://github.com/yomas000/whitewallApp.git', $descriptorspec, $pipes, $brandingPath, $_ENV);
+             //clone the repo
+            $process = proc_open('git clone https://github.com/yomas000/whitewallApp.git', $descriptorspec, $pipes, $brandingPath, $_ENV);
 
-            // if (is_resource($process)) {
+            if (is_resource($process)) {
 
-            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-            //     // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
-            //     fclose($pipes[1]);
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+               // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
+                fclose($pipes[1]);
 
-            //     // It is important that you close any pipes before calling
-            //     // proc_close in order to avoid a deadlock
-            //     $return_value = proc_close($process);
-            // }
+                // It is important that you close any pipes before calling
+                // proc_close in order to avoid a deadlock
+                $return_value = proc_close($process);
+            }
 
             if (file_exists($brandingPath . "my-upload-key.keystore")) {
-                copy($brandingPath . "my-upload-key.keystore", $copyAppPath . "/android/app");
+                copy($brandingPath . "my-upload-key.keystore", $copyAppPath . "/android/app/my-upload-key.keystore");
 
                 $file = file_get_contents($copyAppPath. "/android/gradle.properties");
-                file_put_contents($copyAppPath . "/android/gradle.properties", preg_replace("*****", "129034", $file));
+		file_put_contents($copyAppPath . "/android/gradle.properties", preg_replace("/\*\*\*\*\*/", "129034", $file));
             } else {
                 //generate the key
                 $process = proc_open('keytool -genkeypair -v -storetype PKCS12 -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000', $descriptorspec, $pipes, $brandingPath, $_ENV);
@@ -89,24 +89,28 @@ class App extends BaseController
 
                     fwrite($pipes[0], "129034\n");
                     fwrite($pipes[0], "129034\n");
-
+			
+		    fwrite($pipes[0], "Johnathan Dick\n");
                     fwrite($pipes[0], "IT\n");
                     fwrite($pipes[0], "Whitewall\n");
                     fwrite($pipes[0], "Salt Lake City\n");
                     fwrite($pipes[0], "Utah\n");
                     fwrite($pipes[0], "US\n");
-                    fwrite($pipes[0], "YES\n");
+		    fwrite($pipes[0], "YES\n");
+
+		    echo var_dump(stream_get_contents($pipes[1]));
 
                     // It is important that you close any pipes before calling
-                    // proc_close in order to avoid a deadlock
+		    // proc_close in order to avoid a deadlock
+		    fclose($pipes[1]);
                     fclose($pipes[0]);
                     $return_value = proc_close($process);
                 }
 
-                copy($brandingPath . "my-upload-key.keystore", $copyAppPath . "/android/app");
+                copy($brandingPath . "my-upload-key.keystore", $copyAppPath . "/android/app/my-upload-key.keystore");
                 
                 $file = file_get_contents($copyAppPath . "/android/gradle.properties");
-                file_put_contents($copyAppPath . "/android/gradle.properties", preg_replace("*****", "129034", $file));
+		file_put_contents($copyAppPath . "/android/gradle.properties", preg_replace("/\*\*\*\*\*/", "129034", $file));
             }
 
             // $appModel->update($rowID, ["state" => "Installing...", "progress" => 30]);
