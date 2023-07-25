@@ -37,30 +37,8 @@ class App extends BaseController
             set_time_limit(0);
 
             //set the last used app to not be the current version
-            $appModel->updateByMultipule(["brand_id" => $brand_id, "current" => 1], ["current" => 0]);
-            $rowID = null;
-            try {
-                $rowID = $appModel->selectByMultipule(["id"], ["brand_id" => $brand_id, "os" => $os])["id"];
-            }catch(\Throwable $e){
-                $rowID = $appModel->insert(["brand_id" => $brand_id, "os" => $os, "state" => "Copying Files...", "progress" => 0, "current" => true]);
-            }
-
-
-            $appName = json_decode((string)$brandModel->getBrand($brand_id, filter: ["branding"]), true)["appName"];
-
-            $output = null;
-            $retVal = null;
-
-            $images = $brandModel->getBrand($brand_id, filter: ["appLoading", "appHeading", "appIcon"], assoc: true);
-            $imageLoading = "";
-            $imageHeading = "";
-            $imageIcon = "";
-            try {
-                $imageLoading = explode("/", $images["appLoading"])[4];
-                $imageHeading = explode("/", $images["appHeading"])[4];
-                $imageIcon = explode("/", $images["appHeading"])[4];
-            } catch (\Throwable $e) {
-            }
+            // $appModel->updateByMultipule(["brand_id" => $brand_id, "current" => 1], ["current" => 0]);
+            // $rowID = $appModel->insert(["brand_id" => $brand_id, "os" => $os, "state" => "Copying Files...", "progress" => 0, "current" => true]);
 
             //variables for command line
             $descriptorspec = array(
