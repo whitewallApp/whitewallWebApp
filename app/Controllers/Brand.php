@@ -9,6 +9,7 @@ use App\Models\ImageModel;
 use App\Models\MenuModel;
 use App\Models\SubscriptionModel;
 use App\Models\UserModel;
+use Mailgun\Mailgun;
 
 class Brand extends BaseController
 {
@@ -212,7 +213,23 @@ class Brand extends BaseController
                 }
 
                 //TODO: send email with temp password
-                $password = password_hash("test", PASSWORD_DEFAULT);
+                $tmpPassword = bin2hex(random_bytes(4));
+                $password = password_hash($tmpPassword, PASSWORD_DEFAULT);
+
+                //email the client
+                $mgClient = Mailgun::create(getenv("MAILGUN_API"), getenv("MAILGUN_URL"));
+                $domain = "support.whitewall.app";
+                $params = array(
+                    'from'    => 'Support <support@whitewall.app>',
+                    'to'      => $email,
+                    'subject' => 'Your Temporary Password',
+                    'template'    => 'Temporary_Password_View',
+                    'text'    => 'Please',
+                    'h:X-Mailgun-Variables'    => json_encode(["password" => $tmpPassword])
+                );
+
+                # Make the call to the client.
+                $mgClient->messages()->send($domain, $params);
 
                 $userData = [
                     "name" => $data["name"],
