@@ -53,6 +53,7 @@
                     </div>
                 </div>
             </div>
+            <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -79,6 +80,7 @@
                         <?php endif ?>
                     </tbody>
                 </table>
+            </div>
         </div>
         <div class="m-2">
             <div class="row">

@@ -8,7 +8,7 @@
                         <div id="limitsChart" style="height:200px"></div>
                     </div>
                     <div class="col-sm-4">
-                        <table class="table">
+                        <table class="table table-sm">
                             <thead>
                                 <tr>
                                     <th scope="col"></th>

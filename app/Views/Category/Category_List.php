@@ -21,7 +21,7 @@
 
                                 </div>
                                 <div class="col-6">
-                                   
+
                                 </div>
                             </div>
                         </div>
@@ -31,32 +31,34 @@
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    
+
                 </div>
             </div>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col"><input id="check-all" type="checkbox" class="checkbox-lg"></th>
-                        <th scope="col">Icon</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Collections</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($categories as $category) : ?>
-                        <tr id="<?= $category["name"] ?>" onclick="getCat(this);">
-                            <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                            <td class="w-25">
-                                <image class="img-sm" src="<?= $category["iconPath"] ?>">
-                            </td>
-                            <td><?= $category["name"] ?></td>
-                            <td><a href="#"><?= $category["collectionName"] ?></a></td>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col"><input id="check-all" type="checkbox" class="checkbox-lg"></th>
+                            <th scope="col">Icon</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Collections</th>
                         </tr>
-                    <?php endforeach ?>
-                    <tr>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($categories as $category) : ?>
+                            <tr id="<?= $category["name"] ?>" onclick="getCat(this);">
+                                <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
+                                <td class="w-25">
+                                    <image class="img-sm" src="<?= $category["iconPath"] ?>">
+                                </td>
+                                <td><?= $category["name"] ?></td>
+                                <td><a href="#"><?= $category["collectionName"] ?></a></td>
+                            </tr>
+                        <?php endforeach ?>
+                        <tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div class="col-sm-4">

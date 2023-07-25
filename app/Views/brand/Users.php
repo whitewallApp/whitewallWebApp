@@ -34,30 +34,32 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col"><input id="check-all" type="checkbox" class="checkbox-lg"></th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($users as $user) : ?>
-                        <tr id="<?= $user["id"] ?>" onclick="getUser(this);">
-                            <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                            <td><?= $user["name"] ?></td>
-                            <td><?= $user["email"] ?></td>
-                            <?php if ($user["status"]) : ?>
-                                <td>Active</td>
-                            <?php else : ?>
-                                <td>Inactive</td>
-                            <?php endif ?>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col"><input id="check-all" type="checkbox" class="checkbox-lg"></th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Status</th>
                         </tr>
-                    <?php endforeach ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($users as $user) : ?>
+                            <tr id="<?= $user["id"] ?>" onclick="getUser(this);">
+                                <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
+                                <td><?= $user["name"] ?></td>
+                                <td><?= $user["email"] ?></td>
+                                <?php if ($user["status"]) : ?>
+                                    <td>Active</td>
+                                <?php else : ?>
+                                    <td>Inactive</td>
+                                <?php endif ?>
+                            </tr>
+                        <?php endforeach ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div class="col-6" id="userForm">
@@ -398,5 +400,7 @@
         </div>
     </div>
 </div>
-<script>currentUser = <?= $session->get("user_id") ?></script>
+<script>
+    currentUser = <?= $session->get("user_id") ?>
+</script>
 <script src="/js/users.js"></script>

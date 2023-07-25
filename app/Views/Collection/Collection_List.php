@@ -21,7 +21,7 @@
 
                                 </div>
                                 <div class="col-6">
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -46,30 +46,32 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col"><input id="check-all" type="checkbox" class="checkbox-lg"></th>
-                        <th scope="col">Thumbnail</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Images</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($collections as $collection) : ?>
-                        <tr id="<?= $collection["name"] ?>" onclick="getColl(this);">
-                            <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                            <td class="w-25">
-                                <image class="img-sm rounded" src="<?= $collection['iconPath'] ?>">
-                            </td>
-                            <td><?= $collection['name'] ?></td>
-                            <td class="w-25"><a href="#"><?= $collection["category"] ?></a></td>
-                            <td><?= $collection["imageCount"] ?></td>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col"><input id="check-all" type="checkbox" class="checkbox-lg"></th>
+                            <th scope="col">Thumbnail</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Images</th>
                         </tr>
-                    <?php endforeach ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($collections as $collection) : ?>
+                            <tr id="<?= $collection["name"] ?>" onclick="getColl(this);">
+                                <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
+                                <td class="w-25">
+                                    <image class="img-sm rounded" src="<?= $collection['iconPath'] ?>">
+                                </td>
+                                <td><?= $collection['name'] ?></td>
+                                <td class="w-25"><a href="#"><?= $collection["category"] ?></a></td>
+                                <td><?= $collection["imageCount"] ?></td>
+                            </tr>
+                        <?php endforeach ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
