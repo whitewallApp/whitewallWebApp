@@ -41,7 +41,7 @@ class App extends BaseController
             $rowID = null;
             try {
                 $rowID = $appModel->selectByMultipule(["id"], ["brand_id" => $brand_id, "os" => $os])["id"];
-            } catch (\Throwable $e) {
+            }catch(\Throwable $e){
                 $rowID = $appModel->insert(["brand_id" => $brand_id, "os" => $os, "state" => "Copying Files...", "progress" => 0, "current" => true]);
             }
 
@@ -163,17 +163,17 @@ class App extends BaseController
             //         $return_value = proc_close($process);
             //     }
             // }
-
+            
             $file = file_get_contents($copyAppPath . "/Style.tsx");
             file_put_contents($copyAppPath . "/Style.tsx", view("brand/Style", ["branding" => json_decode((string)$brandModel->getBrand($brand_id, filter: ["branding"]), true)]));
 
             $appModel->update($rowID, ["state" => "Styling...", "progress" => 50]);
             //add header and loading images
             mkdir($copyAppPath . "/Icons");
-            if (file_exists($brandingPath . $imageLoading)) {
+            if (file_exists($brandingPath . $imageLoading)){
                 copy($brandingPath . $imageLoading, $copyAppPath . "/Icons/" . $imageLoading);
                 $file = file_get_contents($copyAppPath . "/App.tsx");
-                file_put_contents($copyAppPath . "/App.tsx", preg_replace("/appLoading.gif/", $imageLoading, $file));
+                file_put_contents( $copyAppPath . "/App.tsx", preg_replace("/appLoading.gif/", $imageLoading, $file));
             }
 
             if (file_exists($brandingPath . $imageHeading)) {
@@ -201,17 +201,17 @@ class App extends BaseController
             //send the webhook
             $varModel = new VariablesModel();
             $url = $varModel->getVariable("compile_webhook", assoc: true)["value"];
-            if ($url != "") {
+            if ($url != ""){
                 $data = ['appPath' => $copyAppPath, 'iconName' => $imageIcon];
 
                 // use key 'http' even if you send the request to https://...
                 $options = [
-                    'http' => [
-                        'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-                        'method' => 'POST',
-                        'content' => http_build_query($data),
-                    ],
-                ];
+                        'http' => [
+                            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                            'method' => 'POST',
+                            'content' => http_build_query($data),
+                        ],
+                    ];
 
                 $context = stream_context_create($options);
                 $result = file_get_contents($url, false, $context);
