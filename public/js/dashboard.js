@@ -36,4 +36,15 @@ function drawChart() {
     const wallpaperchart = new google.visualization.BarChart(document.getElementById('wallpaperChart'));
     wallpaperchart.draw(wallpaperdata, wallpaperoptions);
 
+
+    const limitdata = google.visualization.arrayToDataTable(limitData);
+
+    const limitoptions = {
+        // hAxis: { format: "0" },
+        isStacked: true
+    };
+
+    const limitchart = new google.visualization.BarChart(document.getElementById('limitsChart'));
+    limitchart.draw(limitdata, limitoptions);
+
 }

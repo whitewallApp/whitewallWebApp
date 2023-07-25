@@ -25,6 +25,16 @@ class Dashboard extends BaseController
         $currentUser = $subModel->getCurrentUserCount($session->get("user_id"));
         $currentBrand = $subModel->getCurrrentBrandCount($session->get("user_id"));
 
+        if ($imageLimit == 0){
+            $imageLimit = "Unlimited";
+        }
+        if ($userLimit == 0) {
+            $userLimit = "Unlimited";
+        }
+        if ($brandLimit == 0) {
+            $brandLimit = "Unlimited";
+        }
+
         //get image and link data
         $linkdb = array_slice($imageModel->getLinksClicked($session->get("brand_id")), 0, 5);
         $linkData = [];
