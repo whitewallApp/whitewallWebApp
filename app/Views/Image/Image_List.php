@@ -2,16 +2,13 @@
     <div class="col-sm-8">
         <div class="card p-2">
             <div class="row m-2">
-                <div class="col-8">
+                <div class="col-sm-8">
                     <div id="actions" class="row" style="display: none">
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <p id="infoSelect" class=""></p>
                         </div>
-                        <div class="col-10">
+                        <div class="col-md-10">
                             <div class="row">
-                                <div class="col-1">
-
-                                </div>
                                 <div class="col-4 text-center">
                                     <?php if ($view[$pageName]["remove"]) : ?>
                                         <button class="btn btn-danger" id="delete">Delete</button>
@@ -27,7 +24,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-sm-2">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="filters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
@@ -42,7 +39,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-sm-2">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="orderby" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i style="font-size: 16px;" class="bi bi-sort-down"></i>
@@ -56,32 +53,32 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th class="header" scope="col"><input id="check-all" type="checkbox" class="checkbox-lg"></th>
-                        <th class="header" scope="col">Thumbnail</th>
-                        <th class="header" scope="col">Name</th>
-                        <th class="header" scope="col">Collection</th>
-                        <th class="header" scope="col">Category</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (isset($images)) : ?>
-                        <?php foreach ($images as $image) : ?>
-                            <tr id="<?= $image["id"] ?>" onclick="getImg(this);">
-                                <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
-                                <td class="w-25">
-                                    <image class="img-sm rounded" src="<?= $image["path"] ?>">
-                                </td>
-                                <td><?= $image["name"] ?></td>
-                                <td><?= $image["collection"] ?></td>
-                                <td><a href="#"><?= $image["category"] ?></a></td>
-                            </tr>
-                        <?php endforeach ?>
-                    <?php endif ?>
-                </tbody>
-            </table>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="header" scope="col"><input id="check-all" type="checkbox" class="checkbox-lg"></th>
+                            <th class="header" scope="col">Thumbnail</th>
+                            <th class="header" scope="col">Name</th>
+                            <th class="header" scope="col">Collection</th>
+                            <th class="header" scope="col">Category</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (isset($images)) : ?>
+                            <?php foreach ($images as $image) : ?>
+                                <tr id="<?= $image["id"] ?>" onclick="getImg(this);">
+                                    <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
+                                    <td class="w-25">
+                                        <image class="img-sm rounded" src="<?= $image["path"] ?>">
+                                    </td>
+                                    <td><?= $image["name"] ?></td>
+                                    <td><?= $image["collection"] ?></td>
+                                    <td><a href="#"><?= $image["category"] ?></a></td>
+                                </tr>
+                            <?php endforeach ?>
+                        <?php endif ?>
+                    </tbody>
+                </table>
         </div>
         <div class="m-2">
             <div class="row">
