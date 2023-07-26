@@ -19,10 +19,10 @@ class BrandModel extends Model
      * @param  array $getBy An array of key value pairs to use for filtering. EX: ["account_active" => 1]
      * @return array
      */
-    public function getCollumn($column, $userId, $getBy=[]): mixed{
+    public function getCollumn($column, $userId, $getBy=[], $fetchBy= "branduser.user_id"): mixed{
         $builder = $this->db->table('brand');
         $builder->join("branduser", "branduser.brand_id = brand.id", "inner");
-        $builder->select($column)->where("branduser.user_id", $userId);
+        $builder->select($column)->where($fetchBy, $userId);
 
         if (count($getBy) > 0){
             $keys = array_keys($getBy);
