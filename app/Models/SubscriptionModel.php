@@ -13,6 +13,29 @@ class SubscriptionModel extends Model
     protected $allowedFields = ["subscriptionID", "productID", "status", "account_id", "customerID"];
 
 
+    public function getCollumn($column, $brandId, $filterBy = [], $getBy = "account_id"): mixed
+    {
+        $builder = $this->db->table('subscription');
+        $builder->select($column)->where($getBy, $brandId);
+
+        if (count($filterBy) > 0) {
+            $keys = array_keys($filterBy);
+            foreach ($keys as $key) {
+                $builder->where($key, $filterBy[$key]);
+            }
+        }
+
+        $return = $builder->get()->getResultArray();
+
+        $returnArray = [];
+
+        foreach ($return as $thing) {
+            array_push($returnArray, $thing);
+        }
+
+        return $returnArray;
+    }
+
     /**
      * Gets the subscription row
      *
