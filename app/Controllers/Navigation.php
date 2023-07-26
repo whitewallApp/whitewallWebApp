@@ -39,7 +39,8 @@ class Navigation extends BaseController
             "actions" => $actions,
             "view" => $canView,
             "pageName" => $pageName,
-            "admin" => $session->get("is_admin")
+            "admin" => $session->get("is_admin"),
+            "superAdmin" => $session->get("super_admin") !== null
         ];
 
 

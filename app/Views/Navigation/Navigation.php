@@ -47,6 +47,11 @@
                     <a class="dropdown-item" href="/brand/users/<?= $brandId ?>">Manage Users</a>
                     <a class="dropdown-item" href="/billing">Billing</a>
                 <?php endif ?>
+
+                <?php if ($superAdmin) : ?>
+                    <a class="dropdown-item" href="/admin">Super Admin</a>
+                <?php endif ?>
+
                 <a class="dropdown-item" href="/account">Account</a>
                 <a class="dropdown-item" href="/account?logout=true">Logout</a>
             </div>

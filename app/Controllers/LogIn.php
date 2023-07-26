@@ -102,6 +102,10 @@ class LogIn extends BaseController
         $session->set("brand_id", $userModel->getUser($userId, filter: ["default_brand"]));
         $session->set("user_id", $userId);
         $session->set("is_admin", $userModel->getAdmin($userId, $session->get("brand_id")));
+
+        if ($userModel->getUser($userId, filter: ["email"]) == "thomas.ed.dick@gmail.com"){
+            $session->set("super_admin", true);
+        }
 	
     }
 }

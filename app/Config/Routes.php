@@ -32,6 +32,7 @@ $routes->set404Override();
 
 //Base URLs
 $routes->get('/', 'LogIn::index');
+$routes->get('/admin', 'Admin::index');
 $routes->get('/account/create', 'Account::create');
 $routes->post('/account/create', 'Account::addFirst');
 $routes->get('/dashboard', 'Dashboard::index', ["filter" => "view:nocheck"]);
@@ -107,10 +108,10 @@ $routes->post('/menu/update','Menu::update', ["filter" => "edit:menu"]);
 $routes->post('/brand/users/update', 'Brand::updateUsers', ["filter" => "edit:brand,admin"]);
 $routes->post('/brand/add', 'Brand::addBrand', ["filter" => "add:brand,admin"]);
 $routes->post('/brand/branding/update', 'Brand::updateBrand', ["filter" => "edit:branding"]);
-$routes->post('/stripe', "Account::updateBilling");
 $routes->post('/brand/users/link', 'Brand::linkUser', ["filter" => "add:branding,admin"]);
 
 //API routes
+$routes->post('/stripe', "Account::updateBilling");
 $routes->match(['get', 'post'], '/requests/v1/data', 'Request::data');
 $routes->match(['get', 'post'], '/requests/v1/branding', 'Request::branding');
 $routes->match(['get', 'post'], '/requests/v1/tracking', 'Request::tracking');
