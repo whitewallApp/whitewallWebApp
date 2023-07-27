@@ -41,10 +41,9 @@ class Admin extends BaseController
                 
                 $brandIds = $brandModel->getCollumn("id", $accountID, fetchBy: "account_id");
 
-                echo var_dump($brandIds);
+                $brandIds = array_unique(array_column($brandIds, "id"));
 
                 foreach ($brandIds as $brandID) {
-                    $brandID = $brandID["id"];
                     $brand = [];
 
                     $brand["identity"] = $brandModel->getBrand($brandID, filter: ["name", "id"], assoc: true);

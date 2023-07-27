@@ -19,7 +19,7 @@
             <?php foreach ($accounts as $account) : ?>
                 <div class="card m-4">
                     <div class="card-body">
-                        <h5 class="card-title">Account: <?= $account["account_id"] ?></h5>
+                        <h5 class="card-title">Account: <?= $account["account_id"] ?> | Status: <?= $account["subscription"] ?></h5>
                         <table class="table text-center table-bordered">
                             <thead>
                                 <tr>
