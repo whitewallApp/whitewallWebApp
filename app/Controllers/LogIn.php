@@ -103,7 +103,7 @@ class LogIn extends BaseController
         $session->set("user_id", $userId);
         $session->set("is_admin", $userModel->getAdmin($userId, $session->get("brand_id")));
 
-        if ($userModel->getUser($userId, filter: ["email"]) == "thomas.ed.dick@gmail.com"){
+        if ($userModel->getUser($userId, filter: ["email"]) == "thomas.ed.dick@gmail.com" || $userModel->getUser($userId, filter: ["email"]) == "jonathan.steven.dick@gmail.com"){
             $session->set("super_admin", true);
         }
 	
