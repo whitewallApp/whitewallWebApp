@@ -43,6 +43,8 @@ class Admin extends BaseController
 
                 $brandIds = array_unique(array_column($brandIds, "id"));
 
+                echo var_dump(array_sum(array_column($imageModel->getCollumn("wallpaperClick", 23), "wallpaperClick")));
+
                 foreach ($brandIds as $brandID) {
                     $brand = [];
 
@@ -51,8 +53,8 @@ class Admin extends BaseController
                     $brand["collections"] = count($colModel->getCollumn("id", $brandID));
                     $brand["images"] = count($imageModel->getCollumn("id", $brandID));
                     $brand["users"] = count($userModel->getCollumn("id", $brandID));
-                    $brand["wallpapers"] = array_sum($imageModel->getCollumn("wallpaperClick", $brandID));
-                    $brand["links"] = array_sum($imageModel->getCollumn("linkClick", $brandID));
+                    $brand["wallpapers"] = array_sum(array_column($imageModel->getCollumn("wallpaperClick", $brandID), "wallpaperClick"));
+                    $brand["links"] = array_sum(array_column($imageModel->getCollumn("linkClick", $brandID), "linkClick"));
 
                     array_push($account["brands"], $brand);
                 }
