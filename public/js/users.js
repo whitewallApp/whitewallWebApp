@@ -88,8 +88,10 @@ function getUser(e) {
 
 $("#unlinkUser").on("click", function(){
     if (confirm("Are you sure you want to unlink the user from the Brand")) {
+        brandID = window.location.pathname.split("/")[window.location.pathname.split("/").length - 1];
         $.post("/brand/users/unlink", {
-            id: $("#permissionsForm").prop("user-id")
+            id: $("#permissionsForm").prop("user-id"),
+            brandId: brandID
         }, function (data, status) {
             response = JSON.parse(data);
             if (response.success){
@@ -101,8 +103,10 @@ $("#unlinkUser").on("click", function(){
 
 function linkUser(e){
     userID = $(e).attr("user-id");
+    brandID = window.location.pathname.split("/")[window.location.pathname.split("/").length - 1];
     $.post("/brand/users/link", {
-        id: userID
+        id: userID,
+        brandId: brandID
     }, function (data, status) {
         response = JSON.parse(data);
         if (response.success) {

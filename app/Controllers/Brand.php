@@ -491,21 +491,25 @@ class Brand extends BaseController
 
     public function unlinkUser(){
         $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
-        
-        if ($id != null){
+        $brandId = $this->request->getPost("brandId", FILTER_SANITIZE_NUMBER_INT);
+
+        if ($id !== null) {
             $userModel = new UserModel();
             $brandModel = new BrandModel();
             $session = session();
 
-            $brandId = $session->get("brand_id");
-            $userIds = $userModel->getCollumn("id", $brandId);
+            $dbbrandids = $brandModel->getCollumn("id", $session->get("user_id"));
 
-            if ($id != $session->get("user_id")){
-                if (count($brandModel->getCollumn("id", $id)) > 1){
-                    foreach($userIds as $userID){
+            foreach ($dbbrandids as $dbbrandid) {
+                if ($dbbrandid["id"] == $brandId) {
+                    //get the account users
+                    $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+                    $userIds = $userModel->getCollumn("id", $accountId, getBy: "account_id");
+
+                    foreach ($userIds as $userID) {
                         $userID = $userID["id"];
 
-                        if ($userID == $id){
+                        if ($userID == $id) {
                             $brandModel->unlinkUser($userID, $brandId);
                         }
                     }
@@ -518,24 +522,29 @@ class Brand extends BaseController
 
     public function linkUser(){
         $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
+        $brandId = $this->request->getPost("brandId", FILTER_SANITIZE_NUMBER_INT);
 
-        if ($id != null) {
+        if ($id !== null) {
             $userModel = new UserModel();
             $brandModel = new BrandModel();
             $session = session();
 
-            $brandId = $session->get("brand_id");
+            $dbbrandids = $brandModel->getCollumn("id", $session->get("user_id"));
 
-            //get the account users
-            $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
-            $userIds = $userModel->getCollumn("id", $accountId, getBy: "account_id");
+            foreach($dbbrandids as $dbbrandid){
+                if ($dbbrandid["id"] == $brandId){
+                    //get the account users
+                    $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+                    $userIds = $userModel->getCollumn("id", $accountId, getBy: "account_id");
 
-            foreach ($userIds as $userID) {
-                $userID = $userID["id"];
+                    foreach ($userIds as $userID) {
+                        $userID = $userID["id"];
 
-                if ($userID == $id) {
-                    $brandModel->joinUser($brandId, $userID);
-                    $userModel->setPermissions($userID, $brandId);
+                        if ($userID == $id) {
+                            $brandModel->joinUser($brandId, $userID);
+                            $userModel->setPermissions($userID, $brandId);
+                        }
+                    }
                 }
             }
         }
