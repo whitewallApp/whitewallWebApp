@@ -37,7 +37,7 @@ class App extends BaseController
             set_time_limit(0);
 
             //set the last used app to not be the current version
-            $appModel->updateByMultipule(["brand_id" => $brand_id, "current" => 1], ["current" => 0]);
+            // $appModel->updateByMultipule(["brand_id" => $brand_id, "current" => 1], ["current" => 0]);
             $rowID = null;
             try {
                 $rowID = $appModel->selectByMultipule(["id"], ["brand_id" => $brand_id, "os" => $os])["id"];
@@ -198,6 +198,7 @@ class App extends BaseController
             $appFile = file_get_contents($copyAppPath . "/App.tsx");
             file_put_contents($copyAppPath . "/App.tsx", preg_replace("/\?apikey=.*(?=\")/", "?apikey=" . $apikey, $appFile));
 
+            $appModel->update($rowID, ["state" => "Compiling... This could take up to 2 hours (you may leave the page)", "progress" => 75]);
             //send the webhook
             $varModel = new VariablesModel();
             $url = $varModel->getVariable("compile_webhook", assoc: true)["value"];
