@@ -96,7 +96,7 @@
                                 <div class="row m-2">
                                     <div class="col-sm-6">
                                         <div class="card card-branding p-2">
-                                            <img class="img-branding" src="<?= $images[$i]["thumbnail"] ?>" alt="Card image cap">
+                                            <img class="card-img-top img-branding" src="<?= $images[$i]["thumbnail"] ?>" alt="Card image cap">
                                             <div class="image-title">
                                                 <p><?= $images[$i]["name"] ?></p>
                                             </div>
@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="card card-branding p-2">
-                                            <img class="img-branding" src="<?= $images[$i + 1]["thumbnail"] ?>" alt="Card image cap">
+                                            <img class="card-img-top img-branding" src="<?= $images[$i + 1]["thumbnail"] ?>" alt="Card image cap">
                                             <div class="image-title">
                                                 <p><?= $images[$i + 1]["name"] ?></p>
                                             </div>
@@ -535,6 +535,10 @@
                     <div id="frameCollapse" class="collapse" aria-labelledby="frame" data-parent="#accordionBranding">
                         <div class="card-body">
                             <form>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" value="" id="shadowBox" checked />
+                                    <label class="form-check-label" for="shadowBox">Card Drop Shadow</label>
+                                </div>
                                 <div class="form-group">
                                     <label for="collBackgroundColor">Background Color</label>
                                     <input type="color" class="form-control" id="collBackgroundColor">

@@ -56,6 +56,15 @@ $("#collImgLabelFontColor").on("input", function(){
     branding.cards.fontcolor = $(this).val();
 })
 
+$("#shadowBox").on("input", function () {
+    if ($("#shadowBox").prop("checked")){
+        $(".card").css("box-shadow", "var(--mdb-card-box-shadow)");
+    }else{
+        $(".card").css("box-shadow", "none");
+    }
+    branding.cards.shadow = $("#shadowBox").prop("checked");
+})
+
 $("#imgCollabelFontStyle").on("input", function(){
     fontType = $(this).val();
     if (fontType == "bold") {

@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         borderColor: "<?= array_key_exists("borderColor", $branding["cards"]["frames"]) ? ($branding["cards"]["frames"]["borderColor"]):("white") ?>",
         borderRadius: <?= array_key_exists("borderRadius", $branding["cards"]["frames"]) ? ($branding["cards"]["frames"]["borderRadius"]):(0) ?>,
         backgroundColor: "<?= array_key_exists("backgroundcolor", $branding["cards"]) ? ($branding["cards"]["backgroundcolor"]):("white") ?>",
-        shadowColor: "black"
+        shadowColor: "<?= array_key_exists("shadow", $branding["cards"]) ? ($branding["cards"]["shadow"] ? ("black") : ("transparent")):("black") ?>"
     },
 
     card_label: {
