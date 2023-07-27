@@ -43,8 +43,6 @@ class Admin extends BaseController
 
                 $brandIds = array_unique(array_column($brandIds, "id"));
 
-                echo var_dump(array_sum(array_column($imageModel->getCollumn("wallpaperClick", 23), "wallpaperClick")));
-
                 foreach ($brandIds as $brandID) {
                     $brand = [];
 
