@@ -203,7 +203,6 @@ body {
 .img-branding {
     height: 100px;
     object-fit: cover;
-    margin-top: 10px;
 }
 
 .btn-branding {
@@ -239,4 +238,8 @@ body {
 
 .brand-img {
     width: 50%;
+}
+
+.card-branding {
+    padding: 8px !important;
 }

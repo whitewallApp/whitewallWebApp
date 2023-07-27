@@ -37,7 +37,7 @@
                                     <div class="col-sm-6">
                                         <div class="card card-branding">
                                             <input type="checkbox" class="form-check-input checkbox-branding" checked>
-                                            <img class="card-img-top img-branding p-2" src="<?= $collections[$i]["thumbnail"] ?>">
+                                            <img class="card-img-top img-branding" src="<?= $collections[$i]["thumbnail"] ?>">
                                             <div class="collection-title">
                                                 <p><?= $collections[$i]["name"] ?></p>
                                             </div>
@@ -46,7 +46,7 @@
                                     <div class="col-sm-6">
                                         <div class="card card-branding">
                                             <input type="checkbox" class="form-check-input checkbox-branding">
-                                            <img class="card-img-top p-2 img-branding" src="<?= $collections[$i + 1]["thumbnail"] ?>">
+                                            <img class="card-img-top img-branding" src="<?= $collections[$i + 1]["thumbnail"] ?>">
                                             <div class="collection-title">
                                                 <p><?= $collections[$i + 1]["name"] ?></p>
                                             </div>
@@ -57,7 +57,7 @@
                             <?php if (count($collections) % 2 != 0) : ?>
                                 <div class="col-sm-6">
                                     <div class="card card-branding">
-                                        <img class="card-img-top p-2 img-branding" src="<?= $collections[count($collections) - 1]["thumbnail"] ?>">
+                                        <img class="card-img-top img-branding" src="<?= $collections[count($collections) - 1]["thumbnail"] ?>">
                                         <div class="collection-title">
                                             <p><?= $collections[count($collections) - 1]["name"] ?></p>
                                         </div>
