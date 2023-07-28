@@ -284,6 +284,7 @@ class Brand extends BaseController
             }
 
             $brandModel->joinUser($brandID, $session->get("user_id"), true);
+            $userModel->setPermissions($session->get("user_id"), $brandID, $userModel->getPermissions($session->get("user_id"), $session->get("brand_id")));
 
             //create default category & collections
             $colModel = new CollectionModel();
@@ -462,13 +463,37 @@ class Brand extends BaseController
 
     public function removeBrand(){
         $brandModel = new BrandModel();
+        $userModel = new UserModel();
+        $session = session();
         $assets = new Assets();
 
         $brandName = $this->request->getPost("id", FILTER_SANITIZE_SPECIAL_CHARS);
         $brandId = $brandModel->getBrand($brandName, "name", ["id"]);
 
-        $assets->removeBrand($brandId);
-        $brandModel->delete($brandId);
+        //find a brand that is not going to be deleted
+        $brandids = $brandModel->getCollumn("id", $session->get("user_id"));
+        $liveBrand = null;
+        foreach ($brandids as $dbid) {
+            if ($dbid["id"] != $brandId){
+                $liveBrand = $dbid["id"];
+            }
+        }
+
+        if ($liveBrand !== null){
+            $accountID = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+            $userids = $userModel->getCollumn("id", $accountID, getBy: "account_id");
+
+            //update the default brands of all the users if they are going to be deleted
+            foreach($userids as $dbuserId){
+                $dbuserId = $dbuserId["id"];
+                if ($userModel->getUser($dbuserId, filter: ["default_brand"]) == $brandId){
+                    $userModel->update($dbuserId, ["default_brand" => $liveBrand]);
+                }
+            }
+
+            $assets->removeBrand($brandId);
+            $brandModel->delete($brandId);
+        }
     }
 
     public function removeUser(){
