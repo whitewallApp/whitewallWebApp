@@ -44,47 +44,55 @@ class LogIn extends BaseController
             if ($payload){
                 $emails = $userModel->findColumn("email");
 
-                foreach($emails as $email){
-                    if ($payload["email"] == $email){
-                        $ids = $userModel->getUser($payload["email"], "user.email", ["google_id", "id"]);
-                        if ($ids["google_id"] == ""){
-                            $userModel->update($ids["id"], ["google_id" => $payload["sub"]]);
+                if ($emails !== null){
+                    foreach($emails as $email){
+                        if ($payload["email"] == $email){
+                            $ids = $userModel->getUser($payload["email"], "user.email", ["google_id", "id"]);
+                            if ($ids["google_id"] == ""){
+                                $userModel->update($ids["id"], ["google_id" => $payload["sub"]]);
 
-                            if($userModel->getUser($ids["id"], filter: ["icon"]) == ""){
-                                $userModel->update($ids["id"], ["icon" => $payload["picture"]]);
-                            }
-
-                            $return["success"] = true;
-                        }else{
-                            if ($ids["google_id"] == $payload["sub"]){
-
-                                if ($userModel->getUser($ids["id"], filter: ["icon"]) == "") {
+                                if($userModel->getUser($ids["id"], filter: ["icon"]) == ""){
                                     $userModel->update($ids["id"], ["icon" => $payload["picture"]]);
                                 }
 
                                 $return["success"] = true;
+                            }else{
+                                if ($ids["google_id"] == $payload["sub"]){
+
+                                    if ($userModel->getUser($ids["id"], filter: ["icon"]) == "") {
+                                        $userModel->update($ids["id"], ["icon" => $payload["picture"]]);
+                                    }
+
+                                    $return["success"] = true;
+                                }
                             }
                         }
                     }
-                }
 
-                if ($return["success"]){
-                    $userId = $userModel->getUser($payload["email"], "user.email", ["id"]);
-                    $this->login($userId);
+                    if ($return["success"]) {
+                        $userId = $userModel->getUser($payload["email"], "user.email", ["id"]);
+                        $this->login($userId);
+                    }
+                }else{
+                    $return["success"] = false;
                 }
             }
         }else{
             $emails = $userModel->findColumn("email");
-            foreach($emails as $email){
-                if ($email == $emailInput){
-                    if (password_verify($password, $userModel->getUser($email, "email", ["password"]))){
-                        $return["success"] = true;
+            if ($emails !== null){
+                foreach($emails as $email){
+                    if ($email == $emailInput){
+                        if (password_verify($password, $userModel->getUser($email, "email", ["password"]))){
+                            $return["success"] = true;
 
-                        $userId = $userModel->getUser($email, "email", ["id"]);
+                            $userId = $userModel->getUser($email, "email", ["id"]);
 
-                        $this->login($userId);
+                            $this->login($userId);
+                        }
                     }
                 }
+            }else{
+                $return["success"] = false;
             }
         }
 
