@@ -21,10 +21,41 @@
                 <td>
                     <div class="row">
                         <div class="col">
-                            <p><?= $aabExists ? ('Download Now') : ('In Progress') ?></p>
+                            <p>In Progress</p>
                         </div>
-                        <div class="col" id="androidModelButton" <?= $aabExists ? ('style="display: none;"') : ('') ?>>
+                        <div class="col" id="androidModelButton">
                             <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#androidModal">Compile</button>
+                        </div>
+                    </div>
+                </td>
+                <td>Why Not Today</td>
+                <!-- <td>
+                    <div class="row">
+                        <div class="col">
+                            <p>In Progress</p>
+                        </div>
+                        <div class="col" id="iosModelButton">
+                            <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#iosModal">Compile</button>
+                        </div>
+                        <div class="row" id="iosButtons" style="display: none;">
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" id="iosDownloadButton">Download Now</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" id="iosPublishButton">Mark as Published</button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>N/A</td>
+                <td>N/A</td> -->
+            </tr>
+            <tr <?= !$aabExists ? ('style="display: none;"') : ('') ?>>
+                <th scope="row"><?= $name ?></th>
+                <td>
+                    <div class="row">
+                        <div class="col">
+                            <p>Download Now</p>
                         </div>
                         <div class="row" id="androidButtons">
                             <div class="col" <?= !$apkExists ? ('style="display: none;"') : ('') ?>>
