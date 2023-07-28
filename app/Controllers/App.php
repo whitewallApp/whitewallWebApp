@@ -12,9 +12,30 @@ class App extends BaseController
 {
 
     public function index()
-    {
+    {   
+        $brandModel = new BrandModel();
+        $appModel = new AppModel();
+        $session = session();
+        $accountId = $brandModel->getBrand($session->get("brand_id"), filter: ["account_id"]);
+        $brandId = $session->get("brand_id");
+        $brandPath = getenv("BASE_PATH") . $accountId . "/" . $brandId . "/branding/";
 
-        return Navigation::renderNavBar("Versions",  "builds") . view('App') . Navigation::renderFooter();
+        try {
+            $date = date_format(date_create($appModel->selectByMultipule(["dateUpdated"], ["current" => true, "brand_id" => $brandId])["dateUpdated"]), "Y/m/d h:i:s A");
+            $versionName = $appModel->selectByMultipule(["versionName"], ["current" => true, "brand_id" => $brandId])["versionName"];
+        }catch(\Throwable $e){
+            $date = "Why Not Today";
+            $versionName = "Workspace";
+        }
+
+        $data = [
+            "apkExists" => file_exists($brandPath . "app-release.apk"),
+            "aabExists" => file_exists($brandPath . "app-release.aab"),
+            "updatedDate" => $date,
+            "name" => $versionName
+        ];
+
+        return Navigation::renderNavBar("Versions",  "builds") . view('App', $data) . Navigation::renderFooter();
     }
 
     public function compile($os)
@@ -26,6 +47,7 @@ class App extends BaseController
             $session = session();
             $brand_id = $session->get("brand_id");
             $accountID = $brandModel->getBrand($brand_id, filter: ["account_id"]);
+            $versionName = $this->request->getPost("version", FILTER_SANITIZE_SPECIAL_CHARS);
 
             //set up app paths
             $brandingPath = getenv("BASE_PATH") . $accountID . "/" . $brand_id . "/branding/";
@@ -41,8 +63,9 @@ class App extends BaseController
             $rowID = null;
             try {
                 $rowID = $appModel->selectByMultipule(["id"], ["brand_id" => $brand_id, "os" => $os])["id"];
+                $appModel->update($rowID, ["versionName" => $versionName]);
             }catch(\Throwable $e){
-                $rowID = $appModel->insert(["brand_id" => $brand_id, "os" => $os, "state" => "Copying Files...", "progress" => 0, "current" => true]);
+                $rowID = $appModel->insert(["brand_id" => $brand_id, "os" => $os, "state" => "Copying Files...", "progress" => 0, "current" => true, "versionName" => $versionName]);
             }
 
 

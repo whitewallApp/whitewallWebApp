@@ -7,11 +7,9 @@
                 <!-- <th scope="col" colspan="3">IOS</th> -->
             </tr>
             <tr>
-                <th scope="col">Version Name</th>
-                <th scope="col" class="border-right">Last Modified Date</th>
-                <th scope="col">Action/Status</th>
+                <th scope="col" class="border-right">Version Name</th>
+                <th scope="col" class="border-right">Action/Status</th>
                 <th scope="col">Compiled Date</th>
-                <th scope="col" class="border-right">Published Date</th>
                 <!-- <th scope="col">Action/Status</th>
                 <th scope="col">Compiled Date</th>
                 <th scope="col">Published Date</th> -->
@@ -19,28 +17,26 @@
         </thead>
         <tbody class="table-group-divider table-divider-color">
             <tr>
-                <th scope="row">Workspace</th>
-                <td class="border-right">Mar 25 2018</td>
+                <th scope="row"><?= $name ?></th>
                 <td>
                     <div class="row">
                         <div class="col">
-                            <p>In Progress</p>
+                            <p><?= $aabExists ? ('Download Now') : ('In Progress') ?></p>
                         </div>
-                        <div class="col" id="androidModelButton">
+                        <div class="col" id="androidModelButton" <?= $aabExists ? ('style="display: none;"') : ('') ?>>
                             <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#androidModal">Compile</button>
                         </div>
-                        <div class="row" id="androidButtons" style="display: none;">
-                            <div class="col">
-                                <button type="button" class="btn btn-primary" id="androidDownloadButton">Download Now</button>
+                        <div class="row" id="androidButtons">
+                            <div class="col" <?= !$apkExists ? ('style="display: none;"') : ('') ?>>
+                                <a href="/assets/app/release/apk" download="app-release.apk"><button type="button" class="btn btn-primary" id="androidDownloadButton">Download Test APK</button></a>
                             </div>
-                            <div class="col">
-                                <button type="button" class="btn btn-primary" id="androidPublishButton">Mark as Published</button>
+                            <div class="col" <?= !$aabExists ? ('style="display: none;"') : ('') ?>>
+                                <a href="/assets/app/release/aab" download="app-release.aab"><button type="button" class="btn btn-primary" id="androidPublishButton">Download App Bundle (aab)</button></a>
                             </div>
                         </div>
                     </div>
                 </td>
-                <td>N/A</td>
-                <td class="border-right">N/A</td>
+                <td><?= $updatedDate ?></td>
                 <!-- <td>
                     <div class="row">
                         <div class="col">

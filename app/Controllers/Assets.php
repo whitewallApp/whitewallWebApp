@@ -103,17 +103,23 @@ class Assets extends BaseController {
         }
     }
 
-    function getAPK(){
-        $path = getenv("BASE_PATH") . $this->accountId . "/" . $this->brand_id . "/branding/";
-        $file = "app-release.apk";
+    function getAPK($type){
+        if ($type == "apk" || $type == "aab"){
+            $path = getenv("BASE_PATH") . $this->accountId . "/" . $this->brand_id . "/branding/";
+            $file = "app-release." . $type;
 
-        if (file_exists($path . $file)) {
+            if (file_exists($path . $file)) {
 
-            header("Content-Type: " . "application/octet-stream");
-            readfile($path . $file);
-            exit;
-        } else {
-            return view("errors/html/error_404", ["message" => "sorry we can't find that image"]);
+                if ($type == "apk"){
+                    header("Content-Type: " . "application/vnd.android.package-archive");
+                }else{
+                    header("Content-Type: " . "application/x-authorware-bin");
+                }
+                readfile($path . $file);
+                exit;
+            } else {
+                return view("errors/html/error_404", ["message" => "sorry we can't find that image"]);
+            }
         }
     }
 
