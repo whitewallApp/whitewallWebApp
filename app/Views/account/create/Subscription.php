@@ -42,11 +42,11 @@
         <div class="col">
             <div class="card  ">
                 <div class="card-body col">
-                    <h5 class="fw-bold">Whitewall Unicycle</h5>
-                    <p class="fw-light">
+                    <h4 class="fw-bold">Whitewall Unicycle</h4>
+                    <!-- <p class="fw-light">
                         Some quick example text to build on the card title and make up the bulk of the
                         card's content.
-                    </p>
+                    </p> -->
 
                     <div class="row float-left">
                         <div class="col-sm-8">
@@ -57,7 +57,7 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary w-100" id="prod_O9giy1xJGXqTI6">Subscribe</button>
+                    <button type="button" class="btn btn-primary w-100" id="<?= $productIds["Whitewall Unicycle"] ?>">Subscribe</button>
 
                     <p class="mt-3 mb-0 pb-0 fw-bold">This Includes:</p>
                     <ol class="list-group list-group-light list-group-numbered">
@@ -72,11 +72,11 @@
         <div class="col">
             <div class="card  ">
                 <div class="card-body col">
-                    <h5 class="fw-bold">Whitewall Sedan</h5>
-                    <p class="fw-light">
+                    <h4 class="fw-bold">Whitewall Sedan</h4>
+                    <!-- <p class="fw-light">
                         Some quick example text to build on the card title and make up the bulk of the
                         card's content.
-                    </p>
+                    </p> -->
 
                     <div class="row float-left">
                         <div class="col-sm-8">
@@ -87,7 +87,7 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary w-100" id="prod_O9gj6841IhBwgH">Subscribe</button>
+                    <button type="button" class="btn btn-primary w-100" id="<?= $productIds["Whitewall Sedan"] ?>">Subscribe</button>
 
                     <p class="mt-3 mb-0 pb-0 fw-bold">This Includes:</p>
                     <ol class="list-group list-group-light list-group-numbered">
@@ -102,11 +102,11 @@
         <div class="col">
             <div class="card  ">
                 <div class="card-body col">
-                    <h5 class="fw-bold">Whitewall Unlimited</h5>
-                    <p class="fw-light">
+                    <h4 class="fw-bold">Whitewall Unlimited</h4>
+                    <!-- <p class="fw-light">
                         Some quick example text to build on the card title and make up the bulk of the
                         card's content.
-                    </p>
+                    </p> -->
 
                     <div class="row float-left">
                         <div class="col-sm-8">
@@ -117,7 +117,7 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary w-100" id="prod_O9gjiMOlqG3hB4">Subscribe</button>
+                    <button type="button" class="btn btn-primary w-100" id="<?= $productIds["Whitewall Unlimited"] ?>">Subscribe</button>
 
                     <p class="mt-3 mb-0 pb-0 fw-bold">This Includes:</p>
                     <ol class="list-group list-group-light list-group-numbered">

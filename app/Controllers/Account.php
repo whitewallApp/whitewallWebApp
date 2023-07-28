@@ -6,6 +6,7 @@ use App\Controllers\Navigation;
 use App\Models\AccountModel;
 use App\Models\CategoryModel;
 use App\Models\CollectionModel;
+use App\Models\ProductModel;
 use App\Models\SubscriptionModel;
 use App\Models\UserModel;
 use Config\Logger;
@@ -188,8 +189,18 @@ class Account extends BaseController
                 $session->set("googleID", $googleID);
                 $session->set("profile", $profilePic);
 
+                $prodModel = new ProductModel();
+                $productIds = $prodModel->findColumn("productID");
+                $ids = [];
+
+                foreach ($productIds as $productId) {
+                    $product = $prodModel->find($productId);
+                    $ids[$product["productName"]] = $productId;
+                }
+
                 $data = [
-                    "credential" => "google"
+                    "credential" => "google",
+                    "productIds" => $ids
                 ];
 
                 return view("account/create/Subscription", $data);
@@ -229,7 +240,7 @@ class Account extends BaseController
                 $subModel->insert(["account_id" => $accountID, "productID" => $productID]);
 
                 //make the brand
-                $brandID = $brandModel->insert(["name" => $brandName, "account_id" => $accountID]);
+                $brandID = $brandModel->insert(["name" => $brandName, "account_id" => $accountID, "apikey" => bin2hex(random_bytes(32))]);
 
                 //create default category and collections
                 $catID = $catModel->insert(["name" => "Default Category", "brand_id" => $brandID]);
@@ -292,7 +303,20 @@ class Account extends BaseController
                 $session->set("email", $this->request->getPost("email", FILTER_SANITIZE_EMAIL));
                 $session->set("password", $this->request->getPost("password"));
 
-                return view("account/create/Subscription");
+                $prodModel = new ProductModel();
+                $productIds = $prodModel->findColumn("productID");
+                $ids = [];
+
+                foreach ($productIds as $productId) {
+                    $product = $prodModel->find($productId);
+                    array_push($ids, [$product["productName"] => $productId]);
+                }
+
+                $data = [
+                    "productIds" => $ids
+                ];
+
+                return view("account/create/Subscription", $data);
             }
 
             if ($this->request->getPost("page") == "subscription"){
@@ -323,7 +347,7 @@ class Account extends BaseController
                 $subModel->insert(["account_id" => $accountID, "productID" => $productID]);
 
                 //make the brand
-                $brandID = $brandModel->insert(["name" => $brandName, "account_id" => $accountID]);
+                $brandID = $brandModel->insert(["name" => $brandName, "account_id" => $accountID, "apikey" => bin2hex(random_bytes(32))]);
 
                 //create default category and collections
                 $catID = $catModel->insert(["name" => "Default Category", "brand_id" => $brandID]);
