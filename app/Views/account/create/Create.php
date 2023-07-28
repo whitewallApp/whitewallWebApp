@@ -31,7 +31,7 @@
         </div>
         <div class="row p-2">
             <div class="col-3">
-                <div id="g_id_onload" data-client_id="437362021062-fserfra8i9g6kicf00jvefvhbpbf845l.apps.googleusercontent.com" data-context="signup" data-ux_mode="popup" data-login_uri="http://localhost/account/create" data-auto_prompt="false">
+                <div id="g_id_onload" data-client_id="437362021062-fserfra8i9g6kicf00jvefvhbpbf845l.apps.googleusercontent.com" data-context="signup" data-ux_mode="popup" data-login_uri="/account/create" data-auto_prompt="false">
                 </div>
 
                 <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signup_with" data-size="large" data-logo_alignment="left">
