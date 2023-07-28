@@ -309,7 +309,7 @@ class Account extends BaseController
 
                 foreach ($productIds as $productId) {
                     $product = $prodModel->find($productId);
-                    array_push($ids, [$product["productName"] => $productId]);
+                    $ids[$product["productName"]] = $productId;
                 }
 
                 $data = [
