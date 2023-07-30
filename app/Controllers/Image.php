@@ -572,7 +572,6 @@ class Image extends BaseController
                                         $image = [
                                             "name" => $data[$columns["name"]],
                                             "description" => $data[$columns["description"]],
-                                            "link" => $data[$columns["link"]],
                                             "imagePath" => $data[$columns["path"]],
                                             "collection_id" => $colModel->getCollection($data[$columns["collection_name"]], ["id"], "name"),
                                             "externalPath" => preg_match("/^http/", $data[$columns["path"]]),
