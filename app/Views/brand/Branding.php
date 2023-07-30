@@ -98,7 +98,7 @@
                                         <div class="card card-branding p-2">
                                             <img class="card-img-top img-branding" src="<?= $images[$i]["thumbnail"] ?>" alt="Card image cap">
                                             <div class="image-title">
-                                                <p><?= $images[$i]["name"] ?></p>
+                                                <p class="m-0"><?= $images[$i]["name"] ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +106,7 @@
                                         <div class="card card-branding p-2">
                                             <img class="card-img-top img-branding" src="<?= $images[$i + 1]["thumbnail"] ?>" alt="Card image cap">
                                             <div class="image-title">
-                                                <p><?= $images[$i + 1]["name"] ?></p>
+                                                <p class="m-0"><?= $images[$i + 1]["name"] ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -115,7 +115,7 @@
                             <?php if (count($images) % 2 != 0) : ?>
                                 <div class="col-sm-6">
                                     <div class="card card-branding p-2">
-                                        <img class="img-branding" src="<?= $images[count($images) - 1]["thumbnail"] ?>" alt="Card image cap">
+                                        <img class="img-category" src="<?= $images[count($images) - 1]["thumbnail"] ?>" alt="Card image cap">
                                         <div class="image-title">
                                             <p><?= $images[count($images) - 1]["name"] ?></p>
                                         </div>
