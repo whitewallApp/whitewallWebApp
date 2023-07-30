@@ -393,7 +393,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <!-- <div class="card">
                     <div class="card-header" id="selection">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#sellectionCollapse" aria-expanded="false" aria-controls="collapseTwo">
@@ -478,7 +478,7 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="card">
                     <div class="card-header" id="imgCol">
                         <h2 class="mb-0">
