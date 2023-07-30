@@ -274,7 +274,7 @@
                         <div class="card-body">
                             <form>
                                 <div class="form-group">
-                                    <label class="form-label" for="categoryColor">Category Icon Color</label>
+                                    <label class="form-label" for="categoryColor">Category Background Color</label>
                                     <input type="color" class="form-control" id="categoryColor">
                                 </div>
                                 <div class="form-group">
