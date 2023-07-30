@@ -1,6 +1,6 @@
 <div class="m-4">
     <div class="row">
-        <div class="col-5">
+        <div class="col-5 position-sticky">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Collections List</a>
