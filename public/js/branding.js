@@ -8,12 +8,14 @@ $("#categoryColor").on("input", function(e){
 $("#categoryFontColor").on("input", function (e) {
     color = $(this).val();
     $(".row.bottom-nav").css("color", color)
+    $(".row.bottom-nav-banner").css("color", color)
     branding.categories.fontcolor = $(this).val();
 })
 
 $("#catFontSize").on("input", function (e) {
     size = $(this).val();
     $(".row.bottom-nav").css("font-size", size+"px")
+    $(".row.bottom-nav-banner").css("font-size", size + "px")
     branding.categories.fontsize = $(this).val();
 })
 
@@ -22,9 +24,13 @@ $("#catFontStyle").on("input", function (e) {
     if (fontType == "bold"){
         $(".row.bottom-nav").css("font-weight", fontType)
         $(".row.bottom-nav").css("font-style", "normal")
+        $(".row.bottom-nav-banner").css("font-weight", fontType)
+        $(".row.bottom-nav-banner").css("font-style", "normal")
     }else{
         $(".row.bottom-nav").css("font-weight", "normal")
         $(".row.bottom-nav").css("font-style", fontType)
+        $(".row.bottom-nav-banner").css("font-weight", "normal")
+        $(".row.bottom-nav-banner").css("font-style", fontType)
     }
     branding.categories.fontstyle = $(this).val();
 })
@@ -32,6 +38,7 @@ $("#catFontStyle").on("input", function (e) {
 $("#catFont").on("input", function (e) {
     font = $(this).val();
     $(".row.bottom-nav").css("font-family", font)
+    $(".row.bottom-nav-banner").css("font-family", font)
     branding.categories.font = $(this).val();
 })
 
