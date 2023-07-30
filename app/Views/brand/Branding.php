@@ -36,7 +36,7 @@
                                 <div class="row m-2">
                                     <div class="col-sm-6">
                                         <div class="card card-branding">
-                                            <input type="checkbox" class="form-check-input checkbox-branding" checked>
+                                            <!-- <input type="checkbox" class="form-check-input checkbox-branding" checked> -->
                                             <img class="card-img-top img-branding" src="<?= $collections[$i]["thumbnail"] ?>">
                                             <div class="collection-title">
                                                 <p><?= $collections[$i]["name"] ?></p>
@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="card card-branding">
-                                            <input type="checkbox" class="form-check-input checkbox-branding">
+                                            <!-- <input type="checkbox" class="form-check-input checkbox-branding"> -->
                                             <img class="card-img-top img-branding" src="<?= $collections[$i + 1]["thumbnail"] ?>">
                                             <div class="collection-title">
                                                 <p><?= $collections[$i + 1]["name"] ?></p>

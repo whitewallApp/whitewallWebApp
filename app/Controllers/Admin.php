@@ -80,7 +80,7 @@ class Admin extends BaseController
             exit;
         }
     }
-
+    
     public static function bytes($bytes, $force_unit = NULL, $format = NULL, $si = TRUE)
     {
         // Format string
