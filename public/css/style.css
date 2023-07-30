@@ -121,6 +121,7 @@ body {
     /* bottom: 0px; */
     border-radius: 0px 0px 40px 40px;
     color: white;
+    margin-bottom: 7px;
 }
 
 .bottom-nav-banner {
@@ -128,6 +129,7 @@ body {
     /* position: relative; */
     width: 268px;
     bottom: 50px;
+    margin-bottom: 7px;
 }
 
 .appBanner {
