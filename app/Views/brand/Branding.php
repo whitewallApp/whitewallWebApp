@@ -39,7 +39,7 @@
                                             <!-- <input type="checkbox" class="form-check-input checkbox-branding" checked> -->
                                             <img class="card-img-top img-branding" src="<?= $collections[$i]["thumbnail"] ?>">
                                             <div class="collection-title">
-                                                <p><?= $collections[$i]["name"] ?></p>
+                                                <p class="m-0"><?= $collections[$i]["name"] ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -48,7 +48,7 @@
                                             <!-- <input type="checkbox" class="form-check-input checkbox-branding"> -->
                                             <img class="card-img-top img-branding" src="<?= $collections[$i + 1]["thumbnail"] ?>">
                                             <div class="collection-title">
-                                                <p><?= $collections[$i + 1]["name"] ?></p>
+                                                <p class="m-0"><?= $collections[$i + 1]["name"] ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -59,7 +59,7 @@
                                     <div class="card card-branding">
                                         <img class="card-img-top img-branding" src="<?= $collections[count($collections) - 1]["thumbnail"] ?>">
                                         <div class="collection-title">
-                                            <p><?= $collections[count($collections) - 1]["name"] ?></p>
+                                            <p class="m-0"><?= $collections[count($collections) - 1]["name"] ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                         <div class="col text-center">
                                             <!-- <i class="bi bi-palette-fill"></i> -->
                                             <img class="category-img" src="<?= $category["iconPath"] ?>">
-                                            <p><?= $category["name"] ?></p>
+                                            <p class="m-0"><?= $category["name"] ?></p>
                                         </div>
                                     <?php endforeach ?>
                                 </div>
