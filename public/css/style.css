@@ -105,8 +105,8 @@ body {
 }
 
 .img-category {
-    width: auto;
-    height: 50px;
+    max-width: 50px;
+    max-height: 30px;
     object-fit: cover;
 }
 
