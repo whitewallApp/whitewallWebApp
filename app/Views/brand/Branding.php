@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                             <?php endif ?>
-                            <div class="">
+                            <div class="app-footer">
                                 <div class="row <?= ($brandimages["appBanner"] == "") ? ("bottom-nav") : ("bottom-nav-banner") ?>">
                                     <?php foreach ($categories as $category) : ?>
                                         <div class="col text-center">
