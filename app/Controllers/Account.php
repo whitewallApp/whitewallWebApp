@@ -267,9 +267,9 @@ class Account extends BaseController
                 //validate form
                 $rules = [
                     'name' => 'required',
-                    'password' => 'required|min_length[12]',
+                    'password' => 'required|min_length[8]',
                     'passconf' => 'required|matches[password]',
-                    'email'    => 'required|valid_email',
+                    'email'    => 'required|valid_email|is_unique[user.email]',
                 ];
 
                 $errors = [

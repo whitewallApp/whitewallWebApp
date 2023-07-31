@@ -5,7 +5,7 @@
 <div class="container p-3">
     <div class="container mt-2 text-center">
         <div class="alert alert-info" role="alert">
-            You do not need a Card to start
+            <h3>No Credit Card Needed to Create Account</h3>
         </div>
     </div>
     <div class="row">
@@ -57,12 +57,12 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary w-100" id="<?= $productIds["Whitewall Unicycle"] ?>">Subscribe</button>
+                    <button type="button" class="btn btn-primary w-100" id="<?= $productIds["Whitewall Unicycle"] ?>">Create Account</button>
 
                     <p class="mt-3 mb-0 pb-0 fw-bold">This Includes:</p>
                     <ol class="list-group list-group-light list-group-numbered">
                         <li class="list-group-item">Up to 1000 Images</li>
-                        <li class="list-group-item">Apps for Android or Apple</li>
+                        <li class="list-group-item">Android Apps</li>
                         <li class="list-group-item">One user</li>
                         <li class="list-group-item">One Brand</li>
                     </ol>
@@ -87,12 +87,12 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary w-100" id="<?= $productIds["Whitewall Sedan"] ?>">Subscribe</button>
+                    <button type="button" class="btn btn-primary w-100" id="<?= $productIds["Whitewall Sedan"] ?>">Create Account</button>
 
                     <p class="mt-3 mb-0 pb-0 fw-bold">This Includes:</p>
                     <ol class="list-group list-group-light list-group-numbered">
                         <li class="list-group-item">Up to 4000 Images</li>
-                        <li class="list-group-item">Apps for Both Android AND Apple</li>
+                        <li class="list-group-item">Android Apps</li>
                         <li class="list-group-item">Up to 4 Users</li>
                         <li class="list-group-item">up to 4 Brands</li>
                     </ol>
@@ -117,12 +117,12 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary w-100" id="<?= $productIds["Whitewall Unlimited"] ?>">Subscribe</button>
+                    <button type="button" class="btn btn-primary w-100" id="<?= $productIds["Whitewall Unlimited"] ?>">Create Account</button>
 
                     <p class="mt-3 mb-0 pb-0 fw-bold">This Includes:</p>
                     <ol class="list-group list-group-light list-group-numbered">
                         <li class="list-group-item">Unlimited Images</li>
-                        <li class="list-group-item">Apps for Both Android AND Apple</li>
+                        <li class="list-group-item">Android Apps</li>
                         <li class="list-group-item">Unlimited Users</li>
                         <li class="list-group-item">Unlimited Brands</li>
                     </ol>
