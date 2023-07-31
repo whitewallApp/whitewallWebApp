@@ -51,6 +51,7 @@ $routes->get('/search', 'Navigation::search');
 
 //App URLS
 $routes->post('/app/(:segment)/compile', 'App::compile/$1', ["filter" => "add:builds"]);
+$routes->get('/app/(:segment)/compile', 'App::compile/$1', ["filter" => "add:builds"]);
 $routes->post('/app/(:segment)/progress', 'App::progress/$1', ["filter" => "add:builds"]);
 $routes->get('/assets/app/release/(:segment)', 'Assets::getAPK/$1');
 
