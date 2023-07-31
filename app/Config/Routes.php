@@ -57,6 +57,7 @@ $routes->get('/assets/app/release/(:segment)', 'Assets::getAPK/$1');
 //admin urls
 $routes->get('/admin', 'Admin::index');
 $routes->post('/admin/account/size', 'Admin::getFolderSize');
+$routes->post('/admin/variables/update', 'Admin::variables');
 
 
 //Asset URLS

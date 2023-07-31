@@ -9,6 +9,7 @@ use App\Models\CollectionModel;
 use App\Models\ImageModel;
 use App\Models\SubscriptionModel;
 use App\Models\UserModel;
+use App\Models\VariablesModel;
 
 class Admin extends BaseController
 
@@ -70,11 +71,19 @@ class Admin extends BaseController
 
             $chartData["storage"] = [
                 ["Type", "GiB"],
-                ["Current Size: GiB", $this->bytes(disk_total_space("/") - disk_free_space("/"), "GiB")],
-                ["Storage Left: GiB", $this->bytes(disk_free_space("/"), "GiB")],
+                ["Current Size: GiB", floatval($this->bytes(disk_total_space("/") - disk_free_space("/"), "GiB"))],
+                ["Storage Left: GiB", floatval($this->bytes(disk_free_space("/"), "GiB"))],
             ];
 
-            return Navigation::renderNavBar("Super Admin") . view("Admin", ["accounts" => $data, "chartData" => $chartData]) . Navigation::renderFooter();
+            $varModel = new VariablesModel();
+
+            $data = [
+                "accounts" => $data, 
+                "chartData" => $chartData,
+                "variables" => $varModel->findAll()
+            ];
+
+            return Navigation::renderNavBar("Super Admin") . view("Admin", $data) . Navigation::renderFooter();
         }else{
             http_response_code(404);
             exit;
@@ -90,6 +99,17 @@ class Admin extends BaseController
             if ($id !== null){
                 echo $this->bytes($this->folderSize(getenv("BASE_PATH") . $id));
             }
+        }
+    }
+
+    public function variables(){
+        $session = session();
+        if ($session->get("super_admin") !== null) {
+            $id = $this->request->getPost("id", FILTER_VALIDATE_INT);
+            $val = $this->request->getPost("value", FILTER_SANITIZE_SPECIAL_CHARS);
+
+            $varModel = new VariablesModel();
+            $varModel->update($id, ["value" => $val]);
         }
     }
 

@@ -10,6 +10,9 @@
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="ex1-tab-2" data-mdb-toggle="pill" href="#graphs" role="tab" aria-controls="graphs" aria-selected="false">Graphs</a>
         </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="ex1-tab-2" data-mdb-toggle="pill" href="#variables" role="tab" aria-controls="variables" aria-selected="false">Variables</a>
+        </li>
     </ul>
     <!-- Pills navs -->
 
@@ -113,6 +116,33 @@
                 </div>
             </div>
         </div>
+        <div class="tab-pane fade" id="variables" role="tabpanel" aria-labelledby="ex1-tab-2">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Value</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($variables as $variable) : ?>
+                        <tr>
+                            <td><?= $variable["name"] ?></td>
+                            <td>
+                                <div class="form-outline">
+                                    <input type="text" id="<?= $variable["name"] ?>" class="form-control" value="<?= $variable["value"] ?>" />
+                                    <label class="form-label" for="<?= $variable["name"] ?>">Value</label>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" id="<?= $variable["id"] ?>" var-name="<?= $variable["name"] ?>">Save</button>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 
@@ -147,13 +177,34 @@
         storagechart.draw(storagedata, storageoptions);
     }
 
-    $("[account-id]").on("click", function(e){
+    $("[account-id]").on("click", function(e) {
         id = $(e.currentTarget).attr("account-id");
 
         $.post("/admin/account/size", {
             id: id
-        }, function(data, status){
+        }, function(data, status) {
             alert("Filesize for account " + id + ": " + data);
+        })
+    })
+
+    $("[var-name]").on("click", function(e) {
+        id = $(e.currentTarget).attr("id");
+        val = $("#" + $(e.currentTarget).attr("var-name")).val();
+        $.post("/admin/variables/update", {
+            id: id,
+            value: val
+        }, function(data, status) {
+            if (status == "success") {
+                $("#" + id).addClass("btn-success");
+                setTimeout(() => {
+                    $("#" + id).removeClass("btn-success");
+                }, 1000)
+            } else {
+                $("#" + id).addClass("btn-danger");
+                setTimeout(() => {
+                    $("#" + id).removeClass("btn-danger");
+                }, 1000)
+            }
         })
     })
 </script>

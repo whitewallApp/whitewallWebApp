@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Controllers\Navigation;
 use App\Models\BrandModel;
 use App\Models\UserModel;
+use App\Models\VariablesModel;
 use Google;
 
 class LogIn extends BaseController
@@ -106,13 +107,18 @@ class LogIn extends BaseController
     public static function login($userId){
         $session = session();
         $userModel = new UserModel();
+        $varModel = new VariablesModel();
         $session->set("logIn", true);
         $session->set("brand_id", $userModel->getUser($userId, filter: ["default_brand"]));
         $session->set("user_id", $userId);
         $session->set("is_admin", $userModel->getAdmin($userId, $session->get("brand_id")));
 
-        if ($userModel->getUser($userId, filter: ["email"]) == "thomas.ed.dick@gmail.com" || $userModel->getUser($userId, filter: ["email"]) == "jonathan.steven.dick@gmail.com"){
-            $session->set("super_admin", true);
+        //check for super admin
+        $emails = (string)$varModel->getVariable("admin_emails", filter: ["value"]);
+        foreach(explode(";", $emails) as $email){
+            if ($userModel->getUser($userId, filter: ["email"]) == $email){
+                $session->set("super_admin", true);
+            }
         }
 	
     }
