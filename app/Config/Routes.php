@@ -32,7 +32,6 @@ $routes->set404Override();
 
 //Base URLs
 $routes->get('/', 'LogIn::index');
-$routes->get('/admin', 'Admin::index');
 $routes->get('/account/create', 'Account::create');
 $routes->post('/account/create', 'Account::addFirst');
 $routes->get('/dashboard', 'Dashboard::index', ["filter" => "view:nocheck"]);
@@ -55,6 +54,9 @@ $routes->post('/app/(:segment)/compile', 'App::compile/$1', ["filter" => "add:bu
 $routes->post('/app/(:segment)/progress', 'App::progress/$1', ["filter" => "add:builds"]);
 $routes->get('/assets/app/release/(:segment)', 'Assets::getAPK/$1');
 
+//admin urls
+$routes->get('/admin', 'Admin::index');
+$routes->post('/admin/account/size', 'Admin::getFolderSize');
 
 
 //Asset URLS

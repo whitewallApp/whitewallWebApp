@@ -80,14 +80,46 @@ class Admin extends BaseController
             exit;
         }
     }
-    
-    public static function bytes($bytes, $force_unit = NULL, $format = NULL, $si = TRUE)
+
+    public function getFolderSize(){
+        $session = session();
+        if ($session->get("super_admin") !== null) {
+            helper("filesystem");
+            $id = $this->request->getPost("id", FILTER_VALIDATE_INT);
+
+            if ($id !== null){
+                echo $this->bytes($this->folderSize(getenv("BASE_PATH") . $id));
+            }
+        }
+    }
+
+    private function folderSize($dir)
+    {
+        $count_size = 0;
+        $count = 0;
+        $dir_array = scandir($dir);
+        foreach ($dir_array as $key => $filename) {
+            if ($filename != ".." && $filename != ".") {
+                if (is_dir($dir . "/" . $filename)) {
+                    $new_foldersize = $this->foldersize($dir . "/" . $filename);
+                    $count_size = $count_size + $new_foldersize;
+                } else if (is_file($dir . "/" . $filename)) {
+                    $count_size = $count_size + filesize($dir . "/" . $filename);
+                    $count++;
+                }
+            }
+        }
+        return $count_size;
+    }
+
+    private function bytes($bytes, $force_unit = NULL, $format = NULL, $si = TRUE)
     {
         // Format string
-        $format = ($format === NULL) ? '%01.2f' : (string) $format;
+        $format = ($format === NULL) ? '%01.2f %s' : (string) $format;
 
         // IEC prefixes (binary)
-        if ($si == FALSE or strpos($force_unit, 'i') !== FALSE) {
+        if ($si == FALSE or strpos($force_unit, 'i') !== FALSE
+        ) {
             $units = array('B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB');
             $mod   = 1024;
         }
@@ -102,6 +134,6 @@ class Admin extends BaseController
             $power = ($bytes > 0) ? floor(log($bytes, $mod)) : 0;
         }
 
-        return floatval(sprintf($format, $bytes / pow($mod, $power)));
+        return sprintf($format, $bytes / pow($mod, $power), $units[$power]);
     }
 }

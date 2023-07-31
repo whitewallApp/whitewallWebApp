@@ -19,7 +19,14 @@
             <?php foreach ($accounts as $account) : ?>
                 <div class="card m-4">
                     <div class="card-body">
-                        <h5 class="card-title">Account: <?= $account["account_id"] ?> | Status: <?= $account["subscription"] ?></h5>
+                        <div class="row p-2">
+                            <div class="col-sm-3">
+                                <h5 class="card-title">Account: <?= $account["account_id"] ?> | Status: <?= $account["subscription"] ?></h5>
+                            </div>
+                            <div class="col-sm-9">
+                                <button account-id="<?= $account["account_id"] ?>" class="btn btn-info">Check Folder Size</button>
+                            </div>
+                        </div>
                         <table class="table text-center table-bordered">
                             <thead>
                                 <tr>
@@ -139,6 +146,16 @@
         const storagechart = new google.visualization.PieChart(document.getElementById('storage'));
         storagechart.draw(storagedata, storageoptions);
     }
+
+    $("[account-id]").on("click", function(e){
+        id = $(e.currentTarget).attr("account-id");
+
+        $.post("/admin/account/size", {
+            id: id
+        }, function(data, status){
+            alert("Filesize for account " + id + ": " + data);
+        })
+    })
 </script>
 
 <?= $this->endSection(); ?>
