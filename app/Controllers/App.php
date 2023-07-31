@@ -251,8 +251,10 @@ class App extends BaseController
 
             if (is_resource($process)) {
                 echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
                 fclose($pipes[1]);
+
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                fclose($pipes[2]);
 
                 // It is important that you close any pipes before calling
                 // proc_close in order to avoid a deadlock
