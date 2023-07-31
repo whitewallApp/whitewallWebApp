@@ -6,6 +6,7 @@ use App\Models\BrandModel;
 use App\Models\CategoryModel;
 use App\Models\CollectionModel;
 use App\Models\ImageModel;
+use App\Models\SubscriptionModel;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -99,7 +100,11 @@ class Request extends BaseController
     }
 
     public function branding(){
-        echo json_encode($this->brandModel->getBrand($this->brandId, filter: ["appIcon", "appLoading", "appHeading", "appBanner", "branding"], assoc: true));
+        $subModel = new SubscriptionModel();
+        $branding = $this->brandModel->getBrand($this->brandId, filter: ["appIcon", "appLoading", "appHeading", "appBanner", "branding"], assoc: true);
+        $branding["status"] = $subModel->getSubscription($this->accountId, "account_id", ["status"]);
+
+        echo json_encode($branding);
     }
 
     public function menu(){
