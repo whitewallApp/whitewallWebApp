@@ -55,6 +55,7 @@
                             <th scope="col">Name</th>
                             <th scope="col">Category</th>
                             <th scope="col">Images</th>
+                            <th scope="col">Active</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,6 +68,7 @@
                                 <td><?= $collection['name'] ?></td>
                                 <td class="w-25"><a href="#"><?= $collection["category"] ?></a></td>
                                 <td><?= $collection["imageCount"] ?></td>
+                                <td><?= $collection["active"]  ? ("Active") : ("Inactive")?></td>
                             </tr>
                         <?php endforeach ?>
                     </tbody>

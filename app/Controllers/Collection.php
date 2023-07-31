@@ -34,6 +34,7 @@ class Collection extends BaseController
             $collection = [
                 "name" => $collModel->getCollection($id, filter: ["name"]),
                 "iconPath" => $collModel->getCollection($id, filter: ["thumbnail"]),
+                "active" => $collModel->getCollection($id, filter: ["active"]),
                 "category" => $catModel->getCategory($catID, filter: ["name"]),
                 "imageCount" => count($imageModel->getCollumn("id", $id, getBy: "collection_id"))
             ];

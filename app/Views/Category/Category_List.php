@@ -42,6 +42,7 @@
                             <th scope="col">Icon</th>
                             <th scope="col">Name</th>
                             <th scope="col">Collections</th>
+                            <th scope="col">Active</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,7 +53,8 @@
                                     <image class="img-sm" src="<?= $category["iconPath"] ?>">
                                 </td>
                                 <td><?= $category["name"] ?></td>
-                                <td><a href="#"><?= $category["collectionName"] ?></a></td>
+                                <td><?= $category["collectionName"] ?></td>
+                                <td><?= $category["active"]  ? ("Active") : ("Inactive") ?></td>
                             </tr>
                         <?php endforeach ?>
                         <tr>
