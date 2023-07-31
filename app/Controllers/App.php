@@ -226,38 +226,38 @@ class App extends BaseController
             $appModel->update($rowID, ["state" => "Compiling... This could take up to 2 hours (you may leave the page)", "progress" => 75]);
             //send the webhook
             $varModel = new VariablesModel();
-            $url = $varModel->getVariable("compile_webhook", assoc: true)["value"];
-            if ($url != ""){
-                $data = ['appPath' => $copyAppPath, 'iconName' => $imageIcon];
+            // $url = $varModel->getVariable("compile_webhook", assoc: true)["value"];
+            // if ($url != ""){
+            //     $data = ['appPath' => $copyAppPath, 'iconName' => $imageIcon];
 
-                // use key 'http' even if you send the request to https://...
-                $options = [
-                        'http' => [
-                            'header' => "Content-type: application/json\r\n",
-                            'method' => 'POST',
-                            'content' => json_encode($data),
-                        ],
-                    ];
+            //     // use key 'http' even if you send the request to https://...
+            //     $options = [
+            //             'http' => [
+            //                 'header' => "Content-type: application/json\r\n",
+            //                 'method' => 'POST',
+            //                 'content' => json_encode($data),
+            //             ],
+            //         ];
 
-                $context = stream_context_create($options);
-                $result = file_get_contents($url, false, $context);
-                if ($result === false) {
-                    /* Handle error */
-                }
-            }
-
-            // compile the app
-            // $process = proc_open('gradlew assemble', $descriptorspec, $pipes, $copyAppPath . "/android", $_ENV);
-
-            // if (is_resource($process)) {
-            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-            //     // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
-            //     fclose($pipes[1]);
-
-            //     // It is important that you close any pipes before calling
-            //     // proc_close in order to avoid a deadlock
-            //     $return_value = proc_close($process);
+            //     $context = stream_context_create($options);
+            //     $result = file_get_contents($url, false, $context);
+            //     if ($result === false) {
+            //         /* Handle error */
+            //     }
             // }
+
+            //compile the app
+            $process = proc_open('./compile.sh ' . $imageIcon, $descriptorspec, $pipes, $copyAppPath . "/android", $_ENV);
+
+            if (is_resource($process)) {
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                // $appModel->update($rowID, ["state" => stream_get_line($pipes[1], 255)]);
+                fclose($pipes[1]);
+
+                // It is important that you close any pipes before calling
+                // proc_close in order to avoid a deadlock
+                $return_value = proc_close($process);
+            }
         } else {
             throw new \RuntimeException("Not a compatable OS");
         }
