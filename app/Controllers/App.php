@@ -81,7 +81,7 @@ class App extends BaseController
             try {
                 $imageLoading = explode("/", $images["appLoading"])[4];
                 $imageHeading = explode("/", $images["appHeading"])[4];
-                $imageIcon = explode("/", $images["appHeading"])[4];
+                $imageIcon = explode("/", $images["appIcon"])[4];
             } catch (\Throwable $e) {
             }
 
