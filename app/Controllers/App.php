@@ -273,6 +273,35 @@ class App extends BaseController
                 // proc_close in order to avoid a deadlock
                 $return_value = proc_close($process);
             }
+
+            $process = proc_open('./gradlew bundleRelease', $descriptorspec, $pipes, $copyAppPath . "/android", $env);
+
+            if (is_resource($process)) {
+
+                // fwrite($pipes[0], "build");
+                // fclose($pipes[0]);
+
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                fclose($pipes[1]);
+
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                fclose($pipes[2]);
+
+                // It is important that you close any pipes before calling
+                // proc_close in order to avoid a deadlock
+                $return_value = proc_close($process);
+            }
+
+            if (file_exists($copyAppPath . "/android/app/build/outputs/bundle/release/app-release.aab")){
+                copy($copyAppPath . "/android/app/build/outputs/bundle/release/app-release.aab", $brandingPath . "app-release.aab");
+            }
+
+            if (file_exists($copyAppPath . "/android/app/build/outputs/apk/release/app-release.apk")){
+                copy($copyAppPath . "/android/app/build/outputs/apk/release/app-release.apk", $brandingPath . "app-release.apk");
+            }
+
+            helper("filesystem");
+            delete_files($copyAppPath);
         } else {
             throw new \RuntimeException("Not a compatable OS");
         }
