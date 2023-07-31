@@ -37,6 +37,9 @@
                 <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
+                            <div class="alert alert-info text-center" role="alert">
+                                You can select multiple files at once AND upload multiple batches
+                            </div>
                             <div class="col-12">
                                 <div id="drag-and-drop-zone" class="dm-uploader p-5">
                                     <h3 class="mb-5 mt-5 text-muted">Drag &amp; drop files here</h3>
