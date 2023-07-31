@@ -247,7 +247,7 @@ class App extends BaseController
             // }
 
             //compile the app
-            $process = proc_open('./compile.sh ' . $imageIcon, $descriptorspec, $pipes, $copyAppPath . "/android", $_ENV);
+            $process = proc_open('./compile.sh ' . $imageIcon, $descriptorspec, $pipes, $copyAppPath, $_ENV);
 
             if (is_resource($process)) {
                 echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
