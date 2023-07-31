@@ -313,7 +313,7 @@ class App extends BaseController
 
 
             //remove directory
-            $process = proc_open('rm -rf whitewallApp/',
+            $process = proc_open('rm -R whitewallApp/',
                 $descriptorspec,
                 $pipes,
                 $copyAppPath . "/android",
