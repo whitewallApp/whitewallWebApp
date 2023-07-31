@@ -316,7 +316,7 @@ class App extends BaseController
             $process = proc_open('rm -R whitewallApp/',
                 $descriptorspec,
                 $pipes,
-                $copyAppPath . "/android",
+                $brandingPath,
                 $env
             );
 
