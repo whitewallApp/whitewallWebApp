@@ -229,28 +229,7 @@ class App extends BaseController
             $appFile = file_get_contents($copyAppPath . "/App.tsx");
             file_put_contents($copyAppPath . "/App.tsx", preg_replace("/\?apikey=.*(?=\")/", "?apikey=" . $apikey, $appFile));
 
-            $appModel->update($rowID, ["state" => "Compiling... This could take up to 2 hours (you may leave the page)", "progress" => 75]);
-            //send the webhook
-            $varModel = new VariablesModel();
-            // $url = $varModel->getVariable("compile_webhook", assoc: true)["value"];
-            // if ($url != ""){
-            //     $data = ['appPath' => $copyAppPath, 'iconName' => $imageIcon];
-
-            //     // use key 'http' even if you send the request to https://...
-            //     $options = [
-            //             'http' => [
-            //                 'header' => "Content-type: application/json\r\n",
-            //                 'method' => 'POST',
-            //                 'content' => json_encode($data),
-            //             ],
-            //         ];
-
-            //     $context = stream_context_create($options);
-            //     $result = file_get_contents($url, false, $context);
-            //     if ($result === false) {
-            //         /* Handle error */
-            //     }
-            // }
+            $appModel->update($rowID, ["state" => "Compiling... This could take up to 20 minutes (you may leave the page)", "progress" => 70]);
 
             //compile the app
             $env = $_ENV;
@@ -274,6 +253,8 @@ class App extends BaseController
                 $return_value = proc_close($process);
             }
 
+            $appModel->update($rowID, ["progress" => 75]);
+
             $process = proc_open('./gradlew bundleRelease', $descriptorspec, $pipes, $copyAppPath . "/android", $env);
 
             if (is_resource($process)) {
@@ -291,6 +272,8 @@ class App extends BaseController
                 // proc_close in order to avoid a deadlock
                 $return_value = proc_close($process);
             }
+
+            $appModel->update($rowID, ["progress" => 85]);
 
             //remove previously compiled files if exist
             if (file_exists($brandingPath . "app-release.aab")) {
@@ -311,7 +294,7 @@ class App extends BaseController
                 copy($copyAppPath . "/android/app/build/outputs/apk/release/app-release.apk", $brandingPath . "app-release.apk");
             }
 
-
+            $appModel->update($rowID, ["state" => "Cleaning up...", "progress" => 90]);
             //remove directory
             $process = proc_open('rm -R whitewallApp/',
                 $descriptorspec,
@@ -335,6 +318,8 @@ class App extends BaseController
                 // proc_close in order to avoid a deadlock
                 $return_value = proc_close($process);
             }
+
+            $appModel->update($rowID, ["progress" => 100]);
         } else {
             throw new \RuntimeException("Not a compatable OS");
         }
