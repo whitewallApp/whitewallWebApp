@@ -17,7 +17,7 @@ class BrandModel extends Model
      * @param  array|string $column The column of the table to get
      * @param  int $accountID The account id of the user/brand
      * @param  array $getBy An array of key value pairs to use for filtering. EX: ["account_active" => 1]
-     * @return array
+     * @return array | an array of assosiative arrays
      */
     public function getCollumn($column, $userId, $getBy=[], $fetchBy= "branduser.user_id"): mixed{
         $builder = $this->db->table('brand');

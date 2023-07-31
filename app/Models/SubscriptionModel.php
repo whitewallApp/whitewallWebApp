@@ -12,7 +12,15 @@ class SubscriptionModel extends Model
     protected $table = "subscription";
     protected $allowedFields = ["subscriptionID", "productID", "status", "account_id", "customerID"];
 
-
+    /**
+     * Gets a column in the database by the brand_id
+     *
+     * @param string $column
+     * @param int $brandId
+     * @param array $filterBy
+     * @param string $getBy
+     * @return array | an array of assiative arrays of the column
+     */
     public function getCollumn($column, $brandId, $filterBy = [], $getBy = "account_id"): mixed
     {
         $builder = $this->db->table('subscription');

@@ -32,6 +32,15 @@ class CollectionModel extends Model
         return $ids;
     }
 
+    /**
+     * Gets a column in the database by a brand_id
+     *
+     * @param string $column
+     * @param int $brandId
+     * @param array $filterBy
+     * @param string $getBy
+     * @return array | an array of the column
+     */
     public function getCollumn($column, $brandId, $filterBy = [], $getBy = "brand_id"): mixed
     {
         $builder = $this->db->table('collection');

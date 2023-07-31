@@ -23,7 +23,7 @@ class CategoryModel extends Model
      * @param  array|string $column The column(s) that you want to get from the database
      * @param  string $brandName The brand name that the user belongs to
      * @param  array $getBy An array of key value pairs for further filtering. EX: ["category_used" => 1]
-     * @return array
+     * @return array | an array of the column
      */
     public function getCollumn(array|string $column, string $brandId, array $getBy=[]): mixed{
 

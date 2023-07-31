@@ -12,6 +12,14 @@ class NotificationModel extends Model
     protected $table = "notifications";
     protected $allowedFields = ["title", "description", "clickAction", "data", "forceWall", "forceId", "sendTime", "status", "brand_id"];
 
+    /**
+     * Gets a column in teh database by the brandid
+     *
+     * @param string $column
+     * @param int $brandID
+     * @param array $getBy
+     * @return array | An array of the column
+     */
     public function getCollumn($column, $brandID, $getBy = [])
     {
         $builder = $this->db->table('notifications');

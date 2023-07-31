@@ -12,6 +12,15 @@ class UserModel extends Model
     protected $table = "user";
     protected $allowedFields = ["name", "password", "email", "phone", "icon", "status", "default_brand", "google_id", "account_id"];
 
+    /**
+     * Gets a column in the database by the brand_id
+     *
+     * @param string|array $column
+     * @param int $brandId
+     * @param array $filterBy
+     * @param string $getBy
+     * @return array | An array of assoiative arrays of the column
+     */
     public function getCollumn($column, $brandId, $filterBy = [], $getBy="brand_id"): mixed
     {
         $builder = $this->db->table('user');
