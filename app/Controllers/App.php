@@ -253,7 +253,9 @@ class App extends BaseController
             // }
 
             //compile the app
-            $process = proc_open('./gradlew assembleRelease'. $imageIcon, $descriptorspec, $pipes, $copyAppPath . "/android", ["ANDROID_HOME" => "/opt/android-sdk"]);
+            $env = $_ENV;
+            $env["ANDROID_HOME"] = "/opt/android-sdk";
+            $process = proc_open('./gradlew assembleRelease'. $imageIcon, $descriptorspec, $pipes, $copyAppPath . "/android", $env);
 
             if (is_resource($process)) {
 
