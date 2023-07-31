@@ -253,23 +253,23 @@ class App extends BaseController
             // }
 
             //compile the app
-            // $process = proc_open('./compile.sh '. $imageIcon, $descriptorspec, $pipes, $copyAppPath);
+            $process = proc_open('./gradlew assembleRelease'. $imageIcon, $descriptorspec, $pipes, $copyAppPath . "/android");
 
-            // if (is_resource($process)) {
+            if (is_resource($process)) {
 
-            //     // fwrite($pipes[0], "build");
-            //     // fclose($pipes[0]);
+                // fwrite($pipes[0], "build");
+                // fclose($pipes[0]);
 
-            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-            //     fclose($pipes[1]);
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                fclose($pipes[1]);
 
-            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-            //     fclose($pipes[2]);
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                fclose($pipes[2]);
 
-            //     // It is important that you close any pipes before calling
-            //     // proc_close in order to avoid a deadlock
-            //     $return_value = proc_close($process);
-            // }
+                // It is important that you close any pipes before calling
+                // proc_close in order to avoid a deadlock
+                $return_value = proc_close($process);
+            }
         } else {
             throw new \RuntimeException("Not a compatable OS");
         }
