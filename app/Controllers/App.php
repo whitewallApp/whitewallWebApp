@@ -112,7 +112,7 @@ class App extends BaseController
                 copy($brandingPath . "my-upload-key.keystore", $copyAppPath . "/android/app/my-upload-key.keystore");
 
                 $file = file_get_contents($copyAppPath . "/android/gradle.properties");
-                $password = $appModel->selectByMultipule("password", ["id" => $rowID]);
+                $password = $appModel->selectByMultipule("password", ["id" => $rowID])["password"];
                 file_put_contents($copyAppPath . "/android/gradle.properties", preg_replace("/\*\*\*\*\*/", $password, $file));
             } else {
                 $keystorepass = bin2hex(random_bytes(4));
