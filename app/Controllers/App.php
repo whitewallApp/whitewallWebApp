@@ -256,7 +256,7 @@ class App extends BaseController
             $env = $_ENV;
             $env["ANDROID_HOME"] = "/opt/android-sdk";
             $env["JAVA_HOME"] = "/usr/lib/jvm/java-11-openjdk";
-            $process = proc_open('./gradlew assembleRelease'. $imageIcon, $descriptorspec, $pipes, $copyAppPath . "/android", $env);
+            $process = proc_open('./gradlew assembleRelease', $descriptorspec, $pipes, $copyAppPath . "/android", $env);
 
             if (is_resource($process)) {
 
