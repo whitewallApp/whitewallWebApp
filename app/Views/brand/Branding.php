@@ -685,18 +685,56 @@
 <script>
     <?php if ($branding == "") : ?>
         $(function() {
-            branding = {
-                background: {},
-                categories: {},
-                cards: {
-                    frames: {},
-                    images: {}
+            branding = json_decode({
+                "background": {
+                    "color": "#ffffff"
                 },
-                dropdowns: {},
-                checkmarks: {},
-                buttons: {},
-                loading: {}
-            };
+                "categories": {
+                    "backgroundcolor": "#ffffff",
+                    "fontcolor": "#000000",
+                    "font": "Tahoma",
+                    "fontstyle": "italic",
+                    "fontsize": "12"
+                },
+                "cards": {
+                    "frames": {
+                        "borderRadius": "0",
+                        "borderWidth": "0",
+                        "borderColor": "#000000"
+                    },
+                    "images": {
+                        "borderRadius": "0",
+                        "borderWidth": "0",
+                        "borderColor": "#000000"
+                    },
+                    "backgroundcolor": "#ffffff",
+                    "fontcolor": "#000000",
+                    "fontstyle": "normal",
+                    "fontsize": "8",
+                    "font": "Tahoma"
+                },
+                "dropdowns": {
+                    "backgroundcolor": "#000000",
+                    "fontcolor": "#000000",
+                    "font": "Arial",
+                    "fontstyle": "normal",
+                    "fontsize": "30"
+                },
+                "checkmarks": {},
+                "buttons": {
+                    "fontcolor": "#ffffff",
+                    "fontsize": "16",
+                    "borderColor": "#ffdf3d",
+                    "borderRadius": "7",
+                    "font": "Tahoma",
+                    "fontstyle": "bold"
+                },
+                "loading": {
+                    "size": "80"
+                },
+                "appName": "The Beautiful AI",
+                "headerSize": "80"
+            });
         })
     <?php else : ?>
         $(function() {

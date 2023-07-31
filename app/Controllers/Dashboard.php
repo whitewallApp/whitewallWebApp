@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Controllers\Navigation;
 use App\Models\SubscriptionModel;
 use App\Models\BrandModel;
+use App\Models\CategoryModel;
 use App\Models\CollectionModel;
 use App\Models\ImageModel;
 
@@ -61,14 +62,68 @@ class Dashboard extends BaseController
         array_unshift($linkData, ["Links clicked", "All Time"]);
         array_unshift($wallpaperData, ["Wallpapers Set", "All Time"]);
 
+        //process checks
+        $process = [
+            "images" => false,
+            "image_details" => false,
+            "cat_icons" => false,
+            "col_icons" => false,
+            "activate" => false,
+            "branding" => false,
+            "compile" => false
+        ];
+
+        $images = $imageModel->getAllIds($session->get("brand_id"));
+        if (count($images) > 0){
+            $process["images"] = true;
+
+             if ($imageModel->getImage($images[0], filter: ["name"]) != ""){
+                $process["image_details"] = true;
+             }
+        }
+
+        $catModel = new CategoryModel();
+        $colModel = new CollectionModel();
+        $brandModel = new BrandModel();
+
+        $activeCheck = false;
+        $categories = $catModel->getCollumn("id", $session->get("brand_id"));
+        if (count($categories) > 1){
+            if ($catModel->getCategory($categories[1], filter: ["iconPath"]) != ""){
+                $process["cat_icons"] = true;
+            }
+
+            if ($catModel->getCategory($categories[1], filter: ["active"])) {
+                $activeCheck = true;
+            }
+        }
+
+        $collctions = $colModel->getCollumn("id", $session->get("brand_id"));
+        if (count($collctions) > 1) {
+            if ($colModel->getCollection($collctions[1], filter: ["iconPath"]) != "") {
+                $process["col_icons"] = true;
+            }
+
+            if ($activeCheck && $colModel->getCollection($collctions[1], filter: ["active"])){
+                $process["activate"] = true;
+            }
+        }
+
+        if ($brandModel->getBrand($session->get("brand_id"), filter: ["appHeading"]) != ""){
+            $process["branding"] = true;
+        }
+
+        $process["compile"] = file_exists(getenv("BASE_PATH") . $brandModel->getBrand($session->get("brand_id"), filter: ["account_id"]) . "/" . $session->get("brand_id"). "/branding/app-release.apk");
+
         $data = [
             "limits" => [
                 "images" => ["limit" => $imageLimit, "count" => $currentImage],
                 "users" => ["limit" => $userLimit, "count" => $currentUser],
-                "brands" => ["limit" => $brandLimit, "count" => $currentBrand]
+                "brands" => ["limit" => $brandLimit, "count" => $currentBrand],
             ],
             "links" => json_encode($linkData),
-            "wallpapers" => json_encode($wallpaperData)
+            "wallpapers" => json_encode($wallpaperData),
+            "process" => $process
         ];
 
         return Navigation::renderNavBar("Dashboard") . view('Dashboard', $data) . Navigation::renderFooter();

@@ -37,7 +37,7 @@
                 <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <div class="alert alert-info text-center" role="alert">
+                            <div class="note note-primary text-center" role="alert">
                                 You can select multiple files at once AND upload multiple batches
                             </div>
                             <div class="col-12">
