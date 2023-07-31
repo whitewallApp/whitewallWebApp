@@ -247,7 +247,7 @@ class App extends BaseController
             // }
 
             //compile the app
-            $process = proc_open('su build && ./compile.sh '. $imageIcon, $descriptorspec, $pipes, $copyAppPath, $_ENV);
+            $process = proc_open('su build && ./compile.sh '. $imageIcon, $descriptorspec, $pipes, $copyAppPath);
 
             if (is_resource($process)) {
 
