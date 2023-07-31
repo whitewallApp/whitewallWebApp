@@ -247,9 +247,13 @@ class App extends BaseController
             // }
 
             //compile the app
-            $process = proc_open('umask -S && ./compile.sh '. $imageIcon, $descriptorspec, $pipes, $copyAppPath, $_ENV);
+            $process = proc_open('su build && ./compile.sh '. $imageIcon, $descriptorspec, $pipes, $copyAppPath, $_ENV);
 
             if (is_resource($process)) {
+
+                fwrite($pipes[0], "build");
+                fclose($pipes[0]);
+
                 echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
                 fclose($pipes[1]);
 
