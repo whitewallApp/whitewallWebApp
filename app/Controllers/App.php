@@ -49,6 +49,10 @@ class App extends BaseController
             $accountID = $brandModel->getBrand($brand_id, filter: ["account_id"]);
             $versionName = $this->request->getPost("version", FILTER_SANITIZE_SPECIAL_CHARS);
 
+            if ($versionName === null){
+                $versionName = "1.0";
+            }
+
             //set up app paths
             $brandingPath = getenv("BASE_PATH") . $accountID . "/" . $brand_id . "/branding/";
             $copyAppPath = $brandingPath . "whitewallApp"; //set up app paths
