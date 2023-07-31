@@ -61,6 +61,7 @@ function pollProgress(os){
                 if (progress < 100) {
                     pollProgress(os);
                 }else{
+                    window.location.reload();
                     $("#"+ os +"Buttons").show();
                     $("#"+ os +"ModelButton").hide();
                 }
