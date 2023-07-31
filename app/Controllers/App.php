@@ -292,6 +292,17 @@ class App extends BaseController
                 $return_value = proc_close($process);
             }
 
+            //remove previously compiled files if exist
+            if (file_exists($brandingPath . "app-release.aab")) {
+                unlink($brandingPath . "app-release.aab");
+            }
+
+            if (file_exists($brandingPath . "app-release.apk")) {
+                unlink($brandingPath . "app-release.apk");
+            }
+
+
+            //copy compiled files
             if (file_exists($copyAppPath . "/android/app/build/outputs/bundle/release/app-release.aab")){
                 copy($copyAppPath . "/android/app/build/outputs/bundle/release/app-release.aab", $brandingPath . "app-release.aab");
             }
@@ -300,8 +311,30 @@ class App extends BaseController
                 copy($copyAppPath . "/android/app/build/outputs/apk/release/app-release.apk", $brandingPath . "app-release.apk");
             }
 
-            helper("filesystem");
-            delete_files($copyAppPath);
+
+            //remove directory
+            $process = proc_open('rm -rf whitewallApp/',
+                $descriptorspec,
+                $pipes,
+                $copyAppPath . "/android",
+                $env
+            );
+
+            if (is_resource($process)) {
+
+                // fwrite($pipes[0], "build");
+                // fclose($pipes[0]);
+
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                fclose($pipes[1]);
+
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                fclose($pipes[2]);
+
+                // It is important that you close any pipes before calling
+                // proc_close in order to avoid a deadlock
+                $return_value = proc_close($process);
+            }
         } else {
             throw new \RuntimeException("Not a compatable OS");
         }
