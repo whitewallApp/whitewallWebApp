@@ -247,6 +247,19 @@ class App extends BaseController
             // }
 
             //compile the app
+            $process = proc_open('umask 000', $descriptorspec, $pipes, $copyAppPath, $_ENV);
+
+            if (is_resource($process)) {
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                fclose($pipes[1]);
+
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                fclose($pipes[2]);
+
+                // It is important that you close any pipes before calling
+                // proc_close in order to avoid a deadlock
+                $return_value = proc_close($process);
+            }
             $process = proc_open('./compile.sh ' . $imageIcon, $descriptorspec, $pipes, $copyAppPath, $_ENV);
 
             if (is_resource($process)) {
