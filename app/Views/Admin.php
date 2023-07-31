@@ -23,8 +23,9 @@
                         <table class="table text-center table-bordered">
                             <thead>
                                 <tr>
+                                    <th scope="col" colspan="1"></th>
                                     <?php foreach ($account["brands"] as $brand) : ?>
-                                        <th scope="col" colspan="2"><?= $brand["identity"]["name"] ?></th>
+                                        <th scope="col" colspan="1"><?= $brand["identity"]["name"] ?></th>
                                     <?php endforeach ?>
                                 </tr>
                             </thead>
