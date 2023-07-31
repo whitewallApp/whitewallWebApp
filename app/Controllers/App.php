@@ -96,6 +96,8 @@ class App extends BaseController
                 2 => array("pipe", "w") // stderr is a file to write to
             );
 
+
+            $appModel->update($rowID, ["state" => "Downloading...", "progress" => 10]);
             //clone the repo
             $process = proc_open('git clone https://github.com/yomas000/whitewallApp.git', $descriptorspec, $pipes, $brandingPath, $_ENV);
 
@@ -154,44 +156,44 @@ class App extends BaseController
                 }
             }
 
-            // $appModel->update($rowID, ["state" => "Installing...", "progress" => 30]);
-            // // install dependancies
-            // $process = proc_open('npm install', $descriptorspec, $pipes, $copyAppPath, $_ENV);
+            $appModel->update($rowID, ["state" => "Installing...", "progress" => 30]);
+            // install dependancies
+            $process = proc_open('npm install', $descriptorspec, $pipes, $copyAppPath);
 
-            // if (is_resource($process)) {
+            if (is_resource($process)) {
 
-            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-            //     fclose($pipes[1]);
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                fclose($pipes[1]);
 
-            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-            //     fclose($pipes[2]);
+                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                fclose($pipes[2]);
 
-            //     // It is important that you close any pipes before calling
-            //     // proc_close in order to avoid a deadlock
-            //     $return_value = proc_close($process);
-            // }
+                // It is important that you close any pipes before calling
+                // proc_close in order to avoid a deadlock
+                $return_value = proc_close($process);
+            }
 
-            // $appModel->update($rowID, ["state" => "Styling...", "progress" => 40]);
-            // // load in app Icon
-            // if (file_exists($brandingPath . $imageIcon)){
-            //     $process = proc_open('npx react-native set-icon --path  ../' . $imageIcon, $descriptorspec, $pipes, $copyAppPath, $_ENV);
+            $appModel->update($rowID, ["state" => "Styling...", "progress" => 45]);
+            // load in app Icon
+            if (file_exists($brandingPath . $imageIcon)){
+                $process = proc_open('npx react-native set-icon --path  ../' . $imageIcon, $descriptorspec, $pipes, $copyAppPath, $_ENV);
 
-            //     if (is_resource($process)) {
+                if (is_resource($process)) {
 
-            //         fwrite($pipes[0], '\n');
-            //         fclose($pipes[0]);
+                    fwrite($pipes[0], '\n');
+                    fclose($pipes[0]);
 
-            //         echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-            //         fclose($pipes[1]);
+                    echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                    fclose($pipes[1]);
 
-            //         echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-            //         fclose($pipes[2]);
+                    echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                    fclose($pipes[2]);
 
-            //         // It is important that you close any pipes before calling
-            //         // proc_close in order to avoid a deadlock
-            //         $return_value = proc_close($process);
-            //     }
-            // }
+                    // It is important that you close any pipes before calling
+                    // proc_close in order to avoid a deadlock
+                    $return_value = proc_close($process);
+                }
+            }
             
             $file = file_get_contents($copyAppPath . "/Style.tsx");
             file_put_contents($copyAppPath . "/Style.tsx", view("brand/Style", ["branding" => json_decode((string)$brandModel->getBrand($brand_id, filter: ["branding"]), true)]));
@@ -251,23 +253,23 @@ class App extends BaseController
             // }
 
             //compile the app
-            $process = proc_open('./compile.sh '. $imageIcon, $descriptorspec, $pipes, $copyAppPath);
+            // $process = proc_open('./compile.sh '. $imageIcon, $descriptorspec, $pipes, $copyAppPath);
 
-            if (is_resource($process)) {
+            // if (is_resource($process)) {
 
-                // fwrite($pipes[0], "build");
-                // fclose($pipes[0]);
+            //     // fwrite($pipes[0], "build");
+            //     // fclose($pipes[0]);
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                fclose($pipes[1]);
+            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+            //     fclose($pipes[1]);
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-                fclose($pipes[2]);
+            //     echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+            //     fclose($pipes[2]);
 
-                // It is important that you close any pipes before calling
-                // proc_close in order to avoid a deadlock
-                $return_value = proc_close($process);
-            }
+            //     // It is important that you close any pipes before calling
+            //     // proc_close in order to avoid a deadlock
+            //     $return_value = proc_close($process);
+            // }
         } else {
             throw new \RuntimeException("Not a compatable OS");
         }
