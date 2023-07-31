@@ -17,7 +17,7 @@
         </thead>
         <tbody class="table-group-divider table-divider-color">
             <tr>
-                <th scope="row"><?= $name ?></th>
+                <th scope="row">Workspace</th>
                 <td>
                     <div class="row">
                         <div class="col">
@@ -165,4 +165,12 @@
     </div>
 </div>
 
-<script src="js/app.js"></script>
+<?php if ($subStatus == "active") : ?>
+    <script src="js/app.js"></script>
+<?php else : ?>
+    <script>
+        $("button").on("click", function() {
+            window.location.href = "/billing"
+        })
+    </script>
+<?php endif ?>

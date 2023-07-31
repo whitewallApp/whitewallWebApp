@@ -5,7 +5,10 @@ namespace App\Controllers;
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
 use App\Models\AppModel;
+use App\Models\SubscriptionModel;
 use App\Models\VariablesModel;
+use Google\Service\AndroidPublisher\Subscription;
+use RuntimeException;
 
 class App extends BaseController
 
@@ -15,6 +18,7 @@ class App extends BaseController
     {   
         $brandModel = new BrandModel();
         $appModel = new AppModel();
+        $subModel = new SubscriptionModel();
         $session = session();
         $accountId = $brandModel->getBrand($session->get("brand_id"), filter: ["account_id"]);
         $brandId = $session->get("brand_id");
@@ -32,7 +36,8 @@ class App extends BaseController
             "apkExists" => file_exists($brandPath . "app-release.apk"),
             "aabExists" => file_exists($brandPath . "app-release.aab"),
             "updatedDate" => $date,
-            "name" => $versionName
+            "name" => $versionName,
+            "subStatus" => $subModel->getSubscription($accountId, "account_id", ["status"])
         ];
 
         return Navigation::renderNavBar("Versions",  "builds") . view('App', $data) . Navigation::renderFooter();
@@ -51,6 +56,11 @@ class App extends BaseController
 
             if ($versionName === null){
                 $versionName = "1.0";
+            }
+
+            $subModel = new SubscriptionModel();
+            if ($subModel->getSubscription($accountID, "account_id", ["status"]) != "active"){
+                throw new RuntimeException("You need to pay before using this service");
             }
 
             //set up app paths
