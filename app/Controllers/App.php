@@ -112,16 +112,18 @@ class App extends BaseController
                 copy($brandingPath . "my-upload-key.keystore", $copyAppPath . "/android/app/my-upload-key.keystore");
 
                 $file = file_get_contents($copyAppPath . "/android/gradle.properties");
-                file_put_contents($copyAppPath . "/android/gradle.properties", preg_replace("/\*\*\*\*\*/", "129034", $file));
+                $password = $appModel->selectByMultipule("password", ["id" => $rowID]);
+                file_put_contents($copyAppPath . "/android/gradle.properties", preg_replace("/\*\*\*\*\*/", $password, $file));
             } else {
+                $keystorepass = bin2hex(random_bytes(4));
                 //generate the key
                 $process = proc_open('keytool -genkeypair -v -storetype PKCS12 -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000', $descriptorspec, $pipes, $brandingPath, $_ENV);
 
                 if (is_resource($process)) {
-                    $appModel->update($rowID, ["password" => "129034"]);
+                    $appModel->update($rowID, ["password" => $keystorepass]);
 
-                    fwrite($pipes[0], "129034\n");
-                    fwrite($pipes[0], "129034\n");
+                    fwrite($pipes[0], $keystorepass . "\n");
+                    fwrite($pipes[0], $keystorepass . "\n");
 
                     fwrite($pipes[0], "Johnathan Dick\n");
                     fwrite($pipes[0], "IT\n");
@@ -144,7 +146,7 @@ class App extends BaseController
                     copy($brandingPath . "my-upload-key.keystore", $copyAppPath . "/android/app/my-upload-key.keystore");
 
                     $file = file_get_contents($copyAppPath . "/android/gradle.properties");
-                    file_put_contents($copyAppPath . "/android/gradle.properties", preg_replace("/\*\*\*\*\*/", "129034", $file));
+                    file_put_contents($copyAppPath . "/android/gradle.properties", preg_replace("/\*\*\*\*\*/", $keystorepass, $file));
                 }
             }
 
