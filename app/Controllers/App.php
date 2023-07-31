@@ -8,6 +8,7 @@ use App\Models\AppModel;
 use App\Models\SubscriptionModel;
 use App\Models\VariablesModel;
 use Google\Service\AndroidPublisher\Subscription;
+use Google\Service\PagespeedInsights\RuntimeError;
 use RuntimeException;
 
 class App extends BaseController
@@ -63,6 +64,8 @@ class App extends BaseController
                 throw new RuntimeException("You need to pay before using this service");
             }
 
+            
+
             //set up app paths
             $brandingPath = getenv("BASE_PATH") . $accountID . "/" . $brand_id . "/branding/";
             $copyAppPath = $brandingPath . "whitewallApp"; //set up app paths
@@ -89,6 +92,15 @@ class App extends BaseController
             $retVal = null;
 
             $images = $brandModel->getBrand($brand_id, filter: ["appLoading", "appHeading", "appIcon"], assoc: true);
+
+            foreach ($images as $image) {
+                if ($image == ""){
+                    $appModel->update($rowID, ["state" => "Error: Not all Branding images set", "progress" => 0]);
+                    throw new RuntimeError("Branding Error");
+                }
+            }
+
+
             $imageLoading = "";
             $imageHeading = "";
             $imageIcon = "";
