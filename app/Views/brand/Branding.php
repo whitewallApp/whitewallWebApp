@@ -3,16 +3,16 @@
         <div class="col-5 position-sticky">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Collections List</a>
+                    <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Collections List</a>
                     <a class="nav-item nav-link" id="nav-profile-img-pg" data-toggle="tab" href="#nav-img-pg" role="tab" aria-controls="nav-img-pg" aria-selected="false">Image List</a>
-                    <a class="nav-item nav-link" id="nav-contact-img" data-toggle="tab" href="#nav-img" role="tab" aria-controls="nav-img" aria-selected="false">Wallpaper Preview</a>
+                    <a class="nav-item nav-link active" id="nav-contact-img" data-toggle="tab" href="#nav-img" role="tab" aria-controls="nav-img" aria-selected="false">Wallpaper Preview</a>
                     <!-- <a class="nav-item nav-link" id="nav-contact-menu" data-toggle="tab" href="#nav-menu" role="tab" aria-controls="nav-menu" aria-selected="false">Custom Page</a> -->
                     <a class="nav-item nav-link" id="nav-contact-loading" data-toggle="tab" href="#loading-img" role="tab" aria-controls="loading-img" aria-selected="false">Loading Page</a>
                 </div>
             </nav>
             <div class="tab-content" id="myTabContent">
                 <!-- Collections -->
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="phone">
                         <img class="phone-img" src="/Icons/phone.png">
                         <div class="background-phone-collection">
@@ -127,13 +127,20 @@
                 </div>
 
                 <!-- Wallpaper Pane -->
-                <div class="tab-pane fade" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab">
+                <div class="tab-pane fade show active" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab">
                     <div class="phone">
                         <img class="phone-img" src="/Icons/phone.png">
-                        <?php if (count($images) > 0) : ?>
-                            <img class="phone-wallpaper" src="<?= $images[0]["imagePath"] ?>">
-                        <?php endif ?>
-                        <button class="btn btn-primary btn-branding" id="setWallpaper">Set Wallpaper</button>
+                        <div class="background-phone-image">
+                            <button class="btn btn-branding back-btn">Back</button>
+                            <?php if (count($images) > 0) : ?>
+                                <img class="phone-wallpaper" src="<?= $images[0]["imagePath"] ?>">
+                            <?php endif ?>
+                            <div class="calltoaction text-center">
+                                <span>{imageDescription}</span><br>
+                                <small class="">{call to action name}</small>
+                            </div>
+                            <button class="btn btn-primary btn-branding" id="setWallpaper">Set Wallpaper</button>
+                        </div>
                     </div>
                 </div>
 
@@ -203,7 +210,7 @@
                                 <div class="form-group">
                                     <label class="form-label" for="appBanner">App Banner</label>
                                     <input type="file" class="form-control" id="appBanner" />
-                                    <small class="form-text text-muted">960x150 px banner recomended</small>
+                                    <small class="form-text text-muted">1080x160 px banner recomended</small>
                                     <label class="form-label" for="bannerLink">Banner Link</label>
                                     <input type="text" class="form-control" id="bannerLink" />
                                 </div>
