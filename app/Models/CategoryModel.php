@@ -15,7 +15,7 @@ class CategoryModel extends Model
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'dateCreated';
     protected $updatedField  = 'dateUpdated';
-    protected $allowedFields = ["name", "description", "iconPath", "link", "brand_id"];
+    protected $allowedFields = ["name", "description", "iconPath", "link", "brand_id", "active"];
     
     /**
      * Get the column(s) in the Category table based on brand name.

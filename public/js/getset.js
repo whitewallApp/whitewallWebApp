@@ -10,6 +10,15 @@ $(function () {
     }
 })
 
+$("#setactive").on("click", function(){
+    url = window.location + "/update";
+    $.post(url, {
+        allactive: true
+    }, function(data, status){
+        window.location.reload();
+    })
+})
+
 //IMAGES
 function getImg(e) {
 

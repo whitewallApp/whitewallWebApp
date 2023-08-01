@@ -102,7 +102,7 @@ class Collection extends BaseController
 
     public function update(){
         $session = session();
-        try {
+        // try {
             $catModel = new CategoryModel();
             $colModel = new CollectionModel();
             $userModel = new UserModel();
@@ -112,6 +112,16 @@ class Collection extends BaseController
             if (file_exists("../writable/cache/CollectionCollection_Detail")){
                 unlink("../writable/cache/CollectionCollection_Detail");
                 unlink("../writable/cache/CollectionCollection_List");
+            }
+
+            echo var_dump($this->request->getPost("allactive", FILTER_VALIDATE_BOOL));
+
+            if ($this->request->getPost("allactive") !== null){
+                $ids = $colModel->getAllIds($session->get("brand_id"));
+                foreach ($ids as $id) {
+                    $colModel->update($id, ["active" => $this->request->getPost("allactive", FILTER_VALIDATE_BOOL)]);
+                }
+                exit;
             }
 
             $post = $this->request->getPost(["id", "name", "description", "link", "category"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -178,11 +188,11 @@ class Collection extends BaseController
             $colModel->updateCollection($post["id"], $data);
 
             return json_encode(["success" => true]);
-        }catch (\Exception $e){
-            http_response_code(400);
-            return json_encode($e->getMessage());
-            exit;
-        }
+        // }catch (\Exception $e){
+        //     http_response_code(400);
+        //     return json_encode($e->getMessage());
+        //     exit;
+        // }
     }
 
     //delete

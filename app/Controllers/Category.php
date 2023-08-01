@@ -92,6 +92,7 @@ class Category extends BaseController
     public function update(){
         $categoryModel = new CategoryModel();
         $assets = new Assets();
+        $session = session();
 
         //delete caches
         if (file_exists("../writable/cache/CategoryCategory_Detail")) {
@@ -99,10 +100,17 @@ class Category extends BaseController
             unlink("../writable/cache/CategoryCategory_List");
         }
 
+        if ($this->request->getPost("allactive") !== null) {
+            $ids = $categoryModel->getCollumn("id", $session->get("brand_id"));
+            foreach ($ids as $id) {
+                $categoryModel->update($id, ["active" => $this->request->getPost("allactive", FILTER_VALIDATE_BOOL)]);
+            }
+            exit;
+        }
+
         // try {
             $brandModel = new BrandModel();
             $userModel = new UserModel();
-            $session = session();
             $post = $this->request->getPost(["id", "name", "description", "link"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $active = $this->request->getPost("active", FILTER_VALIDATE_BOOL);
             $permission = $userModel->getPermissions($session->get("user_id"), $session->get("brand_id"), ["categories"], ["p_add"]);

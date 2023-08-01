@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="col-sm-2">
-
+                    <button class="btn btn-info" id="setactive">Set All Active</button>
                 </div>
             </div>
             <div class="table-responsive">

@@ -16,7 +16,7 @@ class CollectionModel extends Model
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'dateCreated';
     protected $updatedField  = 'dateUpdated';
-    protected $allowedFields = ["name", "description", "iconPath", "link", "category_id", "brand_id", "thumbnail"];
+    protected $allowedFields = ["name", "description", "iconPath", "link", "category_id", "brand_id", "thumbnail", "active"];
 
     public function getAllIds($brandID){
         $builder = $this->db->table('collection');
