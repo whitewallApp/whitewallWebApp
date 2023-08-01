@@ -203,7 +203,9 @@
                                 <div class="form-group">
                                     <label class="form-label" for="appBanner">App Banner</label>
                                     <input type="file" class="form-control" id="appBanner" />
-                                    <small class="form-text text-muted">320x50 px banner recomended</small>
+                                    <small class="form-text text-muted">960x150 px banner recomended</small>
+                                    <label class="form-label" for="bannerLink">Banner Link</label>
+                                    <input type="text" class="form-control" id="bannerLink" />
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="appName">App Name</label>
@@ -733,7 +735,8 @@
                     "size": "80"
                 },
                 "appName": "The Beautiful AI",
-                "headerSize": "80"
+                "headerSize": "80",
+                "bannerLink": ""
             });
         })
     <?php else : ?>

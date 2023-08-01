@@ -324,6 +324,7 @@ $("#loadingSize").on("input", function () {
 $("#save").on("click", function(){
     formData = new FormData();
     branding.appName = $("#appName").val();
+    branding.bannerLink = $("#bannerLink").val();
     formData.append("branding", JSON.stringify(branding));
     formData.append("collectionLink", $("#collectionLink").val());
     formData.append("categoryLink", $("#categoryLink").val());
@@ -368,6 +369,7 @@ $(function(){
     $("#backgroundColor").trigger("input");
 
     $("#appName").val(branding.appName);
+    $("#bannerLink").val(branding.bannerLink);
 
     
 
