@@ -471,7 +471,7 @@ class Image extends BaseController
 
                         //sanitize csv row
                         foreach ($data as &$item) {
-                            $item = htmlspecialchars($item);
+                            $item = strtolower(htmlspecialchars($item));
                         }
 
                         if ($row == 1) {
@@ -600,6 +600,7 @@ class Image extends BaseController
                                         $image = [];
                                         if (count($imageDatabase) > 0) {
                                             $imageDatabase = $imageDatabase[0];
+                                            $colDefaultId = $colModel->getCollection("Default Collection", ["id"], "name");
 
                                             if ($imageDatabase["name"] == "") {
                                                 $image["name"] = $data[$columns["name"]];
@@ -615,6 +616,10 @@ class Image extends BaseController
 
                                             if (((array)json_decode($imageDatabase["callToAction"]))["link"] == "" && $data[$columns["action_link"]] != "") {
                                                 $action["link"] = $data[$columns["action_link"]];
+                                            }
+
+                                            if ($imageDatabase["collection_id"] == $colDefaultId){
+                                                $image["collection_id"] == $colModel->getCollection($data[$columns["collection_name"]], ["id"], "name");
                                             }
 
                                             $image["callToAction"] = json_encode($action);
