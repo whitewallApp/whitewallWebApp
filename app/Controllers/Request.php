@@ -56,6 +56,9 @@ class Request extends BaseController
         $data = [];
         $catIds = $this->categoryModel->getCollumn("id", $this->brandId);
 
+        $accountId = $this->accountId;
+        $brandId = $this->brandId;
+
         //get the categories
         foreach ($catIds as $catId){
             $category = $this->categoryModel->getCategory($catId);
@@ -84,12 +87,25 @@ class Request extends BaseController
                             $imageid = $imageid["id"];
                             $image = $this->imageModel->getImage($imageid)[0];
 
-                            $data[$category["name"]]["collections"][$collection["name"]]["images"][$image["name"]]= [
-                                "thumbnail" => $image["thumbnail"],
-                                "imagePath" => $image["imagePath"],
-                                "description" => $image["description"],
-                                "action" => $image["callToAction"]
-                            ];
+                            if ($image["externalPath"]){
+                                $data[$category["name"]]["collections"][$collection["name"]]["images"][$image["name"]]= [
+                                    "thumbnail" => $image["thumbnail"],
+                                    "imagePath" => $image["imagePath"],
+                                    "description" => $image["description"],
+                                    "action" => $image["callToAction"],
+                                    "width" => getimagesize($image["imagePath"])[0],
+                                    "height" => getimagesize($image["imagePath"])[1]
+                                ];
+                            }else{
+                                $data[$category["name"]]["collections"][$collection["name"]]["images"][$image["name"]] = [
+                                    "thumbnail" => $image["thumbnail"],
+                                    "imagePath" => $image["imagePath"],
+                                    "description" => $image["description"],
+                                    "action" => $image["callToAction"],
+                                    "width" => getimagesize(getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/" . explode("/", $image["imagePath"])[3])[0],
+                                    "height" => getimagesize(getenv("BASE_PATH") . $accountId . "/" . $brandId . "/images/" . explode("/", $image["imagePath"])[3])[1],
+                                ];
+                            }
                         }
                     }
                 }
