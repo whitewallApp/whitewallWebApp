@@ -76,7 +76,7 @@ class Request extends BaseController
                     $colId = $colId;
                     $collection = $this->collectionModel->getCollection($colId);
                     if ($collection["active"]){
-                        $data[$category["name"]]["collections"][htmlspecialchars_decode($collection["name"])] = [
+                        $data[htmlspecialchars_decode($category["name"])]["collections"][htmlspecialchars_decode($collection["name"])] = [
                             "image" => $collection["thumbnail"],
                             "link" => $collection["link"],
                             "images" => []
@@ -88,7 +88,7 @@ class Request extends BaseController
                             $image = $this->imageModel->getImage($imageid)[0];
 
                             if ($image["externalPath"]){
-                                $data[$category["name"]]["collections"][$collection["name"]]["images"][htmlspecialchars_decode($image["name"])]= [
+                                $data[htmlspecialchars_decode($category["name"])]["collections"][htmlspecialchars_decode($collection["name"])]["images"][htmlspecialchars_decode($image["name"])]= [
                                     "thumbnail" => $image["thumbnail"],
                                     "imagePath" => $image["imagePath"],
                                     "description" => $image["description"],
@@ -97,7 +97,7 @@ class Request extends BaseController
                                     "height" => getimagesize($image["imagePath"])[1]
                                 ];
                             }else{
-                                $data[$category["name"]]["collections"][$collection["name"]]["images"][htmlspecialchars_decode($image["name"])] = [
+                                $data[htmlspecialchars_decode($category["name"])]["collections"][htmlspecialchars_decode($collection["name"])]["images"][htmlspecialchars_decode($image["name"])] = [
                                     "thumbnail" => $image["thumbnail"],
                                     "imagePath" => $image["imagePath"],
                                     "description" => $image["description"],
