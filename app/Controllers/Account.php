@@ -9,9 +9,9 @@ use App\Models\CollectionModel;
 use App\Models\ProductModel;
 use App\Models\SubscriptionModel;
 use App\Models\UserModel;
-use Config\Logger;
+use App\Models\VariablesModel;
+use Mailgun\Mailgun;
 use Google;
-use Google\Service\AndroidPublisher\Subscription;
 
 class Account extends BaseController
 {
@@ -258,6 +258,49 @@ class Account extends BaseController
                 $userId = $userModel->getUser($email, "email", ["id"]);
 
                 LogIn::login($userId);
+
+                $productModel = new ProductModel();
+                $productName = $productModel->find($productID)["productName"];
+
+                //email admin
+                //email the client
+                $mgClient = Mailgun::create(getenv("MAILGUN_API"), getenv("MAILGUN_URL"));
+                $domain = "support.whitewall.app";
+                $params = array(
+                    'from'    => 'Support <support@whitewall.app>',
+                    'to'      => "admin@whitewall.app",
+                    'subject' => 'New Account Creation',
+                    'template'    => 'Account_Creationi',
+                    'text'    => '',
+                    'h:X-Mailgun-Variables'    => json_encode(["name" => $name, "email" => $email, "brand" => $brandName, "product" => $productName])
+                );
+
+                # Make the call to the client.
+                $mgClient->messages()->send($domain, $params);
+
+                //send webhook
+                $varModel = new VariablesModel();
+                $url = (string)$varModel->getVariable("account_make_webhook", filter: ["value"]);
+
+                if ($url != "" && $url !== null){
+                    $data = json_encode(["name" => $name, "email" => $email, "brand" => $brandName, "product" => $productName]);
+
+                    // use key 'http' even if you send the request to https://...
+                    $options = [
+                        'http' => [
+                            'header' => "Content-type: application/json\r\n",
+                            'method' => 'POST',
+                            'content' => $data,
+                        ],
+                    ];
+
+                    $context = stream_context_create($options);
+                    $result = file_get_contents($url, false, $context);
+                    if ($result === false) {
+                        /* Handle error */
+                    }
+                }
+
                 return redirect()->to("/dashboard");
             }
 
@@ -366,6 +409,49 @@ class Account extends BaseController
                 $userId = $userModel->getUser($email, "email", ["id"]);
 
                 LogIn::login($userId);
+
+                //email admin
+                $productModel = new ProductModel();
+                $productName = $productModel->find($productID)["productName"];
+
+                //email the client
+                $mgClient = Mailgun::create(getenv("MAILGUN_API"), getenv("MAILGUN_URL"));
+                $domain = "support.whitewall.app";
+                $params = array(
+                    'from'    => 'Support <support@whitewall.app>',
+                    'to'      => "admin@whitewall.app",
+                    'subject' => 'New Account Creation',
+                    'template'    => 'Account_Creationi',
+                    'text'    => '',
+                    'h:X-Mailgun-Variables'    => json_encode(["name" => $name, "email" => $email, "brand" => $brandName, "product" => $productName])
+                );
+
+                # Make the call to the client.
+                $mgClient->messages()->send($domain, $params);
+
+                //send webhook
+                $varModel = new VariablesModel();
+                $url = (string)$varModel->getVariable("account_make_webhook", filter: ["value"]);
+
+                if ($url != "" && $url !== null) {
+                    $data = json_encode(["name" => $name, "email" => $email, "brand" => $brandName, "product" => $productName]);
+
+                    // use key 'http' even if you send the request to https://...
+                    $options = [
+                        'http' => [
+                            'header' => "Content-type: application/json\r\n",
+                            'method' => 'POST',
+                            'content' => $data,
+                        ],
+                    ];
+
+                    $context = stream_context_create($options);
+                    $result = file_get_contents($url, false, $context);
+                    if ($result === false) {
+                        /* Handle error */
+                    }
+                }
+
                 return redirect()->to("/dashboard");
             }
         }

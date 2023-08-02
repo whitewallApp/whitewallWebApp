@@ -3,6 +3,7 @@
         <div class="col-sm-4">
             <div class="card">
                 <div class="card-body">
+                    <h4>Getting Started</h4>
                     <ul class="list-unstyled">
                         <li class="mb-1"><?= $process["images"] ? ('<i class="bi bi-check-circle-fill mr-2"></i>') : ('<i class="bi bi-circle mr-2"></i>') ?>Upload Images</li>
                         <li class="mb-1"><?= $process["image_details"] ? ('<i class="bi bi-check-circle-fill mr-2"></i>') : ('<i class="bi bi-circle mr-2"></i>') ?>Upload Image Details</li>
