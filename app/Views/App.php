@@ -26,6 +26,7 @@
                         <div class="col" id="androidModelButton">
                             <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#androidModal">Compile</button>
                         </div>
+                        <?php if ($admin) : ?><a href="/app/logs">View Log Fiile</a><?php endif ?>
                     </div>
                 </td>
                 <td>Why Not Today</td>

@@ -38,7 +38,8 @@ class App extends BaseController
             "aabExists" => file_exists($brandPath . "app-release.aab"),
             "updatedDate" => $date,
             "name" => $versionName,
-            "subStatus" => $subModel->getSubscription($accountId, "account_id", ["status"])
+            "subStatus" => $subModel->getSubscription($accountId, "account_id", ["status"]),
+            "admin" => $session->get("is_admin")
         ];
 
         return Navigation::renderNavBar("Versions",  "builds") . view('App', $data) . Navigation::renderFooter();
@@ -345,7 +346,7 @@ class App extends BaseController
                 $return_value = proc_close($process);
             }
 
-            echo file_get_contents($brandingPath . "app-log.txt");
+            echo preg_replace("/\r\n|\r|\n/", "<br>", file_get_contents($brandingPath . "app-log.txt"));
 
             $appModel->update($rowID, ["progress" => 100]);
         } else {

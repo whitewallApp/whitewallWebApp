@@ -103,6 +103,21 @@ class Assets extends BaseController {
         }
     }
 
+    function getAppLog()
+    {
+            $path = getenv("BASE_PATH") . $this->accountId . "/" . $this->brand_id . "/branding/";
+            $file = "app-log.txt";
+
+            if (file_exists($path . $file)) {
+
+                header("Content-Type: " . "text/plain");
+                readfile($path . $file);
+                exit;
+            } else {
+                return view("errors/html/error_404", ["message" => "sorry we can't find that image"]);
+            }
+    }
+
     function getAPK($type){
         if ($type == "apk" || $type == "aab"){
             $path = getenv("BASE_PATH") . $this->accountId . "/" . $this->brand_id . "/branding/";
