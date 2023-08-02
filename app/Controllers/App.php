@@ -129,11 +129,11 @@ class App extends BaseController
 
             if (is_resource($process)) {
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                fclose($pipes[1]);
+                // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                // fclose($pipes[1]);
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-                fclose($pipes[2]);
+                // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                // fclose($pipes[2]);
 
                 // It is important that you close any pipes before calling
                 // proc_close in order to avoid a deadlock
@@ -170,8 +170,8 @@ class App extends BaseController
                     //fclose($pipes[1]);
                     fclose($pipes[0]);
 
-                    echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-                    fclose($pipes[2]);
+                    // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                    // fclose($pipes[2]);
 
                     $return_value = proc_close($process);
 
@@ -188,11 +188,11 @@ class App extends BaseController
 
             if (is_resource($process)) {
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                fclose($pipes[1]);
+                // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                // fclose($pipes[1]);
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-                fclose($pipes[2]);
+                // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                // fclose($pipes[2]);
 
                 // It is important that you close any pipes before calling
                 // proc_close in order to avoid a deadlock
@@ -209,11 +209,11 @@ class App extends BaseController
                     fwrite($pipes[0], '\n');
                     fclose($pipes[0]);
 
-                    echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                    fclose($pipes[1]);
+                    // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                    // fclose($pipes[1]);
 
-                    echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-                    fclose($pipes[2]);
+                    // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                    // fclose($pipes[2]);
 
                     // It is important that you close any pipes before calling
                     // proc_close in order to avoid a deadlock
@@ -268,11 +268,11 @@ class App extends BaseController
                 // fwrite($pipes[0], "build");
                 // fclose($pipes[0]);
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                fclose($pipes[1]);
+                // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                // fclose($pipes[1]);
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-                fclose($pipes[2]);
+                // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                // fclose($pipes[2]);
 
                 // It is important that you close any pipes before calling
                 // proc_close in order to avoid a deadlock
@@ -288,11 +288,11 @@ class App extends BaseController
                 // fwrite($pipes[0], "build");
                 // fclose($pipes[0]);
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                fclose($pipes[1]);
+                // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                // fclose($pipes[1]);
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-                fclose($pipes[2]);
+                // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                // fclose($pipes[2]);
 
                 // It is important that you close any pipes before calling
                 // proc_close in order to avoid a deadlock
@@ -334,16 +334,18 @@ class App extends BaseController
                 // fwrite($pipes[0], "build");
                 // fclose($pipes[0]);
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
-                fclose($pipes[1]);
+                // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[1]));
+                // fclose($pipes[1]);
 
-                echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
-                fclose($pipes[2]);
+                // echo preg_replace("/\r\n|\r|\n/", "<br>", stream_get_contents($pipes[2]));
+                // fclose($pipes[2]);
 
                 // It is important that you close any pipes before calling
                 // proc_close in order to avoid a deadlock
                 $return_value = proc_close($process);
             }
+
+            echo file_get_contents($brandingPath . "app-log.txt");
 
             $appModel->update($rowID, ["progress" => 100]);
         } else {
