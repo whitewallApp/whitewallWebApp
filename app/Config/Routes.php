@@ -55,6 +55,7 @@ $routes->get('/app/(:segment)/compile', 'App::compile/$1', ["filter" => "add:bui
 $routes->post('/app/(:segment)/progress', 'App::progress/$1', ["filter" => "add:builds"]);
 $routes->get('/assets/app/release/(:segment)', 'Assets::getAPK/$1');
 $routes->get('/app/logs', 'Assets::getAppLog', ["filter" => "view:builds,admin"]);
+$routes->get('/assets/app/keystore', 'Assets::getAppKeystore', ["filter" => "view:builds,admin"]);
 
 //admin urls
 $routes->get('/admin', 'Admin::index');

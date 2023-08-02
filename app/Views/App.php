@@ -65,6 +65,9 @@
                             <div class="col" <?= !$aabExists ? ('style="display: none;"') : ('') ?>>
                                 <a href="/assets/app/release/aab" download="app-release.aab"><button type="button" class="btn btn-primary" id="androidPublishButton">Download App Bundle (aab)</button></a>
                             </div>
+                            <div class="col">
+                                <a href="/assets/app/release/keystore" download="app.keystore"><button type="button" class="btn btn-primary">Download App Keystore</button></a>
+                            </div>
                         </div>
                     </div>
                 </td>

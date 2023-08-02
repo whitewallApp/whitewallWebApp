@@ -114,8 +114,23 @@ class Assets extends BaseController {
                 readfile($path . $file);
                 exit;
             } else {
-                return view("errors/html/error_404", ["message" => "sorry we can't find that image"]);
+                return view("errors/html/error_404", ["message" => "sorry we can't find that log file"]);
             }
+    }
+
+    function getAppKeystore()
+    {
+        $path = getenv("BASE_PATH") . $this->accountId . "/" . $this->brand_id . "/branding/";
+        $file = "my-upload-key.keystore";
+
+        if (file_exists($path . $file)) {
+
+            header("Content-Type: " . "application/keychain_access");
+            readfile($path . $file);
+            exit;
+        } else {
+            return view("errors/html/error_404", ["message" => "sorry we can't find that keystore"]);
+        }
     }
 
     function getAPK($type){
