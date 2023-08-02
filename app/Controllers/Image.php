@@ -499,8 +499,8 @@ class Image extends BaseController
                                     $structure[$data[$columns["collection_name"]]] = $data[$columns["category_name"]];
                                 }
 
-                                if (strlen($data[$columns["description"]]) > (255 - 10)) {
-                                    array_push($errors, ["image" => $data[$columns["name"]], "message" => "Description must be under 245 characters"]);
+                                if (strlen($data[$columns["description"]]) > (100 - 10)) {
+                                    array_push($errors, ["image" => $data[$columns["name"]], "message" => "Description must be under 90 characters"]);
                                 }
                                 if (strlen($data[$columns["name"]]) > (255)) {
                                     array_push($errors, ["image" => $data[$columns["name"]], "message" => "Name must be under 255 characters"]);
