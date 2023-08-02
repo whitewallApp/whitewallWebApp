@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     header_container: { 
         width: "100%", 
         height: "auto", 
-        flex: 0.2,
+        flex: 0.25,
         
         //branding
         backgroundColor: "<?= array_key_exists("color", $branding["background"]) ? ($branding["background"]["color"]):("white") ?>"

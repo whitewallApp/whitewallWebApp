@@ -376,6 +376,9 @@ $(function(){
     $("#bannerLink").val(branding.bannerLink);
     $("#headerLink").val(branding.headerLink);
 
+
+    $("#headerSize").attr("value", branding.headerSize);
+    $("#headerSize").trigger("input");
     
 
     //buttons
