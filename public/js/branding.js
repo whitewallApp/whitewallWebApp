@@ -342,6 +342,9 @@ $("#save").on("click", function(){
             console.log(status);
             if (response.success) {
                 $(".alert-success").show();
+                setTimeout(() => {
+                    $(".alert-success").hide();
+                }, 1000)
             } else {
                 $(".alert-danger").html(response.message);
                 $(".alert-danger").show();
