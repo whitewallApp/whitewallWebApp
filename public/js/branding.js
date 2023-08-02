@@ -325,6 +325,7 @@ $("#save").on("click", function(){
     formData = new FormData();
     branding.appName = $("#appName").val();
     branding.bannerLink = $("#bannerLink").val();
+    branding.headerLink = $("#headerLink").val();
     formData.append("branding", JSON.stringify(branding));
     formData.append("collectionLink", $("#collectionLink").val());
     formData.append("categoryLink", $("#categoryLink").val());
@@ -370,6 +371,7 @@ $(function(){
 
     $("#appName").val(branding.appName);
     $("#bannerLink").val(branding.bannerLink);
+    $("#headerLink").val(branding.headerLink);
 
     
 

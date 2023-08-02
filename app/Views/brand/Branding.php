@@ -201,6 +201,8 @@
                                 <div class="form-group">
                                     <label class="form-label" for="appHeader">App Header</label>
                                     <input type="file" class="form-control" id="appHeader" />
+                                    <label class="form-label" for="headerLink">Header Link</label>
+                                    <input type="text" class="form-control" id="headerLink" />
 
                                     <label class="form-label" for="headerSize">Header Size</label>
                                     <div class="range">
