@@ -13,6 +13,8 @@ class LogIn extends BaseController
     {
 
         $migrate = \Config\Services::migrations();
+        
+        // dd( WRITEPATH, config('Session') );
 
         try {
             $migrate->latest();

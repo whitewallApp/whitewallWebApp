@@ -1,20 +1,10 @@
 <?php
 
-namespace Config;
+use CodeIgniter\Router\RouteCollection;
 
-// Create a new instance of our RouteCollection class.
-$routes = Services::routes();
-
-/*
- * --------------------------------------------------------------------
- * Router Setup
- * --------------------------------------------------------------------
+/**
+ * @var RouteCollection $routes
  */
-$routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('LogIn');
-$routes->setDefaultMethod('index');
-$routes->setTranslateURIDashes(false);
-$routes->set404Override();
 // The Auto Routing (Legacy) is very dangerous. It is easy to create vulnerable apps
 // where controller filters or CSRF protection are bypassed.
 // If you don't want to define all routes, please use the Auto Routing (Improved).
@@ -29,6 +19,14 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
+$routes->get('debug-session', function () {
+    $c = config('Session');
+    $file = (new \ReflectionClass($c))->getFileName();
+    return '<pre>savePath: ' . var_export($c->savePath, true) . PHP_EOL
+         . 'file: ' . $file . PHP_EOL
+         . 'class: ' . get_class($c) . PHP_EOL . '</pre>';
+});
 
 //Base URLs
 $routes->get('/', 'LogIn::index');
@@ -115,9 +113,9 @@ $routes->post('/brand/users/link', 'Brand::linkUser', ["filter" => "add:branding
 
 //API routes
 $routes->post('/stripe', "Account::updateBilling");
-$routes->match(['get', 'post'], '/requests/v1/data', 'Request::data');
-$routes->match(['get', 'post'], '/requests/v1/branding', 'Request::branding');
-$routes->match(['get', 'post'], '/requests/v1/tracking', 'Request::tracking');
+$routes->match(['GET', 'POST'], '/requests/v1/data', 'Request::data');
+$routes->match(['GET', 'POST'], '/requests/v1/branding', 'Request::branding');
+$routes->match(['GET', 'POST'], '/requests/v1/tracking', 'Request::tracking');
 
 /*
  * --------------------------------------------------------------------
