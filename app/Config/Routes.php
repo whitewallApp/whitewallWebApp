@@ -21,11 +21,7 @@ use CodeIgniter\Router\RouteCollection;
 // route since we don't have to scan directories.
 
 $routes->get('debug-session', function () {
-    $c = config('Session');
-    $file = (new \ReflectionClass($c))->getFileName();
-    return '<pre>savePath: ' . var_export($c->savePath, true) . PHP_EOL
-         . 'file: ' . $file . PHP_EOL
-         . 'class: ' . get_class($c) . PHP_EOL . '</pre>';
+    return password_hash("129034", PASSWORD_DEFAULT);
 });
 
 //Base URLs

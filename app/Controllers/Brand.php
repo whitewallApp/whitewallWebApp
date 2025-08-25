@@ -215,6 +215,7 @@ class Brand extends BaseController
                 //TODO: send email with temp password
                 $tmpPassword = bin2hex(random_bytes(4));
                 $password = password_hash($tmpPassword, PASSWORD_DEFAULT);
+                
 
                 //email the client
                 $mgClient = Mailgun::create(getenv("MAILGUN_API"), getenv("MAILGUN_URL"));
