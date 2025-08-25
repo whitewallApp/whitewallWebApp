@@ -43,6 +43,7 @@
     "config": {
         "allow-plugins": {
             "php-http/discovery": true
-        }
+        },
+        "check-platform-reqs": false
     }
 }
