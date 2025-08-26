@@ -115,6 +115,7 @@ function linkUser(e){
     })
 }
 
+//this is what makes the admin checkbox work
 $("#admin").on("click", function(){
 
     if ($("#admin").prop("checked")){
@@ -131,10 +132,13 @@ $("#admin").on("click", function(){
 $("#permissionsForm").submit(function(e){
     e.preventDefault();
     var disabled = $("[name^='permissions[']").prop("disabled");
+    var brandID = window.location.pathname.split("/")[window.location.pathname.split("/").length - 1];
+    
     $("[name^='permissions[']").prop("disabled", false);
 
     formData = new FormData(document.getElementById("permissionsForm"));
     formData.append("userId", $("#permissionsForm").prop("user-id"));
+    formData.append("brandId", brandID);
 
     $("[name^='permissions[']").prop("disabled", disabled);
 
@@ -161,6 +165,7 @@ $("#save").on("click", function(){
     $("#permissionsForm").submit();
 })
 
+//This makes the Select All button for the permissions work
 $("[name='permissions[all][view][]']").on("click", function(e){
     $("[name$='[view][]']").prop("checked", $(e.target).prop("checked"))
 })

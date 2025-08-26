@@ -184,14 +184,25 @@ class Brand extends BaseController
             $data = $this->request->getPost(["name", "active", "admin", "email", "name", "permissions","phone", FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
             $email = $this->request->getPost("email", FILTER_SANITIZE_EMAIL);
             $id = $this->request->getPost("userId", FILTER_SANITIZE_NUMBER_INT);
+            $brandId = $this->request->getPost("brandId", FILTER_SANITIZE_NUMBER_INT);
+
             $permissions = $data["permissions"];
             $session = session();
 
             $userModel = new UserModel();
+            $brandModel = new BrandModel();
 
             if ($id != ""){
                 $userModel->updatePermissions($id, $permissions);
                 $userModel->updateAdmin((int)$id, isset($data["admin"]));
+
+                //make sure they have permission to edit the user and brand
+                $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+                $allUsers = $userModel->getCollumn("id", $accountId, getBy: "account_id");
+                log_message("debug", json_encode($allUsers));
+                if (!in_array($id, $allUsers)){
+                    throw new \RuntimeException("You don't have permission to edit this user");
+                }
 
                 $user = [
                     "name" => $data["name"],
@@ -205,33 +216,42 @@ class Brand extends BaseController
                 return json_encode(["success" => true]);
             }else{
                 //check if they have reached the limit
-
                 $subModel = new SubscriptionModel();
                 $userLimit = $subModel->getLimit($session->get("user_id"), "userLimit");
                 if ($subModel->checkUserLimit($session->get("user_id"), $userLimit)) {
                     throw new \RuntimeException("User Limit Reached");
                 }
 
-                //TODO: send email with temp password
+                //check to make sure they have permission to the brandid
+                $brandIds = $brandModel->getCollumn("id", $session->get("user_id"));
+                $flatten = [];
+                foreach($brandIds as $brand){
+                    $flatten[] = $brand["id"];
+                }
+                log_message("debug", json_encode($brandIds));
+                if (!in_array($brandId, $flatten)){
+                    throw new \RuntimeException("You don't have permission to edit this brand");
+                }
+
                 $tmpPassword = bin2hex(random_bytes(4));
                 $password = password_hash($tmpPassword, PASSWORD_DEFAULT);
                 
+                // // email the client
+                // $mgClient = Mailgun::create(getenv("MAILGUN_API"), getenv("MAILGUN_URL"));
+                // $domain = "support.whitewall.app";
+                // $params = array(
+                //     'from'    => 'Support <support@whitewall.app>',
+                //     'to'      => $email,
+                //     'subject' => 'Your Temporary Password',
+                //     'template'    => 'Temporary_Password_View',
+                //     'text'    => 'Please',
+                //     'h:X-Mailgun-Variables'    => json_encode(["password" => $tmpPassword])
+                // );
 
-                //email the client
-                $mgClient = Mailgun::create(getenv("MAILGUN_API"), getenv("MAILGUN_URL"));
-                $domain = "support.whitewall.app";
-                $params = array(
-                    'from'    => 'Support <support@whitewall.app>',
-                    'to'      => $email,
-                    'subject' => 'Your Temporary Password',
-                    'template'    => 'Temporary_Password_View',
-                    'text'    => 'Please',
-                    'h:X-Mailgun-Variables'    => json_encode(["password" => $tmpPassword])
-                );
+                // # Make the call to the client.
+                // $mgClient->messages()->send($domain, $params);
 
-                # Make the call to the client.
-                $mgClient->messages()->send($domain, $params);
-
+                //create the user
                 $userData = [
                     "name" => $data["name"],
                     "email" => $email,
@@ -239,10 +259,11 @@ class Brand extends BaseController
                     "status" => isset($data["active"]),
                     "password" => $password
                 ];
-                $userModel->addUser($userData, $session->get("brand_id"), $permissions, isset($data["admin"]));
+                // $userModel->addUser($userData, $brandId, $permissions, isset($data["admin"]));
             }
         } catch (\Exception $e) {
             http_response_code(400);
+            log_message("critical", $e->getMessage());
             echo json_encode(["success" => false, "message" => $e->getMessage()]);
             exit;
         }
