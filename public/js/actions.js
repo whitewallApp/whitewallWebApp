@@ -113,14 +113,26 @@ $("#resetBtn").on("click", function(e){
 })
 
 $("[aria-labelledby='filters']").on("click", function(e){
-    id = $(e.target).attr("collection-id");
-    
-    if (window.location.toString().includes("page") && !window.location.toString().includes("collection")){
-        window.location = window.location + "&collection=" + id;
-    } else if (window.location.toString().includes("collection")) {
-        window.location = window.location.toString().replace(/collection=[\d]*/, "collection=" + id);
-    }else{
-        window.location = window.location + "?collection=" + id;
+    //make sure we arn't doing image filters on other pages
+    if (window.location.toString().includes("images")){
+        id = $(e.target).attr("collection-id");
+        
+        if (window.location.toString().includes("page") && !window.location.toString().includes("collection")){
+            window.location = window.location + "&collection=" + id;
+        } else if (window.location.toString().includes("collection")) {
+            window.location = window.location.toString().replace(/collection=[\d]*/, "collection=" + id);
+        }else{
+            window.location = window.location + "?collection=" + id;
+        }
+    }
+
+    //for brand user filters
+    if (window.location.toString().includes("users")){
+        if (window.location.toString().includes("filterby")){
+            window.location = window.location.toString().replace(/filterby=[a-z]*/, "filterby=" + $(e.target).val());
+        }else{
+            window.location = window.location + "?filterby=" + $(e.target).val();
+        }
     }
 })
 

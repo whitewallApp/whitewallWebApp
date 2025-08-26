@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\BrandModel;
 use App\Controllers\Navigation;
 use App\Models\CategoryModel;
@@ -25,7 +26,7 @@ class Brand extends BaseController
         $subModel = new SubscriptionModel();
         $amount = 0;
         $limit = $subModel->getLimit($session->get("user_id"), "brandLimit");
-        foreach($ids as $id){
+        foreach ($ids as $id) {
             $run = true;
             if ($amount > $limit && $limit != 0) {
                 $run = false;
@@ -46,7 +47,8 @@ class Brand extends BaseController
         return Navigation::renderNavBar("Brands",  "brands") . view('brand/Brand', $data) . Navigation::renderFooter();
     }
 
-    public function branding($brandId){
+    public function branding($brandId)
+    {
         $session = session();
         $brandModel = new BrandModel();
         $colModel = new CollectionModel();
@@ -58,8 +60,8 @@ class Brand extends BaseController
         $categoryIds = $catModel->getCollumn("id", $brandname);
         $categories = [];
         foreach ($categoryIds as $id) {
-            $category = $catModel->getCategory($id, filter:["name", "iconPath"], assoc: true);
-            
+            $category = $catModel->getCategory($id, filter: ["name", "iconPath"], assoc: true);
+
             if ($category["name"] == "Default Category") {
                 continue;
             }
@@ -69,10 +71,10 @@ class Brand extends BaseController
 
         $collectionIds = $colModel->getCollumn("id", $brandname);
         $collections = [];
-        foreach($collectionIds as $id){
+        foreach ($collectionIds as $id) {
             $collection = $colModel->getCollection($id, ["name", "iconPath", "thumbnail"], assoc: true);
 
-            if ($collection["name"] == "Default Collection"){
+            if ($collection["name"] == "Default Collection") {
                 continue;
             }
 
@@ -92,15 +94,16 @@ class Brand extends BaseController
             "categories" => array_slice($categories, 0, 6),
             "collections" => array_slice($collections, 0, 6),
             "images" => array_slice($images, 0, 6),
-            "menu"=> $menu,
+            "menu" => $menu,
             "branding" => $brandModel->getBrand($session->get("brand_id"), filter: ["branding"]),
             "brandimages" => $brandModel->getBrand($session->get("brand_id"), filter: ["appIcon", "appLoading", "appHeading", "appBanner"], assoc: true),
         ];
 
-        return Navigation::renderNavBar("Branding","branding") . view("brand/Branding", $data) . Navigation::renderFooter();
+        return Navigation::renderNavBar("Branding", "branding") . view("brand/Branding", $data) . Navigation::renderFooter();
     }
 
-    public function users($brandId){
+    public function users($brandId)
+    {
         $brandId = filter_var($brandId, FILTER_VALIDATE_INT);
 
         $session = session();
@@ -111,35 +114,48 @@ class Brand extends BaseController
         $accountUsers = [];
 
         $brandIds = $brandModel->getCollumn("id", $session->get("user_id"));
+        $allowed = false;
 
-        $amount = 0;
-        $limit = $subModel->getLimit($session->get("user_id"), "userLimit");
-        foreach($brandIds as $dbId){
-                if ($dbId["id"] == $brandId){
-                    $userIds = $userModel->getCollumn("id", $brandId);
+        //checking to see if they have access to that brand
+        foreach ($brandIds as $dbId) {
+            if ($dbId["id"] == $brandId) {
+                $allowed = true;
+            }
+        }
+        if (!$allowed) {
+            throw new \RuntimeException("Access Forbidden", 403);
+        }
 
-                    foreach($userIds as $id){
-                        $run = true;
-                        if ($amount > $limit && $limit != 0) {
-                            $run = false;
-                        }
 
-                        if ($run) {
-                            $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status", "icon"]);
+        $userIds = $userModel->getCollumn("id", $brandId);
+        foreach ($userIds as $id) {
+            $user = $userModel->getUser($id, filter: ["name", "email", "id", "brand_id", "status", "icon", "admin", "status"]);
+
+            if ($this->request->getGet("filterby") != null) {
+                $filter = $this->request->getGet("filterby", FILTER_SANITIZE_SPECIAL_CHARS);
+                switch ($filter) {
+                    case "admin":
+                        if ($user["admin"] == 1) {
                             array_push($users, $user);
                         }
-                        $amount++;
-                    }
-
-                    //get the account users for adding
-                    $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
-                    $accountUserIds = $userModel->getCollumn("id", $accountId, getBy: "account_id");
-                    foreach($accountUserIds as $dbuserId){
-                        if ($dbuserId["id"] != $session->get("user_id")){
-                            array_push($accountUsers, $userModel->getUser($dbuserId["id"], filter: ["id", "name", "icon"]));
+                        break;
+                    case "active":
+                        if ($user["status"] == 1) {
+                            array_push($users, $user);
                         }
-                    }
+                        break;
                 }
+            } else {
+                array_push($users, $user);
+            }
+        }
+
+        $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+        $accountUserIds = $userModel->getCollumn("id", $accountId, getBy: "account_id");
+        foreach ($accountUserIds as $dbuserId) {
+            if ($dbuserId["id"] != $session->get("user_id")) {
+                array_push($accountUsers, $userModel->getUser($dbuserId["id"], filter: ["id", "name", "icon"]));
+            }
         }
 
         $data = [
@@ -151,10 +167,11 @@ class Brand extends BaseController
         return Navigation::renderNavBar("Brand Users", [true, "Users"]) . view("brand/Users", $data) . Navigation::renderFooter();
     }
 
-    public function userData(){ //Post
+    public function userData()
+    { //Post
         $session = session();
 
-        if ($session->get("logIn") && $session->get("is_admin")){
+        if ($session->get("logIn") && $session->get("is_admin")) {
             $request = \Config\Services::request();
             $userModel = new UserModel();
             $brandModel = new BrandModel();
@@ -173,104 +190,100 @@ class Brand extends BaseController
             ];
 
             return json_encode($data);
-        }else{
+        } else {
             $this->response->setStatusCode(401);
-            return $this->response->send(); 
+            return $this->response->send();
         }
     }
 
-    public function updateUsers(){
-        try {
-            $data = $this->request->getPost(["name", "active", "admin", "email", "name", "permissions","phone", FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
-            $email = $this->request->getPost("email", FILTER_SANITIZE_EMAIL);
-            $id = $this->request->getPost("userId", FILTER_SANITIZE_NUMBER_INT);
-            $brandId = $this->request->getPost("brandId", FILTER_SANITIZE_NUMBER_INT);
+    public function updateUsers()
+    {
+        $data = $this->request->getPost(["name", "active", "admin", "email", "name", "permissions", "phone", FILTER_SANITIZE_FULL_SPECIAL_CHARS]);
+        $email = $this->request->getPost("email", FILTER_SANITIZE_EMAIL);
+        $id = $this->request->getPost("userId", FILTER_SANITIZE_NUMBER_INT);
+        $brandId = $this->request->getPost("brandId", FILTER_SANITIZE_NUMBER_INT);
 
-            $permissions = $data["permissions"];
-            $session = session();
+        $permissions = $data["permissions"];
+        $session = session();
 
-            $userModel = new UserModel();
-            $brandModel = new BrandModel();
+        $userModel = new UserModel();
+        $brandModel = new BrandModel();
 
-            if ($id != ""){
-                $userModel->updatePermissions($id, $permissions);
-                $userModel->updateAdmin((int)$id, isset($data["admin"]));
+        if ($id != "") {
+            $userModel->updatePermissions($id, $permissions);
+            $userModel->updateAdmin((int)$id, isset($data["admin"]));
 
-                //make sure they have permission to edit the user and brand
-                $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
-                $allUsers = $userModel->getCollumn("id", $accountId, getBy: "account_id");
-                log_message("debug", json_encode($allUsers));
-                if (!in_array($id, $allUsers)){
-                    throw new \RuntimeException("You don't have permission to edit this user");
-                }
-
-                $user = [
-                    "name" => $data["name"],
-                    "email" => $email,
-                    "status" => isset($data["active"]),
-                    "phone" => $data["phone"]
-                ];
-
-                $userModel->update($id, $user);
-
-                return json_encode(["success" => true]);
-            }else{
-                //check if they have reached the limit
-                $subModel = new SubscriptionModel();
-                $userLimit = $subModel->getLimit($session->get("user_id"), "userLimit");
-                if ($subModel->checkUserLimit($session->get("user_id"), $userLimit)) {
-                    throw new \RuntimeException("User Limit Reached");
-                }
-
-                //check to make sure they have permission to the brandid
-                $brandIds = $brandModel->getCollumn("id", $session->get("user_id"));
-                $flatten = [];
-                foreach($brandIds as $brand){
-                    $flatten[] = $brand["id"];
-                }
-                log_message("debug", json_encode($brandIds));
-                if (!in_array($brandId, $flatten)){
-                    throw new \RuntimeException("You don't have permission to edit this brand");
-                }
-
-                $tmpPassword = bin2hex(random_bytes(4));
-                $password = password_hash($tmpPassword, PASSWORD_DEFAULT);
-                
-                // // email the client
-                // $mgClient = Mailgun::create(getenv("MAILGUN_API"), getenv("MAILGUN_URL"));
-                // $domain = "support.whitewall.app";
-                // $params = array(
-                //     'from'    => 'Support <support@whitewall.app>',
-                //     'to'      => $email,
-                //     'subject' => 'Your Temporary Password',
-                //     'template'    => 'Temporary_Password_View',
-                //     'text'    => 'Please',
-                //     'h:X-Mailgun-Variables'    => json_encode(["password" => $tmpPassword])
-                // );
-
-                // # Make the call to the client.
-                // $mgClient->messages()->send($domain, $params);
-
-                //create the user
-                $userData = [
-                    "name" => $data["name"],
-                    "email" => $email,
-                    "phone" => $data["phone"],
-                    "status" => isset($data["active"]),
-                    "password" => $password
-                ];
-                // $userModel->addUser($userData, $brandId, $permissions, isset($data["admin"]));
+            //make sure they have permission to edit the user and brand
+            $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
+            $allUsers = $userModel->getCollumn("id", $accountId, getBy: "account_id");
+            $flatten = [];
+            foreach ($allUsers as $user) {
+                $flatten[] = $user["id"];
             }
-        } catch (\Exception $e) {
-            http_response_code(400);
-            log_message("critical", $e->getMessage());
-            echo json_encode(["success" => false, "message" => $e->getMessage()]);
-            exit;
-        }
+            if (!in_array($id, $flatten)) {
+                throw new \RuntimeException("You don't have permission to edit this user");
+            }
 
+            $user = [
+                "name" => $data["name"],
+                "email" => $email,
+                "status" => isset($data["active"]),
+                "phone" => $data["phone"]
+            ];
+
+            $userModel->update($id, $user);
+
+            return json_encode(["success" => true]);
+        } else {
+            //check if they have reached the limit
+            $subModel = new SubscriptionModel();
+            $userLimit = $subModel->getLimit($session->get("user_id"), "userLimit");
+            if ($subModel->checkUserLimit($session->get("user_id"), $userLimit)) {
+                throw new \RuntimeException("User Limit Reached");
+            }
+
+            //check to make sure they have permission to the brandid
+            $brandIds = $brandModel->getCollumn("id", $session->get("user_id"));
+            $flatten = [];
+            foreach ($brandIds as $brand) {
+                $flatten[] = $brand["id"];
+            }
+            if (!in_array($brandId, $flatten)) {
+                throw new \RuntimeException("You don't have permission to edit this brand");
+            }
+
+            $tmpPassword = bin2hex(random_bytes(4));
+            $password = password_hash($tmpPassword, PASSWORD_DEFAULT);
+
+            // email the client
+            $mgClient = Mailgun::create(getenv("MAILGUN_API"), getenv("MAILGUN_URL"));
+            $domain = "support.whitewall.app";
+            $params = array(
+                'from'    => 'Support <support@whitewall.app>',
+                'to'      => $email,
+                'subject' => 'Your Temporary Password',
+                'template'    => 'Temporary_Password_View',
+                'text'    => 'Please',
+                'h:X-Mailgun-Variables'    => json_encode(["password" => $tmpPassword])
+            );
+
+            # Make the call to the client.
+            $mgClient->messages()->send($domain, $params);
+
+            //create the user
+            $userData = [
+                "name" => $data["name"],
+                "email" => $email,
+                "phone" => $data["phone"],
+                "status" => isset($data["active"]),
+                "password" => $password
+            ];
+            $userModel->addUser($userData, $brandId, $permissions, isset($data["admin"]));
+        }
     }
 
-    public function addBrand(){
+    public function addBrand()
+    {
         try {
             $brandModel = new BrandModel();
             $userModel = new UserModel();
@@ -324,12 +337,12 @@ class Brand extends BaseController
             ];
             $colModel->insert($collection);
 
-            if ($import){
+            if ($import) {
                 $userIds = $userModel->getCollumn("id", $session->get("brand_id"));
                 foreach ($userIds as $userId) {
                     $userId = $userId["id"];
                     $userModel->setPermissions($userId, $brandID, $userModel->getPermissions($userId, $session->get("brand_id")));
-                    if ($userId != $session->get("user_id")){
+                    if ($userId != $session->get("user_id")) {
                         $brandModel->joinUser($brandID, $userId, $userModel->getAdmin($userId, $session->get("brand_id")));
                     }
                 }
@@ -341,140 +354,141 @@ class Brand extends BaseController
         }
     }
 
-    public function updateBrand(){
+    public function updateBrand()
+    {
         // try {
-            $brandModel = new BrandModel();
-            $session = session();
+        $brandModel = new BrandModel();
+        $session = session();
 
-            if (count($this->request->getFiles()) > 0){
-                $imageType = htmlspecialchars(array_keys($this->request->getFiles())[0]);
-                $file = $this->request->getFiles()[$imageType];
-                $assets = new Assets();
+        if (count($this->request->getFiles()) > 0) {
+            $imageType = htmlspecialchars(array_keys($this->request->getFiles())[0]);
+            $file = $this->request->getFiles()[$imageType];
+            $assets = new Assets();
 
-                //preform checks
-                if (!$file->isValid()) {
-                    throw new \RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
+            //preform checks
+            if (!$file->isValid()) {
+                throw new \RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
+            }
+
+            //check if the name of the file has not been modified
+            $typeCheck = false;
+            foreach (["appIcon", "appLoading", "appHeading", "appBanner", "logo"] as $type) {
+                if ($imageType == $type) {
+                    $typeCheck = true;
                 }
-                
-                //check if the name of the file has not been modified
-                $typeCheck = false;
-                foreach(["appIcon", "appLoading", "appHeading", "appBanner", "logo"] as $type){
-                    if ($imageType == $type){
-                        $typeCheck = true;
-                    }
-                }
+            }
 
-                if (!$typeCheck){
-                    throw new \RuntimeException("File Name Error");
-                }
+            if (!$typeCheck) {
+                throw new \RuntimeException("File Name Error");
+            }
 
-                $getbrandID = $session->get("brand_id");
+            $getbrandID = $session->get("brand_id");
 
-                if (!is_null($this->request->getPost("id"))){
-                    $id = $this->request->getPost("id", FILTER_VALIDATE_INT);
+            if (!is_null($this->request->getPost("id"))) {
+                $id = $this->request->getPost("id", FILTER_VALIDATE_INT);
 
-                    $dbids = $brandModel->getCollumn("id", $session->get("user_id"));
-                    //if they can edit that brand
-                    foreach ($dbids as $dbid) {
-                        $dbid = $dbid["id"];
-                        if ($dbid == $id) {
-                            $getbrandID = $dbid;
-                        }
-                    }
-                }
-
-                $brand = $brandModel->getBrand($getbrandID, filter: ["id", "appIcon", "appLoading", "appHeading", "appBanner", "logo"], assoc: true);
-
-                if ($this->request->getPost("name") != null) {
-                    $name = $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS);
-                    $brandModel->update($brand["id"], ["name" => $name]);
-                }
-
-                //if we seting it for the first time else delete old file
-                if ($brand[$imageType] == "" || preg_match("/^http/", $brand[$imageType]) == "1"){
-                    $name = $assets->saveBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], $imageType, $getbrandID);
-                    $updatedBrand = [
-                        $imageType => "/assets/branding/" . $getbrandID . "/" . $name
-                    ];
-                    $brandModel->update($brand["id"], $updatedBrand);
-                }else{
-                    $oldName = explode("/", $brand[$imageType])[4];
-                    $name = $assets->updateBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], $oldName, $getbrandID);
-                    $updatedBrand = [
-                        $imageType => "/assets/branding/" . $getbrandID . "/" . $name
-                    ];
-                    $brandModel->update($brand["id"], $updatedBrand);
-                }
-            }else{
-                //TODO: needs validation and filtering
-                $branding = $this->request->getPost("branding");
-                $post = $this->request->getPost(["collectionLink", "categoryLink", "menuLink"]);
-
-                $brandId = $session->get("brand_id");
-                $brandModel->update($brandId, ["branding" => $branding]);
-
-                $colModel = new CollectionModel();
-                $catModel = new CategoryModel();
-
-                //update brandname if it comes in
-                if ($this->request->getPost("name") != null) {
-                    $name = $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS);
-                    $id = $this->request->getPost("id", FILTER_VALIDATE_INT);
-                    $dbids = $brandModel->getCollumn("id", $session->get("user_id"));
-                    //if they can edit that brand
-                    foreach ($dbids as $dbid) {
-                        $dbid = $dbid["id"];
-                        if ($dbid == $id){
-                            $brandModel->update($dbid, ["name" => $name]);
-                        }
-                    }
-                }
-
-                if ($post["collectionLink"] != ""){
-                    $ids = $colModel->getAllIds($session->get("brand_id"));
-                    foreach($ids as $id){
-                        $collection = $colModel->getCollection($id, assoc: true);
-                        $cateogory = $catModel->getCategory($collection["category_id"], assoc: true);
-
-                        $link = preg_replace("/{{collection_id}}/", $id, $post["collectionLink"]);
-                        $link = preg_replace("/{{collection_name}}/", urlencode($collection["name"]), $link);
-                        $link = preg_replace("/{{category_id}}/", $collection["category_id"], $link);
-                        $link = preg_replace("/{{category_name}}/", urlencode($cateogory["name"]), $link);
-
-                        $finalLink = $collection["link"] . $link;
-                        $colModel->update($id, ["link" => $finalLink]);
-                    }
-                }
-                if ($post["categoryLink"] != "") {
-                    $ids = $catModel->getCollumn("id", $session->get("brand_id"));
-
-                    foreach($ids as $id){
-                        $cateogory = $catModel->getCategory($id, assoc: true);
-
-                        $link = preg_replace("/{{category_id}}/", $id, $post["categoryLink"]);
-                        $link = preg_replace("/{{category_name}}/", urlencode($cateogory["name"]), $link);
-
-                        $finalLink = $cateogory["link"] . $link;
-                        $catModel->update($id, ["link" => $finalLink]);
-                    }
-                }
-                if ($post["menuLink"] != "") {
-                    $menuModel = new MenuModel();
-                    $ids = $menuModel->getCollumn("id", $session->get("brand_id"));
-
-                    foreach($ids as $id){
-                        $menuItem = $menuModel->getMenuItem($id, assoc: true);
-
-                        $link = preg_replace("/{{menu_id}}/", $id, $post["menuLink"]);
-                        $link = preg_replace("/{{menu_title}}/", urlencode($menuItem["title"]), $link);
-
-                        $finalLink = $menuItem["externalLink"] . $link;
-                        $menuModel->update($id, ["externalLink" => $finalLink]);
+                $dbids = $brandModel->getCollumn("id", $session->get("user_id"));
+                //if they can edit that brand
+                foreach ($dbids as $dbid) {
+                    $dbid = $dbid["id"];
+                    if ($dbid == $id) {
+                        $getbrandID = $dbid;
                     }
                 }
             }
 
-            return json_encode(["success" => true]);
+            $brand = $brandModel->getBrand($getbrandID, filter: ["id", "appIcon", "appLoading", "appHeading", "appBanner", "logo"], assoc: true);
+
+            if ($this->request->getPost("name") != null) {
+                $name = $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS);
+                $brandModel->update($brand["id"], ["name" => $name]);
+            }
+
+            //if we seting it for the first time else delete old file
+            if ($brand[$imageType] == "" || preg_match("/^http/", $brand[$imageType]) == "1") {
+                $name = $assets->saveBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], $imageType, $getbrandID);
+                $updatedBrand = [
+                    $imageType => "/assets/branding/" . $getbrandID . "/" . $name
+                ];
+                $brandModel->update($brand["id"], $updatedBrand);
+            } else {
+                $oldName = explode("/", $brand[$imageType])[4];
+                $name = $assets->updateBrandImg($file->getTempName(), explode("/", $file->getMimeType())[1], $oldName, $getbrandID);
+                $updatedBrand = [
+                    $imageType => "/assets/branding/" . $getbrandID . "/" . $name
+                ];
+                $brandModel->update($brand["id"], $updatedBrand);
+            }
+        } else {
+            //TODO: needs validation and filtering
+            $branding = $this->request->getPost("branding");
+            $post = $this->request->getPost(["collectionLink", "categoryLink", "menuLink"]);
+
+            $brandId = $session->get("brand_id");
+            $brandModel->update($brandId, ["branding" => $branding]);
+
+            $colModel = new CollectionModel();
+            $catModel = new CategoryModel();
+
+            //update brandname if it comes in
+            if ($this->request->getPost("name") != null) {
+                $name = $this->request->getPost("name", FILTER_SANITIZE_SPECIAL_CHARS);
+                $id = $this->request->getPost("id", FILTER_VALIDATE_INT);
+                $dbids = $brandModel->getCollumn("id", $session->get("user_id"));
+                //if they can edit that brand
+                foreach ($dbids as $dbid) {
+                    $dbid = $dbid["id"];
+                    if ($dbid == $id) {
+                        $brandModel->update($dbid, ["name" => $name]);
+                    }
+                }
+            }
+
+            if ($post["collectionLink"] != "") {
+                $ids = $colModel->getAllIds($session->get("brand_id"));
+                foreach ($ids as $id) {
+                    $collection = $colModel->getCollection($id, assoc: true);
+                    $cateogory = $catModel->getCategory($collection["category_id"], assoc: true);
+
+                    $link = preg_replace("/{{collection_id}}/", $id, $post["collectionLink"]);
+                    $link = preg_replace("/{{collection_name}}/", urlencode($collection["name"]), $link);
+                    $link = preg_replace("/{{category_id}}/", $collection["category_id"], $link);
+                    $link = preg_replace("/{{category_name}}/", urlencode($cateogory["name"]), $link);
+
+                    $finalLink = $collection["link"] . $link;
+                    $colModel->update($id, ["link" => $finalLink]);
+                }
+            }
+            if ($post["categoryLink"] != "") {
+                $ids = $catModel->getCollumn("id", $session->get("brand_id"));
+
+                foreach ($ids as $id) {
+                    $cateogory = $catModel->getCategory($id, assoc: true);
+
+                    $link = preg_replace("/{{category_id}}/", $id, $post["categoryLink"]);
+                    $link = preg_replace("/{{category_name}}/", urlencode($cateogory["name"]), $link);
+
+                    $finalLink = $cateogory["link"] . $link;
+                    $catModel->update($id, ["link" => $finalLink]);
+                }
+            }
+            if ($post["menuLink"] != "") {
+                $menuModel = new MenuModel();
+                $ids = $menuModel->getCollumn("id", $session->get("brand_id"));
+
+                foreach ($ids as $id) {
+                    $menuItem = $menuModel->getMenuItem($id, assoc: true);
+
+                    $link = preg_replace("/{{menu_id}}/", $id, $post["menuLink"]);
+                    $link = preg_replace("/{{menu_title}}/", urlencode($menuItem["title"]), $link);
+
+                    $finalLink = $menuItem["externalLink"] . $link;
+                    $menuModel->update($id, ["externalLink" => $finalLink]);
+                }
+            }
+        }
+
+        return json_encode(["success" => true]);
 
         // } catch (\Exception $e){
         //     http_response_code(400);
@@ -483,7 +497,8 @@ class Brand extends BaseController
         // }
     }
 
-    public function removeBrand(){
+    public function removeBrand()
+    {
         $brandModel = new BrandModel();
         $userModel = new UserModel();
         $session = session();
@@ -496,19 +511,19 @@ class Brand extends BaseController
         $brandids = $brandModel->getCollumn("id", $session->get("user_id"));
         $liveBrand = null;
         foreach ($brandids as $dbid) {
-            if ($dbid["id"] != $brandId){
+            if ($dbid["id"] != $brandId) {
                 $liveBrand = $dbid["id"];
             }
         }
 
-        if ($liveBrand !== null){
+        if ($liveBrand !== null) {
             $accountID = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
             $userids = $userModel->getCollumn("id", $accountID, getBy: "account_id");
 
             //update the default brands of all the users if they are going to be deleted
-            foreach($userids as $dbuserId){
+            foreach ($userids as $dbuserId) {
                 $dbuserId = $dbuserId["id"];
-                if ($userModel->getUser($dbuserId, filter: ["default_brand"]) == $brandId){
+                if ($userModel->getUser($dbuserId, filter: ["default_brand"]) == $brandId) {
                     $userModel->update($dbuserId, ["default_brand" => $liveBrand]);
                 }
             }
@@ -518,7 +533,8 @@ class Brand extends BaseController
         }
     }
 
-    public function removeUser(){
+    public function removeUser()
+    {
         $userModel = new UserModel();
         $userID = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
         $assets = new Assets();
@@ -536,7 +552,8 @@ class Brand extends BaseController
         }
     }
 
-    public function unlinkUser(){
+    public function unlinkUser()
+    {
         $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
         $brandId = $this->request->getPost("brandId", FILTER_SANITIZE_NUMBER_INT);
 
@@ -567,7 +584,8 @@ class Brand extends BaseController
         return json_encode(["success" => true]);
     }
 
-    public function linkUser(){
+    public function linkUser()
+    {
         $id = $this->request->getPost("id", FILTER_SANITIZE_NUMBER_INT);
         $brandId = $this->request->getPost("brandId", FILTER_SANITIZE_NUMBER_INT);
 
@@ -578,8 +596,8 @@ class Brand extends BaseController
 
             $dbbrandids = $brandModel->getCollumn("id", $session->get("user_id"));
 
-            foreach($dbbrandids as $dbbrandid){
-                if ($dbbrandid["id"] == $brandId){
+            foreach ($dbbrandids as $dbbrandid) {
+                if ($dbbrandid["id"] == $brandId) {
                     //get the account users
                     $accountId = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
                     $userIds = $userModel->getCollumn("id", $accountId, getBy: "account_id");
@@ -608,7 +626,7 @@ class Brand extends BaseController
             $userModel = new UserModel();
 
             //update session brand
-            if ($request->getPost("name") != null){
+            if ($request->getPost("name") != null) {
                 $name = $request->getPost("name", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                 $brands = $brandModel->getCollumn("name", $session->get("user_id"));
@@ -634,16 +652,15 @@ class Brand extends BaseController
                 $postId = $request->getPost("default", FILTER_VALIDATE_INT);
 
                 foreach ($brandids as $brandId) {
-                    if ($brandId["id"] == $postId){
+                    if ($brandId["id"] == $postId) {
                         $userModel->update($session->get("user_id"), ["default_brand" => $postId]);
                         return json_encode(["success" => true]);
                     }
                 }
             }
-
         } else {
             $this->response->setStatusCode(401);
-            return $this->response->send(); 
+            return $this->response->send();
         }
     }
 }
