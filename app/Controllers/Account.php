@@ -114,6 +114,8 @@ class Account extends BaseController
                 $subid = $subModel->where("account_id", $event->data->object->client_reference_id)->first();
                 $subModel->update($subid["id"], ["subscriptionID" => $event->data->object->subscription, "customerID" => $event->data->object->customer]);
                 break;
+            case 'invoice.paid':
+                break;
             default:
                 $this->logger->error("Recived and UnownEvent of type: " . $event->type);
         }
