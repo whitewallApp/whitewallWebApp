@@ -379,3 +379,32 @@ body {
         height: auto;
     }
 }
+
+/* Login card centered with max width */
+.card {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Logo size */
+#login_logo {
+    max-height: 80px;
+    object-fit: contain;
+}
+
+/* Google sign-in column spacing */
+.g_id_signin {
+    display: inline-block;
+}
+
+/* Alerts spacing */
+.alert {
+    font-size: 0.9rem;
+}
+
+/* Buttons full-width on mobile */
+@media (max-width: 575.98px) {
+    .btn-block {
+        width: 100%;
+    }
+}
