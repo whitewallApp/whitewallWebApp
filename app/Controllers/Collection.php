@@ -119,7 +119,10 @@ class Collection extends BaseController
             if ($this->request->getPost("allactive") !== null){
                 $ids = $colModel->getAllIds($session->get("brand_id"));
                 foreach ($ids as $id) {
-                    $colModel->update($id, ["active" => $this->request->getPost("allactive", FILTER_VALIDATE_BOOL)]);
+                    $name = $colModel->find($id)["name"];
+                    if ($name != "Default Collection"){
+                        $colModel->update($id, ["active" => $this->request->getPost("allactive", FILTER_VALIDATE_BOOL)]);
+                    }
                 }
                 exit;
             }

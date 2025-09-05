@@ -40,7 +40,9 @@ function drawChart() {
     const limitdata = google.visualization.arrayToDataTable(limitData);
 
     const limitoptions = {
-        // hAxis: { format: "0" },
+        hAxis: {
+            logScale: true  // <- key part
+        },
         isStacked: true,
     };
 

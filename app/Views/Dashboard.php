@@ -24,7 +24,7 @@
         <div class="row flex-grow-1">
             <div class="col-12 col-lg-8 mb-3 mb-lg-0 d-flex flex-column">
                 <h4>Account Limits</h4>
-                <div id="limitsChart" class="chart-container flex-grow-1"></div>
+                <div id="limitsChart" class="chart-container"></div>
             </div>
             <div class="col-12 col-lg-4 d-flex flex-column">
                 <div class="table-responsive flex-grow-1">

@@ -103,7 +103,10 @@ class Category extends BaseController
         if ($this->request->getPost("allactive") !== null) {
             $ids = $categoryModel->getCollumn("id", $session->get("brand_id"));
             foreach ($ids as $id) {
-                $categoryModel->update($id, ["active" => $this->request->getPost("allactive", FILTER_VALIDATE_BOOL)]);
+                $name = $categoryModel->find($id)["name"];
+                if ($name != "Default Category"){
+                    $categoryModel->update($id, ["active" => $this->request->getPost("allactive", FILTER_VALIDATE_BOOL)]);
+                }
             }
             exit;
         }
