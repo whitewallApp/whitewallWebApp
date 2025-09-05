@@ -81,7 +81,7 @@
             <?php if ($view["categories"]["view"]) : ?><li class="nav-item"><a class="nav-link" href="/categories">Categories</a></li><?php endif ?>
             <?php if ($view["collections"]["view"]) : ?><li class="nav-item"><a class="nav-link" href="/collections">Collections</a></li><?php endif ?>
             <?php if ($view["images"]["view"]) : ?><li class="nav-item"><a class="nav-link" href="/images">Images</a></li><?php endif ?>
-            <?php if ($view["notifications"]["view"]) : ?><li class="nav-item"><a class="nav-link" href="/notifications">Notifications</a></li><?php endif ?>
+            <!-- <?php if ($view["notifications"]["view"]) : ?><li class="nav-item"><a class="nav-link" href="/notifications">Notifications</a></li><?php endif ?> -->
             <?php if ($view["menu"]["view"]) : ?><li class="nav-item"><a class="nav-link" href="/menu">Menu Items</a></li><?php endif ?>
             <?php if ($view["branding"]["view"]) : ?><li class="nav-item"><a class="nav-link" href="/brand/branding/<?= $brandId ?>">Branding</a></li><?php endif ?>
             <?php if ($view["builds"]["view"]) : ?><li class="nav-item"><a class="nav-link" href="/app">Versions</a></li><?php endif ?>

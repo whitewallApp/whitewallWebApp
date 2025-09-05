@@ -53,27 +53,26 @@ class Menu extends BaseController
             $data = [
                 "title" => $post["title"],
                 "sequence" => $post["sequence"],
-                "target" => $post["target"]
+                "target" => $post["target"],
+                "externalLink" => "",
+                "internalContext" => ""
             ];
 
             if ($data["target"] == "1"){
                 $link = $this->request->getPost("link", FILTER_SANITIZE_URL);
-                $data["link"] = $link;
-                $data["internalContext"] = "";
+                $data["externalLink"] = $link;
             }else{
                 $html = $this->request->getPost("internalContext");
                 $config = HTMLPurifier_Config::createDefault();
                 $purifier = new HTMLPurifier($config);
 
                 $cleanHtml = $purifier->purify($html);
-                $data["link"] = "";
                 $data["internalContext"] = $cleanHtml;
             }
 
             if ($post["id"] == "undefined" && $permission){
-                $brandModel = new BrandModel();
                 $session = session();
-                $data["brand_id"] = $brandModel->getBrand($session->get("brand_id"), "name", ["id"]);
+                $data["brand_id"] = $session->get("brand_id");
 
                 $menuModel->save($data);
             }else{

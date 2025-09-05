@@ -6,6 +6,7 @@ use App\Models\BrandModel;
 use App\Models\CategoryModel;
 use App\Models\CollectionModel;
 use App\Models\ImageModel;
+use App\Models\MenuModel;
 use App\Models\SubscriptionModel;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -117,9 +118,52 @@ class Request extends BaseController
 
     public function branding(){
         $subModel = new SubscriptionModel();
+        $menuModel = new MenuModel();
         $branding = $this->brandModel->getBrand($this->brandId, filter: ["appIcon", "appLoading", "appHeading", "appBanner", "branding"], assoc: true);
         $branding["status"] = $subModel->getSubscription($this->accountId, "account_id", ["status"]);
+        $menuItems = $menuModel->where("brand_id", $this->brandId)->findAll();
 
+        $appMenuItems = [];
+
+        foreach($menuItems as $item){
+            $icon = "web";
+
+            switch(strtolower($item["title"])){
+                case "facebook":
+                    $icon = "facebook";
+                    break;
+                case "instagram":
+                    $icon = "instagram";
+                    break;
+                case "snapchat":
+                    $icon = "snapchat";
+                    break;
+                case "discord":
+                    $icon = "discord";
+                    break;
+                case "deviantart":
+                    $icon = "deviantart";
+                    break;
+                case "youtube":
+                    $icon = "youtube";
+                    break;
+                case "pinterest":
+                    $icon = "pin";
+                    break;
+                case "artstation":
+                    $icon = "artstation";
+                    break;
+            }
+
+            array_push($appMenuItems, [
+                "title" => $item["title"],
+                "link" => $item["externalLink"],
+                "icon" => $icon,
+                "sequence" => $item["sequence"]
+            ]);
+        }
+
+        $branding["menuItems"] = $appMenuItems;
         echo json_encode($branding);
     }
 
