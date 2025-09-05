@@ -328,6 +328,8 @@ class Assets extends BaseController {
         $file = explode(".tmp", $filename)[0];
         $file = $file . "." . $type;
 
+        $file = strtolower($file);
+
         if(move_uploaded_file($tmpPath, $file)){
 
             $dst = $this->generateThumbnail($file, $type);

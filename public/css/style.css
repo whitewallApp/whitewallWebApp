@@ -269,3 +269,113 @@ body {
 .card-branding {
     padding: 8px !important;
 }
+
+
+
+
+/* Make chart containers fill available space in flex layout */
+.chart-container {
+    width: 100%;
+    min-height: 200px; /* minimum height on mobile */
+}
+
+/* Adjust chart height on larger screens */
+@media (min-width: 768px) {
+    #limitsChart {
+        min-height: 250px;
+    }
+    #wallpaperChart,
+    #linkChart {
+        min-height: 200px;
+    }
+}
+
+/* Navbar Logo and Brand Selector on Mobile */
+.navbar-brand img {
+    max-height: 50px;
+    width: auto;
+}
+
+.profile-photo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+/* Page header adjustments for mobile */
+@media (max-width: 576px) {
+    h2 {
+        font-size: 1.25rem;
+    }
+    select.custom-select {
+        font-size: 1rem;
+    }
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.6rem;
+    }
+}
+
+.profile-photo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.brand-select {
+    min-width: 150px; /* ensures brand dropdown is always visible */
+}
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Mobile adjustments */
+@media (max-width: 576px) {
+    select.brand-select {
+        font-size: 0.95rem;
+    }
+    h2.mb-0 {
+        font-size: 1.25rem;
+    }
+}
+
+/* Ensure small images scale nicely in table */
+.img-sm {
+    max-width: 50px;
+    max-height: 50px;
+    object-fit: contain;
+}
+
+/* Large checkboxes scale well on mobile */
+.checkbox-lg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Add spacing between action buttons on small screens */
+#actions button {
+    margin-bottom: 5px;
+}
+
+/* Table on very small screens */
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Keep buttons a reasonable height on desktop, full width on mobile */
+.action-btn {
+    min-width: 100px; /* desktop minimum width */
+    height: 38px; /* default Bootstrap button height */
+}
+
+/* Full width only on xs screens */
+@media (max-width: 575.98px) {
+    .action-btn {
+        width: 100%;
+        height: auto;
+    }
+}

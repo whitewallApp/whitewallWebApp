@@ -20,7 +20,7 @@ function drawChart() {
 
     const linkoptions = {
         legend: "none",
-        hAxis: {format: "0"}
+        hAxis: {format: "0"},
     };
 
     const linkchart = new google.visualization.BarChart(document.getElementById('linkChart'));
@@ -30,7 +30,7 @@ function drawChart() {
 
     const wallpaperoptions = {
         legend: "none",
-        hAxis: { format: "0" }
+        hAxis: { format: "0" },
     };
 
     const wallpaperchart = new google.visualization.BarChart(document.getElementById('wallpaperChart'));
@@ -41,7 +41,7 @@ function drawChart() {
 
     const limitoptions = {
         // hAxis: { format: "0" },
-        isStacked: true
+        isStacked: true,
     };
 
     const limitchart = new google.visualization.BarChart(document.getElementById('limitsChart'));

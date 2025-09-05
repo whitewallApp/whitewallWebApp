@@ -1,13 +1,14 @@
-<div class="col p-3">
+<div class="container-fluid p-3">
     <div class="row">
-        <div class="col-sm-4">
-            <div class="card">
+        <!-- Getting Started -->
+        <div class="col-12 col-md-4 mb-3">
+            <div class="card h-100">
                 <div class="card-body">
                     <h4>Getting Started</h4>
                     <ul class="list-unstyled">
                         <li class="mb-1"><?= $process["images"] ? ('<i class="bi bi-check-circle-fill mr-2"></i>') : ('<i class="bi bi-circle mr-2"></i>') ?>Upload Images</li>
                         <li class="mb-1"><?= $process["image_details"] ? ('<i class="bi bi-check-circle-fill mr-2"></i>') : ('<i class="bi bi-circle mr-2"></i>') ?>Upload Image Details</li>
-                        <li class="mb-1"><?= $process["cat_icons"] ? ('<i class="bi bi-check-circle-fill mr-2"></i>') : ('<i class="bi bi-circle mr-2"></i>') ?>Set Cateogory Icons</li>
+                        <li class="mb-1"><?= $process["cat_icons"] ? ('<i class="bi bi-check-circle-fill mr-2"></i>') : ('<i class="bi bi-circle mr-2"></i>') ?>Set Category Icons</li>
                         <li class="mb-1"><?= $process["col_icons"] ? ('<i class="bi bi-check-circle-fill mr-2"></i>') : ('<i class="bi bi-circle mr-2"></i>') ?>Set Collection Thumbnails</li>
                         <li class="mb-1"><?= $process["activate"] ? ('<i class="bi bi-check-circle-fill mr-2"></i>') : ('<i class="bi bi-circle mr-2"></i>') ?>Activate Collections & Categories</li>
                         <li class="mb-1"><?= $process["branding"] ? ('<i class="bi bi-check-circle-fill mr-2"></i>') : ('<i class="bi bi-circle mr-2"></i>') ?>Update Branding</li>
@@ -16,64 +17,70 @@
                 </div>
             </div>
         </div>
-        <div class="col-8">
-            <div class="card p-3 text-center">
-                <div class="row">
-                    <div class="col-sm-8">
-                        <h4>Account Limits</h4>
-                        <div id="limitsChart"></div>
-                    </div>
-                    <div class="col-sm-4">
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">Current Count</th>
-                                    <th scope="col">Limit</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">Images</th>
-                                    <td><?= $limits["images"]["count"] ?></td>
-                                    <td><?= $limits["images"]["limit"] ?></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Users</th>
-                                    <td><?= $limits["users"]["count"] ?></td>
-                                    <td><?= $limits["users"]["limit"] ?></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Brand</th>
-                                    <td scope="row"><?= $limits["brands"]["count"] ?></td>
-                                    <td><?= $limits["brands"]["limit"] ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+
+        <!-- Account Limits -->
+<div class="col-12 col-md-8 mb-3">
+    <div class="card p-3 text-center h-100 d-flex flex-column">
+        <div class="row flex-grow-1">
+            <div class="col-12 col-lg-8 mb-3 mb-lg-0 d-flex flex-column">
+                <h4>Account Limits</h4>
+                <div id="limitsChart" class="chart-container flex-grow-1"></div>
+            </div>
+            <div class="col-12 col-lg-4 d-flex flex-column">
+                <div class="table-responsive flex-grow-1">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Current</th>
+                                <th>Limit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Images</th>
+                                <td><?= $limits["images"]["count"] ?></td>
+                                <td><?= $limits["images"]["limit"] ?></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Users</th>
+                                <td><?= $limits["users"]["count"] ?></td>
+                                <td><?= $limits["users"]["limit"] ?></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Brand</th>
+                                <td><?= $limits["brands"]["count"] ?></td>
+                                <td><?= $limits["brands"]["limit"] ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-
-    </div>
-    <div class="row mt-4">
-        <div class="col">
-            <div class="card p-3 text-center">
-                <h4>Wallpapers Set</h4>
-                <div id="wallpaperChart"></div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="card p-3 text-center">
-                <h4>Action Links Clicked</h4>
-                <div id="linkChart"></div>
-            </div>
-        </div>
-        <div class="col">
-
-        </div>
     </div>
 </div>
+
+<!-- Second Row -->
+<div class="row mt-4">
+    <div class="col-12 col-lg-4 mb-3 d-flex flex-column">
+        <div class="card p-3 text-center h-100 d-flex flex-column">
+            <h4>Wallpapers Set</h4>
+            <div id="wallpaperChart" class="chart-container flex-grow-1"></div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-4 mb-3 d-flex flex-column">
+        <div class="card p-3 text-center h-100 d-flex flex-column">
+            <h4>Action Links Clicked</h4>
+            <div id="linkChart" class="chart-container flex-grow-1"></div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-4 mb-3">
+        <!-- Empty column reserved -->
+    </div>
+</div>
+
+
+
 <script src="https://www.gstatic.com/charts/loader.js">
 </script>
 <script>

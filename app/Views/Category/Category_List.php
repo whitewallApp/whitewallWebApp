@@ -1,39 +1,35 @@
 <div class="row m-3">
-    <div class="col-sm-8">
+
+    <!-- Main Table Column -->
+    <div class="col-12 col-md-8 mb-3 mb-md-0">
         <div class="card p-2">
-            <div class="row m-2">
-                <div class="col-sm-10">
+
+            <!-- Actions Row -->
+            <div class="row m-2 align-items-center">
+                <div class="col-12 col-md-10">
                     <div id="actions" class="row" style="display: none">
-                        <div class="col-2">
+                        <div class="col-6 col-md-2">
                             <p id="infoSelect" class=""></p>
                         </div>
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col-1">
-
-                                </div>
-                                <div class="col-4 text-center">
-                                    <?php if ($view[$pageName]["remove"]) : ?>
-                                        <button class="btn btn-danger" id="delete">Delete</button>
-                                    <?php endif ?>
-                                </div>
-                                <div class="col-1">
-
-                                </div>
-                                <div class="col-6">
-
-                                </div>
+                        <div class="col-6 col-md-4">
+                            <div class="row justify-content-start">
+                                <?php if ($view[$pageName]["remove"]) : ?>
+                                    <div class="col-auto">
+                                        <button class="btn btn-danger action-btn" id="delete">Delete</button>
+                                    </div>
+                                <?php endif ?>
                             </div>
                         </div>
-                        <div class="col-4">
-
-                        </div>
+                        <div class="col-12 col-md-4"></div>
                     </div>
                 </div>
-                <div class="col-sm-2">
-                    <button class="btn btn-info" id="setactive">Set All Active</button>
+
+                <div class="col-12 col-md-2 mt-2 mt-md-0 text-md-right">
+                    <button class="btn btn-info action-btn" id="setactive">Set All Active</button>
                 </div>
             </div>
+
+            <!-- Table -->
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
@@ -50,22 +46,25 @@
                             <tr id="<?= $category["name"] ?>" onclick="getCat(this);">
                                 <th scope="row"><input type="checkbox" class="checkbox-lg"></th>
                                 <td class="w-25">
-                                    <image class="img-sm" src="<?= $category["iconPath"] ?>">
+                                    <img class="img-sm" src="<?= $category["iconPath"] ?>" alt="<?= $category["name"] ?> Icon">
                                 </td>
                                 <td><?= $category["name"] ?></td>
                                 <td><?= $category["collectionName"] ?></td>
-                                <td><?= $category["active"]  ? ("Active") : ("Inactive") ?></td>
+                                <td><?= $category["active"] ? "Active" : "Inactive" ?></td>
                             </tr>
                         <?php endforeach ?>
-                        <tr>
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
-    <div class="col-sm-4">
+
+    <!-- Detail Column -->
+    <div class="col-12 col-md-4">
         <div class="card p-2">
             <?= $this->renderSection('Detail') ?>
         </div>
     </div>
+
 </div>

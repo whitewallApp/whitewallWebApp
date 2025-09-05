@@ -257,6 +257,7 @@ class Brand extends BaseController
 
             // email the client
             $mgClient = Mailgun::create(getenv("MAILGUN_API"), getenv("MAILGUN_URL"));
+            
             $domain = "support.whitewall.app";
             $params = array(
                 'from'    => 'Support <support@whitewall.app>',
