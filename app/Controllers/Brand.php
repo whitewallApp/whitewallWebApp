@@ -10,6 +10,7 @@ use App\Models\ImageModel;
 use App\Models\MenuModel;
 use App\Models\SubscriptionModel;
 use App\Models\UserModel;
+use App\Models\VariablesModel;
 use Mailgun\Mailgun;
 
 class Brand extends BaseController
@@ -208,6 +209,7 @@ class Brand extends BaseController
 
         $userModel = new UserModel();
         $brandModel = new BrandModel();
+        $varModel = new VariablesModel();
 
         if ($id != "") {
             $userModel->updatePermissions($id, $permissions);
@@ -255,8 +257,11 @@ class Brand extends BaseController
             $tmpPassword = bin2hex(random_bytes(4));
             $password = password_hash($tmpPassword, PASSWORD_DEFAULT);
 
+            $mailgunAPI = (string)$varModel->getVariable("MAILGUN_API", filter: ["value"]);
+            $mailgunURL = (string)$varModel->getVariable("MAILGUN_URL", filter: ["value"]);
+
             // email the client
-            $mgClient = Mailgun::create(getenv("MAILGUN_API"), getenv("MAILGUN_URL"));
+            $mgClient = Mailgun::create($mailgunAPI, $mailgunURL);
             
             $domain = "support.whitewall.app";
             $params = array(

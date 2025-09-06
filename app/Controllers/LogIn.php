@@ -15,11 +15,10 @@ class LogIn extends BaseController
         $migrate = \Config\Services::migrations();
         
         // dd( WRITEPATH, config('Session') );
-
         try {
             $migrate->latest();
         } catch (\Throwable $e) {
-            echo var_dump($e->getMessage());
+            log_message("error", $e->getMessage());
         }
 
         $session = session();

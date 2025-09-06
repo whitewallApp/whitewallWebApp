@@ -6,6 +6,7 @@ use App\Models\BrandModel;
 use App\Controllers\Navigation;
 use App\Models\ResetModel;
 use App\Models\UserModel;
+use App\Models\VariablesModel;
 use Mailgun\Mailgun;
 
 class Reset extends BaseController
@@ -84,6 +85,7 @@ class Reset extends BaseController
     public function post(){
         $resetModel = new ResetModel();
         $userModel = new UserModel();
+        $varModel = new VariablesModel();
         $email = esc($this->request->getPost("email", FILTER_VALIDATE_EMAIL));
 
         //If the email is not a valid email
@@ -112,8 +114,11 @@ class Reset extends BaseController
 
         $resetModel->insert(["user_id" => $userid, "reset_key" => $resetKey]);
 
+        $mailgunAPI = (string)$varModel->getVariable("MAILGUN_API", filter: ["value"]);
+        $mailgunURL = (string)$varModel->getVariable("MAILGUN_URL", filter: ["value"]);
+
         //email the client
-        $mgClient = Mailgun::create(getenv("MAILGUN_API"), getenv("MAILGUN_URL"));
+        $mgClient = Mailgun::create($mailgunAPI, $mailgunURL);
         $domain = "support.whitewall.app";
         $params = array(
                 'from'    => 'Support <support@whitewall.app>',

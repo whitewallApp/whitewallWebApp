@@ -44,6 +44,7 @@ class Account extends BaseController
     public function billing(){
         $subModel = new SubscriptionModel();
         $userModel = new UserModel();
+        $varModel = new VariablesModel();
         $session = session();
 
         $accountID = $userModel->getUser($session->get("user_id"), filter: ["account_id"]);
@@ -54,19 +55,22 @@ class Account extends BaseController
         if ($type == null){
             return Navigation::renderNavBar("Billing") . view("account/Billing", ["accountID" => $accountID]) . Navigation::renderFooter();
         }else{
-            header('Location: ' . getenv("STRIPE_CLIENT_PORTAL"));
+            $billingPortal = $varModel->getVariable("STRIPE_CLIENT_PORTAL", filter: ["value"]);
+            header('Location: ' . $billingPortal);
             exit;
         }
     }
 
     public function updateBilling(){
+        $varModel = new VariablesModel();
+
         // See your keys here: https://dashboard.stripe.com/apikeys
-        \Stripe\Stripe::setApiKey(getenv("STRIPE_API_KEY"));
+        \Stripe\Stripe::setApiKey($varModel->getVariable("STRIPE_API_KEY", filter: ["value"]));
 
         // If you are testing your webhook locally with the Stripe CLI you
         // can find the endpoint's secret by running `stripe listen`
         // Otherwise, find your endpoint's secret in your webhook settings in the Developer Dashboard
-        $endpoint_secret = getenv("STRIPE_WEBHOOK_SECRET");
+        $endpoint_secret = $varModel->getVariable("STRIPE_WEBHOOK_SECRET", filter: ["value"]);
 
         $payload = @file_get_contents('php://input');
         $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
@@ -174,11 +178,17 @@ class Account extends BaseController
 
         helper("form");
         $session = session();
+        
+        $varModel = new VariablesModel();
+        $mailgunAPI = (string)$varModel->getVariable("MAILGUN_API", filter: ["value"]);
+        $mailgunURL = (string)$varModel->getVariable("MAILGUN_URL", filter: ["value"]);
+
+
         //if they sign in with google
         if ($this->request->getPost("credential") != null){
 
             if ($this->request->getPost("credential") != "google"){
-                $client = new Google\Client(["client_id" => getenv("GOOGLE_CLIENT_ID")]);
+                $client = new Google\Client(["client_id" => $varModel->getVariable("GOOGLE_CLIENT_ID", filter: ["value"])]);
                 $payload = $client->verifyIdToken($this->request->getPost("credential"));
 
                 $name = $payload["name"];
@@ -234,6 +244,7 @@ class Account extends BaseController
                 $userModel = new UserModel();
                 $colModel = new CollectionModel();
                 $catModel = new CategoryModel();
+                $varModel = new VariablesModel();
 
                 //make the account
                 $accountID = $accountModel->insert(["id" => null]);
@@ -266,7 +277,7 @@ class Account extends BaseController
 
                 //email admin
                 //email the client
-                $mgClient = Mailgun::create(getenv("MAILGUN_API"), getenv("MAILGUN_URL"));
+                $mgClient = Mailgun::create($mailgunAPI, $mailgunURL);
                 $domain = "support.whitewall.app";
                 $params = array(
                     'from'    => 'Support <support@whitewall.app>',
@@ -417,7 +428,7 @@ class Account extends BaseController
                 $productName = $productModel->find($productID)["productName"];
 
                 //email the client
-                $mgClient = Mailgun::create(getenv("MAILGUN_API"), getenv("MAILGUN_URL"));
+                $mgClient = Mailgun::create($mailgunAPI, $mailgunURL);
                 $domain = "support.whitewall.app";
                 $params = array(
                     'from'    => 'Support <support@whitewall.app>',
