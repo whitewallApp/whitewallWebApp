@@ -204,7 +204,7 @@ class Brand extends BaseController
         $id = $this->request->getPost("userId", FILTER_SANITIZE_NUMBER_INT);
         $brandId = $this->request->getPost("brandId", FILTER_SANITIZE_NUMBER_INT);
 
-        $permissions = $data["permissions"];
+        // $permissions = $data["permissions"];
         $session = session();
 
         $userModel = new UserModel();
@@ -212,7 +212,7 @@ class Brand extends BaseController
         $varModel = new VariablesModel();
 
         if ($id != "") {
-            $userModel->updatePermissions($id, $permissions);
+            // $userModel->updatePermissions($id, $permissions);
             $userModel->updateAdmin((int)$id, isset($data["admin"]));
 
             //make sure they have permission to edit the user and brand
@@ -222,6 +222,7 @@ class Brand extends BaseController
             foreach ($allUsers as $user) {
                 $flatten[] = $user["id"];
             }
+            // echo var_dump($flatten);
             if (!in_array($id, $flatten)) {
                 throw new \RuntimeException("You don't have permission to edit this user");
             }
@@ -284,7 +285,7 @@ class Brand extends BaseController
                 "status" => isset($data["active"]),
                 "password" => $password
             ];
-            $userModel->addUser($userData, $brandId, $permissions, isset($data["admin"]));
+            // $userModel->addUser($userData, $brandId, $permissions, isset($data["admin"]));
         }
     }
 

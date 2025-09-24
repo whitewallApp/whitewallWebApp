@@ -114,8 +114,6 @@ class Collection extends BaseController
                 unlink("../writable/cache/CollectionCollection_List");
             }
 
-            echo var_dump($this->request->getPost("allactive", FILTER_VALIDATE_BOOL));
-
             if ($this->request->getPost("allactive") !== null){
                 $ids = $colModel->getAllIds($session->get("brand_id"));
                 foreach ($ids as $id) {

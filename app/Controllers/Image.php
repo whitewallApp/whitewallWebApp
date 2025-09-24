@@ -471,7 +471,7 @@ class Image extends BaseController
 
                         //sanitize csv row
                         foreach ($data as &$item) {
-                            $item = strtolower(htmlspecialchars($item));
+                            $item = htmlspecialchars($item);
                         }
 
                         if ($row == 1) {
