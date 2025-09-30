@@ -1,231 +1,4 @@
-$("#categoryColor").on("input", function(e){
-    color = $(this).val();
-    $(".row.bottom-nav").css("background-color", color);
-    $(".row.bottom-nav-banner").css("background-color", color);
-    branding.categories.backgroundcolor = $(this).val();
-})
-
-$("#categoryFontColor").on("input", function (e) {
-    color = $(this).val();
-    $(".row.bottom-nav").css("color", color)
-    $(".row.bottom-nav-banner").css("color", color)
-    branding.categories.fontcolor = $(this).val();
-})
-
-$("#catFontSize").on("input", function (e) {
-    size = $(this).val();
-    $(".row.bottom-nav").css("font-size", size+"px")
-    $(".row.bottom-nav-banner").css("font-size", size + "px")
-    branding.categories.fontsize = $(this).val();
-})
-
-$("#catFontStyle").on("input", function (e) {
-    fontType = $(this).val();
-    if (fontType == "bold"){
-        $(".row.bottom-nav").css("font-weight", fontType)
-        $(".row.bottom-nav").css("font-style", "normal")
-        $(".row.bottom-nav-banner").css("font-weight", fontType)
-        $(".row.bottom-nav-banner").css("font-style", "normal")
-    }else{
-        $(".row.bottom-nav").css("font-weight", "normal")
-        $(".row.bottom-nav").css("font-style", fontType)
-        $(".row.bottom-nav-banner").css("font-weight", "normal")
-        $(".row.bottom-nav-banner").css("font-style", fontType)
-    }
-    branding.categories.fontstyle = $(this).val();
-})
-
-$("#catFont").on("input", function (e) {
-    font = $(this).val();
-    $(".row.bottom-nav").css("font-family", font)
-    $(".row.bottom-nav-banner").css("font-family", font)
-    branding.categories.font = $(this).val();
-})
-
-$("#backgroundColor").on("input", function(e){
-    color = $(this).val();
-    $(".background-phone-collection").css("background-color", color);
-    $(".background-phone-image").css("background-color", color);
-    branding.background.color = $(this).val();
-})
-
-imagecolLabels = {};
-// Collection & Image Labels
-$("#imgCollabelFont").on("input", function(){
-    $(".collection-title").css("font-family", $(this).val());
-    $(".image-title").css("font-family", $(this).val());
-    branding.cards.font = $(this).val();
-})
-
-$("#collImgLabelFontColor").on("input", function(){
-    $(".collection-title").css("color", $(this).val());
-    $(".image-title").css("color", $(this).val());
-    branding.cards.fontcolor = $(this).val();
-})
-
-$("#shadowBox").on("input", function () {
-    if ($("#shadowBox").prop("checked")){
-        $(".card").css("box-shadow", "var(--mdb-card-box-shadow)");
-    }else{
-        $(".card").css("box-shadow", "none");
-    }
-    branding.cards.shadow = $("#shadowBox").prop("checked");
-})
-
-$("#imgCollabelFontStyle").on("input", function(){
-    fontType = $(this).val();
-    if (fontType == "bold") {
-        $(".collection-title").css("font-weight", fontType)
-        $(".collection-title").css("font-style", "normal")
-
-        $(".image-title").css("font-weight", fontType)
-        $(".image-title").css("font-style", "normal")
-    } else {
-        $(".collection-title").css("font-weight", "normal")
-        $(".collection-title").css("font-style", fontType)
-
-        $(".image-title").css("font-weight", "normal")
-        $(".image-title").css("font-style", fontType)
-    }
-    branding.cards.fontstyle = $(this).val();
-})
-
-$("#imgCollabelFontsize").on("input", function(){
-    $(".collection-title").css("font-size", $(this).val()+"px");
-    $(".image-title").css("font-size", $(this).val()+"px");
-    branding.cards.fontsize = $(this).val();
-})
-
-dropdowns = {};
-//Dropdown
-$("#dropdownFontsize").on("input", function(){
-    $(".custom-select-sm").css("font-size", $(this).val()+"px");
-    branding.dropdowns.fontsize = $(this).val();
-})
-
-$("#dropdownFontStyle").on("input", function(){
-    fontType = $(this).val();
-    if (fontType == "bold") {
-        $(".custom-select-sm").css("font-weight", fontType)
-        $(".custom-select-sm").css("font-style", "normal")
-    } else {
-        $(".custom-select-sm").css("font-weight", "normal")
-        $(".custom-select-sm").css("font-style", fontType)
-    }
-    branding.dropdowns.fontstyle = $(this).val();
-})
-
-$("#dropdownFontColor").on("input", function(){
-    $(".custom-select-sm").css("color", $(this).val());
-    branding.dropdowns.fontcolor = $(this).val();
-})
-
-$("#dropdownFont").on("input", function(){
-    $(".custom-select-sm").css("font-family", $(this).val());
-    branding.dropdowns.font = $(this).val();
-})
-
-$("#dropdownColor").on("input", function(){
-    $(".custom-select-sm").css("background-color", $(this).val());
-    branding.dropdowns.backgroundcolor = $(this).val();
-})
-
-checkmarks = {};
-//checkmark
-$("#checkmarkColor").on("input", function(){
- //TODO: make a custom checkbox
-})
-
-$("#checkmarkBackground").on("input", function(){
-    // console.log($(this).val() + " !important");
-    color = $(this).val();
-    array = $(".checkbox-branding:checked")
-    for (let i = 0; i < array.length; i++) {
-        const element = array[i];
-        element.style.setProperty('background-color', color, 'important');
-        element.style.setProperty('border-color', color, 'important');
-    }
-    branding.checkmarks.backgroundcolor = $(this).val();
-})
-
-imagecol = {};
-//image and collection images
-$("#imgBorderRadius").on("input", function(){
-    $(".img-branding").css("border-radius", $(this).val()+"px");
-    branding.cards.images.borderRadius = $(this).val();
-})
-
-$("#imgBorderWidth").on("input", function(){
-    $(".img-branding").css("border", $(this).val() + "px solid");
-    branding.cards.images.borderWidth = $(this).val();
-})
-
-$("#borderColor").on("input", function(){
-    $(".img-branding").css("border-color", $(this).val());
-    branding.cards.images.borderColor = $(this).val();
-})
-
-imagecolFrame = {};
-//image & collection cards/frams
-$("#collBorderColor").on("input", function(){
-    $(".card-branding").css("border-color", $(this).val());
-    branding.cards.frames.borderColor = $(this).val();
-})
-
-$("#frameBorderWidth").on("input", function(){
-    $(".card-branding").css("border", $(this).val() + "px solid");
-    branding.cards.frames.borderWidth = $(this).val();
-})
-
-$("#frameRadius").on("input", function(){
-    $(".card-branding").css("border-radius", $(this).val() + "px");
-    branding.cards.frames.borderRadius = $(this).val();
-})
-
-$("#collBackgroundColor").on("input", function(){
-    $(".card-branding").css("background-color", $(this).val());
-    branding.cards.backgroundcolor = $(this).val();
-})
-
-buttons = {};
-//buttons
-$("#buttonFontSize").on("input", function(){
-    $(".btn-branding").css("font-size", $(this).val() + "px");
-    branding.buttons.fontsize = $(this).val();
-})
-
-$("#buttonFontStyle").on("input", function(){
-    fontType = $(this).val();
-    if (fontType == "bold") {
-        $(".btn-branding").css("font-weight", fontType)
-        $(".btn-branding").css("font-style", "normal")
-    } else {
-        $(".btn-branding").css("font-weight", "normal")
-        $(".btn-branding").css("font-style", fontType)
-    }
-    branding.buttons.fontstyle = $(this).val();
-})
-
-$("#buttonFontColor").on("input", function(){
-    $(".btn-branding").css("color", $(this).val());
-    branding.buttons.fontcolor = $(this).val();
-})
-
-$("#buttonFont").on("input", function(){
-    $(".btn-branding").css("font-family", $(this).val());
-    branding.buttons.font = $(this).val();
-})
-
-$("#buttonBorderRadius").on("input", function(){
-    $(".btn-branding").css("border-radius", $(this).val() + "px");
-    branding.buttons.borderRadius = $(this).val();
-})
-
-$("#buttonColor").on("input", function(){
-    $(".btn-branding").css("background-color", $(this).val());
-    branding.buttons.borderColor = $(this).val();
-})
-
+// File Uploads
 $("#appIcon").on("input", function(){
     formData = new FormData();
     formData.append("appIcon", this.files[0]);
@@ -283,13 +56,6 @@ $("#appHeader").on("input", function(){
     });
 })
 
-$("#headerSize").on("input", function() {
-    var size = $("#headerSize").val();
-    branding.headerSize = size;
-
-    $(".menu-img").css("width", size + "%");
-})
-
 $("#appBanner").on("input", function(){
     formData = new FormData();
     formData.append("appBanner", this.files[0]);
@@ -309,18 +75,6 @@ $("#appBanner").on("input", function(){
     });
 })
 
-//loading
-$("#loadingcolor").on("input", function() {
-    $(".background-phone-loading").css("background-color", $(this).val());
-    branding.loading.color = $(this).val()
-})
-
-$("#loadingSize").on("input", function () {
-    $(".phone-loading").css("width", $(this).val() + "%");
-    branding.loading.size = $(this).val()
-})
-
-
 $("#save").on("click", function(){
     formData = new FormData();
     branding.appName = $("#appName").val();
@@ -330,6 +84,9 @@ $("#save").on("click", function(){
     formData.append("collectionLink", $("#collectionLink").val());
     formData.append("categoryLink", $("#categoryLink").val());
     formData.append("menuLink", $("#menuLink").val());
+
+    console.log(Object.fromEntries(formData));
+    
 
     $.ajax({
         url: "/brand/branding/update",
@@ -342,6 +99,7 @@ $("#save").on("click", function(){
             console.log(status);
             if (response.success) {
                 $(".alert-success").show();
+                changed = false;
                 setTimeout(() => {
                     $(".alert-success").hide();
                 }, 1000)
@@ -359,110 +117,242 @@ $("#save").on("click", function(){
     });
 })
 
-//call to action
-$("#collImgLabelActionColor").on("input", function(){
-    branding.actionColor = $("#collImgLabelActionColor").val();
+changed = false;
+
+// Base App Branding
+$("#backgroundColor").on("input", function(){
+    color = $(this).val()
+    branding.background.color = color;
+    updateBranding();
+    changed = true;
 })
+
+// Card Branding
+$("#cardFont").on("input", function(){
+    family = $(this).val()
+    branding.cards.font = family
+    updateBranding();
+    changed = true;
+})
+
+$("#cardFontColor").on("input", function(){
+    color = $(this).val()
+    branding.cards.fontcolor = color
+    updateBranding();
+    changed = true;
+})
+
+$("#cardFontStyle").on("input", function(){
+    style = $(this).val()
+    branding.cards.fontstyle = style
+    updateBranding();
+    changed = true;
+})
+
+$("#cardFontsize").on("input", function(){
+    size = $(this).val()
+    branding.cards.fontsize = size
+    updateBranding();
+    changed = true;
+})
+
+// Card Image Frames
+$("#imgBorderRadius").on("input", function(){
+    radius = $(this).val()
+    branding.cards.images.borderRadius = radius
+    updateBranding();
+    changed = true;
+})
+
+$("#imgBorderWidth").on("input", function(){
+    width = $(this).val()
+    branding.cards.images.borderWidth = width
+    updateBranding();
+    changed = true;
+})
+
+$("#borderColor").on("input", function(){
+    color = $(this).val()
+    branding.cards.images.borderColor = color
+    updateBranding();
+    changed = true;
+})
+
+// Cards
+$("#shadowBox").on("input", function(){
+    shadow = $(this).prop("checked")
+    branding.cards.shadow = shadow
+    updateBranding();
+    changed = true;
+})
+
+$("#cardBackgroundColor").on("input", function(){
+    color = $(this).val()
+    branding.cards.backgroundcolor = color
+    updateBranding();
+    changed = true;
+})
+
+$("#cardframeRadius").on("input", function(){
+    radius = $(this).val()
+    branding.cards.frames.borderRadius = radius
+    updateBranding();
+    changed = true;
+})
+
+$("#frameBorderWidth").on("input", function(){
+    width = $(this).val()
+    branding.cards.frames.borderWidth = width
+    updateBranding();
+    changed = true;
+})
+
+$("#cardBorderColor").on("input", function(){
+    color = $(this).val()
+    branding.cards.frames.borderColor = color
+    updateBranding();
+    changed = true;
+})
+
+// Buttons
+$("#buttonColor").on("input", function(){
+    color = $(this).val()
+    branding.buttons.color= color
+    updateBranding();
+    changed = true;
+})
+
+$("#buttonBorderRadius").on("input", function(){
+    radius = $(this).val()
+    branding.buttons.borderRadius = radius
+    updateBranding();
+    changed = true;
+})
+
+$("#buttonFont").on("input", function(){
+    font = $(this).val()
+    branding.buttons.font = font
+    updateBranding();
+    changed = true;
+})
+
+$("#buttonFontColor").on("input", function(){
+    fontcolor = $(this).val()
+    branding.buttons.fontcolor = fontcolor
+    updateBranding();
+    changed = true;
+})
+
+$("#buttonFontStyle").on("input", function(){
+    fontstyle = $(this).val()
+    branding.buttons.fontstyle = fontstyle
+    updateBranding();
+    changed = true;
+})
+
+$("#buttonFontSize").on("input", function(){
+    fontsize = $(this).val()
+    branding.buttons.fontsize = fontsize
+    updateBranding();
+    changed = true;
+})
+
+function updateBranding(){
+    // Base App Branding
+    $(".phone").css("background-color", branding.background.color);
+
+    // Card Branding
+    $(".phone-card p").css("color", branding.cards.fontcolor);
+    $(".phone-card p").css("font-family", branding.cards.font);
+
+    if (branding.cards.fontstyle == "bold") {
+        $(".phone-card p").css("font-weight", branding.cards.fontstyle)
+        $(".phone-card p").css("font-style", "normal")
+    } else {
+        $(".phone-card p").css("font-weight", "normal")
+        $(".phone-card p").css("font-style", branding.cards.fontstyle)
+        $(".phone-card p").css("font-size", branding.cards.fontsize + "px")
+    }
+
+    // Card Image Frames
+    $(".phone-card img").css("border-radius", branding.cards.images.borderRadius + "px");
+    $(".phone-card img").css("border", branding.cards.images.borderWidth + "px solid");
+    $(".phone-card img").css("border-color", branding.cards.images.borderColor);
+
+    // Cards
+    $(".phone-card").css("background-color", branding.cards.backgroundcolor);
+    $(".phone-card").css("border-radius", branding.cards.frames.borderRadius + "px");
+    $(".phone-card").css("border", branding.cards.frames.borderWidth + "px solid");
+    $(".phone-card").css("border-color", branding.cards.frames.borderColor);
+    if (branding.cards.shadow){
+        $(".phone-card").addClass("shadow-effect");
+    }else{
+        $(".phone-card").removeClass("shadow-effect");
+    }
+
+    // Buttons
+    $(".btn-branding").each(function() {
+        this.style.setProperty("background-color", branding.buttons.color, "important");
+    });
+    $(".btn-branding").each(function() {
+        this.style.setProperty("border-radius", branding.buttons.borderRadius + "px", "important");
+    });
+    $(".btn-branding").css("font-family", branding.buttons.font);
+    $(".btn-branding").css("color", branding.buttons.fontcolor);
+
+    if (branding.buttons.fontstyle == "bold") {
+        $(".btn-branding").css("font-weight", branding.buttons.fontstyle)
+        $(".btn-branding").css("font-style", "normal")
+    } else {
+        $(".btn-branding").css("font-weight", "normal")
+        $(".btn-branding").css("font-style", branding.buttons.fontstyle)
+        $(".btn-branding").css("font-size", branding.buttons.fontsize + "px")
+    }
+
+    $(".btn-branding").css("font-size", branding.buttons.fontsize + "px");
+
+}
 
 //load in branding on page load
-
 $(function(){
-    console.log(branding);
-    //background
+    // Base App
     $("#backgroundColor").val(branding.background.color);
-    $("#backgroundColor").trigger("input");
 
-    $("#appName").val(branding.appName);
-    $("#bannerLink").val(branding.bannerLink);
-    $("#headerLink").val(branding.headerLink);
+    // Cards
+    $("#cardFont").val(branding.cards.font);
+    $("#cardFontColor").val(branding.cards.fontcolor);
+    $("#cardFontStyle").val(branding.cards.fontstyle);
+    $("#cardFontsize").val(branding.cards.fontsize);
 
-
-    $("#headerSize").attr("value", branding.headerSize);
-    $("#headerSize").trigger("input");
-    
-
-    //buttons
-    $("#buttonFontColor").val(branding.buttons.fontcolor);
-    $("#buttonFontColor").trigger("input");
-
-    $("#buttonFontSize").attr("value", branding.buttons.fontsize);
-    $("#buttonFontSize").trigger("input");
-
-    $("#buttonColor").val(branding.buttons.borderColor);
-    $("#buttonColor").trigger("input");
-
-    $("#buttonBorderRadius").attr("value", branding.buttons.borderRadius);
-    $("#buttonBorderRadius").trigger("input");
-
-    $(`#buttonFont>option[value='${branding.buttons.font}']`).attr("selected", true);
-    $("#buttonFont").trigger("input");
-
-    //Images & Collections Frame
-    $("#collBackgroundColor").val(branding.cards.backgroundcolor);
-    $("#collBackgroundColor").trigger("input");
-
-    $("#frameRadius").attr("value", branding.cards.frames.borderRadius);
-    $("#frameRadius").trigger("input");
-
-    $("#frameBorderWidth").attr("value", branding.cards.frames.borderWidth);
-    $("#frameBorderWidth").trigger("input");
-
-    $("#collBorderColor").val(branding.cards.frames.borderColor);
-    $("#collBorderColor").trigger("input");
-
-    //Images & Collections
-    $("#imgBorderRadius").attr("value", branding.cards.images.borderRadius);
-    $("#imgBorderRadius").trigger("input");
-
-    $("#imgBorderWidth").attr("value", branding.cards.images.borderWidth);
-    $("#imgBorderWidth").trigger("input");
-
+    // Card Image Frames
+    $("#imgBorderRadius").val(branding.cards.images.borderRadius);
+    $("#imgBorderWidth").val(branding.cards.images.borderWidth);
     $("#borderColor").val(branding.cards.images.borderColor);
-    $("#borderColor").trigger("input");
 
-    //Dropdowns
-    $("#dropdownColor").val(branding.dropdowns.backgroundcolor);
-    $("#dropdownColor").trigger("input");
+    // Cards
+    $("#shadowBox").prop("checked", branding.cards.shadow);
+    $("#cardBackgroundColor").val(branding.cards.backgroundcolor);
+    $("#cardframeRadius").val(branding.cards.frames.borderRadius);
+    $("#frameBorderWidth").val(branding.cards.frames.borderWidth);
+    $("#cardBorderColor").val(branding.cards.frames.borderColor);
 
-    $("#dropdownFontColor").val(branding.dropdowns.fontcolor);
-    $("#dropdownFontColor").trigger("input");
+    // Buttons
+    $("#buttonColor").val(branding.buttons.color)
+    $("#buttonBorderRadius").val(branding.buttons.borderRadius)
+    $("#buttonFont").val(branding.buttons.font)
+    $("#buttonFontColor").val(branding.buttons.fontcolor)
+    $("#buttonFontStyle").val(branding.buttons.fontstyle)
+    $("#buttonFontSize").val(branding.buttons.fontsize)
 
-    $(`#dropdownFont>option[value='${branding.dropdowns.font}']`).attr("selected", true);
-    $("#dropdownFont").trigger("input");
-
-    $(`#dropdownFontStyle>option[value='${branding.dropdowns.fontstyle}']`).attr("selected", true);
-    $("#dropdownFontStyle").trigger("input");
-
-    $("#dropdownFontsize").attr("value", branding.dropdowns.fontsize);
-    $("#dropdownFontsize").trigger("input");
-
-    //Image & Collection Labels
-    $(`#imgCollabelFont>option[value='${branding.cards.font}']`).attr("selected", true);
-    $("imgCollabelFont").trigger("input");
-
-    $("#collImgLabelFontColor").val(branding.cards.fontcolor);
-    $("#collImgLabelFontColor").trigger("input");
-
-    $(`#imgCollabelFontStyle>option[value='${branding.cards.fontType}']`).attr("selected", true);
-    $("#imgCollabelFontStyle").trigger("input");
-
-    $("#imgCollabelFontsize").attr("value", branding.cards.fontsize);
-    $("#imgCollabelFontsize").trigger("input");
-
-    //category Labels
-    $("#categoryColor").val(branding.categories.backgroundcolor);
-    $("#categoryColor").trigger("input");
-
-    $("#categoryFontColor").val(branding.categories.fontcolor);
-    $("#categoryFontColor").trigger("input");
-
-    $(`#catFont>option[value='${branding.categories.font}']`).attr("selected", true);
-    $("#catFont").trigger("input");
-
-    $(`#catFontStyle>option[value='${branding.categories.fontstyle}']`).attr("selected", true);
-    $("#catFontStyle").trigger("input");
-
-    $("#catFontSize").attr("value", branding.categories.fontsize);
-    $("#catFontSize").trigger("input");
-
+    updateBranding();
 })
+
+$(window).on('beforeunload', function() {
+  // This function will execute when the user attempts to navigate away.
+  // You can perform actions here, such as saving data or displaying a message.
+
+  // To display a confirmation message to the user, return a string.
+  // The browser will then display this string in a default confirmation dialog.
+  if (changed)
+    return 'Are you sure you want to leave this page? Your changes might not be saved.';
+});

@@ -1,6 +1,8 @@
+<link rel="stylesheet" href="/css/branding.css">
+
 <div class="m-4">
     <div class="row">
-        <div class="col-5 position-sticky">
+        <div class="col position-sticky">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Collections List</a>
@@ -14,132 +16,71 @@
                 <!-- Collections -->
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="phone">
-                        <img class="phone-img" src="/Icons/phone.png">
-                        <div class="background-phone-collection">
-                            <div class="top-nav col my-auto text-center">
-                                <img class="menu-img" src="<?= ($brandimages["appHeading"] == "") ? ("/Icons/SMALL-Whitewall-LOGO-pos.png") : ($brandimages["appHeading"]) ?>">
-                                <!-- <div class="row">
-                                    <div class="col-9">
-                                        <select class="custom-select custom-select-sm" style="font-size: x-small;">
-                                            <option selected>Change: Never</option>
-                                            <option value="1">Change Every: Day</option>
-                                            <option value="2">Change Every: Other Day</option>
-                                            <option value="3">Change Every: Week</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-3">
-                                        <i class="bi bi-list menu-icon" style="top: -5px;"></i>
-                                    </div>
-                                </div> -->
+                        <div class="header row">
+                            <div class="col text-center my-auto">
+                                <img class="header-img" src="<?= ($brandimages["appHeading"] == "") ? ("/Icons/SMALL-Whitewall-LOGO-pos.png") : ($brandimages["appHeading"]) ?>">
                             </div>
+                        </div>
+                        <div>
                             <?php for ($i = 0; $i < floor(count($collections) / 2); $i += 2) : ?>
-                                <div class="row m-2">
-                                    <div class="col-sm-6">
-                                        <div class="card card-branding">
-                                            <!-- <input type="checkbox" class="form-check-input checkbox-branding" checked> -->
-                                            <img class="card-img-top img-branding" src="<?= $collections[$i]["thumbnail"] ?>">
-                                            <div class="collection-title">
-                                                <p class="m-0"><?= $collections[$i]["name"] ?></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="card card-branding">
-                                            <!-- <input type="checkbox" class="form-check-input checkbox-branding"> -->
-                                            <img class="card-img-top img-branding" src="<?= $collections[$i + 1]["thumbnail"] ?>">
-                                            <div class="collection-title">
-                                                <p class="m-0"><?= $collections[$i + 1]["name"] ?></p>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="d-flex justify-content-around">
+                                <div class="phone-card m-2">
+                                    <p class="text-center"><?= $collections[$i]["name"] ?></p>
+                                    <img src="<?= $collections[$i]["thumbnail"] ?>">
                                 </div>
-                            <?php endfor ?>
-                            <?php if (count($collections) % 2 != 0) : ?>
-                                <div class="col-sm-6">
-                                    <div class="card card-branding">
-                                        <img class="card-img-top img-branding" src="<?= $collections[count($collections) - 1]["thumbnail"] ?>">
-                                        <div class="collection-title">
-                                            <p class="m-0"><?= $collections[count($collections) - 1]["name"] ?></p>
-                                        </div>
-                                    </div>
+                                <div class="phone-card m-2">
+                                    <p class="text-center"><?= $collections[$i + 1]["name"] ?></p>
+                                    <img src="<?= $collections[$i + 1]["thumbnail"] ?>">
                                 </div>
-                            <?php endif ?>
-                            <div class="app-footer">
-                                <div class="row <?= ($brandimages["appBanner"] == "") ? ("bottom-nav") : ("bottom-nav-banner") ?>">
-                                    <?php foreach ($categories as $category) : ?>
-                                        <div class="col text-center">
-                                            <!-- <i class="bi bi-palette-fill"></i> -->
-                                            <img class="img-category" src="<?= $category["iconPath"] ?>">
-                                            <p class="m-0"><?= $category["name"] ?></p>
-                                        </div>
-                                    <?php endforeach ?>
-                                </div>
-                                <?php if ($brandimages["appBanner"] != "") : ?>
-                                    <div>
-                                        <img class="appBanner" src="<?= $brandimages["appBanner"] ?>">
-                                    </div>
-                                <?php endif ?>
                             </div>
+                            <?php endfor ?>
                         </div>
                     </div>
                 </div>
 
                 <!-- Set Image Pane -->
                 <div class="tab-pane fade" id="nav-img-pg" role="tabpanel" aria-labelledby="nav-img-pg-tab">
-                    <div class="phone">
-                        <img class="phone-img" src="/Icons/phone.png">
-                        <div class="background-phone-image">
-                            <div class="col top-nav mt-2 mb-2">
-                                <button class="btn btn-primary w-100 btn-branding">Back</button>
+                   <div class="phone">
+                        <div class="header row">
+                            <div class="col text-center my-auto">
+                                <img class="header-img" src="<?= ($brandimages["appHeading"] == "") ? ("/Icons/SMALL-Whitewall-LOGO-pos.png") : ($brandimages["appHeading"]) ?>">
                             </div>
+                        </div>
+                        <div>
                             <?php for ($i = 0; $i < floor(count($images) / 2); $i += 2) : ?>
-                                <div class="row m-2">
-                                    <div class="col-sm-6">
-                                        <div class="card card-branding p-2">
-                                            <img class="card-img-top img-branding" src="<?= $images[$i]["thumbnail"] ?>" alt="Card image cap">
-                                            <div class="image-title">
-                                                <p class="m-0"><?= $images[$i]["name"] ?></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="card card-branding p-2">
-                                            <img class="card-img-top img-branding" src="<?= $images[$i + 1]["thumbnail"] ?>" alt="Card image cap">
-                                            <div class="image-title">
-                                                <p class="m-0"><?= $images[$i + 1]["name"] ?></p>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="d-flex justify-content-around">
+                                <div class="phone-card m-2">
+                                    <p class="text-center"><?= $images[$i]["name"] ?></p>
+                                    <img src="<?= $images[$i]["thumbnail"] ?>">
                                 </div>
+                                <div class="phone-card m-2">
+                                    <p class="text-center"><?= $images[$i + 1]["name"] ?></p>
+                                    <img src="<?= $images[$i + 1]["thumbnail"] ?>">
+                                </div>
+                            </div>
                             <?php endfor ?>
-                            <?php if (count($images) % 2 != 0) : ?>
-                                <div class="col-sm-6">
-                                    <div class="card card-branding p-2">
-                                        <img class="img-category" src="<?= $images[count($images) - 1]["thumbnail"] ?>" alt="Card image cap">
-                                        <div class="image-title">
-                                            <p><?= $images[count($images) - 1]["name"] ?></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endif ?>
                         </div>
                     </div>
                 </div>
 
                 <!-- Wallpaper Pane -->
                 <div class="tab-pane fade" id="nav-img" role="tabpanel" aria-labelledby="nav-img-tab">
-                    <div class="phone">
-                        <img class="phone-img" src="/Icons/phone.png">
-                        <div class="background-phone-image">
-                            <button class="btn btn-branding back-btn">Back</button>
-                            <?php if (count($images) > 0) : ?>
-                                <img class="phone-wallpaper" src="<?= $images[0]["imagePath"] ?>">
-                            <?php endif ?>
-                            <div class="calltoaction text-center">
-                                <span>{imageDescription}</span><br>
-                                <small class="">{call to action name}</small>
+                   <div class="phone">
+                        <div class="header row">
+                            <div class="col text-center my-auto">
+                                <img class="header-img" src="<?= ($brandimages["appHeading"] == "") ? ("/Icons/SMALL-Whitewall-LOGO-pos.png") : ($brandimages["appHeading"]) ?>">
                             </div>
-                            <button class="btn btn-primary btn-branding" id="setWallpaper">Set Wallpaper</button>
+                        </div>
+                        <div>
+                           <div>
+                                <button class="btn btn-primary btn-branding" id="actionBtn">Call to Action</button>
+                                <div id="wallpaper">
+                                    <?php if (count($images) > 0) : ?>
+                                        <img src="<?= $images[0]["imagePath"] ?>">
+                                    <?php endif ?>
+                                    <button class="btn btn-primary btn-branding" id="setWallpaper">Set Wallpaper</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -147,12 +88,7 @@
                 <!-- Loading Pane -->
                 <div class="tab-pane fade" id="loading-img" role="tabpanel" aria-labelledby="loading-img-tab">
                     <div class="phone">
-                        <img class="phone-img" src="/Icons/phone.png">
-                        <div class="background-phone-loading row">
-                            <div class="col-sm-12 my-auto text-center">
-                                <img class="phone-loading" src="<?= $brandimages["appLoading"] ?>">
-                            </div>
-                        </div>
+
                     </div>
                 </div>
 
@@ -172,17 +108,17 @@
         </div>
 
         <!-- Branding Buttons -->
-        <div class="col-6" <?php if (!$view[$pageName]["edit"]) echo 'style="display: none;"' ?>>
+        <div class="col" <?php if (!$view[$pageName]["edit"]) echo 'style="display: none;"' ?>>
             <div class="accordion" id="accordionBranding">
                 <div class="card">
                     <div class="card-header" id="logos">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#logosCollapse" aria-expanded="true" aria-controls="collapseOne">
                                 <div class="row">
-                                    <div class="col-sm-11">
+                                    <div class="col-10">
                                         Branding
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col">
                                         <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
                                     </div>
                                 </div>
@@ -229,10 +165,10 @@
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#loadingCollapse" aria-expanded="true" aria-controls="collapseOne">
                                 <div class="row">
-                                    <div class="col-sm-11">
+                                    <div class="col-10">
                                         Loading
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col">
                                         <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
                                     </div>
                                 </div>
@@ -266,71 +202,14 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header" id="catLabels">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#catLabelscollapse" aria-expanded="true" aria-controls="collapseOne">
-                                <div class="row">
-                                    <div class="col-sm-11">
-                                        Category Labels
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
-                                    </div>
-                                </div>
-                            </button>
-                        </h2>
-                    </div>
-
-                    <div id="catLabelscollapse" class="collapse" aria-labelledby="catLabels" data-parent="#accordionBranding">
-                        <div class="card-body">
-                            <form>
-                                <div class="form-group">
-                                    <label class="form-label" for="categoryColor">Category Background Color</label>
-                                    <input type="color" class="form-control" id="categoryColor">
-                                </div>
-                                <div class="form-group">
-                                    <select class="custom-select" id="catFont">
-                                        <option value="Arial">Arial (sans-serif)</option>
-                                        <option value="Verdana">Verdana (sans-serif)</option>
-                                        <option value="Tahoma">Tahoma (sans-serif)</option>
-                                        <option value="Trebuchet MS">Trebuchet MS (sans-serif)</option>
-                                        <option value="Times New Roman">Times New Roman (serif)</option>
-                                        <option value="Georgia">Georgia (serif)</option>
-                                        <option value="Garamond">Garamond (serif)</option>
-                                        <option value="Courier New">Courier New (monospace)</option>
-                                        <option value="Brush Script MT, cursive">Brush Script MT (cursive)</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="categoryFontColor">Font Color</label>
-                                    <input type="color" class="form-control" id="categoryFontColor">
-                                </div>
-                                <div class="form-group">
-                                    <select class="custom-select" id="catFontStyle">
-                                        <option selected value="normal">Normal</option>
-                                        <option value="bold">Bold</option>
-                                        <option value="italic">Italicized</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="catFontSize">Category Font Size</label>
-                                    <div class="range">
-                                        <input type="range" class="form-range" step="1" min="0" max="60" id="catFontSize" />
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
                     <div class="card-header" id="background">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#backgroundCollapse" aria-expanded="false" aria-controls="collapseTwo">
                                 <div class="row">
-                                    <div class="col-sm-11">
+                                    <div class="col-10">
                                         Background
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col">
                                         <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
                                     </div>
                                 </div>
@@ -353,10 +232,10 @@
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#colImgLabelsCollapse" aria-expanded="false" aria-controls="collapseTwo">
                                 <div class="row">
-                                    <div class="col-sm-11">
-                                        Collection & Image Labels
+                                    <div class="col-10">
+                                        Card Labels
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col">
                                         <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
                                     </div>
                                 </div>
@@ -367,7 +246,7 @@
                         <div class="card-body">
                             <form>
                                 <div class="form-group">
-                                    <select class="custom-select" id="imgCollabelFont">
+                                    <select class="custom-select" id="cardFont">
                                         <option value="Arial">Arial (sans-serif)</option>
                                         <option value="Verdana">Verdana (sans-serif)</option>
                                         <option value="Tahoma">Tahoma (sans-serif)</option>
@@ -381,124 +260,38 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="collImgLabelFontColor">Font Color</label>
-                                    <input type="color" class="form-control" id="collImgLabelFontColor">
+                                    <input type="color" class="form-control" id="cardFontColor">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="collImgLabelActionColor">Call To Action Color</label>
-                                    <input type="color" class="form-control" id="collImgLabelActionColor">
+                                    <input type="color" class="form-control" id="cardActionColor">
                                 </div>
                                 <div class="form-group">
-                                    <select class="custom-select" id="imgCollabelFontStyle">
+                                    <select class="custom-select" id="cardFontStyle">
                                         <option selected value="normal">Normal</option>
                                         <option value="bold">Bold</option>
                                         <option value="italic">Italicized</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="imgCollabelFontsize">Font Size</label>
+                                    <label class="form-label" for="cardFontsize">Font Size</label>
                                     <div class="range">
-                                        <input type="range" class="form-range" step="1" min="0" max="60" id="imgCollabelFontsize" />
+                                        <input type="range" class="form-range" step="1" min="0" max="60" id="cardFontsize"/>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
-                </div>
-                <!-- <div class="card">
-                    <div class="card-header" id="selection">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#sellectionCollapse" aria-expanded="false" aria-controls="collapseTwo">
-                                <div class="row">
-                                    <div class="col-sm-11">
-                                        Selection Dropdown
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
-                                    </div>
-                                </div>
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="sellectionCollapse" class="collapse" aria-labelledby="selection" data-parent="#accordionBranding">
-                        <div class="card-body">
-                            <form>
-                                <div class="form-group">
-                                    <label class="form-label" for="dropdownColor">Dropdown Icon Color</label>
-                                    <input type="color" class="form-control" id="dropdownColor">
-                                </div>
-                                <div class="form-group">
-                                    <select class="custom-select" id="dropdownFont">
-                                        <option value="Arial">Arial (sans-serif)</option>
-                                        <option value="Verdana">Verdana (sans-serif)</option>
-                                        <option value="Tahoma">Tahoma (sans-serif)</option>
-                                        <option value="Trebuchet MS">Trebuchet MS (sans-serif)</option>
-                                        <option value="Times New Roman">Times New Roman (serif)</option>
-                                        <option value="Georgia">Georgia (serif)</option>
-                                        <option value="Garamond">Garamond (serif)</option>
-                                        <option value="Courier New">Courier New (monospace)</option>
-                                        <option value="Brush Script MT, cursive">Brush Script MT (cursive)</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="dropdownFontColor">Font Color</label>
-                                    <input type="color" class="form-control" id="dropdownFontColor">
-                                </div>
-                                <div class="form-group">
-                                    <select class="custom-select" id="dropdownFontStyle">
-                                        <option selected value="normal">Normal</option>
-                                        <option value="bold">Bold</option>
-                                        <option value="italic">Italicized</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="dropdownFontsize">Font Size</label>
-                                    <div class="range">
-                                        <input type="range" class="form-range" min="0" max="60" id="dropdownFontsize" />
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header" id="checkmark">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#checkmarkCollapse" aria-expanded="false" aria-controls="collapseTwo">
-                                <div class="row">
-                                    <div class="col-sm-11">
-                                        Selection Checkmark
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
-                                    </div>
-                                </div>
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="checkmarkCollapse" class="collapse" aria-labelledby="checkmark" data-parent="#accordionBranding">
-                        <div class="card-body">
-                            <form>
-                                <div class="form-group">
-                                    <label class="form-label" for="checkmarkBackground">Background Color</label>
-                                    <input type="color" class="form-control" id="checkmarkBackground">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="checkmarkColor">Checkmark Color</label>
-                                    <input type="color" class="form-control" id="checkmarkColor">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div> -->
+                </div>  
                 <div class="card">
                     <div class="card-header" id="imgCol">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#imgColCollapse" aria-expanded="false" aria-controls="collapseTwo">
                                 <div class="row">
-                                    <div class="col-sm-11">
-                                        Image Frames
+                                    <div class="col-10">
+                                        Card Image Frames
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col">
                                         <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
                                     </div>
                                 </div>
@@ -533,10 +326,10 @@
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#frameCollapse" aria-expanded="false" aria-controls="collapseTwo">
                                 <div class="row">
-                                    <div class="col-sm-11">
-                                        Images & Collections Frame
+                                    <div class="col-10">
+                                        Card
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col">
                                         <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
                                     </div>
                                 </div>
@@ -547,17 +340,17 @@
                         <div class="card-body">
                             <form>
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" value="" id="shadowBox" checked />
+                                    <input class="form-check-input" type="checkbox" value="" id="shadowBox" />
                                     <label class="form-check-label" for="shadowBox">Card Drop Shadow</label>
                                 </div>
                                 <div class="form-group">
                                     <label for="collBackgroundColor">Background Color</label>
-                                    <input type="color" class="form-control" id="collBackgroundColor">
+                                    <input type="color" class="form-control" id="cardBackgroundColor">
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="frameRadius">Border Radius</label>
+                                    <label class="form-label" for="cardframeRadius">Border Radius</label>
                                     <div class="range">
-                                        <input type="range" class="form-range" min="0" max="100" id="frameRadius" />
+                                        <input type="range" class="form-range" min="0" max="100" id="cardframeRadius" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -568,7 +361,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="collBorderColor">Border Color</label>
-                                    <input type="color" class="form-control" id="collBorderColor">
+                                    <input type="color" class="form-control" id="cardBorderColor">
                                 </div>
                             </form>
                         </div>
@@ -579,10 +372,10 @@
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#buttonCollapse" aria-expanded="false" aria-controls="collapseTwo">
                                 <div class="row">
-                                    <div class="col-sm-11">
+                                    <div class="col-10">
                                         Buttons
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col">
                                         <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
                                     </div>
                                 </div>
@@ -599,7 +392,7 @@
                                 <div class="form-group">
                                     <label class="form-label" for="buttonBorderRadius">Border Radius</label>
                                     <div class="range">
-                                        <input type="range" class="form-range" min="0" max="100" id="buttonBorderRadius" />
+                                        <input type="range" class="form-range" step="0.2" min="0" max="20" id="buttonBorderRadius" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -641,10 +434,10 @@
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#linkCollapse" aria-expanded="false" aria-controls="collapseTwo">
                                 <div class="row">
-                                    <div class="col-sm-11">
+                                    <div class="col-10">
                                         Custom Links
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col">
                                         <i class="bi bi-plus" style="color: var(--mdb-btn-color); font-size: 1rem"></i>
                                     </div>
                                 </div>
@@ -700,13 +493,6 @@
                 "background": {
                     "color": "#ffffff"
                 },
-                "categories": {
-                    "backgroundcolor": "#ffffff",
-                    "fontcolor": "#000000",
-                    "font": "Tahoma",
-                    "fontstyle": "italic",
-                    "fontsize": "12"
-                },
                 "cards": {
                     "frames": {
                         "borderRadius": "0",
@@ -743,7 +529,7 @@
                 "loading": {
                     "size": "80"
                 },
-                "appName": "The Beautiful AI",
+                "appName": "My App",
                 "headerSize": "80",
                 "bannerLink": ""
             });

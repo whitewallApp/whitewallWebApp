@@ -1,0 +1,80 @@
+/* Phone frame mock */
+.phone {
+  position: relative;
+  width: 380px;   /* matches emulator size */
+  height: 780px;
+  background: #e4e4e4; /* light gray background */
+  border-radius: 70px; /* rounded phone corners */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  margin: 20px auto;
+  border: 10px solid #000;
+  /* background: url("/Icons/phone.png") no-repeat center/cover; */
+  /* background-size: ; */
+}
+
+.header {
+    background:#fff;
+    padding: 5%;
+}
+
+.header-img {
+    width: 90%;
+}
+
+.phone-card {
+    border-radius: 10px;
+    background: #fff;
+    width: 50%;
+    /* filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5)); */
+}
+
+.phone-card p {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: large;
+    margin-bottom: 0px;
+    margin: 5px;
+    width: 90%;
+}
+
+.phone-card img {
+    display: block;
+    margin: 5px auto;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+#wallpaper img {
+    border-radius: 10px;
+    width: 80%;
+    display: block;
+    margin: auto;
+    margin-top: 10%;
+}
+
+.btn-branding {
+    display: block;
+    margin: auto;
+    width: 80% !important;
+}
+
+#setWallpaper {
+    position: relative;
+    z-index: 1;
+    top: -50px;
+    width: 70% !important;
+}
+
+#actionBtn {
+    margin-top: 10%;
+}
+
+.shadow-effect {
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* horizontal-offset vertical-offset blur-radius color */
+}
+
+/* This is for the branding Controls */
