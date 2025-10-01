@@ -127,6 +127,28 @@ $("#backgroundColor").on("input", function(){
     changed = true;
 })
 
+$("#headerSize").on("input", function(){
+    size = $(this).val()
+    branding.headerSize = size;
+    updateBranding();
+    changed = true;
+})
+
+// Loading
+$("#loadingSize").on("input", function(){
+    size = $(this).val()
+    branding.loading.size = size;
+    updateBranding();
+    changed = true;
+})
+
+$("#loadingcolor").on("input", function(){
+    color = $(this).val()
+    branding.loading.color = color;
+    updateBranding();
+    changed = true;
+})
+
 // Card Branding
 $("#cardFont").on("input", function(){
     family = $(this).val()
@@ -260,6 +282,11 @@ $("#buttonFontSize").on("input", function(){
 function updateBranding(){
     // Base App Branding
     $(".phone").css("background-color", branding.background.color);
+    $(".header-img").css("width", branding.headerSize + "%");
+
+    // Loading
+    $("#loadingct").css("background-color", branding.loading.color);
+    $("#loading").css("width", branding.loading.size + "%");
 
     // Card Branding
     $(".phone-card p").css("color", branding.cards.fontcolor);
@@ -317,6 +344,12 @@ function updateBranding(){
 $(function(){
     // Base App
     $("#backgroundColor").val(branding.background.color);
+    $("#headerSize").val(branding.headerSize);
+    $("#appName").val(branding.appName);
+
+    // Loading
+    $("#loadingSize").val(branding.loading.size)
+    $("#loadingcolor").val(branding.loading.color)
 
     // Cards
     $("#cardFont").val(branding.cards.font);
@@ -348,11 +381,6 @@ $(function(){
 })
 
 $(window).on('beforeunload', function() {
-  // This function will execute when the user attempts to navigate away.
-  // You can perform actions here, such as saving data or displaying a message.
-
-  // To display a confirmation message to the user, return a string.
-  // The browser will then display this string in a default confirmation dialog.
   if (changed)
     return 'Are you sure you want to leave this page? Your changes might not be saved.';
 });

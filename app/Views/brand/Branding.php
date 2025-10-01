@@ -87,8 +87,10 @@
 
                 <!-- Loading Pane -->
                 <div class="tab-pane fade" id="loading-img" role="tabpanel" aria-labelledby="loading-img-tab">
-                    <div class="phone">
-
+                    <div class="phone" id="loadingct">
+                        <div class="loading">
+                            <img id="loading" src="<?= $brandimages["appLoading"] ?>">
+                        </div>
                     </div>
                 </div>
 
@@ -145,13 +147,13 @@
                                         <input type="range" class="form-range" min="0" max="100" id="headerSize" value="100" />
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="form-label" for="appBanner">App Banner</label>
                                     <input type="file" class="form-control" id="appBanner" />
                                     <small class="form-text text-muted">1080x160 px banner recomended</small>
                                     <label class="form-label" for="bannerLink">Banner Link</label>
                                     <input type="text" class="form-control" id="bannerLink" />
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label class="form-label" for="appName">App Name</label>
                                     <input type="text" class="form-control" id="appName" />

@@ -15,7 +15,6 @@
 
 .header {
     background:#fff;
-    padding: 5%;
 }
 
 .header-img {
@@ -25,7 +24,7 @@
 .phone-card {
     border-radius: 10px;
     background: #fff;
-    width: 50%;
+    width: 45%;
     /* filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5)); */
 }
 
@@ -47,6 +46,14 @@
     height: 150px;
     object-fit: cover;
 }
+
+.loading {
+  display: flex;
+  align-items: center; /* Vertically centers child elements */
+  justify-content: center;
+  height: 100%;
+}
+
 
 #wallpaper img {
     border-radius: 10px;
