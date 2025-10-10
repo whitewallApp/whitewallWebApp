@@ -154,6 +154,12 @@ $("#imageFile").on("change", function (e) {
     $("#imageFileText").html(imageName);
 })
 
+$("#filterRemove").on("click", function(){
+    window.location.reload();
+})
+
+
+
 //COLLECTIONS
 function getColl(e) {
     tableRow = $(e);

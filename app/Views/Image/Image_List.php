@@ -7,12 +7,12 @@
             <!-- Actions & Filters Row -->
             <div class="row m-2 align-items-center">
                 <!-- Actions -->
-                <div class="col-12 col-md-8">
+                <div class="col">
                     <div id="actions" class="row" style="display: none">
-                        <div class="col-12 col-md-2">
+                        <div class="col">
                             <p id="infoSelect" class=""></p>
                         </div>
-                        <div class="col-12 col-md-10">
+                        <div class="col">
                             <div class="row justify-content-start align-items-center">
                                 <?php if ($view[$pageName]["remove"]) : ?>
                                     <div class="col-auto mb-2 mb-md-0">
@@ -24,8 +24,12 @@
                     </div>
                 </div>
 
+                <div class="col">
+                    <i id="filterRemove" style="font-size: 1.75rem; cursor: pointer; display: none;" class="bi bi-x-circle"></i>
+                </div>
+
                 <!-- Collection Filter Dropdown -->
-                <div class="col-6 col-md-2 mt-2 mt-md-0">
+                <div class="col">
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-block action-btn dropdown-toggle" type="button" id="filters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
@@ -42,7 +46,7 @@
                 </div>
 
                 <!-- OrderBy Dropdown -->
-                <div class="col-6 col-md-2 mt-2 mt-md-0">
+                <div class="col">
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-block action-btn dropdown-toggle" type="button" id="orderby" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i style="font-size: 16px;" class="bi bi-sort-down"></i>

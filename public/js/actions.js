@@ -124,6 +124,8 @@ $("[aria-labelledby='filters']").on("click", function(e){
         }else{
             window.location = window.location + "?collection=" + id;
         }
+
+        $("#filterRemove").show();
     }
 
     //for brand user filters

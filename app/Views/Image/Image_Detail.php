@@ -11,7 +11,7 @@
       <h2 id="data-title" class="mr-4">Add Image</h2>
     </div>
     <div class="col d-flex flex-row-reverse">
-
+        
     </div>
   </div>
   <form class="mr-4" id="data" action="/images/update" method="post">
