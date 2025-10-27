@@ -88,10 +88,10 @@ class App extends BaseController
                 $versionName = "1.0";
             }
 
-            // $subModel = new SubscriptionModel();
-            // if ($subModel->getSubscription($accountID, "account_id", ["status"]) != "active"){
-            //     throw new RuntimeException("You need to pay before using this service");
-            // }
+            $subModel = new SubscriptionModel();
+            if ($subModel->getSubscription($accountID, "account_id", ["status"]) != "active"){
+                throw new RuntimeException("You need to pay before using this service");
+            }
 
             // Set up all the files and config
             $assets->setupSharedFiles();
