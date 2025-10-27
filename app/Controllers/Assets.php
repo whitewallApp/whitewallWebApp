@@ -154,6 +154,36 @@ class Assets extends BaseController {
     }
 
     /**
+     * Sets up the shared folder between the app build and server
+     *
+     * @return string the filepath of the shared folderspace
+     */
+    function setupSharedFiles(){
+        $path = "/mnt/shared/" . $this->accountId . "/" . $this->brand_id;
+        
+        if (!is_dir($path)){
+            mkdir($path, 0777, TRUE);
+        }
+        
+        return $path;
+    }
+
+    function saveConfigFile($contents, $fileName){
+        $path = "/mnt/shared/" . $this->accountId . "/" . $this->brand_id . "/" . $fileName;
+        return file_put_contents($path, $contents);
+    }
+
+    function moveAPK($type){
+        if ($type == "apk" || $type == "aab"){
+            $file = "app-release." . $type;
+            $path = "/mnt/shared/" . $this->accountId . "/" . $this->brand_id . $file;
+
+            $file = new \CodeIgniter\Files\File($path);
+            $file->move($path = getenv("BASE_PATH") . $this->accountId . "/" . $this->brand_id . "/branding/");
+        }
+    }
+
+    /**
      * Returns image files
      *
      * @access    public

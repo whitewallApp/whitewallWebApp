@@ -20,9 +20,7 @@ use CodeIgniter\Router\RouteCollection;
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-$routes->get('debug-session', function () {
-    return password_hash("129034", PASSWORD_DEFAULT);
-});
+$routes->get('debug-session/(:any)', "App::compile/$1");
 
 //Base URLs
 $routes->get('/', 'LogIn::index');
