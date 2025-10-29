@@ -120,6 +120,7 @@ class App extends BaseController
             curl_close($ch);
             if ($http_code === 204) {
                 echo "Workflow dispatch event successfully triggered.";
+                $appModel->upsert(["brand_id" => $brand_id, "appName" => $versionName, "os" => $os, "state" => "compiling", "progress" => 20]);
             } else {
                 echo "Error triggering workflow dispatch event. HTTP Code: {$http_code}\n";
                 echo "Response: {$response}\n";
