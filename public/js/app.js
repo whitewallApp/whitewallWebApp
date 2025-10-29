@@ -6,7 +6,6 @@ $("#ioscompileButton").on("click", function () {
         type: "POST",
         url: "app/ios/compile",
         data: { version: $("#iosVersionName").val(), name: $("#iosAppName").val() },
-        timeout: 100,
         error: function (jqXHR, textStatus, errorThrown) {
             if (textStatus === "timeout") {
                 console.log("timeout");
@@ -24,7 +23,6 @@ $("#androidcompileButton").on("click", function () {
         type: "POST",
         url: "app/android/compile",
         data: { version: $("#androidVersionName").val(), name: $("#androidAppName").val() },
-        timeout: 100,
         error: function (jqXHR, textStatus, errorThrown) {
             if (textStatus === "timeout") {
                 console.log("timeout");
